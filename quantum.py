@@ -7,7 +7,11 @@ using quantum-inspired algorithms and feature maps.
 
 import hashlib
 import json
+import math
 from typing import Any, Dict, List, Optional, Tuple
+
+# Supported hash algorithms for fingerprinting
+SUPPORTED_ALGORITHMS = frozenset(["sha256", "sha384", "sha512", "sha3_256", "sha3_512"])
 
 __all__ = [
     "QuantumFeatureMap",
@@ -25,7 +29,17 @@ class QuantumFeatureMap:
     
     This is a classical simulation of the ZZFeatureMap used in
     quantum machine learning for threat detection.
+    
+    Note:
+        This is a classical simulation and does not provide true quantum
+        advantage. For production use with real quantum hardware, use
+        qiskit.circuit.library.ZZFeatureMap with IBM Quantum backends.
+        The simulation is limited to 10 qubits to maintain reasonable
+        performance (2^10 = 1024 state vector elements).
     """
+    
+    # Maximum qubits for classical simulation (2^10 = 1024 amplitudes)
+    MAX_SIMULATION_QUBITS = 10
     
     def __init__(self, feature_dimension: int = 10, reps: int = 2):
         """
@@ -37,7 +51,7 @@ class QuantumFeatureMap:
         """
         self.feature_dimension = feature_dimension
         self.reps = reps
-        self._num_qubits = min(feature_dimension, 10)  # Limit for simulation
+        self._num_qubits = min(feature_dimension, self.MAX_SIMULATION_QUBITS)
     
     @property
     def num_qubits(self) -> int:
@@ -58,8 +72,6 @@ class QuantumFeatureMap:
             features = features + [0.0] * (self.feature_dimension - len(features))
         
         # Simulate quantum state encoding using rotation angles
-        import math
-        
         state_size = 2 ** self._num_qubits
         state = [complex(1.0 / math.sqrt(state_size))] * state_size
         
@@ -92,8 +104,18 @@ class ThreatFingerprint:
         Initialize the fingerprint generator.
         
         Args:
-            algorithm: Hash algorithm to use (sha256, sha512, md5)
+            algorithm: Hash algorithm to use. Supported: sha256, sha384, sha512,
+                       sha3_256, sha3_512. MD5 is NOT supported due to known
+                       cryptographic weaknesses.
+        
+        Raises:
+            ValueError: If an unsupported algorithm is specified.
         """
+        if algorithm not in SUPPORTED_ALGORITHMS:
+            raise ValueError(
+                f"Unsupported algorithm '{algorithm}'. "
+                f"Use one of: {', '.join(sorted(SUPPORTED_ALGORITHMS))}"
+            )
         self.algorithm = algorithm
     
     def compute_post_fingerprint(self, features: Dict[str, Any]) -> str:

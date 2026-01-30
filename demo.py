@@ -134,31 +134,38 @@ def generate_sample_data(
     return list(X), list(y)
 
 
-def normalize_features(X: List[List[float]]) -> List[List[float]]:
+def normalize_features(
+    X: List[List[float]], 
+    mins: List[float] = None, 
+    maxs: List[float] = None
+) -> Tuple[List[List[float]], List[float], List[float]]:
     """
     Normalize features using min-max scaling.
     
     Args:
         X: List of feature vectors
+        mins: Pre-computed minimum values (from training data)
+        maxs: Pre-computed maximum values (from training data)
         
     Returns:
-        Normalized feature vectors
+        Tuple of (normalized_features, mins, maxs) for reuse with test data
     """
     if not X:
-        return X
+        return X, [], []
     
     n_features = len(X[0])
     
-    # Compute min and max for each feature
-    mins = [float("inf")] * n_features
-    maxs = [float("-inf")] * n_features
+    # Compute min and max for each feature if not provided
+    if mins is None or maxs is None:
+        mins = [float("inf")] * n_features
+        maxs = [float("-inf")] * n_features
+        
+        for sample in X:
+            for i, val in enumerate(sample):
+                mins[i] = min(mins[i], val)
+                maxs[i] = max(maxs[i], val)
     
-    for sample in X:
-        for i, val in enumerate(sample):
-            mins[i] = min(mins[i], val)
-            maxs[i] = max(maxs[i], val)
-    
-    # Normalize
+    # Normalize using the provided or computed min/max values
     X_normalized = []
     for sample in X:
         normalized = []
@@ -170,10 +177,10 @@ def normalize_features(X: List[List[float]]) -> List[List[float]]:
                 normalized.append(0.0)
         X_normalized.append(normalized)
     
-    return X_normalized
+    return X_normalized, mins, maxs
 
 
-def compute_accuracy(y_true: List[int], y_pred: List[int]) -> Dict[str, float]:
+def compute_metrics(y_true: List[int], y_pred: List[int]) -> Dict[str, float]:
     """
     Compute classification metrics.
     
@@ -264,10 +271,10 @@ def main():
     print(f"    Test samples: {len(X_test)}")
     print(f"    Features: {FEATURE_NAMES[:len(X_train[0])]}")
     
-    # Normalize features
+    # Normalize features (compute stats from training, apply to both)
     print("\n[2] Normalizing features...")
-    X_train_norm = normalize_features(X_train)
-    X_test_norm = normalize_features(X_test)
+    X_train_norm, mins, maxs = normalize_features(X_train)
+    X_test_norm, _, _ = normalize_features(X_test, mins, maxs)
     
     # Train and evaluate classifier
     print("\n[3] Running quantum-inspired classification...")
@@ -275,7 +282,7 @@ def main():
     
     # Compute metrics
     print("\n[4] Computing evaluation metrics...")
-    metrics = compute_accuracy(y_test, y_pred)
+    metrics = compute_metrics(y_test, y_pred)
     
     print("\n" + "=" * 60)
     print("Results")
