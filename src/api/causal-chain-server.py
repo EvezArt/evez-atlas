@@ -107,13 +107,21 @@ def _rate_limit_for_key(key: str) -> str:
 
 
 def _redact_entity(entity: dict, tier: int) -> dict:
+    # Build payload based on tier with minimal dict lookups
     payload = {"status": entity.get("status")}
-    if tier >= 1:
-        payload["builder"] = entity.get("builder")
-    if tier >= 2:
-        payload["trace"] = entity.get("trace")
     if tier >= 3:
-        payload["metadata"] = entity.get("metadata")
+        payload.update({
+            "builder": entity.get("builder"),
+            "trace": entity.get("trace"),
+            "metadata": entity.get("metadata")
+        })
+    elif tier >= 2:
+        payload.update({
+            "builder": entity.get("builder"),
+            "trace": entity.get("trace")
+        })
+    elif tier >= 1:
+        payload["builder"] = entity.get("builder")
     return payload
 
 
