@@ -5,10 +5,15 @@ This module provides a demonstration of the quantum threat detection
 system using simulated network intrusion data.
 """
 
+import logging
 import random
 from typing import Dict, List, Tuple
 
-from quantum import evaluate_navigation_sequence, predict_navigation_probabilities
+from quantum import (
+    evaluate_navigation_sequence,
+    predict_navigation_probabilities,
+    recursive_navigation_evaluation,
+)
 
 # Feature names from NSL-KDD dataset (first 10 numeric features)
 FEATURE_NAMES = [
@@ -302,6 +307,7 @@ def run_navigation_demo() -> Dict[str, List[float]]:
 
 def main():
     """Run the quantum threat detection demo."""
+    logging.basicConfig(level=logging.INFO, format="%(levelname)s:%(name)s:%(message)s")
     print("=" * 60)
     print("Quantum Threat Detection System Demo")
     print("=" * 60)
@@ -361,6 +367,27 @@ def main():
     print(
         "    Candidate probabilities:",
         [f"{p:.2f}" for p in navigation_results["candidate_probabilities"]],
+    )
+    recursive_navigation_evaluation(
+        sequence=[
+            [0.1, 0.2, 0.15],
+            [0.2, 0.4, 0.3],
+        ],
+        candidates=[
+            [0.2, 0.3, 0.2],
+            [0.9, 0.8, 0.95],
+            [0.4, 0.5, 0.45],
+        ],
+        anchors=[
+            [0.0, 0.0, 0.0],
+            [1.0, 1.0, 1.0],
+            [0.5, 0.5, 0.5],
+        ],
+        steps=2,
+        decay=0.8,
+        feature_dimension=3,
+        reps=1,
+        log=True,
     )
     
     return metrics

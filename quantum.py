@@ -21,6 +21,7 @@ __all__ = [
     "evaluate_navigation_sequence",
     "manifold_projection",
     "predict_navigation_probabilities",
+    "recursive_navigation_evaluation",
     "sequence_embedding",
     "quantum_kernel_estimation",
 ]
@@ -481,3 +482,65 @@ def evaluate_navigation_sequence(
         "top_candidate": top_candidate,
         "top_probability": top_probability,
     }
+
+
+def recursive_navigation_evaluation(
+    sequence: List[List[float]],
+    candidates: List[List[float]],
+    anchors: List[List[float]],
+    steps: int = 3,
+    decay: float = 0.85,
+    feature_dimension: int = 10,
+    reps: int = 2,
+    log: bool = False
+) -> List[Dict[str, Any]]:
+    """
+    Recursively evaluate navigation by appending the top candidate each step.
+    
+    Args:
+        sequence: Observed sequence of feature vectors (oldest -> newest).
+        candidates: Candidate feature vectors for the next step.
+        anchors: Anchor vectors defining the manifold regions.
+        steps: Number of recursive evaluation steps.
+        decay: Exponential decay for older steps (0-1).
+        feature_dimension: Dimension of the feature map.
+        reps: Number of feature map repetitions.
+        log: Whether to emit logging events for each step.
+        
+    Returns:
+        List of evaluation dictionaries for each step.
+    """
+    if steps <= 0:
+        return []
+    _validate_decay(decay)
+    
+    history = []
+    current_sequence = list(sequence)
+    if log:
+        import logging
+        logger = logging.getLogger(__name__)
+    
+    for _ in range(steps):
+        evaluation = evaluate_navigation_sequence(
+            current_sequence,
+            candidates,
+            anchors,
+            decay,
+            feature_dimension,
+            reps,
+        )
+        history.append(evaluation)
+        if log:
+            logger.info(
+                "Navigation step: top=%s prob=%.4f entropy=%.4f projection_entropy=%.4f",
+                evaluation["top_candidate"],
+                evaluation["top_probability"],
+                evaluation["entropy"],
+                evaluation["projection_entropy"],
+            )
+        top_idx = evaluation["top_candidate"]
+        if top_idx is None:
+            break
+        current_sequence.append(candidates[top_idx])
+    
+    return history

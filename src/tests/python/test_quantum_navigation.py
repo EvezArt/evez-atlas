@@ -4,6 +4,7 @@ from quantum import (
     evaluate_navigation_sequence,
     manifold_projection,
     predict_navigation_probabilities,
+    recursive_navigation_evaluation,
     sequence_embedding,
 )
 
@@ -84,3 +85,28 @@ def test_evaluate_navigation_sequence_ranks_candidates():
     )
     assert evaluation["ranked_candidates"][0] == 1
     assert evaluation["top_candidate"] == 1
+
+
+def test_recursive_navigation_evaluation_tracks_steps():
+    sequence = [
+        [0.1, 0.1, 0.1],
+    ]
+    candidates = [
+        [0.2, 0.2, 0.2],
+        [0.9, 0.9, 0.9],
+    ]
+    anchors = [
+        [0.0, 0.0, 0.0],
+        [1.0, 1.0, 1.0],
+    ]
+    history = recursive_navigation_evaluation(
+        sequence,
+        candidates,
+        anchors,
+        steps=2,
+        decay=0.9,
+        feature_dimension=3,
+        reps=1,
+    )
+    assert len(history) == 2
+    assert history[0]["top_candidate"] is not None
