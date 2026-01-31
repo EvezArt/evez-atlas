@@ -7,7 +7,7 @@ system using simulated network intrusion data.
 
 import logging
 import random
-from typing import Dict, List, Tuple
+from typing import Any, Dict, List, Tuple
 
 from quantum import (
     evaluate_navigation_sequence,
@@ -27,6 +27,15 @@ FEATURE_NAMES = [
     "num_failed_logins",
     "logged_in",
     "num_compromised",
+]
+
+ENVIRONMENTAL_TASKS = [
+    "terrain_scan",
+    "atmospheric_drift",
+    "thermal_gradient",
+    "signal_refraction",
+    "magnetic_flux",
+    "subsurface_echo",
 ]
 
 
@@ -302,6 +311,78 @@ def run_navigation_demo() -> Dict[str, List[float]]:
     return {
         "projection": evaluation["manifold_projection"],
         "candidate_probabilities": probabilities,
+    }
+
+
+def _make_sensor_vector(
+    rng: random.Random,
+    baseline: float,
+    jitter: float,
+    feature_dimension: int,
+) -> List[float]:
+    return [
+        max(0.0, min(1.0, baseline + rng.uniform(-jitter, jitter)))
+        for _ in range(feature_dimension)
+    ]
+
+
+def build_navigation_ui_state(
+    seed: int = 13,
+    feature_dimension: int = 10,
+    steps: int = 3,
+    decay: float = 0.85,
+    reps: int = 2,
+) -> Dict[str, Any]:
+    """Build a navigation UI state snapshot for environmental sensory tasks."""
+    rng = random.Random(seed)
+    sensor_tasks = [
+        {
+            "name": task,
+            "vector": _make_sensor_vector(
+                rng,
+                baseline=0.2 + idx * 0.1,
+                jitter=0.08,
+                feature_dimension=feature_dimension,
+            ),
+        }
+        for idx, task in enumerate(ENVIRONMENTAL_TASKS)
+    ]
+    sequence = [entry["vector"] for entry in sensor_tasks[:3]]
+    candidates = [
+        _make_sensor_vector(rng, baseline=0.6, jitter=0.15, feature_dimension=feature_dimension),
+        _make_sensor_vector(rng, baseline=0.35, jitter=0.1, feature_dimension=feature_dimension),
+        _make_sensor_vector(rng, baseline=0.75, jitter=0.12, feature_dimension=feature_dimension),
+        _make_sensor_vector(rng, baseline=0.5, jitter=0.2, feature_dimension=feature_dimension),
+    ]
+    anchors = [
+        _make_sensor_vector(rng, baseline=0.15, jitter=0.05, feature_dimension=feature_dimension),
+        _make_sensor_vector(rng, baseline=0.5, jitter=0.05, feature_dimension=feature_dimension),
+        _make_sensor_vector(rng, baseline=0.85, jitter=0.05, feature_dimension=feature_dimension),
+    ]
+    evaluation = evaluate_navigation_sequence(
+        sequence,
+        candidates,
+        anchors,
+        decay=decay,
+        feature_dimension=feature_dimension,
+        reps=reps,
+    )
+    recursive = recursive_navigation_evaluation(
+        sequence,
+        candidates,
+        anchors,
+        steps=steps,
+        decay=decay,
+        feature_dimension=feature_dimension,
+        reps=reps,
+    )
+    return {
+        "sensor_tasks": sensor_tasks,
+        "sequence": sequence,
+        "candidates": candidates,
+        "anchors": anchors,
+        "evaluation": evaluation,
+        "recursive": recursive,
     }
 
 

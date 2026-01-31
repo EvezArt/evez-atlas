@@ -1,5 +1,7 @@
 import pytest
 
+from demo import build_navigation_ui_state
+
 from quantum import (
     evaluate_navigation_sequence,
     manifold_projection,
@@ -110,3 +112,13 @@ def test_recursive_navigation_evaluation_tracks_steps():
     )
     assert len(history) == 2
     assert history[0]["top_candidate"] is not None
+
+
+def test_build_navigation_ui_state_shapes():
+    state = build_navigation_ui_state(seed=7, feature_dimension=5, steps=2, decay=0.8, reps=1)
+    assert len(state["sensor_tasks"]) == 6
+    assert len(state["sequence"]) == 3
+    assert len(state["candidates"]) == 4
+    assert len(state["anchors"]) == 3
+    assert len(state["recursive"]) == 2
+    assert len(state["evaluation"]["candidate_probabilities"]) == 4
