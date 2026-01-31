@@ -6,6 +6,7 @@ import json
 import os
 import time
 from collections import deque
+from contextlib import asynccontextmanager
 from threading import Lock
 
 from dotenv import load_dotenv
@@ -25,7 +26,6 @@ AUDIT_LOG_PATH = BASE_DIR / "src" / "memory" / "audit.jsonl"
 AUDIT_BUFFER = deque()
 AUDIT_LOCK = Lock()
 AUDIT_BATCH_SIZE = 10
-AUDIT_BATCH_TIMEOUT = 5.0  # seconds
 
 
 class ResolveAwarenessRequest(BaseModel):
@@ -64,16 +64,19 @@ def _rate_limit_key(request: Request) -> str:
     return request.headers.get("X-API-Key") or get_remote_address(request)
 
 
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """Lifespan context manager for startup and shutdown events."""
+    # Startup: Nothing to do
+    yield
+    # Shutdown: Flush audit buffer
+    _flush_audit_buffer()
+
+
 limiter = Limiter(key_func=_rate_limit_key)
-app = FastAPI()
+app = FastAPI(lifespan=lifespan)
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
-
-
-@app.on_event("shutdown")
-def shutdown_event():
-    """Flush audit buffer on shutdown."""
-    _flush_audit_buffer()
 
 
 def verify_api_key(
@@ -89,15 +92,20 @@ def verify_api_key(
 
 
 def _flush_audit_buffer() -> None:
-    """Flush the audit buffer to disk."""
+    """Flush the audit buffer to disk. Must be called without holding AUDIT_LOCK."""
+    entries_to_write = []
     with AUDIT_LOCK:
         if not AUDIT_BUFFER:
             return
-        AUDIT_LOG_PATH.parent.mkdir(parents=True, exist_ok=True)
-        with AUDIT_LOG_PATH.open("a", encoding="utf-8") as handle:
-            while AUDIT_BUFFER:
-                entry = AUDIT_BUFFER.popleft()
-                handle.write(json.dumps(entry) + "\n")
+        # Move all entries out of buffer while holding lock
+        while AUDIT_BUFFER:
+            entries_to_write.append(AUDIT_BUFFER.popleft())
+    
+    # Write to disk without holding lock
+    AUDIT_LOG_PATH.parent.mkdir(parents=True, exist_ok=True)
+    with AUDIT_LOG_PATH.open("a", encoding="utf-8") as handle:
+        for entry in entries_to_write:
+            handle.write(json.dumps(entry) + "\n")
 
 
 def audit_log(
@@ -116,11 +124,16 @@ def audit_log(
         "api_key": api_key,
         "result": result,
     }
+    should_flush = False
     with AUDIT_LOCK:
         AUDIT_BUFFER.append(entry)
-        # Flush if buffer is full
+        # Check if buffer is full
         if len(AUDIT_BUFFER) >= AUDIT_BATCH_SIZE:
-            _flush_audit_buffer()
+            should_flush = True
+    
+    # Flush outside the lock to avoid reentrant lock issues
+    if should_flush:
+        _flush_audit_buffer()
 
 
 def hmac_sign(data: dict) -> str:

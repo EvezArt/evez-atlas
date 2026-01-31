@@ -158,10 +158,9 @@ def normalize_features(
     
     # Compute min and max for each feature if not provided
     if mins is None or maxs is None:
-        # Transpose and compute min/max in one pass per feature
-        transposed = zip(*X)
+        # Compute min and max in one pass per feature
+        transposed = list(zip(*X))
         mins = [min(feature_vals) for feature_vals in transposed]
-        transposed = zip(*X)
         maxs = [max(feature_vals) for feature_vals in transposed]
     
     # Normalize using the provided or computed min/max values
