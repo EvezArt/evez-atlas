@@ -126,12 +126,13 @@ def generate_sample_data(
         X.append(features[:n_features])
         y.append(1)
     
-    # Shuffle data
-    combined = list(zip(X, y))
-    random.shuffle(combined)
-    X, y = zip(*combined)
+    # Shuffle data efficiently using index shuffling
+    indices = list(range(len(X)))
+    random.shuffle(indices)
+    X = [X[i] for i in indices]
+    y = [y[i] for i in indices]
     
-    return list(X), list(y)
+    return X, y
 
 
 def normalize_features(
@@ -157,13 +158,11 @@ def normalize_features(
     
     # Compute min and max for each feature if not provided
     if mins is None or maxs is None:
-        mins = [float("inf")] * n_features
-        maxs = [float("-inf")] * n_features
-        
-        for sample in X:
-            for i, val in enumerate(sample):
-                mins[i] = min(mins[i], val)
-                maxs[i] = max(maxs[i], val)
+        # Transpose and compute min/max in one pass per feature
+        transposed = zip(*X)
+        mins = [min(feature_vals) for feature_vals in transposed]
+        transposed = zip(*X)
+        maxs = [max(feature_vals) for feature_vals in transposed]
     
     # Normalize using the provided or computed min/max values
     X_normalized = []
@@ -191,10 +190,17 @@ def compute_metrics(y_true: List[int], y_pred: List[int]) -> Dict[str, float]:
     Returns:
         Dictionary with accuracy, precision, recall, and f1
     """
-    tp = sum(1 for t, p in zip(y_true, y_pred) if t == 1 and p == 1)
-    tn = sum(1 for t, p in zip(y_true, y_pred) if t == 0 and p == 0)
-    fp = sum(1 for t, p in zip(y_true, y_pred) if t == 0 and p == 1)
-    fn = sum(1 for t, p in zip(y_true, y_pred) if t == 1 and p == 0)
+    # Single pass computation for efficiency
+    tp = tn = fp = fn = 0
+    for t, p in zip(y_true, y_pred):
+        if t == 1 and p == 1:
+            tp += 1
+        elif t == 0 and p == 0:
+            tn += 1
+        elif t == 0 and p == 1:
+            fp += 1
+        else:
+            fn += 1
     
     accuracy = (tp + tn) / len(y_true) if y_true else 0.0
     precision = tp / (tp + fp) if (tp + fp) > 0 else 0.0

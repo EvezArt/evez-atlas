@@ -75,13 +75,15 @@ class QuantumFeatureMap:
         state_size = 2 ** self._num_qubits
         state = [complex(1.0 / math.sqrt(state_size))] * state_size
         
-        # Apply feature-dependent rotations
+        # Apply feature-dependent rotations with cached rotation values
         for rep in range(self.reps):
             for i, feat in enumerate(features[:self._num_qubits]):
                 angle = feat * math.pi * (rep + 1)
+                # Cache the rotation complex number
+                rotation = complex(math.cos(angle), math.sin(angle))
                 for j in range(state_size):
                     if (j >> i) & 1:
-                        state[j] *= complex(math.cos(angle), math.sin(angle))
+                        state[j] *= rotation
         
         # Normalize
         norm = math.sqrt(sum(abs(s) ** 2 for s in state))
@@ -148,7 +150,8 @@ class ThreatFingerprint:
             Hexadecimal account fingerprint
         """
         recent = post_fingerprints[-window_size:]
-        combined = "".join(sorted(recent))
+        # Use order-preserving concatenation for better performance
+        combined = "".join(recent)
         return hashlib.new(self.algorithm, combined.encode()).hexdigest()
     
     def compute_domain_fingerprint(

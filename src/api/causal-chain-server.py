@@ -1,9 +1,12 @@
 from pathlib import Path
+import asyncio
 import hashlib
 import hmac
 import json
 import os
 import time
+from collections import deque
+from threading import Lock
 
 from dotenv import load_dotenv
 from fastapi import Depends, FastAPI, Header, HTTPException, Request
@@ -17,6 +20,12 @@ load_dotenv()
 BASE_DIR = Path(__file__).resolve().parents[2]
 MANIFEST_PATH = BASE_DIR / ".roo" / "archonic-manifest.json"
 AUDIT_LOG_PATH = BASE_DIR / "src" / "memory" / "audit.jsonl"
+
+# Audit log batching for better I/O performance
+AUDIT_BUFFER = deque()
+AUDIT_LOCK = Lock()
+AUDIT_BATCH_SIZE = 10
+AUDIT_BATCH_TIMEOUT = 5.0  # seconds
 
 
 class ResolveAwarenessRequest(BaseModel):
@@ -61,6 +70,12 @@ app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 
+@app.on_event("shutdown")
+def shutdown_event():
+    """Flush audit buffer on shutdown."""
+    _flush_audit_buffer()
+
+
 def verify_api_key(
     request: Request,
     x_api_key: str = Header(..., alias="X-API-Key"),
@@ -73,10 +88,26 @@ def verify_api_key(
     return tier
 
 
+def _flush_audit_buffer() -> None:
+    """Flush the audit buffer to disk."""
+    with AUDIT_LOCK:
+        if not AUDIT_BUFFER:
+            return
+        AUDIT_LOG_PATH.parent.mkdir(parents=True, exist_ok=True)
+        with AUDIT_LOG_PATH.open("a", encoding="utf-8") as handle:
+            while AUDIT_BUFFER:
+                entry = AUDIT_BUFFER.popleft()
+                handle.write(json.dumps(entry) + "\n")
+
+
 def audit_log(
     entity_id: str, endpoint: str, tier: int, result: dict, api_key: str
 ) -> None:
-    AUDIT_LOG_PATH.parent.mkdir(parents=True, exist_ok=True)
+    """
+    Add an audit log entry to the buffer for batched writing.
+    
+    Entries are buffered and written in batches for better I/O performance.
+    """
     entry = {
         "timestamp": time.time(),
         "entity_id": entity_id,
@@ -85,8 +116,11 @@ def audit_log(
         "api_key": api_key,
         "result": result,
     }
-    with AUDIT_LOG_PATH.open("a", encoding="utf-8") as handle:
-        handle.write(json.dumps(entry) + "\n")
+    with AUDIT_LOCK:
+        AUDIT_BUFFER.append(entry)
+        # Flush if buffer is full
+        if len(AUDIT_BUFFER) >= AUDIT_BATCH_SIZE:
+            _flush_audit_buffer()
 
 
 def hmac_sign(data: dict) -> str:
@@ -143,10 +177,11 @@ def resolve_awareness(
 @app.get("/legion-status")
 @limiter.limit(_rate_limit_for_key)
 def legion_status(request: Request, tier: int = Depends(verify_api_key)):
-    entities = []
-    for output_id, entity in ENTITY_REGISTRY.items():
-        redacted = _redact_entity(entity, tier)
-        entities.append({"output_id": output_id, **redacted})
+    # Use list comprehension for better performance
+    entities = [
+        {"output_id": output_id, **_redact_entity(entity, tier)}
+        for output_id, entity in ENTITY_REGISTRY.items()
+    ]
     result = {"count": len(entities), "entities": entities}
     audit_log("legion", "/legion-status", tier, result, request.state.api_key)
     return result

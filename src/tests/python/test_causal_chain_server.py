@@ -80,6 +80,9 @@ def test_audit_logging(tmp_path):
         headers={"X-API-Key": "tier1_builder"},
     )
     assert response.status_code == 200
+    
+    # Flush the audit buffer to ensure logs are written
+    server._flush_audit_buffer()
 
     lines = audit_path.read_text().strip().splitlines()
     assert len(lines) == 2
