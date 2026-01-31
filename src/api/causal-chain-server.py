@@ -73,13 +73,16 @@ def verify_api_key(
     return tier
 
 
-def audit_log(entity_id: str, endpoint: str, tier: int, result: dict) -> None:
+def audit_log(
+    entity_id: str, endpoint: str, tier: int, result: dict, api_key: str
+) -> None:
     AUDIT_LOG_PATH.parent.mkdir(parents=True, exist_ok=True)
     entry = {
         "timestamp": time.time(),
         "entity_id": entity_id,
         "endpoint": endpoint,
         "tier": tier,
+        "api_key": api_key,
         "result": result,
     }
     with AUDIT_LOG_PATH.open("a", encoding="utf-8") as handle:
@@ -127,7 +130,13 @@ def resolve_awareness(
     redacted = _redact_entity(entity, tier)
     response = {"output_id": payload.output_id, **redacted}
     response["signature"] = hmac_sign(response)
-    audit_log(payload.output_id, "/resolve-awareness", tier, response)
+    audit_log(
+        payload.output_id,
+        "/resolve-awareness",
+        tier,
+        response,
+        request.state.api_key,
+    )
     return response
 
 
@@ -139,5 +148,5 @@ def legion_status(request: Request, tier: int = Depends(verify_api_key)):
         redacted = _redact_entity(entity, tier)
         entities.append({"output_id": output_id, **redacted})
     result = {"count": len(entities), "entities": entities}
-    audit_log("legion", "/legion-status", tier, result)
+    audit_log("legion", "/legion-status", tier, result, request.state.api_key)
     return result
