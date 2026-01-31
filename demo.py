@@ -234,6 +234,13 @@ def simple_quantum_classifier(
     
     predictions = []
     
+    # Handle edge case of empty training data
+    if not X_train:
+        return [0] * len(X_test)
+    
+    # Clamp k_neighbors to training set size
+    effective_k = min(k_neighbors, len(X_train))
+    
     for x_test in X_test:
         # Compute kernel similarities to all training samples
         similarities = []
@@ -241,13 +248,13 @@ def simple_quantum_classifier(
             kernel_val = quantum_kernel_estimation(x_test, x_train)
             similarities.append((kernel_val, y_train[i]))
         
-        # Sort by similarity (descending) and take k nearest
-        similarities.sort(reverse=True)
-        k_nearest = similarities[:k_neighbors]
+        # Sort by similarity (descending) using only kernel value and take k nearest
+        similarities.sort(key=lambda item: item[0], reverse=True)
+        k_nearest = similarities[:effective_k]
         
-        # Majority vote
+        # Majority vote based on actual neighbor count
         votes = sum(label for _, label in k_nearest)
-        prediction = 1 if votes > k_neighbors / 2 else 0
+        prediction = 1 if votes > len(k_nearest) / 2 else 0
         predictions.append(prediction)
     
     return predictions
