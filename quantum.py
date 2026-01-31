@@ -18,6 +18,9 @@ __all__ = [
     "ThreatFingerprint",
     "compute_fingerprint",
     "encode_features",
+    "evaluate_navigation_sequence",
+    "manifold_projection",
+    "predict_navigation_probabilities",
     "quantum_kernel_estimation",
 ]
 
@@ -281,3 +284,145 @@ def quantum_kernel_estimation(
     )
     
     return abs(inner_product) ** 2
+
+
+def _softmax(scores: List[float]) -> List[float]:
+    """Compute a numerically stable softmax for a list of scores."""
+    if not scores:
+        return []
+    max_score = max(scores)
+    exp_scores = [math.exp(score - max_score) for score in scores]
+    total = sum(exp_scores)
+    if total == 0:
+        return [1.0 / len(scores)] * len(scores)
+    return [score / total for score in exp_scores]
+
+
+def manifold_projection(
+    features: List[float],
+    anchors: List[List[float]],
+    feature_dimension: int = 10,
+    reps: int = 2
+) -> List[float]:
+    """
+    Project a feature vector onto a quantum-informed manifold.
+    
+    Uses quantum kernel similarity against anchor vectors to produce
+    a probability distribution over manifold regions.
+    
+    Args:
+        features: Feature vector to project.
+        anchors: Anchor vectors defining the manifold regions.
+        feature_dimension: Dimension of the feature map.
+        reps: Number of feature map repetitions.
+        
+    Returns:
+        Probability distribution over anchors (sums to 1).
+    """
+    if not anchors:
+        return []
+    
+    similarities = [
+        quantum_kernel_estimation(features, anchor, feature_dimension, reps)
+        for anchor in anchors
+    ]
+    total = sum(similarities)
+    if total == 0:
+        return [1.0 / len(anchors)] * len(anchors)
+    return [value / total for value in similarities]
+
+
+def predict_navigation_probabilities(
+    sequence: List[List[float]],
+    candidates: List[List[float]],
+    decay: float = 0.85,
+    feature_dimension: int = 10,
+    reps: int = 2
+) -> List[float]:
+    """
+    Predict navigation probabilities for candidate next steps.
+    
+    Scores each candidate by comparing it to the sequence history using
+    a decayed quantum kernel similarity, then normalizes via softmax.
+    
+    Args:
+        sequence: Observed sequence of feature vectors (oldest -> newest).
+        candidates: Candidate feature vectors for the next step.
+        decay: Exponential decay for older steps (0-1).
+        feature_dimension: Dimension of the feature map.
+        reps: Number of feature map repetitions.
+        
+    Returns:
+        Probability distribution over candidates (sums to 1).
+    """
+    if not candidates:
+        return []
+    if not sequence:
+        return [1.0 / len(candidates)] * len(candidates)
+    
+    weights = [decay ** idx for idx in range(len(sequence))]
+    weights.reverse()
+    
+    scores = []
+    for candidate in candidates:
+        score = 0.0
+        for weight, step in zip(weights, sequence):
+            score += weight * quantum_kernel_estimation(
+                candidate,
+                step,
+                feature_dimension,
+                reps,
+            )
+        scores.append(score)
+    
+    return _softmax(scores)
+
+
+def evaluate_navigation_sequence(
+    sequence: List[List[float]],
+    candidates: List[List[float]],
+    anchors: List[List[float]],
+    decay: float = 0.85,
+    feature_dimension: int = 10,
+    reps: int = 2
+) -> Dict[str, Any]:
+    """
+    Evaluate navigation sequencing using manifold projection and prediction.
+    
+    Args:
+        sequence: Observed sequence of feature vectors (oldest -> newest).
+        candidates: Candidate feature vectors for the next step.
+        anchors: Anchor vectors defining the manifold regions.
+        decay: Exponential decay for older steps (0-1).
+        feature_dimension: Dimension of the feature map.
+        reps: Number of feature map repetitions.
+        
+    Returns:
+        Dictionary with projection scores, candidate probabilities, and
+        ranked candidate indices.
+    """
+    projection = manifold_projection(
+        sequence[-1] if sequence else [0.0] * feature_dimension,
+        anchors,
+        feature_dimension,
+        reps,
+    )
+    probabilities = predict_navigation_probabilities(
+        sequence,
+        candidates,
+        decay,
+        feature_dimension,
+        reps,
+    )
+    
+    ranked = sorted(
+        range(len(probabilities)),
+        key=lambda idx: probabilities[idx],
+        reverse=True,
+    )
+    
+    return {
+        "manifold_projection": projection,
+        "candidate_probabilities": probabilities,
+        "ranked_candidates": ranked,
+    }
