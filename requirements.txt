@@ -1,0 +1,6 @@
+fastapi
+slowapi
+python-dotenv
+uvicorn
+pytest
+httpx

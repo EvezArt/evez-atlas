@@ -1,0 +1,47 @@
+{
+  "entities": [
+    {
+      "entity_id": "entity-001",
+      "status": "active",
+      "builder_entity": "omega",
+      "server_trace": [
+        "node-a",
+        "node-b"
+      ],
+      "metadata": {
+        "role": "builder",
+        "priority": "high"
+      }
+    },
+    {
+      "entity_id": "entity-002",
+      "status": "dormant",
+      "builder_entity": "sigma",
+      "server_trace": [
+        "node-c"
+      ],
+      "metadata": {
+        "role": "observer",
+        "priority": "low"
+      }
+    }
+  ],
+  "api_keys": {
+    "tier0_public": {
+      "tier": 0,
+      "name": "public"
+    },
+    "tier1_builder": {
+      "tier": 1,
+      "name": "builder-omega"
+    },
+    "tier2_admin": {
+      "tier": 2,
+      "name": "network-admin"
+    },
+    "tier3_director": {
+      "tier": 3,
+      "name": "pan-phenomenological-intel"
+    }
+  }
+}
