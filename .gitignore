@@ -51,3 +51,6 @@ htmlcov/
 __pycache__/
 *.pyc
 *.pyo
+
+# Performance comparison script (demo only)
+performance_comparison.py
