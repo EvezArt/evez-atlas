@@ -30,16 +30,10 @@ def audit_tail(n: int = Query(200, ge=1, le=1000)) -> JSONResponse:
     if not AUDIT_LOG_PATH.exists():
         return JSONResponse(content=[])
     
-    # Efficiently read last n lines without loading entire file
+    # Efficiently read last n lines without loading entire file using deque
     parsed: List[Any] = []
     with AUDIT_LOG_PATH.open("r", encoding="utf-8") as f:
-        # For small files, just read all; for large files, use a deque
-        try:
-            from collections import deque
-            lines = deque(f, maxlen=n)
-        except Exception:
-            # Fallback to reading all lines if deque fails
-            lines = f.readlines()[-n:]
+        lines = deque(f, maxlen=n)
     
     for line in lines:
         if not line.strip():

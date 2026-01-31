@@ -11,27 +11,28 @@ Multiple performance bottlenecks were identified and resolved, resulting in sign
 ### 1. High Priority Optimizations
 
 #### 1.1 Quantum Feature Map Encoding (quantum.py)
-**Problem:** Triple nested loop with O(reps × features × 2^qubits) complexity, causing ~20K operations per encoding with default parameters.
+**Problem:** Triple nested loop with complex bit operations making the code harder to follow. Repeated trigonometric calculations (cos, sin) for the same angles.
 
-**Solution:** Restructured the encoding algorithm to pre-compute rotation factors and apply them in a more efficient manner, reducing the effective complexity.
+**Solution:** Pre-compute all rotation complex numbers upfront, then apply them to the state vector. Uses clearer bit masking for qubit checking.
 
-**Impact:** 20-30% faster encoding for quantum feature maps.
+**Impact:** 20-30% faster encoding by avoiding repeated trigonometric calculations. Note: The algorithmic complexity O(reps × features × state_size) remains the same, but constant factors are improved.
 
 ```python
-# Before: O(reps × features × state_size)
+# Before: Computed cos/sin in innermost loop
 for rep in range(self.reps):
     for i, feat in enumerate(features[:self._num_qubits]):
+        angle = feat * math.pi * (rep + 1)
         for j in range(state_size):
             if (j >> i) & 1:
-                state[j] *= complex(math.cos(angle), math.sin(angle))
+                state[j] *= complex(math.cos(angle), math.sin(angle))  # Repeated calculation
 
-# After: Pre-compute rotations, then apply
-rotation_factors = [(i, rotation) for rep, feat in ...]
+# After: Pre-compute rotations, clearer bit masking
+rotation_factors = [(i, complex(math.cos(angle), math.sin(angle))) for rep, feat in ...]
 for i, rotation in rotation_factors:
     mask = 1 << i
     for j in range(state_size):
         if j & mask:
-            state[j] *= rotation
+            state[j] *= rotation  # Reuse pre-computed value
 ```
 
 #### 1.2 Quantum Classifier Optimization (demo.py)
@@ -155,7 +156,7 @@ Based on benchmark_performance.py:
 **Key Improvements:**
 - ✓ Single-pass metric computation: 4x faster
 - ✓ List comprehension normalization: 2x faster
-- ✓ Reduced quantum encoding complexity: 20-30% faster
+- ✓ Pre-computed trigonometric operations in quantum encoding: 20-30% faster
 - ✓ FeatureMap reuse in classifier: 50%+ faster
 - ✓ Generator-based string operations: 10-15% faster
 - ✓ Memory-efficient file reading: No memory scaling with file size

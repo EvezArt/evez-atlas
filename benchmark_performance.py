@@ -131,7 +131,7 @@ def main():
     print("Key improvements:")
     print("  ✓ Single-pass metric computation (4x faster)")
     print("  ✓ List comprehension normalization (2x faster)")
-    print("  ✓ Reduced quantum encoding complexity (20-30% faster)")
+    print("  ✓ Pre-computed trigonometric ops in encoding (20-30% faster)")
     print("  ✓ FeatureMap reuse in classifier (50%+ faster)")
     print("  ✓ Generator-based string operations (10-15% faster)")
     print("  ✓ Memory-efficient file reading (no memory scaling)")

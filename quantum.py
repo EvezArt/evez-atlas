@@ -75,14 +75,15 @@ class QuantumFeatureMap:
         state_size = 2 ** self._num_qubits
         state = [complex(1.0 / math.sqrt(state_size))] * state_size
         
-        # Pre-compute rotation factors for better performance
+        # Pre-compute rotation factors to avoid repeated trigonometric calculations
+        # This improves constant factors but maintains O(reps × features × state_size) complexity
         rotation_factors = []
         for rep in range(self.reps):
             for i, feat in enumerate(features[:self._num_qubits]):
                 angle = feat * math.pi * (rep + 1)
                 rotation_factors.append((i, complex(math.cos(angle), math.sin(angle))))
         
-        # Apply feature-dependent rotations (optimized to reduce nested loops)
+        # Apply feature-dependent rotations using bit masking for clarity
         for i, rotation in rotation_factors:
             # Apply rotation only to states where qubit i is |1⟩
             mask = 1 << i
