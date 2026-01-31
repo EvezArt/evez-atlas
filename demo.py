@@ -8,6 +8,8 @@ system using simulated network intrusion data.
 import random
 from typing import Dict, List, Tuple
 
+from quantum import evaluate_navigation_sequence, predict_navigation_probabilities
+
 # Feature names from NSL-KDD dataset (first 10 numeric features)
 FEATURE_NAMES = [
     "duration",
@@ -260,6 +262,44 @@ def simple_quantum_classifier(
     return predictions
 
 
+def run_navigation_demo() -> Dict[str, List[float]]:
+    """Run a navigation evaluation demo using quantum-inspired sequencing."""
+    sequence = [
+        [0.1, 0.2, 0.15],
+        [0.2, 0.4, 0.3],
+        [0.8, 0.7, 0.9],
+    ]
+    candidates = [
+        [0.2, 0.3, 0.2],
+        [0.9, 0.8, 0.95],
+        [0.4, 0.5, 0.45],
+    ]
+    anchors = [
+        [0.0, 0.0, 0.0],
+        [1.0, 1.0, 1.0],
+        [0.5, 0.5, 0.5],
+    ]
+    evaluation = evaluate_navigation_sequence(
+        sequence,
+        candidates,
+        anchors,
+        decay=0.8,
+        feature_dimension=3,
+        reps=1,
+    )
+    probabilities = predict_navigation_probabilities(
+        sequence,
+        candidates,
+        decay=0.8,
+        feature_dimension=3,
+        reps=1,
+    )
+    return {
+        "projection": evaluation["manifold_projection"],
+        "candidate_probabilities": probabilities,
+    }
+
+
 def main():
     """Run the quantum threat detection demo."""
     print("=" * 60)
@@ -312,6 +352,16 @@ def main():
     print("\n" + "=" * 60)
     print("Demo completed successfully!")
     print("=" * 60)
+
+    print("\n" + "=" * 60)
+    print("Quantum Navigation Demo")
+    print("=" * 60)
+    navigation_results = run_navigation_demo()
+    print("    Manifold projection:", [f"{p:.2f}" for p in navigation_results["projection"]])
+    print(
+        "    Candidate probabilities:",
+        [f"{p:.2f}" for p in navigation_results["candidate_probabilities"]],
+    )
     
     return metrics
 
