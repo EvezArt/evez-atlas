@@ -65,6 +65,12 @@ to infer individual behavior:
 - **Sequencing**: measure sequence divergence across consecutive windows to
   detect persistent shifts.
 
+## Collective Awareness Framing (Aggregate-Only)
+
+When describing system behavior, treat the signal landscape as a **collective
+memory** of the environment rather than an attribution to any person or device.
+This framing supports aggregate safety review while avoiding individualization.
+
 ## Mapping: Signals → Risk Tiers
 
 **Tier 0 — Baseline**
