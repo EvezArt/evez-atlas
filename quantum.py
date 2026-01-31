@@ -8,7 +8,7 @@ using quantum-inspired algorithms and feature maps.
 import hashlib
 import json
 import math
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Optional
 
 # Supported hash algorithms for fingerprinting
 SUPPORTED_ALGORITHMS = frozenset(["sha256", "sha384", "sha512", "sha3_256", "sha3_512"])
@@ -168,6 +168,11 @@ class ThreatFingerprint:
         """
         if weights is None:
             weights = [1.0] * len(account_fingerprints)
+        elif len(weights) != len(account_fingerprints):
+            raise ValueError(
+                f"Length mismatch: {len(account_fingerprints)} fingerprints but "
+                f"{len(weights)} weights provided. They must be equal."
+            )
         
         # Combine with weights
         weighted = []
@@ -200,11 +205,21 @@ def compute_fingerprint(data: Any, algorithm: str = "sha256") -> str:
     
     Args:
         data: Data to fingerprint (will be JSON-serialized)
-        algorithm: Hash algorithm to use
+        algorithm: Hash algorithm to use. Supported: sha256, sha384, sha512,
+                   sha3_256, sha3_512. MD5/SHA1 are NOT supported.
         
     Returns:
         Hexadecimal fingerprint string
+    
+    Raises:
+        ValueError: If an unsupported algorithm is specified.
     """
+    if algorithm not in SUPPORTED_ALGORITHMS:
+        raise ValueError(
+            f"Unsupported algorithm '{algorithm}'. "
+            f"Use one of: {', '.join(sorted(SUPPORTED_ALGORITHMS))}"
+        )
+    
     if isinstance(data, (dict, list)):
         serialized = json.dumps(data, sort_keys=True, default=str)
     else:
