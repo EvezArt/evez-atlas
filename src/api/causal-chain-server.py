@@ -1,12 +1,14 @@
 from pathlib import Path
 import hashlib
 import hmac
+import html
 import json
 import os
 import time
 
 from dotenv import load_dotenv
 from fastapi import Depends, FastAPI, Header, HTTPException, Request
+from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
 from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
@@ -117,6 +119,10 @@ def _redact_entity(entity: dict, tier: int) -> dict:
     return payload
 
 
+def _format_vector(vector: list, precision: int = 3) -> str:
+    return "[" + ", ".join(f"{value:.{precision}f}" for value in vector) + "]"
+
+
 @app.post("/resolve-awareness")
 @limiter.limit(_rate_limit_for_key)
 def resolve_awareness(
@@ -150,3 +156,174 @@ def legion_status(request: Request, tier: int = Depends(verify_api_key)):
     result = {"count": len(entities), "entities": entities}
     audit_log("legion", "/legion-status", tier, result, request.state.api_key)
     return result
+
+
+@app.get("/navigation-ui", response_class=HTMLResponse)
+@limiter.limit(_rate_limit_for_key)
+def navigation_ui(request: Request, tier: int = Depends(verify_api_key)):
+    from demo import build_navigation_ui_state
+
+    state = build_navigation_ui_state()
+    evaluation = state["evaluation"]
+    resolution = state["resolution"]
+    candidate_rows = []
+    for idx, candidate in enumerate(state["candidates"]):
+        probability = evaluation["candidate_probabilities"][idx]
+        rank = evaluation["ranked_candidates"].index(idx) + 1
+        candidate_rows.append(
+            (
+                idx,
+                _format_vector(candidate),
+                f"{probability:.3f}",
+                rank,
+            )
+        )
+    projection_rows = [
+        (idx, f"{value:.3f}") for idx, value in enumerate(evaluation["manifold_projection"])
+    ]
+    recursive_rows = []
+    for idx, step in enumerate(state["recursive"], start=1):
+        recursive_rows.append(
+            (
+                idx,
+                step["top_candidate"],
+                f"{step['top_probability']:.3f}",
+                f"{step['entropy']:.3f}",
+                f"{step['projection_entropy']:.3f}",
+            )
+        )
+    html_parts = [
+        "<!DOCTYPE html>",
+        "<html lang='en'>",
+        "<head>",
+        "<meta charset='UTF-8' />",
+        "<meta name='viewport' content='width=device-width, initial-scale=1' />",
+        "<title>Quantum Navigation Interface</title>",
+        "<style>",
+        "body { font-family: 'Inter', sans-serif; margin: 32px; color: #101418; }",
+        "h1, h2 { color: #1e2a3a; }",
+        "table { border-collapse: collapse; width: 100%; margin-bottom: 24px; }",
+        "th, td { border: 1px solid #d7dde5; padding: 8px 12px; text-align: left; }",
+        "th { background: #f2f5f9; }",
+        ".card { padding: 16px; border-radius: 12px; background: #f8fafc; margin-bottom: 20px; }",
+        "</style>",
+        "</head>",
+        "<body>",
+        "<h1>Quantum Navigation Interface</h1>",
+        "<div class='card'>",
+        "<p>Outerfacing sensory navigation snapshot derived from the latest sequence evaluation.</p>",
+        "</div>",
+        "<h2>Environmental Sensory Tasks</h2>",
+        "<table>",
+        "<thead><tr><th>Task</th><th>Vector</th></tr></thead>",
+        "<tbody>",
+    ]
+    for task in state["sensor_tasks"]:
+        html_parts.append(
+            "<tr><td>"
+            + html.escape(task["name"])
+            + "</td><td>"
+            + html.escape(_format_vector(task["vector"]))
+            + "</td></tr>"
+        )
+    html_parts.extend(
+        [
+            "</tbody>",
+            "</table>",
+            "<h2>Operational Resolution</h2>",
+            "<div class='card'>",
+            "<p><strong>Dominant anchor:</strong> "
+            + str(resolution["dominant_anchor"])
+            + "</p>",
+            "<p><strong>Anchor weight:</strong> "
+            + f"{resolution['dominant_anchor_weight']:.3f}"
+            + "</p>",
+            "<p><strong>Top candidate:</strong> "
+            + str(resolution["top_candidate"])
+            + "</p>",
+            "<p><strong>Top probability:</strong> "
+            + f"{resolution['top_probability']:.3f}"
+            + "</p>",
+            "<p><strong>Recommended candidate:</strong> "
+            + html.escape(
+                _format_vector(resolution["recommended_candidate"])
+                if resolution["recommended_candidate"] is not None
+                else "None"
+            )
+            + "</p>",
+            "</div>",
+            "<h2>Sequence Embedding</h2>",
+            "<div class='card'>",
+            "<p><strong>Embedding:</strong> "
+            + html.escape(_format_vector(evaluation["embedding"]))
+            + "</p>",
+            "<p><strong>Entropy:</strong> "
+            + f"{evaluation['entropy']:.3f}"
+            + "</p>",
+            "<p><strong>Projection entropy:</strong> "
+            + f"{evaluation['projection_entropy']:.3f}"
+            + "</p>",
+            "</div>",
+            "<h2>Candidate Probabilities</h2>",
+            "<table>",
+            "<thead><tr><th>Candidate</th><th>Vector</th><th>Probability</th><th>Rank</th></tr></thead>",
+            "<tbody>",
+        ]
+    )
+    for idx, vector, probability, rank in candidate_rows:
+        html_parts.append(
+            "<tr><td>"
+            + str(idx)
+            + "</td><td>"
+            + html.escape(vector)
+            + "</td><td>"
+            + probability
+            + "</td><td>"
+            + str(rank)
+            + "</td></tr>"
+        )
+    html_parts.extend(
+        [
+            "</tbody>",
+            "</table>",
+            "<h2>Manifold Projection</h2>",
+            "<table>",
+            "<thead><tr><th>Anchor</th><th>Projection</th></tr></thead>",
+            "<tbody>",
+        ]
+    )
+    for idx, value in projection_rows:
+        html_parts.append(
+            "<tr><td>"
+            + str(idx)
+            + "</td><td>"
+            + value
+            + "</td></tr>"
+        )
+    html_parts.extend(
+        [
+            "</tbody>",
+            "</table>",
+            "<h2>Recursive Navigation Steps</h2>",
+            "<table>",
+            "<thead><tr><th>Step</th><th>Top Candidate</th><th>Top Probability</th>"
+            "<th>Entropy</th><th>Projection Entropy</th></tr></thead>",
+            "<tbody>",
+        ]
+    )
+    for step, top_candidate, top_probability, entropy, projection_entropy in recursive_rows:
+        html_parts.append(
+            "<tr><td>"
+            + str(step)
+            + "</td><td>"
+            + str(top_candidate)
+            + "</td><td>"
+            + top_probability
+            + "</td><td>"
+            + entropy
+            + "</td><td>"
+            + projection_entropy
+            + "</td></tr>"
+        )
+    html_parts.extend(["</tbody>", "</table>", "</body>", "</html>"])
+    return HTMLResponse("".join(html_parts))
