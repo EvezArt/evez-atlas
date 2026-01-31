@@ -1,7 +1,10 @@
+import pytest
+
 from quantum import (
     evaluate_navigation_sequence,
     manifold_projection,
     predict_navigation_probabilities,
+    sequence_embedding,
 )
 
 
@@ -38,6 +41,26 @@ def test_predict_navigation_probabilities_prefers_recent_match():
     assert probabilities[1] > probabilities[0]
 
 
+def test_sequence_embedding_weights_recent_entries():
+    sequence = [
+        [0.0, 0.0, 0.0],
+        [1.0, 1.0, 1.0],
+    ]
+    embedding = sequence_embedding(sequence, decay=0.5, feature_dimension=3)
+    assert embedding[0] > 0.5
+
+
+def test_predict_navigation_probabilities_rejects_invalid_decay():
+    with pytest.raises(ValueError):
+        predict_navigation_probabilities(
+            sequence=[[0.1, 0.2, 0.3]],
+            candidates=[[0.1, 0.2, 0.3]],
+            decay=0.0,
+            feature_dimension=3,
+            reps=1,
+        )
+
+
 def test_evaluate_navigation_sequence_ranks_candidates():
     sequence = [
         [0.3, 0.3, 0.3],
@@ -60,3 +83,4 @@ def test_evaluate_navigation_sequence_ranks_candidates():
         reps=1,
     )
     assert evaluation["ranked_candidates"][0] == 1
+    assert evaluation["top_candidate"] == 1

@@ -21,6 +21,7 @@ __all__ = [
     "evaluate_navigation_sequence",
     "manifold_projection",
     "predict_navigation_probabilities",
+    "sequence_embedding",
     "quantum_kernel_estimation",
 ]
 
@@ -298,6 +299,18 @@ def _softmax(scores: List[float]) -> List[float]:
     return [score / total for score in exp_scores]
 
 
+def _entropy(probabilities: List[float]) -> float:
+    """Compute entropy for a probability distribution."""
+    if not probabilities:
+        return 0.0
+    return -sum(p * math.log(p) for p in probabilities if p > 0)
+
+
+def _validate_decay(decay: float) -> None:
+    if not 0 < decay <= 1:
+        raise ValueError("decay must be in the interval (0, 1].")
+
+
 def manifold_projection(
     features: List[float],
     anchors: List[List[float]],
@@ -332,6 +345,39 @@ def manifold_projection(
     return [value / total for value in similarities]
 
 
+def sequence_embedding(
+    sequence: List[List[float]],
+    decay: float = 0.85,
+    feature_dimension: int = 10
+) -> List[float]:
+    """
+    Compute a weighted embedding for a navigation sequence.
+    
+    Args:
+        sequence: Observed sequence of feature vectors (oldest -> newest).
+        decay: Exponential decay for older steps (0-1).
+        feature_dimension: Target feature dimension.
+        
+    Returns:
+        Weighted embedding vector.
+    """
+    if not sequence:
+        return [0.0] * feature_dimension
+    _validate_decay(decay)
+    
+    weights = [decay ** idx for idx in range(len(sequence))]
+    weights.reverse()
+    total_weight = sum(weights)
+    if total_weight == 0:
+        return [0.0] * feature_dimension
+    
+    embedding = [0.0] * feature_dimension
+    for weight, step in zip(weights, sequence):
+        for idx in range(feature_dimension):
+            embedding[idx] += weight * (step[idx] if idx < len(step) else 0.0)
+    return [value / total_weight for value in embedding]
+
+
 def predict_navigation_probabilities(
     sequence: List[List[float]],
     candidates: List[List[float]],
@@ -359,6 +405,7 @@ def predict_navigation_probabilities(
         return []
     if not sequence:
         return [1.0 / len(candidates)] * len(candidates)
+    _validate_decay(decay)
     
     weights = [decay ** idx for idx in range(len(sequence))]
     weights.reverse()
@@ -399,10 +446,11 @@ def evaluate_navigation_sequence(
         
     Returns:
         Dictionary with projection scores, candidate probabilities, and
-        ranked candidate indices.
+        ranked candidate indices and diagnostic metrics.
     """
+    embedding = sequence_embedding(sequence, decay, feature_dimension)
     projection = manifold_projection(
-        sequence[-1] if sequence else [0.0] * feature_dimension,
+        embedding,
         anchors,
         feature_dimension,
         reps,
@@ -421,8 +469,15 @@ def evaluate_navigation_sequence(
         reverse=True,
     )
     
+    top_candidate = ranked[0] if ranked else None
+    top_probability = probabilities[top_candidate] if top_candidate is not None else 0.0
     return {
+        "embedding": embedding,
         "manifold_projection": projection,
+        "projection_entropy": _entropy(projection),
         "candidate_probabilities": probabilities,
         "ranked_candidates": ranked,
+        "entropy": _entropy(probabilities),
+        "top_candidate": top_candidate,
+        "top_probability": top_probability,
     }
