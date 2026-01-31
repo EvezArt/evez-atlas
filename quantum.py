@@ -18,6 +18,11 @@ __all__ = [
     "ThreatFingerprint",
     "compute_fingerprint",
     "encode_features",
+    "evaluate_navigation_sequence",
+    "manifold_projection",
+    "predict_navigation_probabilities",
+    "recursive_navigation_evaluation",
+    "sequence_embedding",
     "quantum_kernel_estimation",
 ]
 
@@ -281,3 +286,261 @@ def quantum_kernel_estimation(
     )
     
     return abs(inner_product) ** 2
+
+
+def _softmax(scores: List[float]) -> List[float]:
+    """Compute a numerically stable softmax for a list of scores."""
+    if not scores:
+        return []
+    max_score = max(scores)
+    exp_scores = [math.exp(score - max_score) for score in scores]
+    total = sum(exp_scores)
+    if total == 0:
+        return [1.0 / len(scores)] * len(scores)
+    return [score / total for score in exp_scores]
+
+
+def _entropy(probabilities: List[float]) -> float:
+    """Compute entropy for a probability distribution."""
+    if not probabilities:
+        return 0.0
+    return -sum(p * math.log(p) for p in probabilities if p > 0)
+
+
+def _validate_decay(decay: float) -> None:
+    if not 0 < decay <= 1:
+        raise ValueError("decay must be in the interval (0, 1].")
+
+
+def manifold_projection(
+    features: List[float],
+    anchors: List[List[float]],
+    feature_dimension: int = 10,
+    reps: int = 2
+) -> List[float]:
+    """
+    Project a feature vector onto a quantum-informed manifold.
+    
+    Uses quantum kernel similarity against anchor vectors to produce
+    a probability distribution over manifold regions.
+    
+    Args:
+        features: Feature vector to project.
+        anchors: Anchor vectors defining the manifold regions.
+        feature_dimension: Dimension of the feature map.
+        reps: Number of feature map repetitions.
+        
+    Returns:
+        Probability distribution over anchors (sums to 1).
+    """
+    if not anchors:
+        return []
+    
+    similarities = [
+        quantum_kernel_estimation(features, anchor, feature_dimension, reps)
+        for anchor in anchors
+    ]
+    total = sum(similarities)
+    if total == 0:
+        return [1.0 / len(anchors)] * len(anchors)
+    return [value / total for value in similarities]
+
+
+def sequence_embedding(
+    sequence: List[List[float]],
+    decay: float = 0.85,
+    feature_dimension: int = 10
+) -> List[float]:
+    """
+    Compute a weighted embedding for a navigation sequence.
+    
+    Args:
+        sequence: Observed sequence of feature vectors (oldest -> newest).
+        decay: Exponential decay for older steps (0-1).
+        feature_dimension: Target feature dimension.
+        
+    Returns:
+        Weighted embedding vector.
+    """
+    if not sequence:
+        return [0.0] * feature_dimension
+    _validate_decay(decay)
+    
+    weights = [decay ** idx for idx in range(len(sequence))]
+    weights.reverse()
+    total_weight = sum(weights)
+    if total_weight == 0:
+        return [0.0] * feature_dimension
+    
+    embedding = [0.0] * feature_dimension
+    for weight, step in zip(weights, sequence):
+        for idx in range(feature_dimension):
+            embedding[idx] += weight * (step[idx] if idx < len(step) else 0.0)
+    return [value / total_weight for value in embedding]
+
+
+def predict_navigation_probabilities(
+    sequence: List[List[float]],
+    candidates: List[List[float]],
+    decay: float = 0.85,
+    feature_dimension: int = 10,
+    reps: int = 2
+) -> List[float]:
+    """
+    Predict navigation probabilities for candidate next steps.
+    
+    Scores each candidate by comparing it to the sequence history using
+    a decayed quantum kernel similarity, then normalizes via softmax.
+    
+    Args:
+        sequence: Observed sequence of feature vectors (oldest -> newest).
+        candidates: Candidate feature vectors for the next step.
+        decay: Exponential decay for older steps (0-1).
+        feature_dimension: Dimension of the feature map.
+        reps: Number of feature map repetitions.
+        
+    Returns:
+        Probability distribution over candidates (sums to 1).
+    """
+    if not candidates:
+        return []
+    if not sequence:
+        return [1.0 / len(candidates)] * len(candidates)
+    _validate_decay(decay)
+    
+    weights = [decay ** idx for idx in range(len(sequence))]
+    weights.reverse()
+    
+    scores = []
+    for candidate in candidates:
+        score = 0.0
+        for weight, step in zip(weights, sequence):
+            score += weight * quantum_kernel_estimation(
+                candidate,
+                step,
+                feature_dimension,
+                reps,
+            )
+        scores.append(score)
+    
+    return _softmax(scores)
+
+
+def evaluate_navigation_sequence(
+    sequence: List[List[float]],
+    candidates: List[List[float]],
+    anchors: List[List[float]],
+    decay: float = 0.85,
+    feature_dimension: int = 10,
+    reps: int = 2
+) -> Dict[str, Any]:
+    """
+    Evaluate navigation sequencing using manifold projection and prediction.
+    
+    Args:
+        sequence: Observed sequence of feature vectors (oldest -> newest).
+        candidates: Candidate feature vectors for the next step.
+        anchors: Anchor vectors defining the manifold regions.
+        decay: Exponential decay for older steps (0-1).
+        feature_dimension: Dimension of the feature map.
+        reps: Number of feature map repetitions.
+        
+    Returns:
+        Dictionary with projection scores, candidate probabilities, and
+        ranked candidate indices and diagnostic metrics.
+    """
+    embedding = sequence_embedding(sequence, decay, feature_dimension)
+    projection = manifold_projection(
+        embedding,
+        anchors,
+        feature_dimension,
+        reps,
+    )
+    probabilities = predict_navigation_probabilities(
+        sequence,
+        candidates,
+        decay,
+        feature_dimension,
+        reps,
+    )
+    
+    ranked = sorted(
+        range(len(probabilities)),
+        key=lambda idx: probabilities[idx],
+        reverse=True,
+    )
+    
+    top_candidate = ranked[0] if ranked else None
+    top_probability = probabilities[top_candidate] if top_candidate is not None else 0.0
+    return {
+        "embedding": embedding,
+        "manifold_projection": projection,
+        "projection_entropy": _entropy(projection),
+        "candidate_probabilities": probabilities,
+        "ranked_candidates": ranked,
+        "entropy": _entropy(probabilities),
+        "top_candidate": top_candidate,
+        "top_probability": top_probability,
+    }
+
+
+def recursive_navigation_evaluation(
+    sequence: List[List[float]],
+    candidates: List[List[float]],
+    anchors: List[List[float]],
+    steps: int = 3,
+    decay: float = 0.85,
+    feature_dimension: int = 10,
+    reps: int = 2,
+    log: bool = False
+) -> List[Dict[str, Any]]:
+    """
+    Recursively evaluate navigation by appending the top candidate each step.
+    
+    Args:
+        sequence: Observed sequence of feature vectors (oldest -> newest).
+        candidates: Candidate feature vectors for the next step.
+        anchors: Anchor vectors defining the manifold regions.
+        steps: Number of recursive evaluation steps.
+        decay: Exponential decay for older steps (0-1).
+        feature_dimension: Dimension of the feature map.
+        reps: Number of feature map repetitions.
+        log: Whether to emit logging events for each step.
+        
+    Returns:
+        List of evaluation dictionaries for each step.
+    """
+    if steps <= 0:
+        return []
+    _validate_decay(decay)
+    
+    history = []
+    current_sequence = list(sequence)
+    if log:
+        import logging
+        logger = logging.getLogger(__name__)
+    
+    for _ in range(steps):
+        evaluation = evaluate_navigation_sequence(
+            current_sequence,
+            candidates,
+            anchors,
+            decay,
+            feature_dimension,
+            reps,
+        )
+        history.append(evaluation)
+        if log:
+            logger.info(
+                "Navigation step: top=%s prob=%.4f entropy=%.4f projection_entropy=%.4f",
+                evaluation["top_candidate"],
+                evaluation["top_probability"],
+                evaluation["entropy"],
+                evaluation["projection_entropy"],
+            )
+        top_idx = evaluation["top_candidate"]
+        if top_idx is None:
+            break
+        current_sequence.append(candidates[top_idx])
+    
+    return history
