@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import json
+from collections import deque
 from pathlib import Path
 from typing import Any, List
 
@@ -28,10 +29,19 @@ def serve_console() -> FileResponse:
 def audit_tail(n: int = Query(200, ge=1, le=1000)) -> JSONResponse:
     if not AUDIT_LOG_PATH.exists():
         return JSONResponse(content=[])
-    lines = AUDIT_LOG_PATH.read_text(encoding="utf-8").splitlines()
-    tail = lines[-n:]
+    
+    # Efficiently read last n lines without loading entire file
     parsed: List[Any] = []
-    for line in tail:
+    with AUDIT_LOG_PATH.open("r", encoding="utf-8") as f:
+        # For small files, just read all; for large files, use a deque
+        try:
+            from collections import deque
+            lines = deque(f, maxlen=n)
+        except Exception:
+            # Fallback to reading all lines if deque fails
+            lines = f.readlines()[-n:]
+    
+    for line in lines:
         if not line.strip():
             continue
         try:

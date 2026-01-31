@@ -44,30 +44,33 @@ def load_audit_entries(path: Path) -> List[AuditEntry]:
     entries: List[AuditEntry] = []
     if not path.exists():
         return entries
-    for line in path.read_text(encoding="utf-8").splitlines():
-        if not line.strip():
-            continue
-        try:
-            record = json.loads(line)
-        except json.JSONDecodeError:
-            continue
-        endpoint = record.get("endpoint", "")
-        if "/resolve-awareness" not in endpoint:
-            continue
-        output_id = (
-            record.get("output_id")
-            or record.get("entity_id")
-            or record.get("result", {}).get("output_id")
-            or "unknown"
-        )
-        entries.append(
-            AuditEntry(
-                output_id=output_id,
-                endpoint=endpoint,
-                api_key=record.get("api_key", "unknown"),
-                timestamp=_parse_timestamp(record.get("timestamp")),
+    
+    # Process file line by line for better memory efficiency
+    with path.open("r", encoding="utf-8") as f:
+        for line in f:
+            if not line.strip():
+                continue
+            try:
+                record = json.loads(line)
+            except json.JSONDecodeError:
+                continue
+            endpoint = record.get("endpoint", "")
+            if "/resolve-awareness" not in endpoint:
+                continue
+            output_id = (
+                record.get("output_id")
+                or record.get("entity_id")
+                or record.get("result", {}).get("output_id")
+                or "unknown"
             )
-        )
+            entries.append(
+                AuditEntry(
+                    output_id=output_id,
+                    endpoint=endpoint,
+                    api_key=record.get("api_key", "unknown"),
+                    timestamp=_parse_timestamp(record.get("timestamp")),
+                )
+            )
     return entries
 
 

@@ -166,16 +166,13 @@ def normalize_features(
                 maxs[i] = max(maxs[i], val)
     
     # Normalize using the provided or computed min/max values
-    X_normalized = []
-    for sample in X:
-        normalized = []
-        for i, val in enumerate(sample):
-            range_val = maxs[i] - mins[i]
-            if range_val > 0:
-                normalized.append((val - mins[i]) / range_val)
-            else:
-                normalized.append(0.0)
-        X_normalized.append(normalized)
+    X_normalized = [
+        [
+            (val - mins[i]) / (maxs[i] - mins[i]) if maxs[i] > mins[i] else 0.0
+            for i, val in enumerate(sample)
+        ]
+        for sample in X
+    ]
     
     return X_normalized, mins, maxs
 
@@ -191,10 +188,17 @@ def compute_metrics(y_true: List[int], y_pred: List[int]) -> Dict[str, float]:
     Returns:
         Dictionary with accuracy, precision, recall, and f1
     """
-    tp = sum(1 for t, p in zip(y_true, y_pred) if t == 1 and p == 1)
-    tn = sum(1 for t, p in zip(y_true, y_pred) if t == 0 and p == 0)
-    fp = sum(1 for t, p in zip(y_true, y_pred) if t == 0 and p == 1)
-    fn = sum(1 for t, p in zip(y_true, y_pred) if t == 1 and p == 0)
+    # Single pass computation for better performance
+    tp = tn = fp = fn = 0
+    for t, p in zip(y_true, y_pred):
+        if t == 1 and p == 1:
+            tp += 1
+        elif t == 0 and p == 0:
+            tn += 1
+        elif t == 0 and p == 1:
+            fp += 1
+        else:  # t == 1 and p == 0
+            fn += 1
     
     accuracy = (tp + tn) / len(y_true) if y_true else 0.0
     precision = tp / (tp + fp) if (tp + fp) > 0 else 0.0
@@ -230,7 +234,7 @@ def simple_quantum_classifier(
     Returns:
         Predicted labels for test samples
     """
-    from quantum import quantum_kernel_estimation
+    from quantum import QuantumFeatureMap
     
     predictions = []
     
@@ -241,11 +245,25 @@ def simple_quantum_classifier(
     # Clamp k_neighbors to training set size
     effective_k = min(k_neighbors, len(X_train))
     
+    # Create feature map once and reuse for better performance
+    feature_map = QuantumFeatureMap(feature_dimension=10, reps=2)
+    
+    # Pre-compute encoded training samples for efficiency
+    encoded_train = [feature_map.encode(x) for x in X_train]
+    
     for x_test in X_test:
+        # Encode test sample once
+        encoded_test = feature_map.encode(x_test)
+        
         # Compute kernel similarities to all training samples
         similarities = []
-        for i, x_train in enumerate(X_train):
-            kernel_val = quantum_kernel_estimation(x_test, x_train)
+        for i, encoded_train_sample in enumerate(encoded_train):
+            # Compute fidelity (inner product magnitude squared)
+            inner_product = sum(
+                s1.conjugate() * s2 
+                for s1, s2 in zip(encoded_test, encoded_train_sample)
+            )
+            kernel_val = abs(inner_product) ** 2
             similarities.append((kernel_val, y_train[i]))
         
         # Sort by similarity (descending) using only kernel value and take k nearest

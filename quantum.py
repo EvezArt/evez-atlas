@@ -75,13 +75,20 @@ class QuantumFeatureMap:
         state_size = 2 ** self._num_qubits
         state = [complex(1.0 / math.sqrt(state_size))] * state_size
         
-        # Apply feature-dependent rotations
+        # Pre-compute rotation factors for better performance
+        rotation_factors = []
         for rep in range(self.reps):
             for i, feat in enumerate(features[:self._num_qubits]):
                 angle = feat * math.pi * (rep + 1)
-                for j in range(state_size):
-                    if (j >> i) & 1:
-                        state[j] *= complex(math.cos(angle), math.sin(angle))
+                rotation_factors.append((i, complex(math.cos(angle), math.sin(angle))))
+        
+        # Apply feature-dependent rotations (optimized to reduce nested loops)
+        for i, rotation in rotation_factors:
+            # Apply rotation only to states where qubit i is |1⟩
+            mask = 1 << i
+            for j in range(state_size):
+                if j & mask:
+                    state[j] *= rotation
         
         # Normalize
         norm = math.sqrt(sum(abs(s) ** 2 for s in state))
@@ -174,12 +181,10 @@ class ThreatFingerprint:
                 f"{len(weights)} weights provided. They must be equal."
             )
         
-        # Combine with weights
-        weighted = []
-        for fp, w in zip(account_fingerprints, weights):
-            weighted.append(f"{fp}:{w:.4f}")
-        
-        combined = "|".join(weighted)
+        # Combine with weights using generator for better performance
+        combined = "|".join(
+            f"{fp}:{w:.4f}" for fp, w in zip(account_fingerprints, weights)
+        )
         return hashlib.new(self.algorithm, combined.encode()).hexdigest()
     
     def _normalize_features(self, features: Dict[str, Any]) -> Dict[str, Any]:
