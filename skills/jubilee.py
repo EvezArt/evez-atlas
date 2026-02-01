@@ -10,6 +10,8 @@ import subprocess
 from datetime import datetime
 from typing import Any, Dict, Optional
 
+import requests
+
 
 def forgive(data: Dict[str, Any]) -> Dict[str, Any]:
     """
@@ -21,8 +23,6 @@ def forgive(data: Dict[str, Any]) -> Dict[str, Any]:
     Returns:
         Event data logged to events.jsonl
     """
-    import requests
-    
     endpoint = os.environ.get('JUBILEE_ENDPOINT', 'http://localhost:8000/forgive')
     
     try:
@@ -175,7 +175,6 @@ def swarm_status() -> Dict[str, Any]:
     
     # Check Jubilee service
     try:
-        import requests
         response = requests.get('http://localhost:8000/healthz', timeout=5)
         status['services']['jubilee'] = {
             'status': 'healthy' if response.status_code == 200 else 'degraded',

@@ -71,6 +71,14 @@ export JUBILEE_HMAC_SECRET=$(openssl rand -hex 32)
 export QISKIT_IBM_TOKEN=your_token_here
 ```
 
+### Example Forgiveness
+
+```bash
+curl -X POST http://localhost:8000/forgive \
+  -H 'Content-Type: application/json' \
+  -d '{"account_id":"SWARM1", "amount":100.0, "reason":"test"}'
+```
+
 ## Docker Compose
 
 The service includes a complete Docker Compose configuration with:
