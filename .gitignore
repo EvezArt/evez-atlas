@@ -51,3 +51,6 @@ htmlcov/
 __pycache__/
 *.pyc
 *.pyo
+
+# Audit logs
+src/memory/*.jsonl
