@@ -80,6 +80,36 @@ openclaw --soul SOUL.md --skills jubilee,molt_post
 
 See [Swarm Setup Documentation](docs/swarm-setup.md) for complete details.
 
+### Enhanced Autonomous Capabilities
+
+**New in this version**: Advanced entity lifecycle management, quantum domain signaling, and temporal correlation.
+
+**Key Features:**
+- Entity golem system with hibernation/active states
+- Task queue with iterative error correction
+- Quantum domain signaling with retrocausal links
+- Temporal correlation across all operations
+
+**Quick Start:**
+```bash
+# Initialize entity golems
+python3 -c "from skills.jubilee import initialize_swarm_golems; \
+    print(initialize_swarm_golems(['Evez666', 'quantum']))"
+
+# Awaken entities (closed claws → open claws)
+python3 -c "from skills.jubilee import awaken_swarm_entities; \
+    print(awaken_swarm_entities())"
+
+# Process tasks with error correction
+python3 -c "from skills.jubilee import process_task_queue; \
+    print(process_task_queue())"
+
+# Run demonstration
+python3 scripts/demo_autonomy.py
+```
+
+See [Enhanced Autonomy Guide](docs/enhanced-autonomy-guide.md) for complete documentation.
+
 ### 4. Monitoring and Analysis Tools
 Local-only tools for audit log analysis and hermetic console operations.
 
