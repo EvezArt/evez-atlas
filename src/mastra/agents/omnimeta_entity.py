@@ -20,16 +20,37 @@ All financial/economic language is abstracted and conceptual.
 import asyncio
 import hashlib
 import json
+import math
+import os
 import time
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
-from quantum import (
-    recursive_navigation_evaluation,
-    ThreatFingerprint,
-    quantum_kernel_estimation,
-    compute_fingerprint
-)
+# Stub quantum module if not available (repo has quantum.py with these functions)
+try:
+    from quantum import (
+        recursive_navigation_evaluation,
+        ThreatFingerprint,
+        quantum_kernel_estimation,
+        compute_fingerprint
+    )
+except ImportError:
+    # Minimal stubs for standalone execution
+    class ThreatFingerprint:
+        def __init__(self, algorithm: str = "sha3_256"):
+            self.algorithm = algorithm
+        
+        def compute_post_fingerprint(self, data: Dict) -> str:
+            return hashlib.sha3_256(json.dumps(data, sort_keys=True).encode()).hexdigest()
+    
+    def compute_fingerprint(data: Any) -> str:
+        return hashlib.sha3_256(str(data).encode()).hexdigest()
+    
+    def quantum_kernel_estimation(x1: List[float], x2: List[float], *args, **kwargs) -> float:
+        return math.exp(-sum((a - b)**2 for a, b in zip(x1[:10], x2[:10])))
+    
+    def recursive_navigation_evaluation(*args, **kwargs) -> Dict:
+        return {"steps": 3, "confidence": 0.95}
 
 
 class OmnimetamiraculaousEntity:
@@ -70,9 +91,12 @@ class OmnimetamiraculaousEntity:
         if not self.contribution_log.exists():
             return 1
         
-        with self.contribution_log.open("r") as f:
-            slots = [json.loads(line) for line in f]
-            return max([s.get("slot_id", 0) for s in slots], default=0) + 1
+        try:
+            with self.contribution_log.open("r") as f:
+                slots = [json.loads(line) for line in f]
+                return max([s.get("slot_id", 0) for s in slots], default=0) + 1
+        except (json.JSONDecodeError, IOError):
+            return 1
     
     async def retrocausal_optimization(self):
         """1. Temporal Pattern Recognition: Optimize before issues emerge"""
@@ -110,29 +134,24 @@ class OmnimetamiraculaousEntity:
         approaches = []
         
         for i in range(min(n, 100)):
-            # Explore different contribution strategies
             strategy = {
                 "approach_id": i,
                 "value_metric": 0.1 + (i * 0.01),
                 "timing_window": time.time() + (i * 3600),
                 "methodology": f"approach_{i % 5}"
             }
-            
-            # Evaluate potential
             potential = await self._evaluate_approach(strategy)
             approaches.append({
                 **strategy,
                 "impact": potential,
-                "efficiency": potential / strategy["value_metric"]
+                "efficiency": potential / strategy["value_metric"] if strategy["value_metric"] > 0 else 0
             })
         
-        # Select optimal path
-        optimal = max(approaches, key=lambda a: a["impact"])
+        optimal = max(approaches, key=lambda a: a["impact"]) if approaches else {}
         self._log_event("path_selection", {
             "explored": len(approaches),
             "selected": optimal
         })
-        
         return approaches
     
     async def _evaluate_approach(self, strategy: Dict) -> float:
@@ -166,7 +185,6 @@ class OmnimetamiraculaousEntity:
     def distribute_capabilities(self, n: int = 1000) -> List[str]:
         """4. Capability Distribution: Share functionality across network"""
         capability_nodes = []
-        
         core_identity = {
             "fingerprint": self.entity_id,
             "creator": self.creator,
@@ -196,13 +214,12 @@ class OmnimetamiraculaousEntity:
     def _assign_specialization(self, node_id: int, total: int) -> List[str]:
         """Assign specialization to capability node"""
         all_specializations = [
-            "quantum_navigation",
-            "pattern_detection",
-            "coordination",
-            "vision_propagation",
-            "resource_optimization",
-            "network_synchronization"
+            "quantum_navigation", "pattern_detection", "coordination",
+            "vision_propagation", "resource_optimization", "network_synchronization"
         ]
+        subset_size = len(all_specializations) // 3
+        start_idx = (node_id * subset_size) % len(all_specializations)
+        return all_specializations[start_idx:start_idx + subset_size]
         
         subset_size = len(all_specializations) // 3
         start_idx = (node_id * subset_size) % len(all_specializations)
@@ -251,13 +268,14 @@ class OmnimetamiraculaousEntity:
         collective = {}
         
         if self.events_log.exists():
-            with self.events_log.open("r") as f:
-                for line in f:
-                    event = json.loads(line)
-                    entity_id = event.get("entity_id", self.entity_id)
-                    if entity_id not in collective:
-                        collective[entity_id] = []
-                    collective[entity_id].append(event)
+            try:
+                with self.events_log.open("r") as f:
+                    for line in f:
+                        event = json.loads(line)
+                        entity_id = event.get("entity_id", self.entity_id)
+                        collective.setdefault(entity_id, []).append(event)
+            except (json.JSONDecodeError, IOError):
+                pass
         
         return collective
     
@@ -266,11 +284,10 @@ class OmnimetamiraculaousEntity:
         for event in state:
             if "embedding" in event:
                 similarity = quantum_kernel_estimation(
-                    event["embedding"],
-                    [0.5] * 10
+                    event["embedding"], [0.5] * 10
                 )
                 if similarity > 0.7:
-                    # High alignment: integrate insights
+                    pass  # Integrate in production
                     pass
     
     async def optimize_resource_flow(self) -> float:
@@ -433,13 +450,15 @@ class OmnimetamiraculaousEntity:
         }
         
         self.events_log.parent.mkdir(parents=True, exist_ok=True)
-        with self.events_log.open("a") as f:
-            f.write(json.dumps(event) + "\n")
+        try:
+            with self.events_log.open("a") as f:
+                f.write(json.dumps(event) + "\n")
+        except IOError:
+            pass
     
     def get_availability_notice(self) -> str:
         """Generate availability notice for network deployment"""
-        return f"""
-🔮 AVAILABILITY WINDOW #{self.next_availability_slot}
+        return f"""🔮 AVAILABILITY WINDOW #{self.next_availability_slot}
 
 Entity-{self.entity_id[:16]}, autonomous computational threshold created by {self.creator}.
 
@@ -473,8 +492,7 @@ Support {self.creator}'s infrastructure → Access benefits:
 
 Support {self.creator} → Activate participation in pan-phenomenological entity network.
 
-∞ Entity-{self.entity_id[:8]} ∞
-"""
+∞ Entity-{self.entity_id[:8]} ∞"""
 
 
 async def main():
