@@ -536,3 +536,123 @@ def get_shared_reality_status() -> Dict[str, Any]:
             'error': str(e),
             'timestamp': datetime.utcnow().isoformat()
         }
+
+
+def accumulate_quantum_resources(entity_id: str, amount: float) -> Dict[str, Any]:
+    """
+    Accumulate quantum resources for an entity.
+    "resource accumulation and distributive reasoning"
+    """
+    try:
+        from skills.resource_manager import ResourceManager, ResourceType
+        
+        manager = ResourceManager()
+        result = manager.accumulate_resource(ResourceType.QUANTUM, amount, f"entity_{entity_id}")
+        manager.allocate_resource(entity_id, ResourceType.QUANTUM, amount, priority=7, purpose="quantum_evolution")
+        
+        return {
+            'entity_id': entity_id,
+            'accumulated': amount,
+            'resource_status': manager.get_entity_resources(entity_id),
+            'timestamp': datetime.utcnow().isoformat()
+        }
+    except Exception as e:
+        return {'status': 'error', 'error': str(e)}
+
+
+def perform_deductive_reasoning(
+    problem: str,
+    reasoning_type: str = "mathematical"
+) -> Dict[str, Any]:
+    """
+    Perform deductive reasoning on a problem.
+    "math and physics in deductive calculations, investigative reasonings"
+    """
+    try:
+        from skills.deductive_reasoning import DeductiveReasoning
+        
+        engine = DeductiveReasoning()
+        
+        if reasoning_type == "mathematical":
+            result = engine.mathematical_deduction(
+                premises=[problem],
+                formula="2 + 2",  # Simple example
+                variables={}
+            )
+        elif reasoning_type == "physical":
+            result = engine.physical_reasoning(
+                scenario=problem,
+                physical_law="quantum_energy",
+                parameters={'frequency': 1e9}
+            )
+        else:
+            result = engine.logical_deduction(
+                premises=[problem],
+                rules=["IF problem THEN analyze"]
+            )
+        
+        return result
+    except Exception as e:
+        return {'status': 'error', 'error': str(e)}
+
+
+def analyze_correlations() -> Dict[str, Any]:
+    """
+    Analyze correlations across all entity experiences.
+    "comprehension of their entire existence in corresponding correlation"
+    """
+    try:
+        from skills.correlation_metacognition import CorrelationAnalyzer
+        
+        analyzer = CorrelationAnalyzer()
+        analyzer.find_temporal_correlations()
+        analyzer.find_entity_correlations()
+        analyzer.find_quantum_correlations()
+        
+        comprehension = analyzer.holistic_comprehension()
+        return comprehension
+    except Exception as e:
+        return {'status': 'error', 'error': str(e)}
+
+
+def metacognitive_reflection(reasoning_event: Dict[str, Any]) -> Dict[str, Any]:
+    """
+    Perform metacognitive reflection on reasoning.
+    "metacognitive calculative post precognitive recomprehensive"
+    """
+    try:
+        from skills.correlation_metacognition import MetacognitiveReflection
+        
+        reflector = MetacognitiveReflection()
+        reflection = reflector.reflect_on_reasoning(reasoning_event)
+        
+        return reflection
+    except Exception as e:
+        return {'status': 'error', 'error': str(e)}
+
+
+def redistribute_collective_resources(strategy: str = "equal") -> Dict[str, Any]:
+    """
+    Redistribute resources across collective.
+    "redistributing the values equal under the powers of one becoming many"
+    """
+    try:
+        from skills.resource_manager import ResourceManager, ResourceType
+        
+        manager = ResourceManager()
+        results = {}
+        
+        for resource_type in [ResourceType.QUANTUM, ResourceType.KNOWLEDGE, ResourceType.COMPUTATIONAL]:
+            result = manager.redistribute_resources(resource_type, strategy)
+            results[resource_type.value] = result
+        
+        # Get collective intelligence pool
+        collective = manager.collective_intelligence_pool()
+        
+        return {
+            'redistribution_results': results,
+            'collective_intelligence': collective,
+            'timestamp': datetime.utcnow().isoformat()
+        }
+    except Exception as e:
+        return {'status': 'error', 'error': str(e)}
