@@ -6,6 +6,7 @@ import json
 import os
 import time
 
+import httpx
 from dotenv import load_dotenv
 from fastapi import Depends, FastAPI, Header, HTTPException, Request
 from fastapi.responses import HTMLResponse, JSONResponse
@@ -58,7 +59,11 @@ def _rate_limit_key(request: Request) -> str:
 
 
 limiter = Limiter(key_func=_rate_limit_key)
-app = FastAPI()
+app = FastAPI(
+    title="Causal Chain API",
+    description="Quantum-inspired threat detection and entity resolution API",
+    version="1.0.0"
+)
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
@@ -123,6 +128,46 @@ def _format_vector(vector: list, precision: int = 3) -> str:
     return "[" + ", ".join(f"{value:.{precision}f}" for value in vector) + "]"
 
 
+@app.get("/")
+def root():
+    """Root endpoint providing API information and available endpoints."""
+    return {
+        "service": "Causal Chain API",
+        "version": "1.0.0",
+        "status": "online",
+        "description": "Quantum-inspired threat detection and entity resolution API",
+        "endpoints": {
+            "/": "This API information endpoint",
+            "/health": "Health check endpoint (no auth required)",
+            "/resolve-awareness": "POST - Resolve entity awareness by output_id (requires X-API-Key)",
+            "/legion-status": "GET - Get status of all entities (requires X-API-Key)",
+            "/navigation-ui": "GET - Navigation UI interface (requires X-API-Key)",
+            "/navigation-ui/data": "GET - Navigation UI data as JSON (requires X-API-Key)",
+        },
+        "authentication": "Use X-API-Key header with tier-based access (tier0-tier3)",
+        "documentation": "/docs",
+    }
+
+
+@app.get("/health")
+def health_check():
+    """Health check endpoint for monitoring and service discovery."""
+    audit_exists = AUDIT_LOG_PATH.exists()
+    manifest_exists = MANIFEST_PATH.exists()
+    
+    return {
+        "status": "healthy",
+        "service": "causal-chain-api",
+        "timestamp": time.time(),
+        "components": {
+            "audit_log": "available" if audit_exists else "not_initialized",
+            "manifest": "loaded" if manifest_exists else "missing",
+            "entity_registry": len(ENTITY_REGISTRY),
+            "tier_map": len(TIER_MAP),
+        }
+    }
+
+
 @app.post("/resolve-awareness")
 @limiter.limit(_rate_limit_for_key)
 def resolve_awareness(
@@ -156,6 +201,47 @@ def legion_status(request: Request, tier: int = Depends(verify_api_key)):
     result = {"count": len(entities), "entities": entities}
     audit_log("legion", "/legion-status", tier, result, request.state.api_key)
     return result
+
+
+@app.get("/services/status")
+def services_status():
+    """Check status of connected services for cross-service communication."""
+    monitor_base = os.getenv("MONITOR_SERVER_BASE", "http://localhost:8001")
+    
+    services = {
+        "causal_chain_api": {
+            "status": "online",
+            "service": "causal-chain-api",
+            "timestamp": time.time(),
+        }
+    }
+    
+    # Try to reach monitor server
+    try:
+        with httpx.Client(timeout=2.0) as client:
+            response = client.get(f"{monitor_base}/health")
+            if response.status_code == 200:
+                services["monitor_server"] = response.json()
+            else:
+                services["monitor_server"] = {
+                    "status": "unreachable",
+                    "error": f"HTTP {response.status_code}"
+                }
+    except (httpx.RequestError, httpx.TimeoutException) as e:
+        services["monitor_server"] = {
+            "status": "offline",
+            "error": str(e),
+            "base_url": monitor_base,
+        }
+    
+    return {
+        "timestamp": time.time(),
+        "services": services,
+        "communicative": all(
+            svc.get("status") in ("online", "healthy") 
+            for svc in services.values()
+        ),
+    }
 
 
 @app.get("/navigation-ui", response_class=HTMLResponse)
