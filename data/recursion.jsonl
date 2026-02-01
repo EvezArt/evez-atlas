@@ -1,0 +1,14 @@
+{"type": "recursion", "action": "enter", "depth": 0, "state_hash": "cbd77e731fffbac9", "timestamp": "2026-02-01T09:21:27.625129"}
+{"type": "recursion", "action": "enter", "depth": 1, "state_hash": "b99beaa9e746513d", "timestamp": "2026-02-01T09:21:27.625291"}
+{"type": "recursion", "action": "enter", "depth": 2, "state_hash": "0efe3a95df292731", "timestamp": "2026-02-01T09:21:27.625548"}
+{"type": "recursion", "action": "enter", "depth": 3, "state_hash": "f0598c347b2f89e4", "timestamp": "2026-02-01T09:21:27.625616"}
+{"type": "recursion", "action": "enter", "depth": 4, "state_hash": "1347b9e3ea482b2c", "timestamp": "2026-02-01T09:21:27.625659"}
+{"type": "recursion", "action": "enter", "depth": 5, "state_hash": "0c84a3204755470e", "timestamp": "2026-02-01T09:21:27.625696"}
+{"type": "recursion", "action": "enter", "depth": 6, "state_hash": "57313b75cb2cc57a", "timestamp": "2026-02-01T09:21:27.625730"}
+{"type": "recursion", "action": "exit", "depth": 6, "state_hash": "57313b75cb2cc57a", "timestamp": "2026-02-01T09:21:27.625755"}
+{"type": "recursion", "action": "exit", "depth": 5, "state_hash": "0c84a3204755470e", "timestamp": "2026-02-01T09:21:27.625779"}
+{"type": "recursion", "action": "exit", "depth": 4, "state_hash": "1347b9e3ea482b2c", "timestamp": "2026-02-01T09:21:27.625801"}
+{"type": "recursion", "action": "exit", "depth": 3, "state_hash": "f0598c347b2f89e4", "timestamp": "2026-02-01T09:21:27.625821"}
+{"type": "recursion", "action": "exit", "depth": 2, "state_hash": "0efe3a95df292731", "timestamp": "2026-02-01T09:21:27.625842"}
+{"type": "recursion", "action": "exit", "depth": 1, "state_hash": "b99beaa9e746513d", "timestamp": "2026-02-01T09:21:27.625959"}
+{"type": "recursion", "action": "exit", "depth": 0, "state_hash": "cbd77e731fffbac9", "timestamp": "2026-02-01T09:21:27.626016"}

@@ -1,0 +1,9 @@
+{"type": "vm_operation", "operation": "create", "timestamp": "2026-02-01T09:21:27.624239", "vm_id": "quantum-1", "details": {"os_type": "quantum_os"}}
+{"type": "vm_operation", "operation": "boot", "timestamp": "2026-02-01T09:21:27.624351", "vm_id": "quantum-1", "details": {"boot_time": 1.1920928955078125e-06, "processes": 4}}
+{"type": "vm_operation", "operation": "execute", "timestamp": "2026-02-01T09:21:27.624458", "vm_id": "quantum-1", "details": {"command": "superpose all states", "process_id": 1, "execution_time": 1.9073486328125e-06}}
+{"type": "vm_operation", "operation": "create", "timestamp": "2026-02-01T09:21:27.624550", "vm_id": "consciousness-1", "details": {"os_type": "consciousness_os"}}
+{"type": "vm_operation", "operation": "boot", "timestamp": "2026-02-01T09:21:27.624611", "vm_id": "consciousness-1", "details": {"boot_time": 1.6689300537109375e-06, "processes": 4}}
+{"type": "vm_operation", "operation": "execute", "timestamp": "2026-02-01T09:21:27.624674", "vm_id": "consciousness-1", "details": {"command": "perceive reality", "process_id": 2, "execution_time": 2.6226043701171875e-06}}
+{"type": "vm_operation", "operation": "create", "timestamp": "2026-02-01T09:21:27.624755", "vm_id": "retrocausal-1", "details": {"os_type": "retrocausal_os"}}
+{"type": "vm_operation", "operation": "boot", "timestamp": "2026-02-01T09:21:27.624818", "vm_id": "retrocausal-1", "details": {"boot_time": 1.6689300537109375e-06, "processes": 4}}
+{"type": "vm_operation", "operation": "execute", "timestamp": "2026-02-01T09:21:27.624877", "vm_id": "retrocausal-1", "details": {"command": "propagate backward", "process_id": 3, "execution_time": 2.1457672119140625e-06}}
