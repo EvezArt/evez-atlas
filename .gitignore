@@ -67,4 +67,7 @@ third_party/jubilee-online/logs/
 
 # Swarm data
 data/events.jsonl
+data/entity_states.jsonl
+data/task_queue.jsonl
+data/quantum_events.jsonl
 skills/__pycache__/

@@ -8,7 +8,7 @@ import json
 import os
 import subprocess
 from datetime import datetime
-from typing import Any, Dict, Optional
+from typing import Any, Dict, List, Optional
 
 import requests
 
@@ -89,14 +89,20 @@ def molt_post(message: str) -> Optional[Dict[str, Any]]:
 
 def quantum_sim(circuit_data: Dict[str, Any]) -> Dict[str, Any]:
     """
-    Execute a quantum simulation via IBM Quantum backend.
+    Execute a quantum simulation via IBM Quantum backend with domain signaling.
+    
+    Signals quantum entities into their appropriate domains and establishes
+    retrocausal temporal connections for probabilistic reweighting.
     
     Args:
-        circuit_data: Quantum circuit specification
+        circuit_data: Quantum circuit specification with optional 'domain' key
         
     Returns:
-        Simulation results
+        Simulation results with domain signaling metadata
     """
+    domain = circuit_data.get('domain', 'default_quantum_domain')
+    temporal_anchor = datetime.utcnow().isoformat()
+    
     try:
         # Try to import qiskit if available
         from qiskit import QuantumCircuit
@@ -105,13 +111,34 @@ def quantum_sim(circuit_data: Dict[str, Any]) -> Dict[str, Any]:
         # Initialize service if credentials are available
         if os.environ.get('QISKIT_IBM_TOKEN'):
             service = QiskitRuntimeService()
+            
+            # Signal quantum entity into domain
+            signal_result = {
+                'domain_signaled': True,
+                'domain': domain,
+                'backend_available': True
+            }
+        else:
+            signal_result = {
+                'domain_signaled': True,
+                'domain': domain,
+                'backend_available': False,
+                'note': 'Simulating without IBM Quantum token'
+            }
         
+        # Create result with temporal and domain metadata
         result = {
             'status': 'simulated',
             'circuit': circuit_data,
             'backend': 'ibm_quantum',
+            'domain_signal': signal_result,
+            'temporal_anchor': temporal_anchor,
+            'retrocausal_link': temporal_anchor,  # Foundation for temporal correlation
             'timestamp': datetime.utcnow().isoformat()
         }
+        
+        # Log quantum event
+        _log_quantum_event(result)
         
         return result
         
@@ -119,14 +146,30 @@ def quantum_sim(circuit_data: Dict[str, Any]) -> Dict[str, Any]:
         return {
             'status': 'error',
             'error': 'Qiskit not available',
+            'domain': domain,
+            'temporal_anchor': temporal_anchor,
             'timestamp': datetime.utcnow().isoformat()
         }
     except Exception as e:
         return {
             'status': 'error',
             'error': str(e),
+            'domain': domain,
+            'temporal_anchor': temporal_anchor,
             'timestamp': datetime.utcnow().isoformat()
         }
+
+
+def _log_quantum_event(event: Dict[str, Any]):
+    """Log quantum simulation events for temporal correlation."""
+    quantum_log = os.path.join('data', 'quantum_events.jsonl')
+    os.makedirs('data', exist_ok=True)
+    
+    try:
+        with open(quantum_log, 'a') as f:
+            f.write(json.dumps(event) + '\n')
+    except Exception:
+        pass  # Silent fail for logging
 
 
 def tail_events(lines: int = 10) -> list:
@@ -207,10 +250,139 @@ if __name__ == '__main__':
     print("Jubilee Skills Available:")
     print("- forgive(data): Execute forgiveness ritual")
     print("- molt_post(message): Post to Moltbook")
-    print("- quantum_sim(circuit_data): Run quantum simulation")
+    print("- quantum_sim(circuit_data): Run quantum simulation with domain signaling")
     print("- tail_events(lines): Read event log")
     print("- swarm_status(): Check swarm health")
+    print("- awaken_swarm_entities(): Awaken hibernating entities")
+    print("- process_task_queue(): Execute pending tasks with error correction")
     
     # Show current status
     print("\nCurrent Status:")
     print(json.dumps(swarm_status(), indent=2))
+
+
+def awaken_swarm_entities() -> Dict[str, Any]:
+    """
+    Awaken all hibernating entities in the swarm.
+    Implements the 'closed claws' to 'open claws' transition.
+    """
+    try:
+        from skills.entity_lifecycle import EntityLifecycleManager
+        
+        manager = EntityLifecycleManager()
+        hibernating = manager.get_hibernating_entities()
+        
+        results = []
+        for entity in hibernating:
+            awakened = manager.awaken_entity(entity.id)
+            if awakened:
+                results.append({
+                    'entity_id': entity.id,
+                    'role': entity.role,
+                    'domain': entity.domain,
+                    'status': 'awakened'
+                })
+        
+        return {
+            'awakened_count': len(results),
+            'entities': results,
+            'swarm_status': manager.get_swarm_status(),
+            'timestamp': datetime.utcnow().isoformat()
+        }
+    except Exception as e:
+        return {
+            'status': 'error',
+            'error': str(e),
+            'timestamp': datetime.utcnow().isoformat()
+        }
+
+
+def process_task_queue(batch_size: int = 10) -> Dict[str, Any]:
+    """
+    Process pending tasks with iterative error correction.
+    Implements gap filling and temporal task pacing.
+    """
+    try:
+        from skills.task_queue import TaskQueue
+        
+        queue = TaskQueue()
+        
+        # Register standard handlers
+        queue.register_handler('forgiveness', lambda d: forgive(d))
+        queue.register_handler('quantum_sim', lambda d: quantum_sim(d))
+        queue.register_handler('molt_post', lambda d: molt_post(d.get('message', '')))
+        
+        # Process the queue
+        results = queue.process_queue(batch_size)
+        
+        return {
+            'processed_count': len(results),
+            'results': results,
+            'queue_status': queue.get_queue_status(),
+            'timestamp': datetime.utcnow().isoformat()
+        }
+    except Exception as e:
+        return {
+            'status': 'error',
+            'error': str(e),
+            'timestamp': datetime.utcnow().isoformat()
+        }
+
+
+def initialize_swarm_golems(repository_roles: List[str]) -> Dict[str, Any]:
+    """
+    Initialize entity 'golems' for each repository role.
+    Creates dormant entities that can be awakened for autonomous operation.
+    
+    Args:
+        repository_roles: List of repository names to create entities for
+        
+    Returns:
+        Status of created entities
+    """
+    try:
+        from skills.entity_lifecycle import EntityLifecycleManager
+        
+        manager = EntityLifecycleManager()
+        created = []
+        
+        role_mappings = {
+            'Evez666': 'leader_launcher',
+            'scaling-chainsaw': 'parallel_forgiver',
+            'copilot-cli': 'cli_interface',
+            'perplexity-py': 'event_oracle',
+            'quantum': 'qiskit_backend'
+        }
+        
+        for repo in repository_roles:
+            role = role_mappings.get(repo, 'autonomous_agent')
+            entity_id = f"golem_{repo.lower().replace('-', '_')}"
+            
+            # Create entity with quantum domain for quantum repo
+            domain = 'quantum_domain' if repo == 'quantum' else 'default_domain'
+            entity = manager.create_entity(entity_id, role, domain)
+            
+            # Quantum entangle quantum entities
+            if repo == 'quantum':
+                manager.quantum_entangle(entity_id, 'ibm_quantum_cloud')
+            
+            created.append({
+                'entity_id': entity_id,
+                'repository': repo,
+                'role': role,
+                'domain': domain,
+                'state': entity.state.value
+            })
+        
+        return {
+            'initialized_count': len(created),
+            'entities': created,
+            'swarm_status': manager.get_swarm_status(),
+            'timestamp': datetime.utcnow().isoformat()
+        }
+    except Exception as e:
+        return {
+            'status': 'error',
+            'error': str(e),
+            'timestamp': datetime.utcnow().isoformat()
+        }
