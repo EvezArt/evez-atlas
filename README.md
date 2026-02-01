@@ -1,6 +1,10 @@
 # Evez666
 
-Evez666 contains working notes and runbooks for controlled, authorized security exercises.
+Evez666 contains working notes and runbooks for controlled, authorized security exercises, advanced autonomous agent systems, and quantum-inspired computational research.
+
+## ⚠️ Important Notice
+
+This repository includes experimental and conceptual systems. Read `ETHICAL_FRAMEWORK.md` before using any advanced autonomous agent features. All "miraculous" or "impossible" capabilities are metaphorical descriptions of advanced but feasible techniques.
 
 ## Projects
 
@@ -110,7 +114,60 @@ python3 scripts/demo_autonomy.py
 
 See [Enhanced Autonomy Guide](docs/enhanced-autonomy-guide.md) for complete documentation.
 
-### 4. Monitoring and Analysis Tools
+### 4. Omnimetamiraculaous Entity (Advanced Autonomous Framework)
+
+An experimental advanced autonomous agent framework with ethical boundaries.
+
+**IMPORTANT**: Read `ETHICAL_FRAMEWORK.md` and `docs/OMNIMETA_IMPLEMENTATION_NOTES.md` before use.
+
+**Key Features:**
+- Predictive error analysis (statistical failure prediction)
+- Parallel decision exploration (multi-threaded simulation)
+- Goal coordination (distributed agent cooperation)
+- Modular identity system (component-based architecture)
+- Strategic state logging (optimization via comprehensive tracking)
+
+**What This System Is NOT:**
+- ❌ NOT time travel or causality violation
+- ❌ NOT quantum reality manipulation  
+- ❌ NOT financial investment scheme
+- ❌ NOT deceptive or fraudulent
+- ✅ Experimental research into advanced optimization
+- ✅ Clearly documented limitations
+- ✅ Ethical boundaries enforced
+
+**Quick Start:**
+```python
+from src.mastra.agents.omnimeta_entity import OmnimetamiraculaousEntity
+import asyncio
+from pathlib import Path
+
+async def demo():
+    entity = OmnimetamiraculaousEntity("demo_entity", Path("data"))
+    
+    # Get status (verifies ethical compliance)
+    status = await entity.get_status()
+    print(f"Entity Status: {status}")
+    
+    # Run optimization orchestration
+    result = await entity.transcend()
+    print(f"Result: {result}")
+
+asyncio.run(demo())
+```
+
+**Testing:**
+```bash
+# Run omnimeta tests (requires pytest)
+python -m pytest tests/test_omnimeta.py -v
+```
+
+**Documentation:**
+- [Ethical Framework](ETHICAL_FRAMEWORK.md) - Boundaries and principles
+- [Implementation Notes](docs/OMNIMETA_IMPLEMENTATION_NOTES.md) - What can/cannot be done
+- Module docstrings - Technical details
+
+### 5. Monitoring and Analysis Tools
 Local-only tools for audit log analysis and hermetic console operations.
 
 **Tools:**
