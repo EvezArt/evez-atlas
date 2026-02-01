@@ -29,5 +29,8 @@
     "ts-jest": "^29.2.0",
     "typescript": "^5.5.0"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "optionalDependencies": {
+    "molthub": "latest"
+  }
 }
