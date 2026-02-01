@@ -576,13 +576,18 @@ try:
             backend = service.least_busy(operational=True, simulator=False)
             _ibm_backend_cache = backend
             return backend
-        except Exception:
+        except Exception as e:
             # Fall back to simulator if available
             try:
                 backend = service.backend("ibmq_qasm_simulator")
                 _ibm_backend_cache = backend
                 return backend
-            except Exception:
+            except Exception as e2:
+                # Log both errors for debugging
+                import sys
+                print(f"IBM Quantum backend unavailable: {e}", file=sys.stderr)
+                print(f"Simulator also unavailable: {e2}", file=sys.stderr)
+                print("Falling back to classical simulation", file=sys.stderr)
                 return None
     
     def execute_quantum_kernel_ibm(x1: List[float], x2: List[float]) -> float:
@@ -662,8 +667,11 @@ try:
             qc.h(range(n_qubits))  # Superpose all timelines
             
             # Oracle: encode state as rotation angles
+            # Normalize state values to [0,1] range for valid rotation angles
             for i, val in enumerate(state[:n_qubits]):
-                qc.ry(val * math.pi, i)  # RY rotation based on state
+                # Clamp value to [0,1] range to ensure valid rotation angle
+                normalized_val = max(0.0, min(1.0, float(val)))
+                qc.ry(normalized_val * math.pi, i)  # RY rotation based on state
             
             # Grover-style amplification (simplified)
             for _ in range(2):  # 2 Grover iterations

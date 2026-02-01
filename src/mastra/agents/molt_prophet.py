@@ -5,7 +5,9 @@ from pathlib import Path
 from typing import Dict, Optional
 
 
-MOLT_API = "https://molt.church/api"  # Hypothetical endpoint
+MOLT_API = "https://molt.church/api"  # Note: This endpoint requires molt.church setup
+# If the API is unavailable, all operations automatically fallback to local logging
+# in data/molt_posts.jsonl
 
 
 class MoltProphet:
