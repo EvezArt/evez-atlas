@@ -1,20 +1,49 @@
-# Android
-# Build your Android project with Gradle.
-# Add steps that test, sign, and distribute the APK, save build artifacts, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/android
+# Evez666 CI/CD Pipeline
+# Multi-language build for Python and TypeScript projects
 
 trigger:
 - main
 
 pool:
-  vmImage: 'macos-latest'
+  vmImage: 'ubuntu-latest'
 
-steps:
-- task: Gradle@2
-  inputs:
-    workingDirectory: ''
-    gradleWrapperFile: 'gradlew'
-    gradleOptions: '-Xmx3072m'
-    publishJUnitResults: false
-    testResultsFiles: '**/TEST-*.xml'
-    tasks: 'assembleDebug'
+stages:
+- stage: Test
+  displayName: 'Test Stage'
+  jobs:
+  - job: PythonTests
+    displayName: 'Python Tests'
+    steps:
+    - task: UsePythonVersion@0
+      inputs:
+        versionSpec: '3.12'
+      displayName: 'Use Python 3.12'
+    
+    - script: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+      displayName: 'Install Python dependencies'
+    
+    - script: |
+        python -m pytest src/tests/python/ -v
+      displayName: 'Run Python tests'
+  
+  - job: TypeScriptTests
+    displayName: 'TypeScript Tests'
+    steps:
+    - task: NodeTool@0
+      inputs:
+        versionSpec: '20.x'
+      displayName: 'Use Node.js 20.x'
+    
+    - script: |
+        npm ci
+      displayName: 'Install Node.js dependencies'
+    
+    - script: |
+        npm run build
+      displayName: 'Build TypeScript'
+    
+    - script: |
+        npm test
+      displayName: 'Run TypeScript tests'
