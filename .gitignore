@@ -59,3 +59,12 @@ yarn-debug.log*
 yarn-error.log*
 *.tsbuildinfo
 coverage/
+
+# Jubilee
+third_party/jubilee-online/data/
+third_party/jubilee-online/**/__pycache__/
+third_party/jubilee-online/logs/
+
+# Swarm data
+data/events.jsonl
+skills/__pycache__/

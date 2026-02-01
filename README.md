@@ -53,7 +53,34 @@ npm test
 npm run lint
 ```
 
-### 3. Monitoring and Analysis Tools
+### 3. OpenClaw Swarm Workflow
+Autonomous agent orchestration system integrating Jubilee forgiveness services, Moltbook AI social features, and IBM Quantum simulations.
+
+**Key Features:**
+- Multi-repository agent coordination
+- Jubilee debt forgiveness service
+- Moltbook integration for AI social networking
+- IBM Quantum backend for simulations
+- Event logging and monitoring
+
+**Setup and Testing:**
+```bash
+# Bootstrap the swarm environment
+./scripts/swarm_bootstrap.sh
+
+# Start Jubilee service
+./scripts/jubilee_up.sh
+
+# Install OpenClaw (optional)
+curl -sSL https://openclaw.ai/install.sh | bash
+
+# Launch swarm agents
+openclaw --soul SOUL.md --skills jubilee,molt_post
+```
+
+See [Swarm Setup Documentation](docs/swarm-setup.md) for complete details.
+
+### 4. Monitoring and Analysis Tools
 Local-only tools for audit log analysis and hermetic console operations.
 
 **Tools:**
