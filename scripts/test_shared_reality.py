@@ -70,26 +70,30 @@ def test_shared_sensory_state():
     print("\nTesting Shared Sensory State...")
     
     from skills.shared_reality_plane import SharedRealityPlane
+    import uuid
     
     plane = SharedRealityPlane()
+    
+    # Use unique domain to avoid conflicts
+    domain = f'shared_perception_{uuid.uuid4().hex[:8]}'
     
     # Multiple entities observe same domain
     plane.localize_quantum_state(
         'entity_1',
-        'shared_perception_domain',
+        domain,
         {'observation': 'state_A'},
         'perception'
     )
     
     plane.localize_quantum_state(
         'entity_2',
-        'shared_perception_domain',
+        domain,
         {'observation': 'state_A'},
         'perception'
     )
     
     # Get shared state
-    shared_state = plane.get_shared_sensory_state('shared_perception_domain')
+    shared_state = plane.get_shared_sensory_state(domain)
     
     assert shared_state['observation_count'] == 2
     assert len(shared_state['participating_entities']) == 2
@@ -135,26 +139,30 @@ def test_measurement_synchronization():
     print("\nTesting Measurement Synchronization...")
     
     from skills.shared_reality_plane import SharedRealityPlane
+    import uuid
     
     plane = SharedRealityPlane()
+    
+    # Use unique domain
+    domain = f'sync_{uuid.uuid4().hex[:8]}'
     
     # Multiple entities make observations
     plane.localize_quantum_state(
         'entity_1',
-        'sync_domain',
+        domain,
         {'measured_value': 42},
         'measurement'
     )
     
     plane.localize_quantum_state(
         'entity_2',
-        'sync_domain',
+        domain,
         {'measured_value': 42},
         'measurement'
     )
     
     # Synchronize
-    synchronized = plane.synchronize_measurements('sync_domain')
+    synchronized = plane.synchronize_measurements(domain)
     
     assert len(synchronized) == 2
     # All entities should see same state after sync

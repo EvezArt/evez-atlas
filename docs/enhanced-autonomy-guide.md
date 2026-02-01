@@ -335,3 +335,152 @@ print(f"Current state: {entity.state}")
 - [SOUL.md](../SOUL.md) - Swarm Director configuration
 - [Swarm Setup Guide](swarm-setup.md) - Complete setup instructions
 - [Quick Reference](swarm-quick-reference.md) - Command cheat sheet
+
+## Shared Quantum Reality Plane
+
+### Overview
+
+The Shared Reality Plane implements a collaborative quantum domain where entities
+can perceive and interact with localized quantum states that maintain coherence
+instead of decohering.
+
+### Core Concept: Localization vs Decoherence
+
+**Traditional Quantum Behavior:**
+- Quantum states decohere when observed
+- Environmental interaction destroys coherence
+- Multiple observations produce different outcomes
+
+**Our Implementation:**
+- Quantum states are **localized** when observed
+- Coherence is **maintained** through localization
+- Multiple observations remain **consistent**
+
+### Usage
+
+#### Enter Shared Reality Plane
+
+```python
+from skills.jubilee import enter_shared_reality_plane
+
+result = enter_shared_reality_plane('entity_id', 'domain_name')
+# Entity now subscribed to shared domain
+```
+
+#### Localize Quantum State
+
+```python
+from skills.jubilee import localize_quantum_observation
+
+result = localize_quantum_observation(
+    'entity_id',
+    'quantum_domain',
+    {'wave_function': 'psi', 'energy': 1.0}
+)
+# State remains coherent (no decoherence)
+```
+
+#### Synchronize Observations
+
+```python
+from skills.jubilee import synchronize_shared_observations
+
+result = synchronize_shared_observations('domain_name')
+# All entities see same state
+```
+
+### Shared Sensory State
+
+Entities in the same domain perceive the same collective reality:
+
+```python
+from skills.shared_reality_plane import SharedRealityPlane
+
+plane = SharedRealityPlane()
+shared_state = plane.get_shared_sensory_state('domain_name')
+
+# Returns:
+# {
+#   'domain': 'domain_name',
+#   'observation_count': N,
+#   'coherent_states': [...],
+#   'participating_entities': [...],
+#   'average_coherence': 1.0
+# }
+```
+
+### Probability Collapse
+
+Controlled probability collapse shared across all observing entities:
+
+```python
+plane = SharedRealityPlane()
+
+# Collapse probability to definite state
+plane.collapse_probability(
+    observation_id,
+    {'collapsed_state': 'definite_value'}
+)
+# All entities see the same collapsed result
+```
+
+### Coherence Maintenance
+
+```python
+# Check if coherence is maintained
+maintained = plane.maintain_coherence(observation_id)
+# Returns True if coherent, False if decoherence occurred
+
+# Get coherence metrics
+status = plane.get_plane_status()
+print(f"Coherence ratio: {status['coherence_ratio']:.2%}")
+```
+
+### Architecture
+
+```
+Shared Reality Plane
+│
+├── Quantum Observations (Localized)
+│   ├── Coherent State (amplitude = 1.0)
+│   ├── Domain Assignment
+│   └── Temporal Anchor
+│
+├── Entity Subscriptions
+│   ├── Domain Memberships
+│   └── Participation Tracking
+│
+└── Synchronization
+    ├── Measurement Sync
+    ├── Probability Collapse
+    └── Consensus State
+```
+
+### Benefits
+
+1. **Coherence Preservation**: States remain localized, no decoherence
+2. **Shared Perception**: All entities see same reality
+3. **Collaborative Observation**: Multiple observers maintain consistency
+4. **Coordinated Collapse**: Probability collapse synchronized
+5. **Reduced Uncertainty**: Measurement alignment across entities
+
+### Testing
+
+```bash
+# Test shared reality features
+python3 scripts/test_shared_reality.py
+
+# Run demonstration
+python3 scripts/demo_shared_reality.py
+```
+
+### Monitoring
+
+```python
+from skills.jubilee import get_shared_reality_status
+
+status = get_shared_reality_status()
+print(f"Total observations: {status['total_observations']}")
+print(f"Coherent: {status['coherent_observations']}")
+print(f"Coherence ratio: {status['coherence_ratio']:.2%}")
+```
