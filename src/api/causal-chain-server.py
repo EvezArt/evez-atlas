@@ -329,3 +329,64 @@ def navigation_ui_data(request: Request, tier: int = Depends(verify_api_key)):
 
     state = build_navigation_ui_state()
     return JSONResponse(state)
+
+
+# ========== Jubilee Integration ==========
+# Add Jubilee router for debt forgiveness
+try:
+    from src.api.jubilee_endpoints import router as jubilee_router
+    app.include_router(jubilee_router)
+except ImportError:
+    # Jubilee endpoints not available
+    pass
+
+
+# ========== WebSocket for Real-time Swarm Communication ==========
+from fastapi import WebSocket, WebSocketDisconnect
+from typing import Set
+
+active_connections: Set[WebSocket] = set()
+
+
+@app.websocket("/ws/swarm")
+async def swarm_websocket(websocket: WebSocket):
+    """
+    WebSocket endpoint for real-time swarm communication.
+    
+    Entities can connect and broadcast messages to all other connected entities.
+    """
+    await websocket.accept()
+    active_connections.add(websocket)
+    try:
+        while True:
+            data = await websocket.receive_text()
+            # Broadcast to all connected entities except sender
+            for connection in active_connections:
+                if connection != websocket:
+                    await connection.send_text(data)
+    except WebSocketDisconnect:
+        active_connections.remove(websocket)
+    except Exception:
+        if websocket in active_connections:
+            active_connections.remove(websocket)
+
+
+# ========== Swarm Status Endpoint ==========
+@app.get("/swarm-status")
+def swarm_status():
+    """Get current swarm status from the director."""
+    try:
+        from src.mastra.agents.swarm_director import director
+        status = director.get_swarm_status()
+        status["websocket_connections"] = len(active_connections)
+        return status
+    except Exception as e:
+        return {
+            "error": str(e),
+            "websocket_connections": len(active_connections)
+        }
+
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)
