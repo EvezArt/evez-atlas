@@ -40,7 +40,8 @@ def health_check() -> JSONResponse:
     
     audit_lines = 0
     if audit_exists:
-        audit_lines = len(AUDIT_LOG_PATH.read_text(encoding="utf-8").splitlines())
+        with open(AUDIT_LOG_PATH, 'r', encoding="utf-8") as f:
+            audit_lines = sum(1 for line in f if line.strip())
     
     return JSONResponse(content={
         "status": "healthy",
@@ -118,7 +119,7 @@ def services_status() -> JSONResponse:
                     "status": "unreachable",
                     "error": f"HTTP {response.status_code}"
                 }
-    except (httpx.RequestError, httpx.TimeoutException) as e:
+    except (httpx.RequestError, httpx.TimeoutError) as e:
         services["causal_chain_api"] = {
             "status": "offline",
             "error": str(e),

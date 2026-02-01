@@ -227,7 +227,7 @@ def services_status():
                     "status": "unreachable",
                     "error": f"HTTP {response.status_code}"
                 }
-    except (httpx.RequestError, httpx.TimeoutException) as e:
+    except (httpx.RequestError, httpx.TimeoutError) as e:
         services["monitor_server"] = {
             "status": "offline",
             "error": str(e),
