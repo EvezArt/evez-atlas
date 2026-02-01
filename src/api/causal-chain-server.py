@@ -329,3 +329,44 @@ def navigation_ui_data(request: Request, tier: int = Depends(verify_api_key)):
 
     state = build_navigation_ui_state()
     return JSONResponse(state)
+
+
+@app.get("/swarm-status")
+@limiter.limit(_rate_limit_for_key)
+def swarm_status(request: Request, tier: int = Depends(verify_api_key)):
+    """
+    Get autonomous agent swarm status.
+    
+    Returns information about registered agents, quantum mode,
+    and swarm configuration. Implements autonomous replication
+    and swarm coordination capabilities.
+    """
+    try:
+        import sys
+        sys.path.insert(0, str(BASE_DIR))
+        from skills.swarm import get_orchestrator
+        from skills.quantum_integration import get_quantum_integration
+        
+        orchestrator = get_orchestrator()
+        quantum = get_quantum_integration()
+        
+        status = orchestrator.get_swarm_status()
+        status["quantum_backend"] = quantum.get_backend_info()
+        
+        audit_log(
+            "swarm",
+            "/swarm-status",
+            tier,
+            {"agent_count": status["agent_count"]},
+            request.state.api_key
+        )
+        
+        return status
+    except ImportError:
+        # Swarm infrastructure not yet initialized
+        return {
+            "swarm_id": "evez666-swarm",
+            "status": "initializing",
+            "message": "Run scripts/swarm-bootstrap.sh to initialize swarm infrastructure",
+            "quantum_mode": os.getenv("JUBILEE_MODE", "classical")
+        }

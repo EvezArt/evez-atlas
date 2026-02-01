@@ -99,3 +99,28 @@ def test_hmac_signature():
     signature = payload.pop("signature")
     expected = server.hmac_sign(payload)
     assert signature == expected
+
+
+def test_swarm_status_endpoint():
+    """Test the swarm-status endpoint for autonomous agent information."""
+    client, _server = get_client()
+    response = client.get(
+        "/swarm-status",
+        headers={"X-API-Key": "tier3_director"}
+    )
+    assert response.status_code == 200
+    
+    data = response.json()
+    assert "swarm_id" in data
+    
+    # May be initializing or fully operational depending on whether
+    # swarm infrastructure has been bootstrapped
+    if data.get("status") == "initializing":
+        assert "message" in data
+        assert "quantum_mode" in data
+    else:
+        # Fully initialized swarm
+        assert "mode" in data
+        assert "agent_count" in data
+        assert "quantum_backend" in data
+
