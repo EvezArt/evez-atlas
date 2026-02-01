@@ -71,4 +71,5 @@ data/entity_states.jsonl
 data/task_queue.jsonl
 data/quantum_events.jsonl
 data/shared_reality_plane.jsonl
+data/resource_manager.jsonl
 skills/__pycache__/
