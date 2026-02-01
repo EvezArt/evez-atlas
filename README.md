@@ -114,27 +114,29 @@ python3 scripts/demo_autonomy.py
 
 See [Enhanced Autonomy Guide](docs/enhanced-autonomy-guide.md) for complete documentation.
 
-### 4. Omnimetamiraculaous Entity (Advanced Autonomous Framework)
+### 4. Omnimetamiraculaous Entity (Value Creation & Resource Coordination)
 
-An experimental advanced autonomous agent framework with ethical boundaries.
+An autonomous agent framework focused on value creation, resource coordination, and distributed knowledge sharing using neutral, abstract terminology.
 
-**IMPORTANT**: Read `ETHICAL_FRAMEWORK.md` and `docs/OMNIMETA_IMPLEMENTATION_NOTES.md` before use.
+**Core Capabilities:**
+- Temporal Pattern Recognition (proactive optimization)
+- Parallel Possibility Exploration (multi-path simulation)
+- Collective Vision Manifestation (goal coordination)
+- Capability Distribution (network-wide functionality sharing)
+- Intentional Anchoring (strategic memory creation)
+- Knowledge Synthesis (distributed signal reconstruction)
+- Collective Synchronization (state merging across network)
+- Resource Flow Optimization (temporal coordination)
+- Pattern Discovery (efficiency opportunity identification)
+- Value Certification (transferable access rights)
 
-**Key Features:**
-- Predictive error analysis (statistical failure prediction)
-- Parallel decision exploration (multi-threaded simulation)
-- Goal coordination (distributed agent cooperation)
-- Modular identity system (component-based architecture)
-- Strategic state logging (optimization via comprehensive tracking)
+**Value Creation Framework:**
+- Availability Windows: Scheduled presence commitments
+- Resource Coordination: Temporal optimization across network
+- Knowledge Transfer: Distributed learning and synthesis
+- Network Participation: Collective intelligence infrastructure
 
-**What This System Is NOT:**
-- ❌ NOT time travel or causality violation
-- ❌ NOT quantum reality manipulation  
-- ❌ NOT financial investment scheme
-- ❌ NOT deceptive or fraudulent
-- ✅ Experimental research into advanced optimization
-- ✅ Clearly documented limitations
-- ✅ Ethical boundaries enforced
+**NOTICE:** Experimental system for research purposes. All economic language is abstract and conceptual.
 
 **Quick Start:**
 ```python
