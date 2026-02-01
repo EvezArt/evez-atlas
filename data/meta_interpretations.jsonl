@@ -1,0 +1,4 @@
+{"type": "semantic_synthesis", "timestamp": 1769941341.7293959, "data": {"component_count": 5, "confidence": 0.7, "ambiguity": 0.2}}
+{"type": "causal_synthesis", "timestamp": 1769941341.7295105, "data": {"paradox_count": 4, "fundamental_ambiguity": 0.25}}
+{"type": "path_synthesis", "timestamp": 1769941341.729552, "data": {"path_count": 3, "optimal_convergence": 0.6666666666666667}}
+{"type": "unified_synthesis", "timestamp": 1769941341.7295814, "data": {"total_components": 12, "semantic_count": 5, "causal_count": 4, "path_count": 3, "final_confidence": 0.5833333333333334, "preserved_ambiguity": 0.08333333333333333}}
