@@ -1,16 +1,6 @@
-# Quantum Threat Detection System Dependencies
-# Core dependencies (no external packages required for the simulator)
-# The system runs with Python 3.8+ standard library only
-
-# Optional: For production use with real quantum hardware:
-# qiskit>=1.0
-# qiskit-machine-learning
-# qiskit-ibm-runtime
-
-# Optional: For data processing:
-# pandas
-# numpy
-# scikit-learn
-
-# Optional: For visualization:
-# matplotlib
+fastapi
+slowapi
+python-dotenv
+uvicorn
+pytest
+httpx
