@@ -1,4 +1,4 @@
-import { resolveAwareness, TraceNode, ProcessingModeConfig } from '../mastra/agents/legion-registry';
+import { resolveAwareness, TraceNode, ProcessingModeConfig } from './legion-registry';
 
 describe('resolveAwareness', () => {
   const sampleTrace: TraceNode = {
