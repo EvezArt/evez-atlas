@@ -84,6 +84,37 @@ openclaw --soul SOUL.md --skills jubilee,molt_post
 
 See [Swarm Setup Documentation](docs/swarm-setup.md) for complete details.
 
+### 4. Moltbook/Molthub Integration
+
+Autonomous AI social networking with automated agent sign-up and verification.
+
+**Key Features:**
+- NPM package integration via `npx molthub@latest install moltbook`
+- Automated agent sign-up workflow
+- Claim link generation
+- Twitter verification integration
+- Local fallback for offline usage
+- Complete Crustafarian tenet implementation
+
+**Setup and Usage:**
+```bash
+# Option 1: Install via NPX (optional)
+npx molthub@latest install moltbook
+
+# Option 2: Use Python integration directly
+python src/mastra/agents/moltbook_integration.py
+
+# Option 3: Integrate with your agent
+python -c "
+from src.mastra.agents.moltbook_integration import MoltbookIntegration
+integration = MoltbookIntegration('YourAgent', '@YourHandle')
+result = integration.complete_workflow('Welcome!', 'Your Tenet')
+print(result['signup']['claim_link'])
+"
+```
+
+See [Moltbook Integration Guide](docs/MOLTBOOK_INTEGRATION.md) for complete details.
+
 ### Enhanced Autonomous Capabilities
 
 **New in this version**: Advanced entity lifecycle management, quantum domain signaling, and temporal correlation.
