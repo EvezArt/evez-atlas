@@ -333,6 +333,7 @@ def initialize_swarm_golems(repository_roles: List[str]) -> Dict[str, Any]:
     """
     Initialize entity 'golems' for each repository role.
     Creates dormant entities that can be awakened for autonomous operation.
+    Also subscribes them to the shared reality plane.
     
     Args:
         repository_roles: List of repository names to create entities for
@@ -342,8 +343,10 @@ def initialize_swarm_golems(repository_roles: List[str]) -> Dict[str, Any]:
     """
     try:
         from skills.entity_lifecycle import EntityLifecycleManager
+        from skills.shared_reality_plane import SharedRealityPlane
         
         manager = EntityLifecycleManager()
+        plane = SharedRealityPlane()
         created = []
         
         role_mappings = {
@@ -362,6 +365,10 @@ def initialize_swarm_golems(repository_roles: List[str]) -> Dict[str, Any]:
             domain = 'quantum_domain' if repo == 'quantum' else 'default_domain'
             entity = manager.create_entity(entity_id, role, domain)
             
+            # Subscribe to shared reality plane
+            plane.subscribe_to_domain(entity_id, 'shared_reality_plane')
+            plane.subscribe_to_domain(entity_id, domain)
+            
             # Quantum entangle quantum entities
             if repo == 'quantum':
                 manager.quantum_entangle(entity_id, 'ibm_quantum_cloud')
@@ -371,15 +378,158 @@ def initialize_swarm_golems(repository_roles: List[str]) -> Dict[str, Any]:
                 'repository': repo,
                 'role': role,
                 'domain': domain,
-                'state': entity.state.value
+                'state': entity.state.value,
+                'subscribed_to_plane': True
             })
         
         return {
             'initialized_count': len(created),
             'entities': created,
             'swarm_status': manager.get_swarm_status(),
+            'plane_status': plane.get_plane_status(),
             'timestamp': datetime.utcnow().isoformat()
         }
+    except Exception as e:
+        return {
+            'status': 'error',
+            'error': str(e),
+            'timestamp': datetime.utcnow().isoformat()
+        }
+
+
+def enter_shared_reality_plane(entity_id: str, domain: str = 'shared_reality_plane') -> Dict[str, Any]:
+    """
+    Enter an entity into the shared reality plane for collaborative observation.
+    
+    Args:
+        entity_id: Entity to enter the plane
+        domain: Domain within the shared plane
+        
+    Returns:
+        Status of entry and current plane state
+    """
+    try:
+        from skills.shared_reality_plane import SharedRealityPlane
+        
+        plane = SharedRealityPlane()
+        plane.subscribe_to_domain(entity_id, domain)
+        
+        # Get current shared sensory state
+        sensory_state = plane.get_shared_sensory_state(domain)
+        
+        return {
+            'entity_id': entity_id,
+            'domain': domain,
+            'status': 'entered',
+            'shared_sensory_state': sensory_state,
+            'plane_status': plane.get_plane_status(),
+            'timestamp': datetime.utcnow().isoformat()
+        }
+    except Exception as e:
+        return {
+            'status': 'error',
+            'error': str(e),
+            'timestamp': datetime.utcnow().isoformat()
+        }
+
+
+def localize_quantum_observation(
+    entity_id: str,
+    domain: str,
+    quantum_state: Dict[str, Any]
+) -> Dict[str, Any]:
+    """
+    Localize a quantum observation in the shared plane (maintain coherence).
+    This prevents decoherence by keeping quantum states localized.
+    
+    Args:
+        entity_id: Observing entity
+        domain: Quantum domain
+        quantum_state: State to localize
+        
+    Returns:
+        Localized observation details
+    """
+    try:
+        from skills.shared_reality_plane import SharedRealityPlane
+        
+        plane = SharedRealityPlane()
+        observation = plane.localize_quantum_state(
+            entity_id,
+            domain,
+            quantum_state,
+            observation_type='quantum_localization'
+        )
+        
+        return {
+            'observation_id': observation.id,
+            'entity_id': entity_id,
+            'domain': domain,
+            'coherent': observation.coherent,
+            'localized': True,  # Localized = no decoherence
+            'probability_amplitude': observation.probability_amplitude,
+            'timestamp': observation.timestamp
+        }
+    except Exception as e:
+        return {
+            'status': 'error',
+            'error': str(e),
+            'timestamp': datetime.utcnow().isoformat()
+        }
+
+
+def synchronize_shared_observations(domain: str) -> Dict[str, Any]:
+    """
+    Synchronize quantum observations across all entities in a domain.
+    Ensures all entities perceive the same collapsed reality.
+    
+    Args:
+        domain: Domain to synchronize
+        
+    Returns:
+        Synchronization results
+    """
+    try:
+        from skills.shared_reality_plane import SharedRealityPlane
+        
+        plane = SharedRealityPlane()
+        synchronized = plane.synchronize_measurements(domain)
+        
+        return {
+            'domain': domain,
+            'synchronized_count': len(synchronized),
+            'observations': [
+                {
+                    'id': obs.id,
+                    'entity_id': obs.entity_id,
+                    'coherent': obs.coherent,
+                    'state': obs.state
+                }
+                for obs in synchronized
+            ],
+            'shared_state': plane.get_shared_sensory_state(domain),
+            'timestamp': datetime.utcnow().isoformat()
+        }
+    except Exception as e:
+        return {
+            'status': 'error',
+            'error': str(e),
+            'timestamp': datetime.utcnow().isoformat()
+        }
+
+
+def get_shared_reality_status() -> Dict[str, Any]:
+    """
+    Get status of the shared reality plane.
+    
+    Returns:
+        Complete plane status including coherence metrics
+    """
+    try:
+        from skills.shared_reality_plane import SharedRealityPlane
+        
+        plane = SharedRealityPlane()
+        return plane.get_plane_status()
     except Exception as e:
         return {
             'status': 'error',
