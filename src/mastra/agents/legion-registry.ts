@@ -34,7 +34,9 @@ export const resolveAwareness = (
     depthLimits: DEFAULT_DEPTH_LIMITS,
   },
 ): TraceNode => {
-  const depthLimit = config.depthLimits[tier] ?? DEFAULT_DEPTH_LIMITS[tier] ?? 0;
+  const depthLimit = tier in config.depthLimits 
+    ? config.depthLimits[tier] 
+    : (tier in DEFAULT_DEPTH_LIMITS ? DEFAULT_DEPTH_LIMITS[tier] : 0);
 
   if (config.mode === "swarm") {
     if (tier < 3) {
