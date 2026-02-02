@@ -4,6 +4,7 @@ import hmac
 import html
 import json
 import os
+import sys
 import time
 
 from dotenv import load_dotenv
@@ -17,6 +18,10 @@ from slowapi.util import get_remote_address
 load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parents[2]
+
+# Add project root to sys.path to enable imports from root modules
+if str(BASE_DIR) not in sys.path:
+    sys.path.insert(0, str(BASE_DIR))
 MANIFEST_PATH = BASE_DIR / ".roo" / "archonic-manifest.json"
 AUDIT_LOG_PATH = BASE_DIR / "src" / "memory" / "audit.jsonl"
 
