@@ -25,7 +25,7 @@ class ResolveAwarenessRequest(BaseModel):
     output_id: str
 
 
-ENTITY_REGISTRY = {
+DEFAULT_ENTITY_REGISTRY = {
     "output-001": {
         "status": "stable",
         "builder": "omega-lab",
@@ -41,16 +41,36 @@ ENTITY_REGISTRY = {
 }
 
 
-def load_tier_map() -> dict:
+def load_manifest() -> dict:
     if not MANIFEST_PATH.exists():
         return {}
-    with MANIFEST_PATH.open("r", encoding="utf-8") as handle:
-        manifest = json.load(handle)
+    try:
+        with MANIFEST_PATH.open("r", encoding="utf-8") as handle:
+            return json.load(handle)
+    except json.JSONDecodeError:
+        return {}
+
+
+def load_tier_map() -> dict:
+    manifest = load_manifest()
     api_keys = manifest.get("api_keys", {})
     return {key: int(value.get("tier", 0)) for key, value in api_keys.items()}
 
 
-TIER_MAP = load_tier_map()
+def load_entity_registry() -> dict:
+    manifest = load_manifest()
+    entities = manifest.get("entities", [])
+    registry: dict = {}
+    if isinstance(entities, dict):
+        registry = {key: value for key, value in entities.items() if isinstance(value, dict)}
+    elif isinstance(entities, list):
+        for entity in entities:
+            if not isinstance(entity, dict):
+                continue
+            output_id = entity.get("output_id")
+            if output_id:
+                registry[output_id] = entity
+    return registry or DEFAULT_ENTITY_REGISTRY
 
 
 def _rate_limit_key(request: Request) -> str:
@@ -67,7 +87,7 @@ def verify_api_key(
     request: Request,
     x_api_key: str = Header(..., alias="X-API-Key"),
 ) -> int:
-    tier = TIER_MAP.get(x_api_key)
+    tier = load_tier_map().get(x_api_key)
     if tier is None:
         raise HTTPException(status_code=401, detail="Invalid API key")
     request.state.api_key = x_api_key
@@ -100,7 +120,7 @@ def hmac_sign(data: dict) -> str:
 
 
 def _rate_limit_for_key(key: str) -> str:
-    tier = TIER_MAP.get(key, 0)
+    tier = load_tier_map().get(key, 0)
     if tier <= 0:
         return "10/minute"
     if tier >= 3:
@@ -130,7 +150,8 @@ def resolve_awareness(
     payload: ResolveAwarenessRequest,
     tier: int = Depends(verify_api_key),
 ):
-    entity = ENTITY_REGISTRY.get(payload.output_id)
+    entity_registry = load_entity_registry()
+    entity = entity_registry.get(payload.output_id)
     if entity is None:
         raise HTTPException(status_code=404, detail="Entity not found")
     redacted = _redact_entity(entity, tier)
@@ -149,8 +170,9 @@ def resolve_awareness(
 @app.get("/legion-status")
 @limiter.limit(_rate_limit_for_key)
 def legion_status(request: Request, tier: int = Depends(verify_api_key)):
+    entity_registry = load_entity_registry()
     entities = []
-    for output_id, entity in ENTITY_REGISTRY.items():
+    for output_id, entity in entity_registry.items():
         redacted = _redact_entity(entity, tier)
         entities.append({"output_id": output_id, **redacted})
     result = {"count": len(entities), "entities": entities}

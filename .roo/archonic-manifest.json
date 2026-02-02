@@ -1,5 +1,20 @@
 {
-  "entities": [],
+  "entities": [
+    {
+      "output_id": "output-001",
+      "status": "stable",
+      "builder": "omega-lab",
+      "trace": ["node-a", "node-b", "node-c"],
+      "metadata": {"region": "orion", "epoch": "v1", "instantiated_at": "2025-01-01T00:00:00Z"}
+    },
+    {
+      "output_id": "output-002",
+      "status": "degraded",
+      "builder": "delta-works",
+      "trace": ["node-x", "node-y"],
+      "metadata": {"region": "centauri", "epoch": "v2", "instantiated_at": "2025-01-02T00:00:00Z"}
+    }
+  ],
   "api_keys": {
     "tier0_public": {"tier": 0, "name": "public"},
     "tier1_builder": {"tier": 1, "name": "builder-omega"},

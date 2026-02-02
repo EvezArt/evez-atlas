@@ -51,6 +51,7 @@ def test_tier3_full_access():
     assert payload["builder"] == "omega-lab"
     assert payload["trace"] == ["node-a", "node-b", "node-c"]
     assert payload["metadata"]["region"] == "orion"
+    assert payload["metadata"]["instantiated_at"] == "2025-01-01T00:00:00Z"
 
 
 def test_invalid_api_key():
