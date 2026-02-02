@@ -20,8 +20,8 @@
 
 ### Audit Requirements
 
-- Every call to `/resolve-awareness` or `/legion-status` must be logged.
-- Logs are written as JSON lines to `src/memory/audit.jsonl` and include timestamp, entity ID, endpoint, tier, and response payload.
+- Every call to `/resolve-awareness`, `/legion-status`, or navigation UI endpoints must be logged.
+- Logs are written as JSON lines to `src/memory/audit.jsonl` and include timestamp, entity ID, endpoint, tier, source IP, and response payload.
 
 ### HMAC Signature Verification
 

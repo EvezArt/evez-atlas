@@ -32,7 +32,9 @@ This runbook documents the **access gateway pipeline** used to reach the causal 
 
 - **Use a single entry point** for all API calls (localhost in lab settings).
 - **Do not expose** the service directly on public interfaces without a reverse proxy.
+- **Bind services locally** by default; only enable remote access when explicitly approved.
 - **Validate `X-API-Key`** at the gateway and refuse unauthenticated traffic.
+- **Trust forwarded IPs** only when `TRUST_FORWARDED_IPS` is explicitly enabled behind a proxy.
 - **Honor tier limits** to avoid privilege escalation via high-volume probing.
 - **Track signature failures** and treat them as potential tampering.
 
@@ -58,6 +60,8 @@ Document what is in scope before running the gateway pipeline:
   - Authorized targets and test ranges confirmed.
   - Approved API keys in `.roo/archonic-manifest.json`.
   - `SECRET_KEY` populated in the environment or `.env`.
+  - `ALLOW_REMOTE_REQUESTS` only set when remote access is approved.
+  - `TRUST_FORWARDED_IPS` only enabled when a trusted proxy is in place.
 - **Pending inventory checks**
   - Hostname/IP list confirmed in the lab environment.
   - Ownership approval documented for any newly added systems.

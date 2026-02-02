@@ -46,7 +46,7 @@ def main() -> int:
     parser.add_argument("--port", type=int, default=8001)
     args = parser.parse_args()
 
-    uvicorn.run(app, host="0.0.0.0", port=args.port)
+    uvicorn.run(app, host="127.0.0.1", port=args.port)
     return 0
 
 

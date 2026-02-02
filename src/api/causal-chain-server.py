@@ -5,6 +5,7 @@ import html
 import json
 import os
 import time
+import warnings
 
 from dotenv import load_dotenv
 from fastapi import Depends, FastAPI, Header, HTTPException, Request
@@ -41,17 +42,25 @@ ENTITY_REGISTRY = {
 }
 
 
-def load_tier_map() -> dict:
+def _load_key_metadata() -> dict:
     if not MANIFEST_PATH.exists():
         return {}
     with MANIFEST_PATH.open("r", encoding="utf-8") as handle:
         manifest = json.load(handle)
-    api_keys = manifest.get("api_keys", {})
-    return {key: int(value.get("tier", 0)) for key, value in api_keys.items()}
+    return manifest.get("api_keys", {})
 
 
-TIER_MAP = load_tier_map()
+API_KEY_METADATA = _load_key_metadata()
+TIER_MAP = {key: int(value.get("tier", 0)) for key, value in API_KEY_METADATA.items()}
+LOCAL_ONLY_HOSTS = {"127.0.0.1", "::1", "testclient"}
+MIN_NAVIGATION_TIER = 2
+UNSALTED_FINGERPRINT_WARNING = "API_KEY_SALT not set; API key fingerprints are disabled."
 
+warnings.filterwarnings(
+    "once",
+    message=UNSALTED_FINGERPRINT_WARNING,
+    category=RuntimeWarning,
+)
 
 def _rate_limit_key(request: Request) -> str:
     return request.headers.get("X-API-Key") or get_remote_address(request)
@@ -63,28 +72,77 @@ app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 
+def _allow_remote_requests() -> bool:
+    return os.getenv("ALLOW_REMOTE_REQUESTS", "").lower() in {"1", "true", "yes"}
+
+
+def _allow_forwarded_ips() -> bool:
+    return os.getenv("TRUST_FORWARDED_IPS", "").lower() in {"1", "true", "yes"}
+
+
+def _get_source_ip(request: Request) -> str:
+    client_host = request.client.host if request.client else "unknown"
+    forwarded_for = request.headers.get("X-Forwarded-For")
+    if forwarded_for and client_host in LOCAL_ONLY_HOSTS and _allow_forwarded_ips():
+        return forwarded_for.split(",")[0].strip()
+    return client_host
+
+
+def enforce_local_request(request: Request) -> None:
+    if _allow_remote_requests():
+        return
+    source_ip = _get_source_ip(request)
+    if source_ip not in LOCAL_ONLY_HOSTS:
+        raise HTTPException(status_code=403, detail="Remote access disabled")
+
+
+def _api_key_id(api_key: str) -> str:
+    metadata = API_KEY_METADATA.get(api_key, {})
+    return metadata.get("name") or "unknown"
+
+
+def _fingerprint_api_key(api_key: str) -> str:
+    salt = os.getenv("API_KEY_SALT", "")
+    if not salt:
+        warnings.warn(UNSALTED_FINGERPRINT_WARNING, RuntimeWarning)
+        return "unset"
+    return hmac.new(salt.encode("utf-8"), api_key.encode("utf-8"), hashlib.sha256).hexdigest()
+
+
 def verify_api_key(
     request: Request,
     x_api_key: str = Header(..., alias="X-API-Key"),
 ) -> int:
+    enforce_local_request(request)
     tier = TIER_MAP.get(x_api_key)
     if tier is None:
         raise HTTPException(status_code=401, detail="Invalid API key")
     request.state.api_key = x_api_key
+    request.state.api_key_id = _api_key_id(x_api_key)
+    request.state.api_key_fingerprint = _fingerprint_api_key(x_api_key)
     request.state.tier = tier
     return tier
 
 
 def audit_log(
-    entity_id: str, endpoint: str, tier: int, result: dict, api_key: str
+    entity_id: str,
+    endpoint: str,
+    tier: int,
+    result: dict,
+    request: Request,
 ) -> None:
     AUDIT_LOG_PATH.parent.mkdir(parents=True, exist_ok=True)
+    api_key_id = getattr(request.state, "api_key_id", "unknown")
+    api_key_fingerprint = getattr(request.state, "api_key_fingerprint", "unknown")
+    source_ip = _get_source_ip(request)
     entry = {
         "timestamp": time.time(),
         "entity_id": entity_id,
         "endpoint": endpoint,
         "tier": tier,
-        "api_key": api_key,
+        "api_key_id": api_key_id,
+        "api_key_fingerprint": api_key_fingerprint,
+        "source_ip": source_ip,
         "result": result,
     }
     with AUDIT_LOG_PATH.open("a", encoding="utf-8") as handle:
@@ -141,26 +199,37 @@ def resolve_awareness(
         "/resolve-awareness",
         tier,
         response,
-        request.state.api_key,
+        request,
     )
     return response
 
 
 @app.get("/legion-status")
 @limiter.limit(_rate_limit_for_key)
-def legion_status(request: Request, tier: int = Depends(verify_api_key)):
+def legion_status(
+    request: Request,
+    tier: int = Depends(verify_api_key),
+):
     entities = []
     for output_id, entity in ENTITY_REGISTRY.items():
         redacted = _redact_entity(entity, tier)
         entities.append({"output_id": output_id, **redacted})
     result = {"count": len(entities), "entities": entities}
-    audit_log("legion", "/legion-status", tier, result, request.state.api_key)
+    audit_log("legion", "/legion-status", tier, result, request)
     return result
 
 
 @app.get("/navigation-ui", response_class=HTMLResponse)
 @limiter.limit(_rate_limit_for_key)
-def navigation_ui(request: Request, tier: int = Depends(verify_api_key)):
+def navigation_ui(
+    request: Request,
+    tier: int = Depends(verify_api_key),
+):
+    if tier < MIN_NAVIGATION_TIER:
+        raise HTTPException(
+            status_code=403,
+            detail=f"Navigation UI requires tier {MIN_NAVIGATION_TIER} access",
+        )
     from demo import build_navigation_ui_state
 
     state = build_navigation_ui_state()
@@ -319,13 +388,44 @@ def navigation_ui(request: Request, tier: int = Depends(verify_api_key)):
             "</html>",
         ]
     )
-    return HTMLResponse("".join(html_parts))
+    response_body = "".join(html_parts)
+    audit_log(
+        "navigation-ui",
+        "/navigation-ui",
+        tier,
+        {
+            "sensor_tasks": len(state["sensor_tasks"]),
+            "candidates": len(state["candidates"]),
+            "anchors": len(state["anchors"]),
+        },
+        request,
+    )
+    return HTMLResponse(response_body)
 
 
 @app.get("/navigation-ui/data", response_class=JSONResponse)
 @limiter.limit(_rate_limit_for_key)
-def navigation_ui_data(request: Request, tier: int = Depends(verify_api_key)):
+def navigation_ui_data(
+    request: Request,
+    tier: int = Depends(verify_api_key),
+):
+    if tier < MIN_NAVIGATION_TIER:
+        raise HTTPException(
+            status_code=403,
+            detail=f"Navigation data requires tier {MIN_NAVIGATION_TIER} access",
+        )
     from demo import build_navigation_ui_state
 
     state = build_navigation_ui_state()
+    audit_log(
+        "navigation-ui",
+        "/navigation-ui/data",
+        tier,
+        {
+            "sensor_tasks": len(state["sensor_tasks"]),
+            "candidates": len(state["candidates"]),
+            "anchors": len(state["anchors"]),
+        },
+        request,
+    )
     return JSONResponse(state)

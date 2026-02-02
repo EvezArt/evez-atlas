@@ -25,4 +25,5 @@ python tools/audit_analyzer.py --api-key tier3_director --api-base http://localh
 ## Notes
 
 - The hermetic console is local-only and uses in-memory identity seeds.
+- The monitor server now binds to 127.0.0.1 by default; use SSH port forwarding to access it remotely.
 - The audit analyzer writes outputs to `tools/out/` without contacting external services.

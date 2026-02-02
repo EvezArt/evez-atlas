@@ -22,7 +22,8 @@ def test_summary_and_anomaly_degradation(tmp_path):
             "entity_id": "output-001",
             "endpoint": "/resolve-awareness",
             "tier": 3,
-            "api_key": "tier3_director",
+            "api_key_id": "tier3_director",
+            "source_ip": "127.0.0.1",
             "result": {"output_id": "output-001"},
         },
         {
@@ -30,8 +31,18 @@ def test_summary_and_anomaly_degradation(tmp_path):
             "entity_id": "output-002",
             "endpoint": "/resolve-awareness",
             "tier": 1,
-            "api_key": "tier1_builder",
+            "api_key_id": "tier1_builder",
+            "source_ip": "127.0.0.1",
             "result": {"output_id": "output-002"},
+        },
+        {
+            "timestamp": 1700000020.0,
+            "entity_id": "legion",
+            "endpoint": "/legion-status",
+            "tier": 0,
+            "api_key_id": "tier0_public",
+            "source_ip": "127.0.0.1",
+            "result": {"count": 2, "entities": []},
         },
     ]
     write_audit_log(audit_path, entries)
@@ -39,13 +50,13 @@ def test_summary_and_anomaly_degradation(tmp_path):
     audit_entries = audit_analyzer.load_audit_entries(audit_path)
     summary = audit_analyzer.summarize(audit_entries)
 
-    assert summary["total_records"] == 2
+    assert summary["total_records"] == 3
     assert summary["by_api_key"]["tier3_director"] == 1
     assert summary["by_output_id"]["output-002"] == 1
+    assert summary["by_source_ip"]["127.0.0.1"] == 3
+    assert summary["by_tier"][0] == 1
 
     anomalies = audit_analyzer.detect_anomalies(audit_entries, {})
-    assert len(anomalies) == 2
-    assert all(
-        anomaly["reason"] == "no_instantiation_timestamp_available"
-        for anomaly in anomalies
-    )
+    reasons = {anomaly["reason"] for anomaly in anomalies}
+    assert "no_instantiation_timestamp_available" in reasons
+    assert "broad_enumeration" in reasons
