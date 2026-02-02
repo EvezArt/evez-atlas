@@ -9,7 +9,7 @@ from collections import Counter
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, Iterable, List, Optional
+from typing import Any, Dict, Iterable, List, Optional, Set
 
 import httpx
 
@@ -120,7 +120,7 @@ def detect_anomalies(
     instantiation_map: Dict[str, float],
 ) -> List[Dict[str, Any]]:
     first_seen: Dict[str, float] = {}
-    high_priority_output_ids: set[str] = set()  # Track entries with high-priority anomalies
+    high_priority_output_ids: Set[str] = set()  # Track entries with high-priority anomalies
     
     for entry in entries:
         if entry.timestamp is None:
