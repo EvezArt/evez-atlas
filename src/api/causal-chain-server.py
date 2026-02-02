@@ -20,6 +20,31 @@ BASE_DIR = Path(__file__).resolve().parents[2]
 MANIFEST_PATH = BASE_DIR / ".roo" / "archonic-manifest.json"
 AUDIT_LOG_PATH = BASE_DIR / "src" / "memory" / "audit.jsonl"
 
+# SECURITY: require a distinct API_KEY_SALT in production. If not set, derive a distinct salt
+# from SECRET_KEY only as a development fallback. Do NOT reuse SECRET_KEY directly as the
+# API key salt.
+API_KEY_SALT = os.getenv("API_KEY_SALT")
+APP_ENV = os.getenv("APP_ENV", "development").lower()
+if not API_KEY_SALT:
+    # In production we must fail fast to avoid weak deterministic fingerprints
+    if APP_ENV in ("prod", "production"):
+        raise RuntimeError("API_KEY_SALT is required in production environment")
+    # In non-production/dev: derive a separate salt using PBKDF2-HMAC to keep separation
+    secret = os.getenv("SECRET_KEY")
+    if not secret:
+        raise RuntimeError("Either API_KEY_SALT or SECRET_KEY must be set for local dev")
+    # Derive a distinct salt (domain separation) from SECRET_KEY
+    API_KEY_SALT = hashlib.pbkdf2_hmac("sha256", secret.encode(), b"evez-api-key-salt", 100000).hex()
+
+
+# Helper: fingerprint an API key using API_KEY_SALT
+def fingerprint_api_key(api_key: str) -> str:
+    """
+    Create a deterministic HMAC-based fingerprint using the dedicated salt.
+    This provides a secure way to identify API keys without storing them directly.
+    """
+    return hmac.new(API_KEY_SALT.encode("utf-8"), api_key.encode("utf-8"), hashlib.sha256).hexdigest()
+
 
 class ResolveAwarenessRequest(BaseModel):
     output_id: str
