@@ -41,14 +41,32 @@ DEFAULT_ENTITY_REGISTRY = {
 }
 
 
+_MANIFEST_CACHE: dict = {"data": {}, "mtime": None}
+
+
 def load_manifest() -> dict:
     if not MANIFEST_PATH.exists():
+        _MANIFEST_CACHE["data"] = {}
+        _MANIFEST_CACHE["mtime"] = None
         return {}
     try:
-        with MANIFEST_PATH.open("r", encoding="utf-8") as handle:
-            return json.load(handle)
-    except json.JSONDecodeError:
+        mtime = MANIFEST_PATH.stat().st_mtime
+    except OSError:
+        _MANIFEST_CACHE["data"] = {}
+        _MANIFEST_CACHE["mtime"] = None
         return {}
+    if _MANIFEST_CACHE["mtime"] == mtime:
+        return _MANIFEST_CACHE["data"]
+    try:
+        with MANIFEST_PATH.open("r", encoding="utf-8") as handle:
+            manifest = json.load(handle)
+    except json.JSONDecodeError:
+        _MANIFEST_CACHE["data"] = {}
+        _MANIFEST_CACHE["mtime"] = mtime
+        return {}
+    _MANIFEST_CACHE["data"] = manifest
+    _MANIFEST_CACHE["mtime"] = mtime
+    return manifest
 
 
 def load_tier_map() -> dict:
