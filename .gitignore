@@ -52,6 +52,9 @@ __pycache__/
 *.pyc
 *.pyo
 
+# Generated artifacts
+artifacts/
+
 # Node.js / TypeScript
 node_modules/
 npm-debug.log*
