@@ -17,7 +17,7 @@ jobs:
           if [ -f requirements.txt ]; then python -m pip install --upgrade pip && pip install -r requirements.txt; fi
       - name: Test
         run: |
-          if [ -f tests ]; then pytest -q; else echo "No tests directory"; fi
+          if [ -d tests ]; then pytest -q; else echo "No tests directory"; fi
   node-ci:
     runs-on: ubuntu-latest
     steps:
@@ -27,4 +27,4 @@ jobs:
           node-version: '20'
       - name: Install & test
         run: |
-          if [ -f package.json ]; then npm ci || npm install; npm test || true; else echo "No package.json"; fi
+          if [ -f package.json ]; then npm ci || npm install; npm test; else echo "No package.json"; fi
