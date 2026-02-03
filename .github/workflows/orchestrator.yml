@@ -15,8 +15,8 @@ jobs:
         id: parse
         run: |
           echo "event_name=${{ github.event_name }}" > $GITHUB_OUTPUT
-          echo "labels=$(jq -r '.issue.labels[].name // empty' <<< '${{ toJson(github.event.issue.labels) }}' | tr '\n' ',')" > $GITHUB_OUTPUT
-          echo "comment=$(jq -r '.comment.body // ""' <<< '${{ toJson(github.event) }}')" > $GITHUB_OUTPUT
+          echo "labels=$(jq -r '.issue.labels[].name // empty' <<< '${{ toJson(github.event.issue.labels) }}' | tr '\n' ',')" >> $GITHUB_OUTPUT
+          echo "comment=$(jq -r '.comment.body // ""' <<< '${{ toJson(github.event) }}')" >> $GITHUB_OUTPUT
       - name: Acknowledge
         uses: peter-evans/create-or-update-comment@v4
         with:
