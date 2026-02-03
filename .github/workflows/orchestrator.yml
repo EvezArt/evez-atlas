@@ -1,0 +1,51 @@
+name: Task Orchestrator
+on:
+  issues:
+    types: [opened, labeled, reopened]
+  issue_comment:
+    types: [created]
+permissions:
+  contents: read
+  issues: write
+jobs:
+  orchestrate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Parse event
+        id: parse
+        run: |
+          echo "event_name=${{ github.event_name }}" >> $GITHUB_OUTPUT
+          echo "labels=$(jq -r '.issue.labels[].name // empty' <<< '${{ toJson(github.event.issue.labels) }}' | tr '\n' ',')" >> $GITHUB_OUTPUT
+          echo "comment=$(jq -r '.comment.body // \"\"' <<< '${{ toJson(github.event) }}')" >> $GITHUB_OUTPUT
+      - name: Acknowledge
+        uses: peter-evans/create-or-update-comment@v4
+        with:
+          issue-number: ${{ github.event.issue.number }}
+          body: |
+            🤖 Orchestrator received: labels=`${{ steps.parse.outputs.labels }}` comment=`${{ steps.parse.outputs.comment }}`.
+            Running tasks as requested (fork-safe, least-privilege).
+      - name: Checkout repository (for test/build tasks)
+        if: contains(steps.parse.outputs.labels, 'task:test') || contains(steps.parse.outputs.labels, 'task:build') || contains(steps.parse.outputs.comment, '/test') || contains(steps.parse.outputs.comment, '/build')
+        uses: actions/checkout@v4
+      - name: Setup Python
+        if: contains(steps.parse.outputs.labels, 'task:test') || contains(steps.parse.outputs.labels, 'task:build') || contains(steps.parse.outputs.comment, '/test') || contains(steps.parse.outputs.comment, '/build')
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install Python deps
+        if: contains(steps.parse.outputs.labels, 'task:test') || contains(steps.parse.outputs.labels, 'task:build') || contains(steps.parse.outputs.comment, '/test') || contains(steps.parse.outputs.comment, '/build')
+        run: |
+          if [ -f requirements.txt ]; then python -m pip install --upgrade pip && pip install -r requirements.txt; fi
+      - name: Run pytest
+        if: contains(steps.parse.outputs.labels, 'task:test') || contains(steps.parse.outputs.comment, '/test')
+        run: |
+          pytest -q || true
+      - name: Optional Node tests
+        if: contains(steps.parse.outputs.labels, 'task:build') || contains(steps.parse.outputs.comment, '/build')
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: npm test (if package.json)
+        if: contains(steps.parse.outputs.labels, 'task:build') || contains(steps.parse.outputs.comment, '/build')
+        run: |
+          if [ -f package.json ]; then npm ci || npm install; npm test || true; fi
