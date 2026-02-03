@@ -6,6 +6,17 @@ Evez666 contains working notes and runbooks for controlled, authorized security 
 
 This repository includes experimental and conceptual systems. Read `ETHICAL_FRAMEWORK.md` before using any advanced autonomous agent features. All "miraculous" or "impossible" capabilities are metaphorical descriptions of advanced but feasible techniques.
 
+## Ethics & Experiment Design
+
+This project's experiment design serves as the ethical README for all research activities. Our work is guided by the axiom:
+
+> **"Quantumly calculated through‑within‑until‑without"**  
+> — Steven Crawford‑Maggard
+
+**Research Clarification**: All references to "quantum" or "temporal" effects in this repository describe classical computational simulations only. We make no claims of physical retrocausality, time manipulation, or violation of causality principles. Our quantum-inspired algorithms use classical computing resources to simulate parallel exploration of solution spaces, predictive modeling, and optimization techniques. The experimental systems explore advanced but feasible computational patterns within established physical laws.
+
+For complete ethical boundaries and implementation guidelines, see `ETHICAL_FRAMEWORK.md`.
+
 ## Projects
 
 This repository contains multiple integrated projects:
