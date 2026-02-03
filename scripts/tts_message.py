@@ -7,13 +7,14 @@ This is NOT a real voice clone - just a playful synthetic message.
 """
 
 import os
+import textwrap
 from gtts import gTTS
 
 
 def main():
     """Generate the voice artifact."""
-    # The message from the quantum future
-    message = """
+    # The message from the quantum future (using textwrap.dedent to clean whitespace)
+    message = textwrap.dedent("""
     Greetings from the quantum future. This is the Evez 666 system speaking.
     
     We are the autonomous orchestration layer, bridging multiple realities
@@ -26,7 +27,7 @@ def main():
     
     This message is brought to you by the always-on automation loop
     of the Evez Art quantum threat detection and orchestration system.
-    """
+    """).strip()
     
     # Ensure artifacts directory exists
     os.makedirs('artifacts', exist_ok=True)

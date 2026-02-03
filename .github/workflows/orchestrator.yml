@@ -14,7 +14,7 @@ jobs:
       - name: Parse event
         id: parse
         run: |
-          echo "event_name=${{ github.event_name }}" > $GITHUB_OUTPUT
+          echo "event_name=${{ github.event_name }}" >> $GITHUB_OUTPUT
           echo "labels=$(jq -r '.issue.labels[].name // empty' <<< '${{ toJson(github.event.issue.labels) }}' | tr '\n' ',')" >> $GITHUB_OUTPUT
           echo "comment=$(jq -r '.comment.body // ""' <<< '${{ toJson(github.event) }}')" >> $GITHUB_OUTPUT
       - name: Acknowledge
@@ -39,6 +39,7 @@ jobs:
       - name: Run pytest
         if: contains(steps.parse.outputs.labels, 'task:test') || contains(steps.parse.outputs.comment, '/test')
         run: |
+          # Allow tests to fail for issue-triggered runs - results posted in comments
           pytest -q || true
       - name: Optional Node tests
         if: contains(steps.parse.outputs.labels, 'task:build') || contains(steps.parse.outputs.comment, '/build')
@@ -48,4 +49,5 @@ jobs:
       - name: npm test (if package.json)
         if: contains(steps.parse.outputs.labels, 'task:build') || contains(steps.parse.outputs.comment, '/build')
         run: |
+          # Allow tests to fail for issue-triggered runs - results posted in comments
           if [ -f package.json ]; then npm ci || npm install; npm test || true; fi

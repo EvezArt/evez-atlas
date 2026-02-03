@@ -27,4 +27,4 @@ jobs:
           node-version: '20'
       - name: Install & test
         run: |
-          if [ -f package.json ]; then npm ci || npm install; npm test || true; else echo "No package.json"; fi
+          if [ -f package.json ]; then npm ci || npm install; npm test; else echo "No package.json"; fi
