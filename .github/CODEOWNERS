@@ -1,0 +1,11 @@
+# CODEOWNERS - Require @EvezArt review for critical paths
+# See: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# GitHub Actions workflows require review
+/.github/workflows/ @EvezArt
+
+# Python dependencies require review
+/requirements.txt @EvezArt
+
+# Core source code requires review
+/src/ @EvezArt

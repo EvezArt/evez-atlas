@@ -1,0 +1,29 @@
+name: Voice from the Future
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  generate-voice:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install gTTS
+        run: |
+          python -m pip install --upgrade pip
+          pip install gTTS
+      - name: Run TTS script
+        run: |
+          python scripts/tts_message.py
+      - name: Upload voice artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: voice-from-future-${{ github.run_id }}
+          path: artifacts/voice_future.mp3
