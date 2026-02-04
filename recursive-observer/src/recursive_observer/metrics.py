@@ -1,15 +1,19 @@
 from __future__ import annotations
 
+import textwrap
+
 from recursive_observer.models import Metrics
 
 
 def get_metrics(code: str) -> Metrics:
     """Return basic metrics for a code snippet."""
+    # Dedent the code to handle indented function definitions
+    code = textwrap.dedent(code)
+    
     try:
         from radon.complexity import cc_visit
-        from radon.metrics import h_visit
+        from radon.metrics import h_visit, mi_visit
         from radon.raw import analyze
-        from radon.visitors import mi_visit
     except ModuleNotFoundError:
         loc = len(code.splitlines())
         return Metrics(
