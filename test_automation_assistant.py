@@ -432,3 +432,147 @@ class TestIntegration:
         # Terminate remaining
         manager.terminate_all()
         assert len(manager.helpers) == 0
+
+
+class TestTelemetry:
+    """Tests for telemetry and debrief functionality."""
+    
+    def test_telemetry_write(self):
+        """Test that telemetry writes to audit file."""
+        import tempfile
+        import os
+        from telemetry import TelemetryLogger
+        
+        # Use a temporary file
+        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.jsonl') as f:
+            temp_file = f.name
+        
+        try:
+            # Create telemetry logger with temp file
+            telemetry = TelemetryLogger(audit_file=temp_file)
+            
+            # Log some events
+            telemetry.log_helper_spawn("test-helper-1", "ChatGPT", 15.5, True)
+            telemetry.log_backend_call("test-helper-1", "ChatGPT", 520.3, True)
+            telemetry.log_task_complete("test-helper-1", "task-1", "ChatGPT", 535.8, True)
+            
+            # Verify file exists and has content
+            assert os.path.exists(temp_file)
+            
+            with open(temp_file, 'r') as f:
+                lines = f.readlines()
+                assert len(lines) == 3
+                
+                # Verify each line is valid JSON
+                import json
+                for line in lines:
+                    entry = json.loads(line)
+                    assert 'timestamp' in entry
+                    assert 'run_id' in entry
+                    assert 'event' in entry
+                    assert 'success' in entry
+        
+        finally:
+            # Cleanup
+            if os.path.exists(temp_file):
+                os.remove(temp_file)
+    
+    def test_debrief_summary_generation(self):
+        """Test that debrief can parse mock telemetry data."""
+        import tempfile
+        import json
+        import os
+        from pathlib import Path
+        
+        # Create mock telemetry data
+        mock_entries = [
+            {"timestamp": 1769967212.0, "run_id": "test_run_1", "event": "helper_spawn", 
+             "helper_id": "h1", "backend": "ChatGPT", "latency_ms": 10.0, "success": True},
+            {"timestamp": 1769967212.1, "run_id": "test_run_1", "event": "backend_call",
+             "helper_id": "h1", "backend": "ChatGPT", "latency_ms": 500.0, "success": True},
+            {"timestamp": 1769967212.2, "run_id": "test_run_1", "event": "task_complete",
+             "helper_id": "h1", "task_id": "t1", "backend": "ChatGPT", "latency_ms": 510.0, "success": True},
+            {"timestamp": 1769967213.0, "run_id": "test_run_2", "event": "helper_spawn",
+             "helper_id": "h2", "backend": "Local", "latency_ms": 5.0, "success": True},
+            {"timestamp": 1769967213.1, "run_id": "test_run_2", "event": "backend_call",
+             "helper_id": "h2", "backend": "Local", "latency_ms": 100.0, "success": False, "error": "Test error"},
+        ]
+        
+        # Write to temporary file
+        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.jsonl') as f:
+            temp_file = f.name
+            for entry in mock_entries:
+                f.write(json.dumps(entry) + '\n')
+        
+        try:
+            # Import debrief functions
+            import sys
+            sys.path.insert(0, 'scripts')
+            from debrief import load_telemetry, analyze_telemetry, generate_markdown_report
+            
+            # Mock the default file path
+            original_file = temp_file
+            
+            # Load and analyze
+            entries = []
+            with open(temp_file, 'r') as f:
+                for line in f:
+                    entries.append(json.loads(line.strip()))
+            
+            assert len(entries) == 5
+            
+            # Analyze
+            analysis = analyze_telemetry(entries)
+            
+            assert analysis['total_runs'] == 2
+            assert 'ChatGPT' in analysis['per_backend']
+            assert 'Local' in analysis['per_backend']
+            
+            # Check ChatGPT stats
+            chatgpt_stats = analysis['per_backend']['ChatGPT']
+            assert chatgpt_stats['count'] == 3
+            assert chatgpt_stats['success'] == 3
+            assert chatgpt_stats['errors'] == 0
+            
+            # Check Local stats
+            local_stats = analysis['per_backend']['Local']
+            assert local_stats['count'] == 2
+            assert local_stats['success'] == 1
+            assert local_stats['errors'] == 1
+            
+            # Check overall health
+            assert analysis['overall']['total_events'] == 5
+            assert analysis['overall']['success_count'] == 4
+            assert analysis['overall']['error_count'] == 1
+            assert analysis['overall']['failure_rate'] == 0.2  # 1 error out of 5
+            
+            # Generate markdown report (should not crash)
+            markdown = generate_markdown_report(analysis)
+            assert len(markdown) > 0
+            assert "# Automation Assistant Telemetry Debrief" in markdown
+            assert "ChatGPT" in markdown
+            assert "Local" in markdown
+        
+        finally:
+            # Cleanup
+            if os.path.exists(temp_file):
+                os.remove(temp_file)
+    
+    def test_stability_score_calculation(self):
+        """Test stability score calculation."""
+        from telemetry import compute_stability_score
+        
+        # Perfect stability
+        assert compute_stability_score(100, 0) == 1.0
+        
+        # 5% error rate
+        assert compute_stability_score(95, 5) == 0.95
+        
+        # 50% error rate
+        assert compute_stability_score(50, 50) == 0.5
+        
+        # Complete failure
+        assert compute_stability_score(0, 100) == 0.0
+        
+        # No data
+        assert compute_stability_score(0, 0) == 1.0

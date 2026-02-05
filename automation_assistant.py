@@ -11,6 +11,7 @@ import asyncio
 import json
 import logging
 import threading
+import time
 import uuid
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass, field
@@ -18,6 +19,8 @@ from datetime import datetime
 from enum import Enum
 from typing import Any, Dict, List, Optional, Callable
 from queue import Queue, Empty
+
+from telemetry import get_telemetry
 
 
 # Configure logging
@@ -163,7 +166,31 @@ class AutomationHelper:
         self.config = config
         self.name = config.name or f"Helper-{self.helper_id}"
         self.status = HelperStatus.INITIALIZING
-        self.backend = self._create_backend()
+        
+        # Track spawn latency
+        spawn_start = time.time()
+        try:
+            self.backend = self._create_backend()
+            spawn_latency_ms = (time.time() - spawn_start) * 1000
+            
+            # Log successful spawn
+            get_telemetry().log_helper_spawn(
+                helper_id=self.helper_id,
+                backend=self.backend.get_name(),
+                latency_ms=spawn_latency_ms,
+                success=True
+            )
+        except Exception as e:
+            spawn_latency_ms = (time.time() - spawn_start) * 1000
+            get_telemetry().log_helper_spawn(
+                helper_id=self.helper_id,
+                backend=config.backend_type.value,
+                latency_ms=spawn_latency_ms,
+                success=False,
+                error=str(e)
+            )
+            raise
+        
         self.task_queue: Queue = Queue()
         self.active_tasks: Dict[str, Task] = {}
         self.completed_tasks: List[Task] = []
@@ -256,6 +283,7 @@ class AutomationHelper:
     
     def _process_task(self, task: Task):
         """Process a single task."""
+        task_start = time.time()
         try:
             self.status = HelperStatus.PROCESSING
             self.active_tasks[task.task_id] = task
@@ -267,11 +295,32 @@ class AutomationHelper:
             asyncio.set_event_loop(loop)
             
             try:
+                backend_call_start = time.time()
                 result = loop.run_until_complete(
                     self.backend.process(task.prompt, task.context)
                 )
+                backend_latency_ms = (time.time() - backend_call_start) * 1000
+                
                 task.result = result
                 task.completed_at = datetime.now()
+                
+                # Log successful backend call
+                get_telemetry().log_backend_call(
+                    helper_id=self.helper_id,
+                    backend=self.backend.get_name(),
+                    latency_ms=backend_latency_ms,
+                    success=True
+                )
+                
+                task_latency_ms = (time.time() - task_start) * 1000
+                get_telemetry().log_task_complete(
+                    helper_id=self.helper_id,
+                    task_id=task.task_id,
+                    backend=self.backend.get_name(),
+                    latency_ms=task_latency_ms,
+                    success=True
+                )
+                
                 logger.info(f"[{self.name}] Task {task.task_id[:8]} completed")
             finally:
                 loop.close()
@@ -280,6 +329,17 @@ class AutomationHelper:
             logger.error(f"[{self.name}] Task {task.task_id[:8]} failed: {e}")
             task.error = str(e)
             task.completed_at = datetime.now()
+            
+            # Log failed task
+            task_latency_ms = (time.time() - task_start) * 1000
+            get_telemetry().log_task_complete(
+                helper_id=self.helper_id,
+                task_id=task.task_id,
+                backend=self.backend.get_name(),
+                latency_ms=task_latency_ms,
+                success=False,
+                error=str(e)
+            )
         finally:
             # Move task from active to completed
             self.active_tasks.pop(task.task_id, None)

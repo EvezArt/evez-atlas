@@ -110,6 +110,9 @@ manager.terminate_all()
 ```bash
 # Run the comprehensive demo
 python automation_assistant_demo.py
+
+# Run the demo and generate telemetry debrief
+python automation_assistant_demo.py --debrief
 ```
 
 This will demonstrate:
@@ -117,6 +120,97 @@ This will demonstrate:
 - Dynamic helper spawning
 - Parallel task processing
 - Device-optimized operation
+
+## Telemetry & Debrief
+
+The automation assistant includes built-in telemetry tracking to monitor performance and reliability.
+
+### What is Tracked
+
+- **Helper Spawn Latency**: Time taken to initialize each helper instance
+- **Backend Call Success/Failure**: Success rate of backend API calls
+- **Task Completion Metrics**: Task processing times and outcomes
+- **Error Rates**: Frequency and types of errors encountered
+
+### Telemetry Data Location
+
+All telemetry is appended to `src/memory/audit.jsonl` in structured JSONL format:
+
+```json
+{
+  "timestamp": 1769967212.25,
+  "run_id": "20260205_165411",
+  "event": "helper_spawn",
+  "helper_id": "a1b2c3d4",
+  "backend": "ChatGPT (gpt-3.5-turbo)",
+  "latency_ms": 12.5,
+  "success": true
+}
+```
+
+### Generating a Debrief Report
+
+To analyze telemetry and generate a health report:
+
+```bash
+# After running demos
+python scripts/debrief.py
+```
+
+The debrief script will:
+1. Read all telemetry entries from `audit.jsonl`
+2. Compute aggregated statistics (p95 latency, failure rate, top errors)
+3. Print a console summary
+4. Save a detailed markdown report to `docs/debrief/latest.md`
+
+### Debrief Metrics
+
+The debrief report includes:
+
+- **Overall Health**: 🟢 OK (< 5% failures), 🟡 Degraded (5-20%), or 🔴 Critical (> 20%)
+- **Per-Backend Stats**: Success count, error count, failure rate
+- **Latency Metrics**: Average, P50 (median), and P95 latency
+- **Stability Score**: Computed as 1 - (errors / total events)
+
+### Example Debrief Output
+
+```
+====================================================================
+Automation Assistant Telemetry Debrief
+====================================================================
+
+Overall Health: 🟢 OK
+Total Runs: 3
+Total Events: 45
+Success: 44
+Errors: 1
+Failure Rate: 2.22%
+
+Per-Backend Stats:
+  ChatGPT (gpt-3.5-turbo):
+    Calls: 15, Errors: 0, Failure: 0.00%
+    Latency: avg=520.5ms, p50=515.2ms, p95=548.1ms
+  Local (local-mock):
+    Calls: 15, Errors: 1, Failure: 6.67%
+    Latency: avg=102.3ms, p50=101.5ms, p95=115.8ms
+
+✅ Detailed report saved to: docs/debrief/latest.md
+====================================================================
+```
+
+### Automated Debrief
+
+Run the demo with the `--debrief` flag to automatically generate a debrief report after completion:
+
+```bash
+python automation_assistant_demo.py --debrief
+```
+
+This is useful for:
+- Continuous monitoring of system health
+- Performance regression testing
+- Identifying problematic backends or patterns
+- Tracking improvements over time
 
 ## Advanced Configuration
 

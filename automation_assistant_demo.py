@@ -5,6 +5,7 @@ Demonstrates the usage of the device automation assistant helper system.
 Shows how to spawn helpers for different backends and process tasks.
 """
 
+import sys
 import time
 from automation_assistant import (
     AutomationAssistantManager,
@@ -270,4 +271,15 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    # Check for --debrief flag
+    if "--debrief" in sys.argv:
+        print("\n" + "=" * 70)
+        print("Running debrief after demo completion...")
+        print("=" * 70 + "\n")
+        main()
+        
+        # Run debrief script
+        import subprocess
+        subprocess.run([sys.executable, "scripts/debrief.py"])
+    else:
+        main()

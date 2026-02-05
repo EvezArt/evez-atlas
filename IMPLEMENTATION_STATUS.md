@@ -2,15 +2,15 @@
 
 ## Project: Device Automation Assistant Helper for Samsung Galaxy A16
 
-**Status:** ✅ **COMPLETE AND PRODUCTION-READY**
+**Status:** ✅ **COMPLETE AND PRODUCTION-READY WITH TELEMETRY**
 
-**Date:** February 1, 2026
+**Date:** February 5, 2026 (Updated with telemetry features)
 
 ---
 
 ## Summary
 
-Successfully implemented a comprehensive on-device automation assistant helper system that can spawn multiple helper instances for different AI backends (ChatGPT, Comet, Local) with full device optimization for Samsung Galaxy A16.
+Successfully implemented a comprehensive on-device automation assistant helper system that can spawn multiple helper instances for different AI backends (ChatGPT, Comet, Local) with full device optimization for Samsung Galaxy A16. **Now includes built-in telemetry tracking and debrief reporting.**
 
 ## Requirements Met
 
@@ -34,36 +34,58 @@ Successfully implemented a comprehensive on-device automation assistant helper s
 - Configurable models and endpoints
 - Analytics and ML experiment tracking
 
+✅ **Telemetry & Monitoring** (NEW)
+- Track helper spawn latency, backend success rates, error rates
+- Structured JSONL logging to src/memory/audit.jsonl
+- Automated debrief reports with health verdicts
+- Stability score calculation (1 - errors/total)
+
 ## Implementation Details
 
 ### Core Files Created
 
-1. **automation_assistant.py** (14,508 bytes)
+1. **automation_assistant.py** (~15,000 bytes)
    - AutomationAssistantManager class
-   - AutomationHelper class
+   - AutomationHelper class with telemetry hooks
    - AIBackend implementations (ChatGPT, Comet, Local)
    - Configuration system
    - Task queue and processing
 
-2. **automation_assistant_demo.py** (8,646 bytes)
+2. **telemetry.py** (3,045 bytes) **NEW**
+   - TelemetryLogger for thread-safe event logging
+   - Helper spawn, backend call, and task completion tracking
+   - Stability score calculation
+   - JSONL append to audit file
+
+3. **automation_assistant_demo.py** (~9,000 bytes)
    - Basic usage demonstration
    - Multiple instances demo
    - Device-optimized examples
+   - `--debrief` flag support
 
-3. **test_automation_assistant.py** (13,740 bytes)
-   - 25 comprehensive test cases
+4. **scripts/debrief.py** (7,716 bytes) **NEW**
+   - Load and analyze telemetry from audit.jsonl
+   - Compute per-backend statistics (count, errors, latency percentiles)
+   - Generate health verdict (🟢 OK / 🟡 Degraded / 🔴 Critical)
+   - Save markdown report to docs/debrief/latest.md
+
+5. **test_automation_assistant.py** (~17,000 bytes)
+   - 28 comprehensive test cases (25 original + 3 telemetry tests)
    - Backend tests
    - Helper lifecycle tests
    - Manager coordination tests
    - Integration scenarios
+   - Telemetry write tests
+   - Debrief generation tests
 
-4. **AUTOMATION_ASSISTANT_README.md** (10,383 bytes)
+6. **AUTOMATION_ASSISTANT_README.md** (~14,000 bytes)
    - Complete API documentation
    - Usage examples
    - Performance tips
    - Troubleshooting guide
+   - **Telemetry & Debrief section** (NEW)
 
-5. **SAMSUNG_GALAXY_A16_GUIDE.md** (8,471 bytes)
+7. **SAMSUNG_GALAXY_A16_GUIDE.md** (8,471 bytes)
    - Device-specific deployment guide
    - Installation instructions
    - Performance optimization
@@ -86,9 +108,16 @@ Successfully implemented a comprehensive on-device automation assistant helper s
 ## Quality Metrics
 
 ### Testing
-- ✅ **25 new tests** - All passing
+- ✅ **28 new tests** - All passing (25 original + 3 telemetry)
 - ✅ **13 existing tests** - All passing (no regressions)
 - ✅ **100% pass rate**
+
+### Telemetry Coverage (NEW)
+- ✅ Helper spawn events tracked
+- ✅ Backend call latency measured
+- ✅ Task completion metrics logged
+- ✅ Error rates computed
+- ✅ Stability scores calculated
 
 ### Security
 - ✅ **CodeQL scan** - 0 vulnerabilities found
