@@ -122,7 +122,9 @@ class QuantumSecurity:
             Hex digest of circuit hash
         """
         # Create a deterministic representation of the circuit
-        circuit_qasm = circuit.qasm()
+        # In Qiskit 1.0+, use qasm3 export instead of deprecated qasm()
+        from qiskit import qasm2
+        circuit_qasm = qasm2.dumps(circuit)
         
         # Hash using SHA-256
         hasher = hashlib.sha256()
@@ -277,7 +279,7 @@ class AnomalyDetector:
             SecurityEvent if anomaly detected
         """
         # Count CNOT gates as a proxy for entanglement
-        cnot_count = sum(1 for inst, _, _ in circuit.data if inst.name == 'cx')
+        cnot_count = sum(1 for inst in circuit.data if inst.operation.name == 'cx')
         
         if cnot_count > max_entanglement_depth * circuit.num_qubits:
             event = SecurityEvent(

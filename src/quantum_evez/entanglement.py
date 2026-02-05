@@ -131,9 +131,20 @@ class EntanglementSimulator:
         Returns:
             Fidelity value between 0 and 1
         """
-        # Add measurement operations
-        qc = circuit.copy()
-        qc.measure_all()
+        # Create a fresh circuit without classical registers
+        from qiskit import QuantumRegister, ClassicalRegister
+        
+        qr = QuantumRegister(circuit.num_qubits, 'q')
+        cr = ClassicalRegister(circuit.num_qubits, 'c')
+        qc = QuantumCircuit(qr, cr)
+        
+        # Copy gates from original circuit (excluding measurements)
+        for instruction in circuit.data:
+            if instruction.operation.name not in ['measure', 'barrier']:
+                qc.append(instruction.operation, instruction.qubits)
+        
+        # Add measurements
+        qc.measure(qr, cr)
         
         # Simulate
         job = self.backend.run(qc, shots=self.shots, noise_model=self.noise_model)
@@ -142,10 +153,10 @@ class EntanglementSimulator:
         
         # Calculate fidelity based on correlation
         # For a perfect Bell state (Φ+), we expect only |00⟩ and |11⟩
+        total_shots = sum(counts.values())
         correlated = counts.get('00', 0) + counts.get('11', 0)
-        uncorrelated = counts.get('01', 0) + counts.get('10', 0)
         
-        fidelity = correlated / (correlated + uncorrelated) if (correlated + uncorrelated) > 0 else 0.0
+        fidelity = correlated / total_shots if total_shots > 0 else 0.0
         return fidelity
     
     def simulate_noisy_channel(
