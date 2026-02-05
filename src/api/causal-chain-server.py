@@ -1,7 +1,11 @@
 from __future__ import annotations
 
 import base64
+import hashlib
+import hmac
 import json
+import os
+import time
 from dataclasses import dataclass
 from typing import Any, Dict
 
@@ -38,8 +42,14 @@ def _decode_jwt_payload(token: str) -> Dict[str, Any]:
             detail="Invalid token format",
             headers={"WWW-Authenticate": "Bearer"},
         )
+    signing_input = f"{parts[0]}.{parts[1]}".encode("utf-8")
+    secret = os.getenv("CAUSAL_CHAIN_JWT_SECRET", "development-secret").encode("utf-8")
+    expected_signature = hmac.new(secret, signing_input, hashlib.sha256).digest()
     try:
+        header_bytes = _decode_base64url(parts[0])
+        signature = _decode_base64url(parts[2])
         payload_bytes = _decode_base64url(parts[1])
+        header = json.loads(header_bytes.decode("utf-8"))
         payload = json.loads(payload_bytes.decode("utf-8"))
     except (ValueError, json.JSONDecodeError):
         raise HTTPException(
@@ -47,12 +57,52 @@ def _decode_jwt_payload(token: str) -> Dict[str, Any]:
             detail="Invalid token payload",
             headers={"WWW-Authenticate": "Bearer"},
         )
+    if not isinstance(header, dict) or header.get("alg") != "HS256":
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid token header",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+
+    if not hmac.compare_digest(signature, expected_signature):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid token signature",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+
     if not isinstance(payload, dict):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid token payload",
             headers={"WWW-Authenticate": "Bearer"},
         )
+
+    now = int(time.time())
+    exp = payload.get("exp")
+    if not isinstance(exp, int) or exp <= now:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Token expired",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+
+    expected_issuer = os.getenv("CAUSAL_CHAIN_JWT_ISSUER", "causal-chain-auth")
+    if payload.get("iss") != expected_issuer:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid token issuer",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+
+    expected_audience = os.getenv("CAUSAL_CHAIN_JWT_AUDIENCE", "causal-chain-api")
+    if payload.get("aud") != expected_audience:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid token audience",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+
     return payload
 
 
