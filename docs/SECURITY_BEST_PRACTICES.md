@@ -223,7 +223,7 @@ If you suspect a security incident:
 
 2. **Review recent audit logs**:
    ```bash
-   tail -1000 src/memory/audit.jsonl | jq 'select(.timestamp > now-3600)'
+   tail -1000 src/memory/audit.jsonl | jq 'select(.timestamp > (now - 3600))'
    ```
 
 3. **Check for suspicious behavior patterns**:
