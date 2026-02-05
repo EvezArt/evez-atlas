@@ -11,7 +11,7 @@ from pathlib import Path
 from fastapi.testclient import TestClient
 
 
-os.environ.setdefault("CAUSAL_CHAIN_JWT_SECRET", "test-secret")
+os.environ["CAUSAL_CHAIN_JWT_SECRET"] = "test-secret"
 os.environ.setdefault("CAUSAL_CHAIN_JWT_ISSUER", "causal-chain-auth")
 os.environ.setdefault("CAUSAL_CHAIN_JWT_AUDIENCE", "causal-chain-api")
 
@@ -39,17 +39,23 @@ def _sign_token(header_segment: str, payload_segment: str, secret: str = "test-s
     return f"{header_segment}.{payload_segment}.{signature_segment}"
 
 
-def _make_token(tier: str, exp_offset_seconds: int = 300) -> str:
+def _make_token(
+    tier: str,
+    exp_offset_seconds: int = 300,
+    secret: str = "test-secret",
+    issuer: str = "causal-chain-auth",
+    audience: str | list[str] = "causal-chain-api",
+) -> str:
     header = _encode_segment({"alg": "HS256", "typ": "JWT"})
     payload = _encode_segment(
         {
             "tier": tier,
-            "iss": "causal-chain-auth",
-            "aud": "causal-chain-api",
+            "iss": issuer,
+            "aud": audience,
             "exp": int(time.time()) + exp_offset_seconds,
         }
     )
-    return _sign_token(header, payload)
+    return _sign_token(header, payload, secret=secret)
 
 
 def test_missing_token_is_unauthorized():
@@ -74,6 +80,15 @@ def test_unsigned_token_is_unauthorized():
     response = client.post(
         "/resolve-awareness",
         headers={"Authorization": f"Bearer {header}.{payload}."},
+    )
+    assert response.status_code == 401
+
+
+def test_wrong_signature_is_unauthorized():
+    client = TestClient(_load_app())
+    response = client.post(
+        "/resolve-awareness",
+        headers={"Authorization": f"Bearer {_make_token('standard', secret='forged-secret')}"},
     )
     assert response.status_code == 401
 
@@ -133,3 +148,16 @@ def test_expired_token_is_unauthorized():
         headers={"Authorization": f"Bearer {_make_token('standard', exp_offset_seconds=-1)}"},
     )
     assert response.status_code == 401
+
+
+def test_list_audience_claim_is_accepted_when_expected_audience_present():
+    client = TestClient(_load_app())
+    response = client.post(
+        "/resolve-awareness",
+        headers={
+            "Authorization": (
+                f"Bearer {_make_token('standard', audience=['some-other-aud', 'causal-chain-api'])}"
+            )
+        },
+    )
+    assert response.status_code == 200
