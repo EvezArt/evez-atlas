@@ -244,6 +244,60 @@ The project uses Azure Pipelines for continuous integration:
 - Python tests run on `ubuntu-latest` with Python 3.12
 - TypeScript tests run on `ubuntu-latest` with Node.js 20.x
 
+## Security Controls
+
+The system implements comprehensive security controls for production deployments.
+
+### Environment-Based Protection
+
+Configure security via environment variables (see `.env.example`):
+
+```bash
+# Enable production mode (blocks debug endpoints)
+PRODUCTION_MODE=true
+
+# Agent behavior controls
+ALLOW_AGENT_HANDOFF=false      # Block "handoff to human" requests
+ALLOW_SOURCE_CITATION=false    # Block "show sources" requests
+ENABLE_EASTER_EGGS=false       # Disable UI Easter eggs
+```
+
+### Protected Debug Routes
+
+The following routes are **blocked in production mode**:
+- `GET /navigation-ui` - Quantum navigation visualization
+- `GET /navigation-ui/data` - Raw navigation state data
+- `GET /swarm-status` - Real-time swarm status
+- `GET /security-info` - Security configuration info
+
+### Agent Behavior Controls
+
+Special agent behaviors are detected and controlled:
+
+| Behavior | Trigger Patterns | Production Default |
+|----------|------------------|-------------------|
+| **Handoff to Human** | "handoff to human", "escalate to human" | BLOCKED ❌ |
+| **Source Citation** | "show sources", "cite sources" | BLOCKED ❌ |
+| **Workflow Triggers** | "run workflow", "execute workflow" | BLOCKED ❌ |
+| **System Info** | "system info", "reveal system" | BLOCKED ❌ (always) |
+
+Use `ALLOW_AGENT_HANDOFF=true` or `ALLOW_SOURCE_CITATION=true` to enable in production if needed.
+
+### Testing Security Controls
+
+```bash
+# Test in development mode (all features enabled)
+python3 demo_security.py
+
+# Test in production mode (debug routes blocked)
+PRODUCTION_MODE=true python3 demo_security.py
+
+# Run security tests
+pytest tests/test_security_controls.py -v
+```
+
+See [SECURITY.md](SECURITY.md) for complete security documentation.
+
 ## Documentation
 
 - [Initial Access](docs/initial-access.md)
