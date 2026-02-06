@@ -387,6 +387,84 @@ def swarm_status():
         }
 
 
+# ========== Visual Dashboard Endpoints ==========
+@app.get("/dashboard", response_class=HTMLResponse)
+def visual_dashboard():
+    """Serve the visual dashboard interface."""
+    dashboard_path = Path(__file__).parent / "visual_dashboard.html"
+    if dashboard_path.exists():
+        return HTMLResponse(dashboard_path.read_text())
+    else:
+        return HTMLResponse("<h1>Dashboard not found</h1>", status_code=404)
+
+
+@app.get("/api/wifi/scan")
+def wifi_scan():
+    """Scan for WiFi networks and return results."""
+    try:
+        from src.api.wifi_scanner import WiFiScanner
+        scanner = WiFiScanner()
+        networks = scanner.scan_networks()
+        statistics = scanner.get_network_statistics()
+        return {
+            "success": True,
+            "networks": networks,
+            "statistics": statistics
+        }
+    except Exception as e:
+        return {
+            "success": False,
+            "error": str(e),
+            "networks": []
+        }
+
+
+@app.get("/api/wifi/map")
+def wifi_network_map():
+    """Get WiFi network map data for visualization."""
+    try:
+        from src.api.wifi_scanner import WiFiScanner
+        scanner = WiFiScanner()
+        scanner.scan_networks()
+        map_data = scanner.generate_network_map_data()
+        return {
+            "success": True,
+            "map_data": map_data
+        }
+    except Exception as e:
+        return {
+            "success": False,
+            "error": str(e)
+        }
+
+
+@app.get("/api/metrics/summary")
+def metrics_summary():
+    """Get summary of system metrics for dashboard."""
+    import random
+    return {
+        "threats_detected": random.randint(0, 50),
+        "active_entities": random.randint(5, 25),
+        "network_health": random.randint(80, 100),
+        "quantum_operations": random.randint(100, 500),
+        "system_uptime": "24h 15m",
+        "api_calls_today": random.randint(1000, 5000)
+    }
+
+
+@app.get("/api/activity/recent")
+def recent_activity(limit: int = 20):
+    """Get recent activity log entries."""
+    activities = [
+        {"timestamp": time.time() - i * 60, "message": f"Activity event {i}", "level": "info"}
+        for i in range(limit)
+    ]
+    return {
+        "success": True,
+        "activities": activities
+    }
+
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)

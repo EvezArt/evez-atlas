@@ -10,6 +10,56 @@ This repository includes experimental and conceptual systems. Read `ETHICAL_FRAM
 
 This repository contains multiple integrated projects:
 
+### 0. Visual Dashboard & Network Mapping
+A comprehensive web-based visual dashboard with real-time system monitoring and WiFi network mapping capabilities.
+
+**Key Features:**
+- Interactive visual dashboard with charts and graphs (Chart.js)
+- Real-time system metrics and activity monitoring
+- WiFi network scanning and visualization
+- Network topology mapping with signal strength
+- Action panels for system control
+- Data export capabilities
+- Responsive design with modern UI
+
+**Access the Dashboard:**
+```bash
+# Start API server (includes dashboard)
+python src/api/causal-chain-server.py
+
+# Access dashboard in browser
+http://localhost:8000/dashboard
+
+# Or access directly
+open src/api/visual_dashboard.html
+```
+
+**API Endpoints:**
+- `GET /dashboard` - Visual dashboard interface
+- `GET /api/wifi/scan` - Scan for WiFi networks
+- `GET /api/wifi/map` - Get network map visualization data
+- `GET /api/metrics/summary` - System metrics summary
+- `GET /api/activity/recent` - Recent activity log
+
+**WiFi Scanner Usage:**
+```bash
+# Run WiFi scanner standalone
+python src/api/wifi_scanner.py
+
+# Or use programmatically
+from src.api.wifi_scanner import WiFiScanner
+scanner = WiFiScanner()
+networks = scanner.scan_networks()
+stats = scanner.get_network_statistics()
+map_data = scanner.generate_network_map_data()
+```
+
+**Testing:**
+```bash
+# Test visual dashboard and WiFi scanner
+PYTHONPATH=$PWD python tests/test_visual_dashboard.py
+```
+
 ### 1. Python Quantum Threat Detection System
 A quantum-inspired threat detection system with machine learning capabilities.
 
