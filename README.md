@@ -5,3 +5,4 @@ Evez666 contains working notes and runbooks for controlled, authorized security 
 ## Documentation
 
 - [Initial Access](docs/initial-access.md)
+- [Codex-wrapped Copilot Agent Command](docs/codex-wrapped-command.md)
