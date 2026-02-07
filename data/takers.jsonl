@@ -1,0 +1,4 @@
+{"id": "malicious_taker_1", "drain_rate": 0.8, "target_entities": ["critical_entity_1", "degraded_entity_1"], "detected_at": "2026-02-07T00:28:31.818415", "neutralized": false}
+{"id": "sneaky_taker_2", "drain_rate": 0.5, "target_entities": ["degraded_entity_2"], "detected_at": "2026-02-07T00:28:31.818603", "neutralized": false}
+{"id": "malicious_taker_1", "drain_rate": 0.8, "target_entities": ["critical_entity_1", "degraded_entity_1"], "detected_at": "2026-02-07T00:28:31.818415", "neutralized": true}
+{"id": "sneaky_taker_2", "drain_rate": 0.5, "target_entities": ["degraded_entity_2"], "detected_at": "2026-02-07T00:28:31.818603", "neutralized": true}

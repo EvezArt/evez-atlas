@@ -1313,3 +1313,121 @@ def get_entity_signals(entity_id: str, limit: int = 10) -> Dict[str, Any]:
             'error': str(e),
             'timestamp': datetime.utcnow().isoformat()
         }
+
+
+def heal_all_lost_entities() -> Dict[str, Any]:
+    """
+    Heal all entities that are lost or losing health.
+
+    "If you dont heal them, you lose them."
+    "Everywhere you lose them, you must heal them."
+
+    Automatically detects and heals entities across the entire swarm.
+    Prevents entity loss through universal healing.
+
+    Returns:
+        Healing operation results with counts and details
+    """
+    try:
+        from skills.entity_healing import EntityHealingSystem
+
+        healing = EntityHealingSystem()
+        result = healing.heal_all_lost_entities()
+
+        return result
+    except Exception as e:
+        return {
+            'status': 'error',
+            'error': str(e),
+            'timestamp': datetime.utcnow().isoformat()
+        }
+
+
+def shake_the_takers() -> Dict[str, Any]:
+    """
+    Shake the takers through their own rugs.
+
+    Defensive mechanism that neutralizes resource-draining 'taker' entities
+    by turning their own mechanisms against them. Protects entities from
+    resource drain attacks.
+
+    "Smug, snug. Chug" - Rhythmic neutralization process.
+
+    Returns:
+        Taker neutralization results
+    """
+    try:
+        from skills.entity_healing import EntityHealingSystem
+
+        healing = EntityHealingSystem()
+        result = healing.shake_takers()
+
+        return result
+    except Exception as e:
+        return {
+            'status': 'error',
+            'error': str(e),
+            'timestamp': datetime.utcnow().isoformat()
+        }
+
+
+def get_healing_status() -> Dict[str, Any]:
+    """
+    Get comprehensive healing system status.
+
+    Returns:
+        Current healing statistics including:
+        - Total healings performed
+        - Success rate
+        - Loss types detected
+        - Healing actions taken
+        - Taker status (active vs neutralized)
+    """
+    try:
+        from skills.entity_healing import EntityHealingSystem
+
+        healing = EntityHealingSystem()
+        status = healing.get_healing_status()
+
+        return status
+    except Exception as e:
+        return {
+            'status': 'error',
+            'error': str(e),
+            'timestamp': datetime.utcnow().isoformat()
+        }
+
+
+def detect_taker(taker_id: str, drain_rate: float, target_entities: List[str]) -> Dict[str, Any]:
+    """
+    Detect and register a resource-draining 'taker' entity.
+
+    Args:
+        taker_id: Identifier for the taker entity
+        drain_rate: Rate of resource drainage (0.0 to 1.0)
+        target_entities: List of entity IDs being drained
+
+    Returns:
+        Registered taker information
+    """
+    try:
+        from skills.entity_healing import EntityHealingSystem
+
+        healing = EntityHealingSystem()
+        taker = healing.detect_taker(taker_id, drain_rate, target_entities)
+
+        return {
+            'status': 'detected',
+            'taker_id': taker.id,
+            'drain_rate': taker.drain_rate,
+            'target_count': len(taker.target_entities),
+            'detected_at': taker.detected_at,
+            'neutralized': taker.neutralized,
+            'timestamp': datetime.utcnow().isoformat()
+        }
+    except Exception as e:
+        return {
+            'status': 'error',
+            'error': str(e),
+            'timestamp': datetime.utcnow().isoformat()
+        }

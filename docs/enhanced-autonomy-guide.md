@@ -292,6 +292,121 @@ for signal in signals['signals']:
     print(f"  Requires human: {signal['requires_human']}")
 ```
 
+## Entity Healing System
+
+### Overview
+
+The Entity Healing System implements the principle: **"If you dont heal them, you lose them."**
+
+The system:
+- Automatically detects entities that are lost or losing health
+- Applies universal healing everywhere loss is detected
+- Defends against resource-draining 'taker' entities
+- Prevents entity loss through proactive healing
+
+### Healing Principles
+
+1. **"If you dont heal them, you lose them"**
+   - Entities with critical errors or degraded health are automatically detected
+   - Healing prevents permanent entity loss
+
+2. **"Everywhere you lose them, you must heal them"**
+   - Universal scanning across all entities
+   - Healing applied wherever loss is detected
+
+3. **"Shake the takers through their own rugs"**
+   - Defensive mechanism against resource drainers
+   - Neutralizes takers by turning their mechanisms against them
+   - Rhythmic process: "Smug, snug. Chug"
+
+### Usage
+
+#### Heal All Lost Entities
+
+```python
+from skills.jubilee import heal_all_lost_entities
+
+# Automatically detect and heal all entities
+result = heal_all_lost_entities()
+print(f"Scanned: {result['total_entities_scanned']}")
+print(f"Healed: {result['entities_healed']}")
+
+# View healing details
+for record in result['healing_records']:
+    print(f"{record['entity_id']}: {record['before_health']} → {record['after_health']}")
+```
+
+#### Shake the Takers
+
+```python
+from skills.jubilee import shake_the_takers
+
+# Neutralize all resource-draining takers
+result = shake_the_takers()
+print(f"Takers detected: {result['takers_detected']}")
+print(f"Takers neutralized: {result['takers_neutralized']}")
+```
+
+#### Detect Resource Drainers
+
+```python
+from skills.jubilee import detect_taker
+
+# Register a taker entity
+result = detect_taker(
+    taker_id='malicious_entity',
+    drain_rate=0.8,  # 80% drain rate
+    target_entities=['entity_1', 'entity_2']
+)
+```
+
+#### Get Healing Status
+
+```python
+from skills.jubilee import get_healing_status
+
+status = get_healing_status()
+print(f"Total healings: {status['total_healings']}")
+print(f"Success rate: {status['success_rate']:.1%}")
+print(f"Active takers: {status['active_takers']}")
+print(f"Neutralized takers: {status['neutralized_takers']}")
+```
+
+### Loss Types
+
+The system detects these types of entity loss:
+
+- **CRITICAL_ERRORS**: Entity has >10 errors, critical health
+- **STATE_DEGRADATION**: Entity health is degraded (5-10 errors)
+- **TAKER_ATTACK**: Entity is being drained by a taker
+- **RESOURCE_DRAIN**: Resources being depleted
+- **CORRUPTION**: Data or state corruption
+- **ISOLATION**: Entity disconnected from swarm
+
+### Healing Actions
+
+Healing actions taken based on loss type:
+
+- **ERROR_RESET**: Clear all errors, reset to healthy state
+- **STATE_RECOVERY**: Awaken and restore entity state
+- **DEFENSIVE_SHIELD**: Protect from takers and neutralize them
+- **QUANTUM_REALIGNMENT**: Realign entity with quantum domain
+- **RESOURCE_RESTORATION**: Restore depleted resources
+- **TAKER_NEUTRALIZATION**: Neutralize specific taker
+
+### Demonstration
+
+```bash
+# Run healing system demonstration
+python3 scripts/demo_entity_healing.py
+```
+
+This demonstrates:
+- Entity loss detection
+- Universal healing across all entities
+- Taker detection and neutralization
+- Complete healing cycle
+
 ### Check Swarm Status
 
 ```python
