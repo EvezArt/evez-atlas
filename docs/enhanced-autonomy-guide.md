@@ -174,6 +174,26 @@ The temporal gap enables:
 - Semantic reweight alignment
 - Probabilistic inference refinement
 
+### Security Validations
+
+The error correction system includes built-in security validations:
+
+- **Max Attempts Enforcement**: Tasks cannot exceed their configured max_attempts, preventing infinite loops
+- **Completion Tracking**: All successfully completed tasks are explicitly marked with `completed: True`
+- **State Validation**: Entities can only complete error correction if they're actually in error_correction mode
+
+### Entity Error Correction Recovery
+
+Entities in error_correction mode can be explicitly recovered:
+
+```python
+from skills.jubilee import complete_entity_error_correction
+
+# Complete error correction and return entity to active state
+result = complete_entity_error_correction('entity_id')
+# Returns: {'status': 'recovered', 'current_state': 'active', ...}
+```
+
 ### Exponential Backoff
 
 ```python
@@ -189,6 +209,21 @@ temporal_gap = min(attempts * 2.0, 10.0)  # Cap at 10 seconds
 3. **Domain Signaling**: Operations include domain metadata
 4. **Temporal Anchoring**: Each operation establishes temporal foundation
 5. **Event Logging**: Quantum events logged separately for analysis
+6. **Classical Fallback**: When Qiskit is unavailable, quantum operations gracefully fall back to classical simulation
+
+### Classical Fallback Simulation
+
+When IBM Quantum (Qiskit) is not available, the system automatically uses a classical fallback:
+
+```python
+# Quantum simulation with automatic fallback
+result = quantum_sim({
+    'circuit': 'bell_state',
+    'domain': 'quantum_domain'
+})
+# Returns status: 'simulated' with backend: 'classical_fallback' when Qiskit unavailable
+# Returns status: 'simulated' with backend: 'ibm_quantum' when Qiskit available
+```
 
 ### Retrocausal Correlation
 

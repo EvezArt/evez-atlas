@@ -109,39 +109,53 @@ class TaskQueue:
         task = self.tasks.get(task_id)
         if not task:
             return {'status': 'error', 'message': 'Task not found'}
-        
+
+        # Security validation: Check if task has exceeded reasonable attempts
+        if task.attempts >= task.max_attempts:
+            task.status = TaskStatus.FAILED
+            task.last_error = "Maximum attempts exceeded"
+            self._save_task(task)
+            return {
+                'status': 'failed',
+                'task_id': task_id,
+                'error': task.last_error,
+                'attempts': task.attempts,
+                'security': 'max_attempts_enforced'
+            }
+
         handler = self.task_handlers.get(task.name)
         if not handler:
             task.status = TaskStatus.FAILED
             task.last_error = f"No handler for task: {task.name}"
             self._save_task(task)
             return {'status': 'error', 'message': task.last_error}
-        
+
         # Update status to running
         task.status = TaskStatus.RUNNING
         task.attempts += 1
         self._save_task(task)
-        
+
         try:
             # Execute the task
             result = handler(task.data)
-            
+
             # Mark as completed
             task.status = TaskStatus.COMPLETED
             task.completed_at = datetime.utcnow().isoformat()
             self._save_task(task)
-            
+
             return {
                 'status': 'success',
                 'task_id': task_id,
                 'result': result,
-                'attempts': task.attempts
+                'attempts': task.attempts,
+                'completed': True
             }
-            
+
         except Exception as e:
             # Error correction mode
             task.last_error = str(e)
-            
+
             if task.attempts >= task.max_attempts:
                 # Max attempts reached
                 task.status = TaskStatus.FAILED
@@ -157,7 +171,7 @@ class TaskQueue:
                 task.status = TaskStatus.ERROR_CORRECTION
                 task.temporal_gap = min(task.attempts * 2.0, 10.0)  # Exponential backoff
                 self._save_task(task)
-                
+
                 # Attempt iterative correction
                 return self._iterative_correction(task)
     

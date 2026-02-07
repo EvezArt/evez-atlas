@@ -131,12 +131,28 @@ class EntityLifecycleManager:
         entity = self.entities.get(entity_id)
         if not entity:
             return None
-        
+
         entity.state = EntityState.ERROR_CORRECTION
         entity.error_count += 1
         entity.last_active = datetime.utcnow().isoformat()
         self._save_entity(entity)
-        
+
+        return entity
+
+    def complete_error_correction(self, entity_id: str) -> Optional[Entity]:
+        """Complete error correction and return entity to active state."""
+        entity = self.entities.get(entity_id)
+        if not entity:
+            return None
+
+        # Can only complete correction if in error correction mode
+        if entity.state != EntityState.ERROR_CORRECTION:
+            return None
+
+        entity.state = EntityState.ACTIVE
+        entity.last_active = datetime.utcnow().isoformat()
+        self._save_entity(entity)
+
         return entity
     
     def offline_adapt(self, entity_id: str) -> Optional[Entity]:
