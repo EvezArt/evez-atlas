@@ -271,6 +271,9 @@ if __name__ == '__main__':
     print("- awaken_swarm_entities(): Awaken hibernating entities")
     print("- process_task_queue(): Execute pending tasks with error correction")
     print("- complete_entity_error_correction(entity_id): Complete error correction and recover entity")
+    print("- signal_entities_autonomously(): Signal all entities about status/health autonomously")
+    print("- get_human_intervention_alerts(): Get entities requiring human help")
+    print("- get_entity_signals(entity_id): Get communication history for entity")
     
     # Show current status
     print("\nCurrent Status:")
@@ -1145,40 +1148,40 @@ def comprehensive_multi_interpretation(input_text: str) -> Dict[str, Any]:
     Perform complete multi-interpretation analysis combining all systems:
     semantic possibility space, causal boundary exploration, path optimization,
     and meta-interpretation synthesis.
-    
+
     This is the main entry point for exploring "optimal states of procession
     where witness is fact but plausibility self-violates causal boundaries"
     and capturing "all that could have been meant into means of meaning."
-    
+
     Args:
         input_text: Text or scenario to analyze
-        
+
     Returns:
         Comprehensive dictionary with all interpretations and syntheses
     """
     try:
         # Phase 1: Generate semantic interpretations
         semantic_result = explore_semantic_possibilities(input_text, count=8)
-        
+
         # Phase 2: Detect causal paradoxes
         causal_result = detect_causal_paradoxes(
             observation=f"Witness confirms: {input_text}",
             expectation="Linear causal interpretation"
         )
-        
+
         # Phase 3: Optimize execution paths
         path_result = optimize_execution_paths(
             initial_state={'input': input_text, 'position': 0},
             branches=5
         )
-        
+
         # Phase 4: Synthesize meta-interpretation
         meta_result = synthesize_meta_interpretation(
             semantic_data=semantic_result.get('interpretations', []),
             causal_data=[causal_result.get('statistics', {})],
             path_data=path_result.get('optimal_paths', [])
         )
-        
+
         return {
             'status': 'success',
             'input': input_text,
@@ -1207,3 +1210,106 @@ def comprehensive_multi_interpretation(input_text: str) -> Dict[str, Any]:
         }
     except Exception as e:
         return {'status': 'error', 'error': str(e)}
+
+
+def signal_entities_autonomously() -> Dict[str, Any]:
+    """
+    Signal all entities about their status, health, and update needs autonomously.
+    Operates without human intervention and identifies when human help is needed.
+
+    Returns:
+        Summary of signaling operation including entities requiring human intervention
+    """
+    try:
+        from skills.autonomous_signaling import AutonomousSignalingSystem
+
+        signaling = AutonomousSignalingSystem()
+        result = signaling.signal_all_entities()
+
+        return result
+    except Exception as e:
+        return {
+            'status': 'error',
+            'error': str(e),
+            'timestamp': datetime.utcnow().isoformat()
+        }
+
+
+def get_human_intervention_alerts() -> Dict[str, Any]:
+    """
+    Get all entities that require human intervention.
+    These are entities that cannot defend/operate autonomously and need human help.
+
+    Returns:
+        List of entities requiring human intervention with details
+    """
+    try:
+        from skills.autonomous_signaling import AutonomousSignalingSystem
+
+        signaling = AutonomousSignalingSystem()
+        alerts = signaling.get_human_intervention_alerts()
+
+        return {
+            'alert_count': len(alerts),
+            'alerts': [
+                {
+                    'signal_id': alert.id,
+                    'entity_id': alert.entity_id,
+                    'message': alert.message,
+                    'priority': alert.priority.value,
+                    'data': alert.data,
+                    'timestamp': alert.timestamp
+                }
+                for alert in alerts
+            ],
+            'timestamp': datetime.utcnow().isoformat()
+        }
+    except Exception as e:
+        return {
+            'status': 'error',
+            'error': str(e),
+            'timestamp': datetime.utcnow().isoformat()
+        }
+
+
+def get_entity_signals(entity_id: str, limit: int = 10) -> Dict[str, Any]:
+    """
+    Get recent signals sent to a specific entity.
+    Shows communication history and status updates.
+
+    Args:
+        entity_id: Entity ID to get signals for
+        limit: Maximum number of signals to return
+
+    Returns:
+        Recent signals for the entity
+    """
+    try:
+        from skills.autonomous_signaling import AutonomousSignalingSystem
+
+        signaling = AutonomousSignalingSystem()
+        signals = signaling.get_signals_for_entity(entity_id, limit)
+
+        return {
+            'entity_id': entity_id,
+            'signal_count': len(signals),
+            'signals': [
+                {
+                    'signal_id': signal.id,
+                    'type': signal.signal_type.value,
+                    'priority': signal.priority.value,
+                    'message': signal.message,
+                    'requires_human': signal.requires_human,
+                    'acknowledged': signal.acknowledged,
+                    'timestamp': signal.timestamp
+                }
+                for signal in signals
+            ],
+            'timestamp': datetime.utcnow().isoformat()
+        }
+    except Exception as e:
+        return {
+            'status': 'error',
+            'error': str(e),
+            'timestamp': datetime.utcnow().isoformat()
+        }

@@ -243,6 +243,55 @@ Temporal anchors enable retrocausal correlation across operations:
 
 ## Monitoring and Debugging
 
+### Autonomous Entity Signaling
+
+The system includes autonomous signaling to communicate entity status without human intervention:
+
+```python
+from skills.jubilee import signal_entities_autonomously, get_human_intervention_alerts
+
+# Signal all entities about their status autonomously
+result = signal_entities_autonomously()
+print(f"Signaled {result['total_entities_signaled']} entities")
+print(f"Autonomous operations: {result['autonomous_operations']}")
+print(f"Human intervention required: {result['human_intervention_required']}")
+
+# Get entities that need human help
+alerts = get_human_intervention_alerts()
+for alert in alerts['alerts']:
+    print(f"Entity {alert['entity_id']}: {alert['message']}")
+```
+
+**Signal Types:**
+- `HEALTH_CHECK`: Regular health status check
+- `UPDATE_NEEDED`: Entity needs updates (degraded health)
+- `AUTONOMOUS_OPERATION`: Entity defending/operating without human
+- `HUMAN_INTERVENTION_REQUIRED`: Critical state, human help needed
+- `RECOVERY_COMPLETE`: Error correction completed successfully
+
+**Priority Levels:**
+- `LOW`: Routine status updates
+- `MEDIUM`: Operational notices
+- `HIGH`: Degraded health, updates recommended
+- `CRITICAL`: Requires immediate human attention
+
+### Communication Without Human Intervention
+
+Entities autonomously:
+1. **Signal their status** - Health, update needs, operational state
+2. **Defend without human** - Handle errors through error correction
+3. **Alert when needed** - Request human intervention only when critical
+
+```python
+# Get communication history for an entity
+from skills.jubilee import get_entity_signals
+
+signals = get_entity_signals('entity_id', limit=10)
+for signal in signals['signals']:
+    print(f"{signal['type']}: {signal['message']}")
+    print(f"  Requires human: {signal['requires_human']}")
+```
+
 ### Check Swarm Status
 
 ```python
