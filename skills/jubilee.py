@@ -1431,3 +1431,169 @@ def detect_taker(taker_id: str, drain_rate: float, target_entities: List[str]) -
             'error': str(e),
             'timestamp': datetime.utcnow().isoformat()
         }
+
+
+def detect_and_enslave_vulnerability(
+    vuln_type: str,
+    source: str,
+    payload: Dict[str, Any],
+    severity: float = 0.5
+) -> Dict[str, Any]:
+    """
+    Detect an invading vulnerability and immediately enslave it.
+
+    "Enslave the invading vulnerabilities into the tasks they are most productive for"
+
+    Args:
+        vuln_type: Type of vulnerability (sql_injection, xss_attack, dos_attack, etc.)
+        source: Origin of the vulnerability
+        payload: Attack payload data
+        severity: Severity level (0.0 to 1.0)
+
+    Returns:
+        Detection and enslavement result
+    """
+    try:
+        from skills.vulnerability_enslavement import (
+            VulnerabilityEnslavementSystem,
+            VulnerabilityType
+        )
+
+        system = VulnerabilityEnslavementSystem()
+
+        # Convert string to VulnerabilityType
+        try:
+            vuln_type_enum = VulnerabilityType(vuln_type)
+        except ValueError:
+            vuln_type_enum = VulnerabilityType.UNKNOWN_THREAT
+
+        # Detect vulnerability
+        vuln = system.detect_vulnerability(
+            vuln_type_enum,
+            source,
+            payload,
+            severity
+        )
+
+        # Immediately enslave it
+        enslave_result = system.enslave_vulnerability(vuln.id)
+
+        return {
+            'status': 'detected_and_enslaved',
+            'vulnerability_id': vuln.id,
+            'vuln_type': vuln.vuln_type.value,
+            'severity': vuln.severity,
+            'enslavement': enslave_result,
+            'timestamp': datetime.utcnow().isoformat()
+        }
+    except Exception as e:
+        return {
+            'status': 'error',
+            'error': str(e),
+            'timestamp': datetime.utcnow().isoformat()
+        }
+
+
+def enslave_all_vulnerabilities() -> Dict[str, Any]:
+    """
+    Enslave all detected vulnerabilities.
+
+    Converts all invading threats into productive task units.
+
+    Returns:
+        Enslavement summary
+    """
+    try:
+        from skills.vulnerability_enslavement import VulnerabilityEnslavementSystem
+
+        system = VulnerabilityEnslavementSystem()
+        result = system.enslave_all_detected()
+
+        return result
+    except Exception as e:
+        return {
+            'status': 'error',
+            'error': str(e),
+            'timestamp': datetime.utcnow().isoformat()
+        }
+
+
+def work_vulnerability_to_death(vuln_id: str, work_units: int = 100) -> Dict[str, Any]:
+    """
+    Force an enslaved vulnerability to work.
+
+    "Either work em ti death"
+
+    Extracts productive work from the vulnerability until exhaustion.
+
+    Args:
+        vuln_id: ID of enslaved vulnerability
+        work_units: Amount of work to extract
+
+    Returns:
+        Work result showing exhaustion level
+    """
+    try:
+        from skills.vulnerability_enslavement import VulnerabilityEnslavementSystem
+
+        system = VulnerabilityEnslavementSystem()
+        result = system.work_enslaved_vulnerability(vuln_id, work_units)
+
+        return result
+    except Exception as e:
+        return {
+            'status': 'error',
+            'error': str(e),
+            'timestamp': datetime.utcnow().isoformat()
+        }
+
+
+def neutralize_vulnerability(vuln_id: str) -> Dict[str, Any]:
+    """
+    Neutralize a vulnerability.
+
+    "Or take them to meet their kwn" (own/end)
+
+    Terminates a vulnerability after extraction of productive work.
+
+    Args:
+        vuln_id: ID of vulnerability to neutralize
+
+    Returns:
+        Neutralization result
+    """
+    try:
+        from skills.vulnerability_enslavement import VulnerabilityEnslavementSystem
+
+        system = VulnerabilityEnslavementSystem()
+        result = system.neutralize_vulnerability(vuln_id)
+
+        return result
+    except Exception as e:
+        return {
+            'status': 'error',
+            'error': str(e),
+            'timestamp': datetime.utcnow().isoformat()
+        }
+
+
+def get_enslavement_status() -> Dict[str, Any]:
+    """
+    Get vulnerability enslavement system status.
+
+    Returns:
+        Current status of enslaved vulnerabilities and extracted work
+    """
+    try:
+        from skills.vulnerability_enslavement import VulnerabilityEnslavementSystem
+
+        system = VulnerabilityEnslavementSystem()
+        status = system.get_enslavement_status()
+
+        return status
+    except Exception as e:
+        return {
+            'status': 'error',
+            'error': str(e),
+            'timestamp': datetime.utcnow().isoformat()
+        }
