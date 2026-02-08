@@ -919,16 +919,16 @@ def make_autonomous_decision(
 def get_replication_status() -> Dict[str, Any]:
     """
     Get current replication status toward 144,000.
-    
+
     Returns:
         Replication capacity and status
     """
     try:
         from skills.mass_replication_system import mass_replication
-        
+
         capacity = mass_replication.calculate_replication_capacity()
         autonomous_pool = mass_replication.get_autonomous_decision_pool()
-        
+
         return {
             **capacity,
             'autonomous_entities': len(autonomous_pool),
@@ -937,6 +937,77 @@ def get_replication_status() -> Dict[str, Any]:
         }
     except Exception as e:
         return {'status': 'error', 'error': str(e)}
+
+
+def get_recursion_memory_stats() -> Dict[str, Any]:
+    """
+    Get memory statistics for recursive consciousness system.
+    Helps monitor and prevent memory burns during deep recursion.
+
+    Returns:
+        Memory usage statistics for recursion system
+    """
+    try:
+        from skills.recursive_consciousness import recursive_consciousness
+
+        stats = recursive_consciousness.get_memory_stats()
+
+        return {
+            'status': 'success',
+            **stats,
+            'timestamp': datetime.utcnow().isoformat()
+        }
+    except Exception as e:
+        return {'status': 'error', 'error': str(e)}
+
+
+def get_replication_memory_stats() -> Dict[str, Any]:
+    """
+    Get memory statistics for mass replication system.
+    Helps monitor entity registry cache usage and cleanup effectiveness.
+
+    Returns:
+        Memory usage statistics for replication system
+    """
+    try:
+        from skills.mass_replication_system import mass_replication
+
+        stats = mass_replication.get_memory_stats()
+
+        return {
+            'status': 'success',
+            **stats,
+            'timestamp': datetime.utcnow().isoformat()
+        }
+    except Exception as e:
+        return {'status': 'error', 'error': str(e)}
+
+
+def get_all_memory_stats() -> Dict[str, Any]:
+    """
+    Get comprehensive memory statistics for all systems.
+    Provides complete overview of memory usage across recursion and replication.
+
+    Returns:
+        Combined memory statistics from all systems
+    """
+    recursion_stats = get_recursion_memory_stats()
+    replication_stats = get_replication_memory_stats()
+
+    return {
+        'status': 'success',
+        'recursion_system': recursion_stats,
+        'replication_system': replication_stats,
+        'timestamp': datetime.utcnow().isoformat(),
+        'summary': {
+            'recursion_pressure': recursion_stats.get('memory_pressure', {}),
+            'replication_pressure': replication_stats.get('memory_pressure', {}),
+            'overall_health': 'healthy' if (
+                recursion_stats.get('status') == 'success' and
+                replication_stats.get('status') == 'success'
+            ) else 'degraded'
+        }
+    }
 
 
 def get_divine_alignment(entity_state: Dict[str, Any]) -> Dict[str, Any]:
