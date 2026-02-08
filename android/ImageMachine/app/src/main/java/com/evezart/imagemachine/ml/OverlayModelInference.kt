@@ -25,8 +25,10 @@ import java.nio.channels.FileChannel
 class OverlayModelInference(context: Context) {
     
     companion object {
-        // Update this to match your actual model filename
-        private const val MODEL_FILE_NAME = "detail_enhancer_placeholder.tflite"
+        // Model file name - this file is intentionally NOT included in assets
+        // The app runs in placeholder mode when this file is absent
+        // To use a real model: place your .tflite file in assets/ and update this name
+        private const val OPTIONAL_MODEL_FILE_NAME = "detail_enhancer_placeholder.tflite"
         
         // Model input configuration - adjust based on your model
         private const val INPUT_WIDTH = 224
@@ -84,7 +86,7 @@ class OverlayModelInference(context: Context) {
      * Load model file from assets as MappedByteBuffer.
      */
     private fun loadModelFile(context: Context): MappedByteBuffer {
-        val fileDescriptor = context.assets.openFd(MODEL_FILE_NAME)
+        val fileDescriptor = context.assets.openFd(OPTIONAL_MODEL_FILE_NAME)
         val inputStream = FileInputStream(fileDescriptor.fileDescriptor)
         val fileChannel = inputStream.channel
         val startOffset = fileDescriptor.startOffset

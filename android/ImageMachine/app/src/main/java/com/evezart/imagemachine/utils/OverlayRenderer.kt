@@ -169,7 +169,7 @@ class OverlayRenderer(
     /**
      * Check if overlay is currently enabled.
      */
-    fun isOverlayEnabled(): Boolean = isOverlayEnabled
+    fun getOverlayEnabled(): Boolean = isOverlayEnabled
     
     /**
      * Reset performance statistics.

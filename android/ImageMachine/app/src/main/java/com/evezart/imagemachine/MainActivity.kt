@@ -58,7 +58,8 @@ class MainActivity : AppCompatActivity() {
     
     // State
     private var isOverlayEnabled = true
-    private var currentIntensity = 50f // 0-100
+    @Volatile
+    private var currentIntensity = 50f // 0-100, volatile for thread-safe access
     
     // Performance tracking
     private var statsUpdateJob: Job? = null

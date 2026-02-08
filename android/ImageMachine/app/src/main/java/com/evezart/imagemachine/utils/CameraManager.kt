@@ -36,9 +36,10 @@ class CameraManager(
         // Target resolution for analysis (balance between quality and performance)
         private val ANALYSIS_SIZE = Size(640, 480)
         
-        // Target FPS - aim for maximum device capability
-        // Note: 120fps requires high-end hardware; will gracefully degrade
-        private const val TARGET_FPS = 120
+        // Aspirational FPS target - 120fps requires high-end hardware
+        // Note: CameraX does not provide direct FPS configuration via this constant.
+        // Actual FPS depends on device capabilities and is measured at runtime.
+        private const val TARGET_FPS_ASPIRATIONAL = 120
     }
     
     /**
@@ -179,7 +180,7 @@ class CameraManager(
         val cameraInfo = camera?.cameraInfo ?: return "Camera not initialized"
         return buildString {
             append("Camera: ${cameraInfo.cameraSelector}\n")
-            append("Target FPS: $TARGET_FPS (device-dependent)\n")
+            append("Target FPS: $TARGET_FPS_ASPIRATIONAL (device-dependent, measured at runtime)\n")
             append("Analysis Resolution: ${ANALYSIS_SIZE.width}x${ANALYSIS_SIZE.height}")
         }
     }
