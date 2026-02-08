@@ -618,15 +618,15 @@ try:
                 # Fall back to simulator if available
                 try:
                     backend = service.backend("ibmq_qasm_simulator")
-                _ibm_backend_cache = backend
-                return backend
-            except Exception as e2:
-                # Log both errors for debugging
-                import sys
-                print(f"IBM Quantum backend unavailable: {e}", file=sys.stderr)
-                print(f"Simulator also unavailable: {e2}", file=sys.stderr)
-                print("Falling back to classical simulation", file=sys.stderr)
-                return None
+                    _ibm_backend_cache = backend
+                    return backend
+                except Exception as e2:
+                    # Log both errors for debugging
+                    import sys
+                    print(f"IBM Quantum backend unavailable: {e}", file=sys.stderr)
+                    print(f"Simulator also unavailable: {e2}", file=sys.stderr)
+                    print("Falling back to classical simulation", file=sys.stderr)
+                    return None
     
     def execute_quantum_kernel_ibm(x1: List[float], x2: List[float]) -> float:
         """
