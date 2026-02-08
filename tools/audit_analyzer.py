@@ -17,6 +17,10 @@ BASE_DIR = Path(__file__).resolve().parents[1]
 AUDIT_LOG_PATH = BASE_DIR / "src" / "memory" / "audit.jsonl"
 OUT_DIR = BASE_DIR / "tools" / "out"
 
+# Security anomaly detection constants
+PUBLIC_KEY_SUFFIX = "_public"
+SENSITIVE_ENDPOINT = "/legion-status"
+
 
 @dataclass
 class AuditEntry:
@@ -134,7 +138,7 @@ def detect_anomalies(
     # These are security-critical checks that should prevent further processing of the same entry
     for entry in entries:
         # High-priority check: tier0 public key accessing sensitive endpoints
-        if entry.api_key.endswith("_public") and entry.endpoint == "/legion-status":
+        if entry.api_key.endswith(PUBLIC_KEY_SUFFIX) and entry.endpoint == SENSITIVE_ENDPOINT:
             anomalies.append(
                 {
                     "output_id": entry.output_id,
