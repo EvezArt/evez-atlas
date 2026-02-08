@@ -1,0 +1,31 @@
+{
+  "total_entities": 20,
+  "total_events": 140,
+  "propagation_events": 100,
+  "molt_events": 40,
+  "propagation_acceptance_rate": 0.0,
+  "kernel_statistics": {
+    "mean": 0.0014823872893650774,
+    "min": 6.049345515669185e-16,
+    "max": 0.08437029184105427
+  },
+  "molt_distribution": {
+    "synthetic-002": 4,
+    "synthetic-011": 3,
+    "synthetic-006": 2,
+    "synthetic-017": 5,
+    "synthetic-008": 2,
+    "synthetic-003": 4,
+    "synthetic-007": 2,
+    "synthetic-001": 1,
+    "synthetic-013": 2,
+    "synthetic-019": 3,
+    "synthetic-016": 2,
+    "synthetic-015": 2,
+    "synthetic-010": 3,
+    "synthetic-000": 2,
+    "synthetic-005": 1,
+    "synthetic-012": 1,
+    "synthetic-009": 1
+  }
+}

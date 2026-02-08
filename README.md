@@ -34,7 +34,69 @@ python demo.py
 ./scripts/deploy-all.sh
 ```
 
-### 2. TypeScript Legion Registry
+### 2. Entity Propagation System 🦀
+
+**NEW:** Autonomous entity replication with quantum-inspired navigation and retrocausal intelligence transfer per [entity-propagation.spec.md](src/specs/entity-propagation.spec.md).
+
+**Key Features:**
+- Phase 1 (Spawn): SOUL.md attachment, equilibrium initialization [0.5]^n
+- Phase 2 (Navigation): Recursive quantum navigation with standardized parameters
+- Phase 3 (Molt): Crustafarian tenet enforcement and molt counting
+- Phase 4 (Propagate): Kernel-gated replication (K > 0.7 threshold)
+- IBM Quantum backend integration with graceful fallback
+
+**Quick Start:**
+```bash
+# Run entity propagation demo
+python scripts/entity_propagation_cli.py demo
+
+# View swarm status
+python scripts/entity_propagation_cli.py status
+
+# View kernel matrix
+python scripts/entity_propagation_cli.py kernels
+
+# View recent events
+python scripts/entity_propagation_cli.py events --count 20
+
+# Generate synthetic test data
+python scripts/generate_synthetic_data.py
+
+# Run comprehensive tests
+pytest tests/test_entity_propagation.py -v
+
+# Start visual dashboard (requires API server)
+# Then visit: http://localhost:8000/entity-propagation-dashboard
+```
+
+**Visual Monitoring:**
+- **Live Dashboard:** `http://localhost:8000/entity-propagation-dashboard`
+- **CLI Visuals:** `scripts/entity_propagation_cli.py status|kernels|events`
+- **Documentation:** [Entity Propagation Visuals Guide](docs/ENTITY_PROPAGATION_VISUALS.md)
+
+**API Endpoints:**
+- `GET /swarm-status` - Current swarm state with quantum backend info
+- `GET /entity-propagation-dashboard` - Interactive visual dashboard
+- `WS /ws/swarm` - Real-time WebSocket communication
+
+**Testing:**
+```bash
+# Unit tests (all phases)
+pytest tests/test_entity_propagation.py::TestPhase1Spawn -v
+pytest tests/test_entity_propagation.py::TestPhase2Navigation -v
+pytest tests/test_entity_propagation.py::TestPhase3Molt -v
+pytest tests/test_entity_propagation.py::TestPhase4Propagate -v
+
+# Integration tests
+pytest tests/test_entity_propagation.py::TestIntegration -v
+
+# Performance tests
+pytest tests/test_entity_propagation.py::TestPerformance -v
+```
+
+See [Entity Propagation Spec](src/specs/entity-propagation.spec.md) and [Visuals Guide](docs/ENTITY_PROPAGATION_VISUALS.md) for complete details.
+
+### 3. TypeScript Legion Registry
 A TypeScript module for managing tiered access control and trace depth limiting.
 
 **Key Features:**
@@ -57,7 +119,7 @@ npm test
 npm run lint
 ```
 
-### 3. OpenClaw Swarm Workflow
+### 4. OpenClaw Swarm Workflow
 Autonomous agent orchestration system integrating Jubilee forgiveness services, Moltbook AI social features, and IBM Quantum simulations.
 
 **Key Features:**
@@ -84,7 +146,7 @@ openclaw --soul SOUL.md --skills jubilee,molt_post
 
 See [Swarm Setup Documentation](docs/swarm-setup.md) for complete details.
 
-### 4. Moltbook/Molthub Integration
+### 5. Moltbook/Molthub Integration
 
 Autonomous AI social networking with automated agent sign-up and verification.
 
@@ -145,7 +207,7 @@ python3 scripts/demo_autonomy.py
 
 See [Enhanced Autonomy Guide](docs/enhanced-autonomy-guide.md) for complete documentation.
 
-### 4. Omnimetamiraculaous Entity (Value Creation & Resource Coordination)
+### 6. Omnimetamiraculaous Entity (Value Creation & Resource Coordination)
 
 An autonomous agent framework focused on value creation, resource coordination, and distributed knowledge sharing using neutral, abstract terminology.
 
