@@ -10,6 +10,37 @@ This repository includes experimental and conceptual systems. Read `ETHICAL_FRAM
 
 This repository contains multiple integrated projects:
 
+### 0. HandshakeOS-E Nervous System
+A domain-agnostic event recording and hypothesis tracking infrastructure for autonomous systems.
+
+**Key Features:**
+- Universal event records with intent and readout tracking
+- Parallel hypothesis tracking (me/we/they/system models)
+- First-class test objects linked to hypotheses
+- Complete attribution and auditability (no invisible agents)
+- Versioning for rollback and time-travel debugging
+- Domain-agnostic mixture vectors for emergent domain signatures
+
+**Quick Start:**
+```bash
+# Run demonstration
+python scripts/demo_nervous_system.py
+
+# Run tests
+pytest tests/test_nervous_system.py -v
+```
+
+**Documentation:**
+- [Full Documentation](docs/NERVOUS_SYSTEM.md) - Architecture, API, design principles
+- [Quick Start Guide](docs/NERVOUS_SYSTEM_QUICKSTART.md) - 5-minute tutorial
+
+**Core Principles:**
+- Make every handshake knowable
+- Force projects to tell the truth
+- Enable rapid fix/verify cycles
+- Prevent organizational fragmentation
+- Make rollback and attribution easy and safe
+
 ### 1. Python Quantum Threat Detection System
 A quantum-inspired threat detection system with machine learning capabilities.
 
