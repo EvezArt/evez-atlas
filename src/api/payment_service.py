@@ -10,13 +10,15 @@ import time
 from typing import Dict, Optional
 from pathlib import Path
 
+from audit_utils import AuditLogManager
+
 
 class PaymentService:
     """Handles payment confirmation and order updates."""
     
     def __init__(self, orders_log_path: str = "src/memory/orders.jsonl"):
-        self.orders_log = Path(orders_log_path)
-        self.orders_log.parent.mkdir(parents=True, exist_ok=True)
+        self.audit_log = AuditLogManager(orders_log_path)
+        self.orders_log = self.audit_log.log_path  # Maintain backward compatibility
         
     def confirm_payment(
         self,
@@ -35,9 +37,9 @@ class PaymentService:
         Returns:
             Payment confirmation dict with status
         """
-        
+
         # 1. Get order details
-        order = self._get_order(order_id)
+        order = self.audit_log.get_order(order_id)
         if not order:
             return {"error": "order_not_found", "message": f"Order {order_id} not found"}
         
@@ -67,7 +69,7 @@ class PaymentService:
         
         # 4. Mark order as paid
         timestamp = time.time()
-        self._append_audit_log({
+        self.audit_log.append_event({
             "timestamp": timestamp,
             "event_type": "payment_confirmed",
             "order_id": order_id,
@@ -90,32 +92,7 @@ class PaymentService:
             "confirmed_at": timestamp,
             "next_step": "fulfillment_triggered"
         }
-    
-    def _get_order(self, order_id: str) -> Optional[Dict]:
-        """Get most recent order state from audit log."""
-        if not self.orders_log.exists():
-            return None
-        
-        order_state = None
-        with open(self.orders_log, 'r') as f:
-            for line in f:
-                event = json.loads(line)
-                if event.get('order_id') == order_id:
-                    # Build up order state from events
-                    if not order_state:
-                        order_state = {
-                            'order_id': order_id,
-                            'customer_id': event.get('customer_id'),
-                            'amount': event.get('amount'),
-                            'status': event.get('status'),
-                            'created_at': event.get('timestamp')
-                        }
-                    else:
-                        # Update with latest status
-                        order_state['status'] = event.get('status', order_state['status'])
-        
-        return order_state
-    
+
     def _verify_payment_proof(self, order: Dict, payment_proof: Optional[str]) -> bool:
         """Verify payment proof (stub for production integration)."""
         # In production, this would:
@@ -126,14 +103,9 @@ class PaymentService:
         
         if not payment_proof:
             return False
-        
+
         # For now, basic validation
         return len(payment_proof) > 10
-    
-    def _append_audit_log(self, event: Dict):
-        """Append event to immutable audit log."""
-        with open(self.orders_log, 'a') as f:
-            f.write(json.dumps(event) + '\n')
 
 
 def confirm_payment_endpoint(request_data: Dict) -> Dict:

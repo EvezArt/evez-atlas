@@ -12,13 +12,15 @@ import random
 from typing import Dict, Optional, List
 from pathlib import Path
 
+from audit_utils import AuditLogManager
+
 
 class FulfillmentService:
     """Handles service delivery and receipt generation."""
     
     def __init__(self, orders_log_path: str = "src/memory/orders.jsonl"):
-        self.orders_log = Path(orders_log_path)
-        self.orders_log.parent.mkdir(parents=True, exist_ok=True)
+        self.audit_log = AuditLogManager(orders_log_path)
+        self.orders_log = self.audit_log.log_path  # Maintain backward compatibility
         
     def fulfill_order(self, order_id: str) -> Dict:
         """
@@ -30,9 +32,9 @@ class FulfillmentService:
         Returns:
             Fulfillment result with analysis, access_token, and receipt
         """
-        
+
         # 1. Get order details
-        order = self._get_order(order_id)
+        order = self.audit_log.get_order(order_id)
         if not order:
             return {"error": "order_not_found", "message": f"Order {order_id} not found"}
         
@@ -70,7 +72,7 @@ class FulfillmentService:
         }
         
         # 6. Write immutable receipt
-        self._append_audit_log({
+        self.audit_log.append_event({
             "timestamp": timestamp,
             "event_type": "order_fulfilled",
             "order_id": order_id,
@@ -138,34 +140,6 @@ class FulfillmentService:
         raw = f"{order_id}{time.time()}{random.random()}"
         hash_val = hashlib.sha256(raw.encode()).hexdigest()
         return f"tok_{hash_val[:24]}"
-    
-    def _get_order(self, order_id: str) -> Optional[Dict]:
-        """Get most recent order state from audit log."""
-        if not self.orders_log.exists():
-            return None
-        
-        order_state = None
-        with open(self.orders_log, 'r') as f:
-            for line in f:
-                event = json.loads(line)
-                if event.get('order_id') == order_id:
-                    if not order_state:
-                        order_state = {
-                            'order_id': order_id,
-                            'customer_id': event.get('customer_id'),
-                            'amount': event.get('amount'),
-                            'status': event.get('status'),
-                            'created_at': event.get('timestamp')
-                        }
-                    else:
-                        order_state['status'] = event.get('status', order_state['status'])
-        
-        return order_state
-    
-    def _append_audit_log(self, event: Dict):
-        """Append event to immutable audit log."""
-        with open(self.orders_log, 'a') as f:
-            f.write(json.dumps(event) + '\n')
 
 
 def fulfill_order_endpoint(request_data: Dict) -> Dict:

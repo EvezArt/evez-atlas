@@ -11,14 +11,16 @@ import hashlib
 from typing import Dict, Optional
 from pathlib import Path
 
+from audit_utils import AuditLogManager
+
 
 class OrderService:
     """Handles order creation with idempotency and rate limiting."""
     
     def __init__(self, orders_log_path: str = "src/memory/orders.jsonl"):
-        self.orders_log = Path(orders_log_path)
-        self.orders_log.parent.mkdir(parents=True, exist_ok=True)
-        
+        self.audit_log = AuditLogManager(orders_log_path)
+        self.orders_log = self.audit_log.log_path  # Maintain backward compatibility
+
         # In-memory cache for idempotency (would use Redis in production)
         self.idempotency_cache = {}
         self.rate_limit_cache = {}
@@ -88,7 +90,7 @@ class OrderService:
         }
         
         # 5. Log to audit trail
-        self._append_audit_log({
+        self.audit_log.append_event({
             "timestamp": timestamp,
             "event_type": "order_created",
             "order_id": order_id,
@@ -110,15 +112,16 @@ class OrderService:
     
     def get_order(self, order_id: str) -> Optional[Dict]:
         """Retrieve order by ID from audit log."""
+        # Get the first event for this order (order_created event)
         if not self.orders_log.exists():
             return None
-        
+
         with open(self.orders_log, 'r') as f:
             for line in f:
                 event = json.loads(line)
                 if event.get('order_id') == order_id:
                     return event
-        
+
         return None
     
     def _generate_order_id(self, customer_id: str, timestamp: float) -> str:
@@ -158,11 +161,6 @@ class OrderService:
         # Add current request
         self.rate_limit_cache[ip].append(now)
         return True
-    
-    def _append_audit_log(self, event: Dict):
-        """Append event to immutable audit log."""
-        with open(self.orders_log, 'a') as f:
-            f.write(json.dumps(event) + '\n')
 
 
 # Simple Flask-like API (can replace with FastAPI/Flask later)
