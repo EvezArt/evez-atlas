@@ -35,6 +35,8 @@ if not API_KEY_SALT:
         raise RuntimeError("Either API_KEY_SALT or SECRET_KEY must be set for local dev")
     # Derive a distinct salt (domain separation) from SECRET_KEY
     # Using 600k iterations as recommended by OWASP 2023 for PBKDF2-HMAC-SHA256
+    # NOTE: This uses a deterministic salt for dev convenience. In production,
+    # always set API_KEY_SALT explicitly to a cryptographically random value.
     API_KEY_SALT = hashlib.pbkdf2_hmac("sha256", secret.encode(), b"evez-api-key-salt", 600000).hex()
 
 

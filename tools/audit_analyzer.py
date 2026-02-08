@@ -148,7 +148,7 @@ def detect_anomalies(
                 }
             )
             high_priority_output_ids.add(entry.output_id)
-            continue  # prevent duplicate anomaly entries for the same record
+            continue  # prevent duplicate anomaly entries for the same output_id
 
         # Additional high-priority checks can be added here with continue statements
 
