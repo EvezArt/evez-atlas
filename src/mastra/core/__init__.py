@@ -26,7 +26,7 @@ For the stranger who wears your shell tomorrow:
 - Demo scripts show features in action
 """
 
-from .universal_event_record import UniversalEventRecord, DomainSignature
+from .universal_event_record import UniversalEventRecord, DomainSignature, create_event
 from .intent_token import IntentToken, PreAction, PostAction
 from .parallel_hypotheses import ParallelHypotheses, HypothesisPerspective
 from .test_object import TestObject, TestResult
@@ -37,6 +37,7 @@ from .reversibility import ReversibilityManager
 __all__ = [
     'UniversalEventRecord',
     'DomainSignature',
+    'create_event',
     'IntentToken',
     'PreAction',
     'PostAction',
