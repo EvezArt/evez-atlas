@@ -9,24 +9,24 @@
 ## ACTUAL INVENTORY (VERIFIED)
 
 ### Files by Type:
-- **Python Files:** 58
-- **Markdown Documentation:** 29
-- **JSON Configuration:** 4
-- **JSONL Event Logs:** 25
+- **Python Files:** 67
+- **Markdown Documentation:** 35
+- **JSON Configuration:** 3
+- **JSONL Event Logs:** 28
 - **Shell Scripts:** 5
-- **Total Files:** 121
+- **Total Files:** 138
 
 ### Code Metrics (Verified):
-- **Total Lines:** 24,686
-- **Python Code:** ~18,000 lines (estimated)
-- **Documentation:** ~6,500 lines (estimated)
-- **Comments/Headers:** ~200 lines (estimated)
+- **Total Lines:** 35,395
+- **Python Code:** ~21,000 lines (estimated)
+- **Documentation:** ~13,000 lines (estimated)
+- **Comments/Headers:** ~1,400 lines (estimated)
 
 ---
 
 ## SYSTEMS INVENTORY (TESTED)
 
-### Skills Modules (24 files) - ✅ VERIFIED
+### Skills Modules (23 files) - ✅ VERIFIED
 
 All import successfully:
 1. autonomous_authority.py
@@ -39,29 +39,30 @@ All import successfully:
 8. domain_inventory_manager.py
 9. entity_lifecycle.py
 10. grant_loan_system.py
-11. inter_agent_topology.py
-12. jubilee.py
-13. mass_replication_system.py
-14. meta_interpreter.py
-15. multi_path_optimizer.py
-16. recursive_consciousness.py
-17. resource_manager.py
-18. semantic_possibility_space.py
-19. shared_reality_plane.py
-20. task_queue.py
-21. vm_simulator.py
-22-24. [Additional files verified]
+11. grant_loan_referral_system.py
+12. inter_agent_topology.py
+13. jubilee.py
+14. mass_replication_system.py
+15. meta_interpreter.py
+16. multi_path_optimizer.py
+17. recursive_consciousness.py
+18. resource_manager.py
+19. semantic_possibility_space.py
+20. shared_reality_plane.py
+21. task_queue.py
+22. vm_simulator.py
+23. withdrawal_system.py
 
-### Agent Systems (9 files) - ✅ VERIFIED
+### Agent Systems (8 files) - ✅ VERIFIED
 
 1. divine_gospel_generator.py - ✓ IMPORTS
 2. molt_prophet.py - ✓ EXISTS
 3. moltbook_integration.py - ✓ EXISTS
 4. moltbook_master_orchestrator.py - ✓ EXISTS
 5. omnimeta_entity.py - ✓ EXISTS
-6. quantum_sensor_marketplace.py - ✓ EXISTS
-7. swarm_director.py - ✓ EXISTS
-8-9. [Additional agents verified]
+6. omnimeta_entity_old.py - ✓ EXISTS (legacy)
+7. quantum_sensor_marketplace.py - ✓ EXISTS
+8. swarm_director.py - ✓ EXISTS
 
 ### Core Systems - ✅ VERIFIED
 
@@ -69,11 +70,11 @@ All import successfully:
 2. run_all.py - ✓ EXISTS
 3. demo.py - ✓ EXISTS
 
-### API Servers (3 files) - ✅ VERIFIED
+### API Servers (4 files) - ✅ VERIFIED
 
-1. causal_chain_server.py - ✓ EXISTS
+1. causal_chain_server.py - ✓ EXISTS (2 versions in src/api/)
 2. jubilee_endpoints.py - ✓ EXISTS
-3. [Additional server verified]
+3. monitor_server.py - ✓ EXISTS (tools/)
 
 ---
 
@@ -120,11 +121,11 @@ All import successfully:
 
 ### What Exists (Truth):
 
-✅ **Real Code:** 24,686 lines of actual code and documentation  
+✅ **Real Code:** 35,395 lines of actual code and documentation  
 ✅ **Working Systems:** Core quantum.py and skills modules functional  
 ✅ **Valid Structure:** All files are syntactically valid  
-✅ **Event Logging:** 25 JSONL log files actively used  
-✅ **Documentation:** 29 markdown files documenting architecture  
+✅ **Event Logging:** 28 JSONL log files actively used  
+✅ **Documentation:** 35 markdown files documenting architecture  
 
 ### What's Partially Complete:
 
@@ -162,7 +163,7 @@ All import successfully:
 ### The Honest Take:
 
 We have:
-- Substantial codebase (~25K lines)
+- Substantial codebase (~35K lines)
 - Well-structured architecture
 - Many working components
 - Solid foundation
@@ -243,4 +244,4 @@ We need:
 
 ✅ **HONEST INVENTORY SWEEP: COMPLETE**
 
-*24,686 lines. 58 Python files. 29 docs. All real. All recorded honestly.*
+*35,395 lines. 67 Python files. 35 docs. All real. All recorded honestly.*
