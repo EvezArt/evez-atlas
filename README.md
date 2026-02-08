@@ -10,7 +10,65 @@ This repository includes experimental and conceptual systems. Read `ETHICAL_FRAM
 
 This repository contains multiple integrated projects:
 
-### 1. Python Quantum Threat Detection System
+### 1. HandshakeOS-E Nervous System
+A universal event-driven architecture addressing the problem: "fragmentation made it impossible to know what's true."
+
+**Key Features:**
+- Universal event records (domain-agnostic tracking)
+- Intent tokens (pre-action + post-event causal analysis)
+- Parallel hypothesis tracking (me/we/they/system perspectives)
+- Tests as first-class objects
+- Auditable, attributable, reversible patterns
+- No mandatory single-domain labels
+
+**Quick Start:**
+```bash
+# Run demo
+python demos/handshakeos_demo.py
+
+# Run tests
+pytest tests/test_handshakeos.py -v
+
+# Read documentation
+cat docs/HANDSHAKEOS_E_ARCHITECTURE.md
+```
+
+**Example Usage:**
+```python
+from src.handshakeos import (
+    UniversalEventRecord, EventSource,
+    IntentToken, Hypothesis, ModelPerspective,
+    TestObject, TestType
+)
+
+# Record event without forcing domain classification
+event = UniversalEventRecord(
+    event_type="user_feedback",
+    payload={"feedback": "System feels slow"},
+    source=EventSource.USER_INPUT
+)
+
+# Create intent with pre-action specification
+intent = IntentToken()
+intent.set_pre_action(
+    goal="Improve response time",
+    constraints=["No breaking changes"],
+    success_signals=["Response < 100ms"],
+    confidence=0.7
+)
+
+# Track parallel hypotheses from multiple perspectives
+hypothesis = Hypothesis(name="Performance hypothesis")
+hypothesis.add_model(
+    perspective=ModelPerspective.ME,
+    description="Caching will help",
+    probability=0.8
+)
+```
+
+See [HandshakeOS-E Architecture Documentation](docs/HANDSHAKEOS_E_ARCHITECTURE.md) for complete details.
+
+### 2. Python Quantum Threat Detection System
 A quantum-inspired threat detection system with machine learning capabilities.
 
 **Key Features:**
@@ -34,7 +92,7 @@ python demo.py
 ./scripts/deploy-all.sh
 ```
 
-### 2. TypeScript Legion Registry
+### 3. TypeScript Legion Registry
 A TypeScript module for managing tiered access control and trace depth limiting.
 
 **Key Features:**
