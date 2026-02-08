@@ -85,16 +85,16 @@ class QuantumFeatureMap:
         
         # Apply feature-dependent rotations
         for rep in range(self.reps):
-            for i, feat in enumerate(features[:self._num_qubits]):
-                angle = feat * math.pi * (rep + 1)
-                for j in range(state_size):
-                    if (j >> i) & 1:
-                        state[j] *= complex(math.cos(angle), math.sin(angle))
-        
+            for qubit_index, feature_value in enumerate(features[:self._num_qubits]):
+                angle = feature_value * math.pi * (rep + 1)
+                for state_index in range(state_size):
+                    if (state_index >> qubit_index) & 1:
+                        state[state_index] *= complex(math.cos(angle), math.sin(angle))
+
         # Normalize
-        norm = math.sqrt(sum(abs(s) ** 2 for s in state))
+        norm = math.sqrt(sum(abs(amplitude) ** 2 for amplitude in state))
         if norm > 0:
-            state = [s / norm for s in state]
+            state = [amplitude / norm for amplitude in state]
         
         return state
 
@@ -199,8 +199,8 @@ class ThreatFingerprint:
                 result[key] = round(value, 6)
             elif isinstance(value, (list, tuple)):
                 result[key] = [
-                    round(v, 6) if isinstance(v, float) else v 
-                    for v in value
+                    round(item, 6) if isinstance(item, float) else item
+                    for item in value
                 ]
             else:
                 result[key] = value
@@ -284,8 +284,8 @@ def quantum_kernel_estimation(
     
     # Compute fidelity (inner product magnitude squared)
     inner_product = sum(
-        s1.conjugate() * s2 
-        for s1, s2 in zip(state1, state2)
+        amplitude1.conjugate() * amplitude2
+        for amplitude1, amplitude2 in zip(state1, state2)
     )
     
     return abs(inner_product) ** 2
@@ -307,7 +307,7 @@ def _entropy(probabilities: List[float]) -> float:
     """Compute entropy for a probability distribution."""
     if not probabilities:
         return 0.0
-    return -sum(p * math.log(p) for p in probabilities if p > 0)
+    return -sum(prob * math.log(prob) for prob in probabilities if prob > 0)
 
 
 def _validate_decay(decay: float) -> None:
@@ -693,12 +693,12 @@ try:
             counts = result.get_counts()
             
             # Find most probable outcome (fixed point)
-            max_state = max(counts.items(), key=lambda x: x[1])[0]
-            
+            max_state = max(counts.items(), key=lambda item: item[1])[0]
+
             # Convert binary string to normalized state
-            fixed_point = [int(b) for b in max_state]
+            fixed_point = [int(bit) for bit in max_state]
             norm = sum(fixed_point) or 1
-            fixed_point = [v / norm for v in fixed_point]
+            fixed_point = [value / norm for value in fixed_point]
             
             return {
                 "fixed_point": fixed_point,

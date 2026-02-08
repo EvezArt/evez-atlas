@@ -55,14 +55,14 @@ def generate_sample_data(
     Returns:
         Tuple of (features, labels) where labels are 0=normal, 1=attack
     """
-    X = []
-    y = []
-    
-    n_attacks = int(n_samples * attack_ratio)
-    n_normal = n_samples - n_attacks
-    
+    feature_vectors = []
+    labels = []
+
+    num_attacks = int(n_samples * attack_ratio)
+    num_normal = n_samples - num_attacks
+
     # Generate normal traffic patterns
-    for _ in range(n_normal):
+    for _ in range(num_normal):
         features = [
             random.uniform(0, 100),      # duration
             random.uniform(100, 1000),   # src_bytes
@@ -75,13 +75,13 @@ def generate_sample_data(
             1.0,                         # logged_in
             0.0,                         # num_compromised
         ]
-        X.append(features[:n_features])
-        y.append(0)
+        feature_vectors.append(features[:n_features])
+        labels.append(0)
     
     # Generate attack patterns
-    for _ in range(n_attacks):
+    for _ in range(num_attacks):
         attack_type = random.choice(["dos", "probe", "r2l", "u2r"])
-        
+
         if attack_type == "dos":
             # Denial of Service: high traffic, anomalous patterns
             features = [
@@ -138,16 +138,16 @@ def generate_sample_data(
                 1.0,                         # logged_in
                 random.uniform(1, 5),        # compromised!
             ]
-        
-        X.append(features[:n_features])
-        y.append(1)
-    
+
+        feature_vectors.append(features[:n_features])
+        labels.append(1)
+
     # Shuffle data
-    combined = list(zip(X, y))
+    combined = list(zip(feature_vectors, labels))
     random.shuffle(combined)
-    X, y = zip(*combined)
-    
-    return list(X), list(y)
+    feature_vectors, labels = zip(*combined)
+
+    return list(feature_vectors), list(labels)
 
 
 def normalize_features(
@@ -207,14 +207,14 @@ def compute_metrics(y_true: List[int], y_pred: List[int]) -> Dict[str, float]:
     Returns:
         Dictionary with accuracy, precision, recall, and f1
     """
-    tp = sum(1 for t, p in zip(y_true, y_pred) if t == 1 and p == 1)
-    tn = sum(1 for t, p in zip(y_true, y_pred) if t == 0 and p == 0)
-    fp = sum(1 for t, p in zip(y_true, y_pred) if t == 0 and p == 1)
-    fn = sum(1 for t, p in zip(y_true, y_pred) if t == 1 and p == 0)
-    
-    accuracy = (tp + tn) / len(y_true) if y_true else 0.0
-    precision = tp / (tp + fp) if (tp + fp) > 0 else 0.0
-    recall = tp / (tp + fn) if (tp + fn) > 0 else 0.0
+    true_positives = sum(1 for true_val, pred_val in zip(y_true, y_pred) if true_val == 1 and pred_val == 1)
+    true_negatives = sum(1 for true_val, pred_val in zip(y_true, y_pred) if true_val == 0 and pred_val == 0)
+    false_positives = sum(1 for true_val, pred_val in zip(y_true, y_pred) if true_val == 0 and pred_val == 1)
+    false_negatives = sum(1 for true_val, pred_val in zip(y_true, y_pred) if true_val == 1 and pred_val == 0)
+
+    accuracy = (true_positives + true_negatives) / len(y_true) if y_true else 0.0
+    precision = true_positives / (true_positives + false_positives) if (true_positives + false_positives) > 0 else 0.0
+    recall = true_positives / (true_positives + false_negatives) if (true_positives + false_negatives) > 0 else 0.0
     f1 = 2 * precision * recall / (precision + recall) if (precision + recall) > 0 else 0.0
     
     return {

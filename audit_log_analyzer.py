@@ -480,30 +480,30 @@ def cmd_report():
         print(f"Order #{i}: {order_id}")
         
         # Get details
-        created = [e for e in order_events if e.get('event_type') == 'order_created']
-        paid = [e for e in order_events if e.get('event_type') == 'payment_confirmed']
-        fulfilled = [e for e in order_events if e.get('event_type') == 'order_fulfilled']
-        
+        created = [event for event in order_events if event.get('event_type') == 'order_created']
+        paid = [event for event in order_events if event.get('event_type') == 'payment_confirmed']
+        fulfilled = [event for event in order_events if event.get('event_type') == 'order_fulfilled']
+
         if created:
-            e = created[0]
-            print(f"  Customer: {e.get('customer_id', 'unknown')}")
-            print(f"  Amount: ${e.get('amount', 0):.2f}")
-            print(f"  Created: {format_timestamp(e.get('timestamp', 0))}")
-        
+            created_event = created[0]
+            print(f"  Customer: {created_event.get('customer_id', 'unknown')}")
+            print(f"  Amount: ${created_event.get('amount', 0):.2f}")
+            print(f"  Created: {format_timestamp(created_event.get('timestamp', 0))}")
+
         if paid:
-            e = paid[0]
+            paid_event = paid[0]
             created_time = created[0].get('timestamp') if created else 0
-            time_diff = e.get('timestamp', 0) - created_time
-            print(f"  Paid: {format_timestamp(e.get('timestamp', 0))} (+{time_diff:.1f}s)")
-        
+            time_diff = paid_event.get('timestamp', 0) - created_time
+            print(f"  Paid: {format_timestamp(paid_event.get('timestamp', 0))} (+{time_diff:.1f}s)")
+
         if fulfilled:
-            e = fulfilled[0]
+            fulfilled_event = fulfilled[0]
             created_time = created[0].get('timestamp') if created else 0
-            time_diff = e.get('timestamp', 0) - created_time
-            print(f"  Fulfilled: {format_timestamp(e.get('timestamp', 0))} (+{time_diff:.1f}s)")
+            time_diff = fulfilled_event.get('timestamp', 0) - created_time
+            print(f"  Fulfilled: {format_timestamp(fulfilled_event.get('timestamp', 0))} (+{time_diff:.1f}s)")
             print(f"  Total time: {time_diff:.1f}s")
-            
-            token = e.get('metadata', {}).get('access_token')
+
+            token = fulfilled_event.get('metadata', {}).get('access_token')
             if token:
                 print(f"  Access token: {token}")
         
