@@ -72,5 +72,6 @@ data/task_queue.jsonl
 data/quantum_events.jsonl
 data/shared_reality_plane.jsonl
 data/resource_manager.jsonl
+data/handshakeos_events.jsonl
 skills/__pycache__/
 data/replication.jsonl
