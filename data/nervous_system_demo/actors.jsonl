@@ -1,0 +1,1 @@
+{"id": "89132abf-2ddc-4ca2-bd54-85fc71085d92", "name": "Demo Agent", "type": "agent", "permissions": ["create_hypotheses", "record_events"], "metadata": {}, "created_at": "2026-02-08T13:27:49.546038"}
