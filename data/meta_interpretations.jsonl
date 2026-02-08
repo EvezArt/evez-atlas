@@ -18,3 +18,11 @@
 {"type": "causal_synthesis", "timestamp": 1769941558.646602, "data": {"paradox_count": 1, "fundamental_ambiguity": 0.0}}
 {"type": "path_synthesis", "timestamp": 1769941558.646632, "data": {"path_count": 3, "optimal_convergence": 0.6666666666666667}}
 {"type": "unified_synthesis", "timestamp": 1769941558.646661, "data": {"total_components": 9, "semantic_count": 5, "causal_count": 1, "path_count": 3, "final_confidence": 0.6111111111111112, "preserved_ambiguity": 0.1111111111111111}}
+{"type": "semantic_synthesis", "timestamp": 1770558388.846786, "data": {"component_count": 5, "confidence": 0.7, "ambiguity": 0.2}}
+{"type": "causal_synthesis", "timestamp": 1770558388.847003, "data": {"paradox_count": 4, "fundamental_ambiguity": 0.25}}
+{"type": "path_synthesis", "timestamp": 1770558388.8470438, "data": {"path_count": 3, "optimal_convergence": 0.6666666666666667}}
+{"type": "unified_synthesis", "timestamp": 1770558388.8470716, "data": {"total_components": 12, "semantic_count": 5, "causal_count": 4, "path_count": 3, "final_confidence": 0.5833333333333334, "preserved_ambiguity": 0.08333333333333333}}
+{"type": "semantic_synthesis", "timestamp": 1770558388.848505, "data": {"component_count": 5, "confidence": 0.7, "ambiguity": 0.2}}
+{"type": "causal_synthesis", "timestamp": 1770558388.8485434, "data": {"paradox_count": 1, "fundamental_ambiguity": 0.0}}
+{"type": "path_synthesis", "timestamp": 1770558388.848568, "data": {"path_count": 3, "optimal_convergence": 0.6666666666666667}}
+{"type": "unified_synthesis", "timestamp": 1770558388.8485994, "data": {"total_components": 9, "semantic_count": 5, "causal_count": 1, "path_count": 3, "final_confidence": 0.6111111111111112, "preserved_ambiguity": 0.1111111111111111}}

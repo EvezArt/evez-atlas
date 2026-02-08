@@ -69,13 +69,17 @@ class CorrelationAnalyzer:
         for source, events in experiences.items():
             for event in events:
                 if 'timestamp' in event:
+                    # Normalize timestamp to string for consistent sorting
+                    ts = event['timestamp']
+                    if isinstance(ts, (int, float)):
+                        ts = str(ts)
                     all_events.append({
                         'source': source,
                         'event': event,
-                        'timestamp': event['timestamp']
+                        'timestamp': ts
                     })
         
-        # Sort by timestamp
+        # Sort by timestamp (now all strings)
         all_events.sort(key=lambda x: x['timestamp'])
         
         # Find correlations within time window
