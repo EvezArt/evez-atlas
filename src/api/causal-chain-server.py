@@ -387,6 +387,187 @@ def swarm_status():
         }
 
 
+# ========== Entity Propagation Dashboard ==========
+@app.get("/entity-propagation-dashboard", response_class=HTMLResponse)
+@limiter.limit(_rate_limit_for_key)
+def entity_propagation_dashboard(request: Request, tier: int = Depends(verify_api_key)):
+    """
+    Entity Propagation Dashboard - Visual monitoring interface
+    
+    Visualizes swarm status, navigation kernels, and propagation thresholds
+    per entity-propagation.spec.md requirements.
+    """
+    try:
+        from src.mastra.agents.swarm_director import director
+        status = director.get_swarm_status()
+        
+        # Build entity rows
+        entity_rows = []
+        for entity_id in status.get("entities", []):
+            entity = director.active_entities.get(entity_id, {})
+            entity_rows.append({
+                "id": entity_id,
+                "status": entity.get("status", "unknown"),
+                "molt_count": entity.get("molt_count", 0),
+                "sequence_length": len(entity.get("sequence", [])),
+                "fingerprint": entity.get("fingerprint", "")[:16] + "..."
+            })
+        
+        # Build kernel matrix (simplified for now)
+        kernel_data = []
+        entity_ids = status.get("entities", [])
+        for i, eid1 in enumerate(entity_ids):
+            for j, eid2 in enumerate(entity_ids):
+                if i <= j:
+                    # Calculate kernel between entities
+                    from quantum import quantum_kernel_estimation
+                    e1 = director.active_entities.get(eid1, {})
+                    e2 = director.active_entities.get(eid2, {})
+                    seq1 = e1.get("sequence", [[0.5]*10])
+                    seq2 = e2.get("sequence", [[0.5]*10])
+                    k = quantum_kernel_estimation(seq1[-1], seq2[-1]) if seq1 and seq2 else 0.0
+                    kernel_data.append({
+                        "from": eid1,
+                        "to": eid2,
+                        "kernel": k,
+                        "threshold_met": k > 0.7
+                    })
+        
+        # Build HTML
+        html_parts = [
+            "<!DOCTYPE html>",
+            "<html lang='en'>",
+            "<head>",
+            "<meta charset='UTF-8' />",
+            "<meta name='viewport' content='width=device-width, initial-scale=1' />",
+            "<title>Entity Propagation Dashboard</title>",
+            "<style>",
+            "body { font-family: 'Inter', sans-serif; margin: 32px; background: #0f1419; color: #e6edf3; }",
+            "h1, h2 { color: #58a6ff; }",
+            "table { border-collapse: collapse; width: 100%; margin-bottom: 24px; background: #161b22; }",
+            "th, td { border: 1px solid #30363d; padding: 8px 12px; text-align: left; }",
+            "th { background: #21262d; color: #58a6ff; }",
+            ".card { padding: 20px; border-radius: 8px; background: #161b22; margin-bottom: 20px; border: 1px solid #30363d; }",
+            ".status-active { color: #3fb950; }",
+            ".status-inactive { color: #f85149; }",
+            ".kernel-high { background: #238636; color: white; font-weight: bold; }",
+            ".kernel-low { background: #8b949e; color: white; }",
+            ".metric { display: inline-block; margin: 10px 20px 10px 0; }",
+            ".metric-label { color: #7d8590; font-size: 0.9em; }",
+            ".metric-value { font-size: 1.5em; font-weight: bold; color: #58a6ff; }",
+            "</style>",
+            "<script>",
+            "setTimeout(() => location.reload(), 10000);",  # Auto-refresh every 10s
+            "</script>",
+            "</head>",
+            "<body>",
+            "<h1>🦀 Entity Propagation Dashboard</h1>",
+            "<div class='card'>",
+            "<p>Real-time monitoring of autonomous entity swarm with quantum-inspired propagation.</p>",
+            "<p><strong>Spec:</strong> <code>src/specs/entity-propagation.spec.md</code></p>",
+            "</div>",
+            
+            # Metrics
+            "<div class='card'>",
+            "<div class='metric'>",
+            "<div class='metric-label'>Total Entities</div>",
+            f"<div class='metric-value'>{status.get('entity_count', 0)}</div>",
+            "</div>",
+            "<div class='metric'>",
+            "<div class='metric-label'>WebSocket Connections</div>",
+            f"<div class='metric-value'>{len(active_connections)}</div>",
+            "</div>",
+            "<div class='metric'>",
+            "<div class='metric-label'>Quantum Backend</div>",
+            f"<div class='metric-value'>{status.get('quantum_backend', {}).get('backend_name', 'unknown')}</div>",
+            "</div>",
+            "<div class='metric'>",
+            "<div class='metric-label'>Mode</div>",
+            f"<div class='metric-value'>{status.get('quantum_backend', {}).get('mode', 'unknown')}</div>",
+            "</div>",
+            "</div>",
+            
+            # Entity table
+            "<h2>Active Entities</h2>",
+            "<table>",
+            "<thead><tr>",
+            "<th>Entity ID</th>",
+            "<th>Status</th>",
+            "<th>Molt Count</th>",
+            "<th>Sequence Length</th>",
+            "<th>Fingerprint</th>",
+            "</tr></thead>",
+            "<tbody>",
+        ]
+        
+        for entity in entity_rows:
+            status_class = "status-active" if entity["status"] == "active" else "status-inactive"
+            html_parts.append(
+                f"<tr>"
+                f"<td>{html.escape(entity['id'])}</td>"
+                f"<td class='{status_class}'>{html.escape(entity['status'])}</td>"
+                f"<td>{entity['molt_count']}</td>"
+                f"<td>{entity['sequence_length']}</td>"
+                f"<td><code>{html.escape(entity['fingerprint'])}</code></td>"
+                f"</tr>"
+            )
+        
+        html_parts.extend([
+            "</tbody>",
+            "</table>",
+            
+            # Kernel matrix
+            "<h2>Propagation Kernels (K > 0.7 threshold)</h2>",
+            "<table>",
+            "<thead><tr>",
+            "<th>Source</th>",
+            "<th>Target</th>",
+            "<th>Kernel K(x₁,x₂)</th>",
+            "<th>Threshold Met</th>",
+            "</tr></thead>",
+            "<tbody>",
+        ])
+        
+        for kernel in kernel_data:
+            kernel_class = "kernel-high" if kernel["threshold_met"] else "kernel-low"
+            threshold_text = "✓ YES" if kernel["threshold_met"] else "✗ NO"
+            html_parts.append(
+                f"<tr>"
+                f"<td>{html.escape(kernel['from'])}</td>"
+                f"<td>{html.escape(kernel['to'])}</td>"
+                f"<td class='{kernel_class}'>{kernel['kernel']:.4f}</td>"
+                f"<td>{threshold_text}</td>"
+                f"</tr>"
+            )
+        
+        html_parts.extend([
+            "</tbody>",
+            "</table>",
+            
+            "<div class='card'>",
+            "<p><em>Dashboard auto-refreshes every 10 seconds</em></p>",
+            "</div>",
+            
+            "</body>",
+            "</html>",
+        ])
+        
+        return HTMLResponse("".join(html_parts))
+        
+    except Exception as e:
+        import traceback
+        error_html = f"""
+        <!DOCTYPE html>
+        <html><head><title>Error</title></head>
+        <body style="font-family: monospace; padding: 20px;">
+        <h1>Dashboard Error</h1>
+        <pre>{html.escape(str(e))}</pre>
+        <pre>{html.escape(traceback.format_exc())}</pre>
+        </body></html>
+        """
+        return HTMLResponse(error_html, status_code=500)
+
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
