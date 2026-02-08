@@ -175,29 +175,33 @@ def _log_quantum_event(event: Dict[str, Any]):
 def tail_events(lines: int = 10) -> list:
     """
     Read the last N lines from events.jsonl.
-    
+
     Args:
         lines: Number of lines to read
-        
+
     Returns:
         List of event dictionaries
     """
     events_file = os.path.join('data', 'events.jsonl')
-    
+
     if not os.path.exists(events_file):
         return []
-    
+
     try:
+        # PERFORMANCE FIX: Use collections.deque for memory-efficient tail operation
+        from collections import deque
+
         with open(events_file, 'r') as f:
-            all_lines = f.readlines()
-            
+            # Only keep last N lines in memory
+            last_lines = deque(f, maxlen=lines)
+
         events = []
-        for line in all_lines[-lines:]:
+        for line in last_lines:
             try:
-                events.append(json.loads(line))
+                events.append(json.loads(line.strip()))
             except json.JSONDecodeError:
                 continue
-                
+
         return events
     except Exception as e:
         return [{'error': str(e)}]
