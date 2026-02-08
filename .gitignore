@@ -74,3 +74,6 @@ data/shared_reality_plane.jsonl
 data/resource_manager.jsonl
 skills/__pycache__/
 data/replication.jsonl
+
+# Profit circuit runtime data
+src/memory/orders.jsonl
