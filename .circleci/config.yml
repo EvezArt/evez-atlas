@@ -32,9 +32,9 @@ jobs:
           command: |
             if [ -f package.json ]; then
               echo "Running npm run build..."
-              npm run build
+              npm run build --if-present
               echo "Running npm test..."
-              npm test
+              npm test --if-present
             else
               echo "No package.json found, skipping Node.js build and tests."
             fi
