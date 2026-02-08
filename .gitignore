@@ -74,3 +74,15 @@ data/shared_reality_plane.jsonl
 data/resource_manager.jsonl
 skills/__pycache__/
 data/replication.jsonl
+
+# Android build artifacts
+android/build/
+android/**/build/
+android/**/*.iml
+android/.gradle/
+android/local.properties
+android/.idea/
+android/**/.cxx/
+android/**/*.apk
+android/**/*.aab
+android/captures/

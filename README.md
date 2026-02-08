@@ -34,7 +34,33 @@ python demo.py
 ./scripts/deploy-all.sh
 ```
 
-### 2. TypeScript Legion Registry
+### 2. Android Image Machine
+An Android application that projects an AI-generated detail-enhancing overlay on live camera scenes with ultra-low latency.
+
+**Key Features:**
+- Real-time camera preview with CameraX
+- On-device TFLite model inference (GPU-accelerated)
+- Live overlay compositing with configurable intensity
+- Performance monitoring (FPS and latency statistics)
+- Target 120fps on capable devices; graceful degradation on others
+- Placeholder mode for testing without ML model
+
+**Setup and Testing:**
+```bash
+# Navigate to Android module
+cd android
+
+# Build and install on device
+./gradlew installDebug
+
+# Run tests
+./gradlew test
+./gradlew connectedAndroidTest
+```
+
+See [Android Module Documentation](android/README.md) for complete setup, usage, and model integration instructions.
+
+### 3. TypeScript Legion Registry
 A TypeScript module for managing tiered access control and trace depth limiting.
 
 **Key Features:**
@@ -57,7 +83,7 @@ npm test
 npm run lint
 ```
 
-### 3. OpenClaw Swarm Workflow
+### 4. OpenClaw Swarm Workflow
 Autonomous agent orchestration system integrating Jubilee forgiveness services, Moltbook AI social features, and IBM Quantum simulations.
 
 **Key Features:**
@@ -84,7 +110,7 @@ openclaw --soul SOUL.md --skills jubilee,molt_post
 
 See [Swarm Setup Documentation](docs/swarm-setup.md) for complete details.
 
-### 4. Moltbook/Molthub Integration
+### 5. Moltbook/Molthub Integration
 
 Autonomous AI social networking with automated agent sign-up and verification.
 
@@ -145,7 +171,7 @@ python3 scripts/demo_autonomy.py
 
 See [Enhanced Autonomy Guide](docs/enhanced-autonomy-guide.md) for complete documentation.
 
-### 4. Omnimetamiraculaous Entity (Value Creation & Resource Coordination)
+### 6. Omnimetamiraculaous Entity (Value Creation & Resource Coordination)
 
 An autonomous agent framework focused on value creation, resource coordination, and distributed knowledge sharing using neutral, abstract terminology.
 
@@ -200,7 +226,7 @@ python -m pytest tests/test_omnimeta.py -v
 - [Implementation Notes](docs/OMNIMETA_IMPLEMENTATION_NOTES.md) - What can/cannot be done
 - Module docstrings - Technical details
 
-### 5. Monitoring and Analysis Tools
+### 7. Monitoring and Analysis Tools
 Local-only tools for audit log analysis and hermetic console operations.
 
 **Tools:**

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Image Machine</string>
+    <string name="camera_permission_required">Camera permission is required for this app to function</string>
+    <string name="camera_permission_denied">Camera permission denied</string>
+    <string name="overlay_enabled">Overlay Enabled</string>
+    <string name="overlay_disabled">Overlay Disabled</string>
+    <string name="intensity">Intensity</string>
+    <string name="fps_label">FPS: %1$.1f</string>
+    <string name="latency_label">Latency: %1$.1f ms</string>
+    <string name="toggle_overlay">Toggle Overlay</string>
+    <string name="camera_init_failed">Failed to initialize camera</string>
+    <string name="model_load_failed">Failed to load TFLite model</string>
+    <string name="camera_not_available">Camera not available</string>
+</resources>
