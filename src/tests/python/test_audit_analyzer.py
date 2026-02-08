@@ -76,13 +76,13 @@ def test_tier0_public_access_anomaly(tmp_path):
 
     audit_entries = audit_analyzer.load_audit_entries(audit_path)
     anomalies = audit_analyzer.detect_anomalies(audit_entries, {})
-    
+
     # Should have one high-priority anomaly for tier0_public accessing /legion-status
     tier0_anomalies = [a for a in anomalies if a.get("reason") == "tier0_public_access_to_legion_status"]
     assert len(tier0_anomalies) == 1
     assert tier0_anomalies[0]["api_key"] == "tier0_public"
     assert tier0_anomalies[0]["endpoint"] == "/legion-status"
-    
+
     # Should also have one time-based anomaly for output-001 (no instantiation timestamp)
     time_anomalies = [a for a in anomalies if a.get("reason") == "no_instantiation_timestamp_available"]
     assert len(time_anomalies) == 1
@@ -108,7 +108,7 @@ def test_no_duplicate_anomalies_for_same_entry(tmp_path):
     # Even with both high-priority and time-based checks, should only get one anomaly
     # because continue prevents duplicate processing
     anomalies = audit_analyzer.detect_anomalies(audit_entries, {})
-    
+
     # Should only have the high-priority anomaly
     assert len(anomalies) == 1
     assert anomalies[0]["reason"] == "tier0_public_access_to_legion_status"

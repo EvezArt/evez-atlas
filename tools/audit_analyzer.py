@@ -121,7 +121,7 @@ def detect_anomalies(
 ) -> List[Dict[str, Any]]:
     first_seen: Dict[str, float] = {}
     high_priority_output_ids: Set[str] = set()  # Track entries with high-priority anomalies
-    
+
     for entry in entries:
         if entry.timestamp is None:
             continue
@@ -129,7 +129,7 @@ def detect_anomalies(
             first_seen[entry.output_id] = entry.timestamp
 
     anomalies: List[Dict[str, Any]] = []
-    
+
     # First pass: check for high-priority anomalies per entry
     # These are security-critical checks that should prevent further processing of the same entry
     for entry in entries:
@@ -145,15 +145,15 @@ def detect_anomalies(
             )
             high_priority_output_ids.add(entry.output_id)
             continue  # prevent duplicate anomaly entries for the same record
-        
+
         # Additional high-priority checks can be added here with continue statements
-    
+
     # Second pass: check for time-based anomalies
     # Skip output_ids that already have high-priority anomalies
     for output_id, first_timestamp in first_seen.items():
         if output_id in high_priority_output_ids:
             continue  # Skip entries already flagged with high-priority anomalies
-            
+
         instantiated_at = instantiation_map.get(output_id)
         if instantiated_at is None:
             anomalies.append(
