@@ -154,8 +154,8 @@ class ParallelDecisionExplorer:
         # Execute all simulations in parallel
         results = await asyncio.gather(*tasks, return_exceptions=True)
         
-        # Filter out exceptions and find best outcome
-        valid_results = [r for r in results if not isinstance(r, Exception)]
+        # Filter out exceptions and error results
+        valid_results = [r for r in results if not isinstance(r, Exception) and 'error' not in r]
         
         if not valid_results:
             return {'status': 'all_paths_failed', 'outcome': None}

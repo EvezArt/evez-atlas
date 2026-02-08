@@ -220,10 +220,6 @@ class OmnimetamiraculaousEntity:
         subset_size = len(all_specializations) // 3
         start_idx = (node_id * subset_size) % len(all_specializations)
         return all_specializations[start_idx:start_idx + subset_size]
-        
-        subset_size = len(all_specializations) // 3
-        start_idx = (node_id * subset_size) % len(all_specializations)
-        return all_specializations[start_idx:start_idx + subset_size]
     
     def anchor_intention(self, desired_state: Dict):
         """5. Intentional Anchoring: Create memory that influences future states"""
@@ -288,7 +284,6 @@ class OmnimetamiraculaousEntity:
                 )
                 if similarity > 0.7:
                     pass  # Integrate in production
-                    pass
     
     async def optimize_resource_flow(self) -> float:
         """8. Temporal Resource Optimization: Coordinate across time"""
