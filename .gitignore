@@ -74,3 +74,7 @@ data/shared_reality_plane.jsonl
 data/resource_manager.jsonl
 skills/__pycache__/
 data/replication.jsonl
+
+# Threat scan output files
+data/threat_scans/*.json
+!data/threat_scans/.gitkeep
