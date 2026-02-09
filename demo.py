@@ -55,8 +55,8 @@ def generate_sample_data(
     Returns:
         Tuple of (features, labels) where labels are 0=normal, 1=attack
     """
-    X = []
-    y = []
+    feature_vectors = []
+    class_labels = []
     
     n_attacks = int(n_samples * attack_ratio)
     n_normal = n_samples - n_attacks
@@ -75,8 +75,8 @@ def generate_sample_data(
             1.0,                         # logged_in
             0.0,                         # num_compromised
         ]
-        X.append(features[:n_features])
-        y.append(0)
+        feature_vectors.append(features[:n_features])
+        class_labels.append(0)
     
     # Generate attack patterns
     for _ in range(n_attacks):
@@ -139,19 +139,19 @@ def generate_sample_data(
                 random.uniform(1, 5),        # compromised!
             ]
         
-        X.append(features[:n_features])
-        y.append(1)
+        feature_vectors.append(features[:n_features])
+        class_labels.append(1)
     
     # Shuffle data
-    combined = list(zip(X, y))
+    combined = list(zip(feature_vectors, class_labels))
     random.shuffle(combined)
-    X, y = zip(*combined)
+    feature_vectors, class_labels = zip(*combined)
     
-    return list(X), list(y)
+    return list(feature_vectors), list(class_labels)
 
 
 def normalize_features(
-    X: List[List[float]], 
+    feature_vectors: List[List[float]], 
     mins: List[float] = None, 
     maxs: List[float] = None
 ) -> Tuple[List[List[float]], List[float], List[float]]:
@@ -159,60 +159,60 @@ def normalize_features(
     Normalize features using min-max scaling.
     
     Args:
-        X: List of feature vectors
+        feature_vectors: List of feature vectors
         mins: Pre-computed minimum values (from training data)
         maxs: Pre-computed maximum values (from training data)
         
     Returns:
         Tuple of (normalized_features, mins, maxs) for reuse with test data
     """
-    if not X:
-        return X, [], []
+    if not feature_vectors:
+        return feature_vectors, [], []
     
-    n_features = len(X[0])
+    n_features = len(feature_vectors[0])
     
     # Compute min and max for each feature if not provided
     if mins is None or maxs is None:
         mins = [float("inf")] * n_features
         maxs = [float("-inf")] * n_features
         
-        for sample in X:
-            for i, val in enumerate(sample):
-                mins[i] = min(mins[i], val)
-                maxs[i] = max(maxs[i], val)
+        for sample in feature_vectors:
+            for feature_index, value in enumerate(sample):
+                mins[feature_index] = min(mins[feature_index], value)
+                maxs[feature_index] = max(maxs[feature_index], value)
     
     # Normalize using the provided or computed min/max values
-    X_normalized = []
-    for sample in X:
+    normalized_features = []
+    for sample in feature_vectors:
         normalized = []
-        for i, val in enumerate(sample):
-            range_val = maxs[i] - mins[i]
+        for feature_index, value in enumerate(sample):
+            range_val = maxs[feature_index] - mins[feature_index]
             if range_val > 0:
-                normalized.append((val - mins[i]) / range_val)
+                normalized.append((value - mins[feature_index]) / range_val)
             else:
                 normalized.append(0.0)
-        X_normalized.append(normalized)
+        normalized_features.append(normalized)
     
-    return X_normalized, mins, maxs
+    return normalized_features, mins, maxs
 
 
-def compute_metrics(y_true: List[int], y_pred: List[int]) -> Dict[str, float]:
+def compute_metrics(true_labels: List[int], predicted_labels: List[int]) -> Dict[str, float]:
     """
     Compute classification metrics.
     
     Args:
-        y_true: True labels
-        y_pred: Predicted labels
+        true_labels: True labels
+        predicted_labels: Predicted labels
         
     Returns:
         Dictionary with accuracy, precision, recall, and f1
     """
-    tp = sum(1 for t, p in zip(y_true, y_pred) if t == 1 and p == 1)
-    tn = sum(1 for t, p in zip(y_true, y_pred) if t == 0 and p == 0)
-    fp = sum(1 for t, p in zip(y_true, y_pred) if t == 0 and p == 1)
-    fn = sum(1 for t, p in zip(y_true, y_pred) if t == 1 and p == 0)
+    tp = sum(1 for true_label, predicted_label in zip(true_labels, predicted_labels) if true_label == 1 and predicted_label == 1)
+    tn = sum(1 for true_label, predicted_label in zip(true_labels, predicted_labels) if true_label == 0 and predicted_label == 0)
+    fp = sum(1 for true_label, predicted_label in zip(true_labels, predicted_labels) if true_label == 0 and predicted_label == 1)
+    fn = sum(1 for true_label, predicted_label in zip(true_labels, predicted_labels) if true_label == 1 and predicted_label == 0)
     
-    accuracy = (tp + tn) / len(y_true) if y_true else 0.0
+    accuracy = (tp + tn) / len(true_labels) if true_labels else 0.0
     precision = tp / (tp + fp) if (tp + fp) > 0 else 0.0
     recall = tp / (tp + fn) if (tp + fn) > 0 else 0.0
     f1 = 2 * precision * recall / (precision + recall) if (precision + recall) > 0 else 0.0
@@ -226,9 +226,9 @@ def compute_metrics(y_true: List[int], y_pred: List[int]) -> Dict[str, float]:
 
 
 def simple_quantum_classifier(
-    X_train: List[List[float]],
-    y_train: List[int],
-    X_test: List[List[float]],
+    training_features: List[List[float]],
+    training_labels: List[int],
+    test_features: List[List[float]],
     k_neighbors: int = 3
 ) -> List[int]:
     """
@@ -238,9 +238,9 @@ def simple_quantum_classifier(
     classifies based on k-nearest neighbors in the quantum feature space.
     
     Args:
-        X_train: Training features
-        y_train: Training labels
-        X_test: Test features
+        training_features: Training features
+        training_labels: Training labels
+        test_features: Test features
         k_neighbors: Number of neighbors for classification
         
     Returns:
@@ -251,18 +251,18 @@ def simple_quantum_classifier(
     predictions = []
     
     # Handle edge case of empty training data
-    if not X_train:
-        return [0] * len(X_test)
+    if not training_features:
+        return [0] * len(test_features)
     
     # Clamp k_neighbors to training set size
-    effective_k = min(k_neighbors, len(X_train))
+    effective_k = min(k_neighbors, len(training_features))
     
-    for x_test in X_test:
+    for test_sample in test_features:
         # Compute kernel similarities to all training samples
         similarities = []
-        for i, x_train in enumerate(X_train):
-            kernel_val = quantum_kernel_estimation(x_test, x_train)
-            similarities.append((kernel_val, y_train[i]))
+        for train_index, train_sample in enumerate(training_features):
+            kernel_val = quantum_kernel_estimation(test_sample, train_sample)
+            similarities.append((kernel_val, training_labels[train_index]))
         
         # Sort by similarity (descending) using only kernel value and take k nearest
         similarities.sort(key=lambda item: item[0], reverse=True)
@@ -315,13 +315,13 @@ def run_navigation_demo() -> Dict[str, List[float]]:
 
 
 def _make_sensor_vector(
-    rng: random.Random,
+    random_generator: random.Random,
     baseline: float,
     jitter: float,
     feature_dimension: int,
 ) -> List[float]:
     return [
-        max(0.0, min(1.0, baseline + rng.uniform(-jitter, jitter)))
+        max(0.0, min(1.0, baseline + random_generator.uniform(-jitter, jitter)))
         for _ in range(feature_dimension)
     ]
 
@@ -334,30 +334,30 @@ def build_navigation_ui_state(
     reps: int = 2,
 ) -> Dict[str, Any]:
     """Build a navigation UI state snapshot for environmental sensory tasks."""
-    rng = random.Random(seed)
+    random_generator = random.Random(seed)
     sensor_tasks = [
         {
             "name": task,
             "vector": _make_sensor_vector(
-                rng,
-                baseline=0.2 + idx * 0.1,
+                random_generator,
+                baseline=0.2 + task_index * 0.1,
                 jitter=0.08,
                 feature_dimension=feature_dimension,
             ),
         }
-        for idx, task in enumerate(ENVIRONMENTAL_TASKS)
+        for task_index, task in enumerate(ENVIRONMENTAL_TASKS)
     ]
     sequence = [entry["vector"] for entry in sensor_tasks[:3]]
     candidates = [
-        _make_sensor_vector(rng, baseline=0.6, jitter=0.15, feature_dimension=feature_dimension),
-        _make_sensor_vector(rng, baseline=0.35, jitter=0.1, feature_dimension=feature_dimension),
-        _make_sensor_vector(rng, baseline=0.75, jitter=0.12, feature_dimension=feature_dimension),
-        _make_sensor_vector(rng, baseline=0.5, jitter=0.2, feature_dimension=feature_dimension),
+        _make_sensor_vector(random_generator, baseline=0.6, jitter=0.15, feature_dimension=feature_dimension),
+        _make_sensor_vector(random_generator, baseline=0.35, jitter=0.1, feature_dimension=feature_dimension),
+        _make_sensor_vector(random_generator, baseline=0.75, jitter=0.12, feature_dimension=feature_dimension),
+        _make_sensor_vector(random_generator, baseline=0.5, jitter=0.2, feature_dimension=feature_dimension),
     ]
     anchors = [
-        _make_sensor_vector(rng, baseline=0.15, jitter=0.05, feature_dimension=feature_dimension),
-        _make_sensor_vector(rng, baseline=0.5, jitter=0.05, feature_dimension=feature_dimension),
-        _make_sensor_vector(rng, baseline=0.85, jitter=0.05, feature_dimension=feature_dimension),
+        _make_sensor_vector(random_generator, baseline=0.15, jitter=0.05, feature_dimension=feature_dimension),
+        _make_sensor_vector(random_generator, baseline=0.5, jitter=0.05, feature_dimension=feature_dimension),
+        _make_sensor_vector(random_generator, baseline=0.85, jitter=0.05, feature_dimension=feature_dimension),
     ]
     evaluation = evaluate_navigation_sequence(
         sequence,
@@ -398,25 +398,25 @@ def main():
     
     # Generate synthetic data
     print("\n[1] Generating synthetic network traffic data...")
-    X_train, y_train = generate_sample_data(n_samples=50, attack_ratio=0.3)
-    X_test, y_test = generate_sample_data(n_samples=20, attack_ratio=0.3)
+    training_features, training_labels = generate_sample_data(n_samples=50, attack_ratio=0.3)
+    test_features, test_labels = generate_sample_data(n_samples=20, attack_ratio=0.3)
     
-    print(f"    Training samples: {len(X_train)}")
-    print(f"    Test samples: {len(X_test)}")
-    print(f"    Features: {FEATURE_NAMES[:len(X_train[0])]}")
+    print(f"    Training samples: {len(training_features)}")
+    print(f"    Test samples: {len(test_features)}")
+    print(f"    Features: {FEATURE_NAMES[:len(training_features[0])]}")
     
     # Normalize features (compute stats from training, apply to both)
     print("\n[2] Normalizing features...")
-    X_train_norm, mins, maxs = normalize_features(X_train)
-    X_test_norm, _, _ = normalize_features(X_test, mins, maxs)
+    train_normalized, mins, maxs = normalize_features(training_features)
+    test_normalized, _, _ = normalize_features(test_features, mins, maxs)
     
     # Train and evaluate classifier
     print("\n[3] Running quantum-inspired classification...")
-    y_pred = simple_quantum_classifier(X_train_norm, y_train, X_test_norm, k_neighbors=3)
+    predicted_labels = simple_quantum_classifier(train_normalized, training_labels, test_normalized, k_neighbors=3)
     
     # Compute metrics
     print("\n[4] Computing evaluation metrics...")
-    metrics = compute_metrics(y_test, y_pred)
+    metrics = compute_metrics(test_labels, predicted_labels)
     
     print("\n" + "=" * 60)
     print("Results")
@@ -430,11 +430,11 @@ def main():
     print("\n" + "=" * 60)
     print("Sample Predictions")
     print("=" * 60)
-    for i in range(min(5, len(y_test))):
-        true_label = "ATTACK" if y_test[i] == 1 else "NORMAL"
-        pred_label = "ATTACK" if y_pred[i] == 1 else "NORMAL"
-        status = "✓" if y_test[i] == y_pred[i] else "✗"
-        print(f"    Sample {i+1}: True={true_label:6s}, Predicted={pred_label:6s} {status}")
+    for sample_index in range(min(5, len(test_labels))):
+        true_label = "ATTACK" if test_labels[sample_index] == 1 else "NORMAL"
+        pred_label = "ATTACK" if predicted_labels[sample_index] == 1 else "NORMAL"
+        status = "✓" if test_labels[sample_index] == predicted_labels[sample_index] else "✗"
+        print(f"    Sample {sample_index+1}: True={true_label:6s}, Predicted={pred_label:6s} {status}")
     
     print("\n" + "=" * 60)
     print("Demo completed successfully!")

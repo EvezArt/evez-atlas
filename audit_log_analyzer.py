@@ -23,14 +23,14 @@ def parse_orders(log_file=LOG_FILE):
         return events
     
     try:
-        with open(log_file, 'r') as f:
-            for line in f:
+        with open(log_file, 'r') as file_handle:
+            for line in file_handle:
                 line = line.strip()
                 if line:
                     events.append(json.loads(line))
         return events
-    except Exception as e:
-        print(f"Error parsing log file: {e}")
+    except Exception as parse_error:
+        print(f"Error parsing log file: {parse_error}")
         return []
 
 
@@ -44,15 +44,15 @@ def group_by_order(events):
     return dict(orders)
 
 
-def format_timestamp(ts):
+def format_timestamp(timestamp_value):
     """Format Unix timestamp to readable string."""
     try:
-        return datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
+        return datetime.fromtimestamp(timestamp_value).strftime('%Y-%m-%d %H:%M:%S')
     except:
-        return str(ts)
+        return str(timestamp_value)
 
 
-def cmd_summary():
+def display_audit_log_summary():
     """Quick overview of audit log."""
     print("=" * 80)
     print("AUDIT LOG SUMMARY")
@@ -67,14 +67,14 @@ def cmd_summary():
     orders = group_by_order(events)
     
     # Event breakdown
-    event_types = Counter(e['event_type'] for e in events)
+    event_types = Counter(event['event_type'] for event in events)
     
     # Revenue calculation
-    fulfilled_events = [e for e in events if e.get('event_type') == 'order_fulfilled']
-    total_revenue = sum(e.get('amount', 0) for e in fulfilled_events)
+    fulfilled_events = [event for event in events if event.get('event_type') == 'order_fulfilled']
+    total_revenue = sum(event.get('amount', 0) for event in fulfilled_events)
     
     # Time range
-    timestamps = [e['timestamp'] for e in events if 'timestamp' in e]
+    timestamps = [event['timestamp'] for event in events if 'timestamp' in event]
     if timestamps:
         first_time = min(timestamps)
         last_time = max(timestamps)
@@ -94,7 +94,7 @@ def cmd_summary():
     complete_orders = 0
     incomplete_orders = 0
     for order_id, order_events in orders.items():
-        event_types_in_order = {e['event_type'] for e in order_events}
+        event_types_in_order = {event['event_type'] for event in order_events}
         if {'order_created', 'payment_confirmed', 'order_fulfilled'}.issubset(event_types_in_order):
             complete_orders += 1
         else:
@@ -123,7 +123,7 @@ def cmd_summary():
     print("✅ AUDIT LOG: HEALTHY")
 
 
-def cmd_verify():
+def verify_audit_log_integrity():
     """Full integrity verification of audit log."""
     print("=" * 80)
     print("AUDIT LOG VERIFICATION")
@@ -142,16 +142,16 @@ def cmd_verify():
     
     # Check 1: Required fields
     required_fields = ['timestamp', 'event_type', 'order_id', 'amount', 'status']
-    for i, event in enumerate(events):
+    for event_index, event in enumerate(events):
         for field in required_fields:
             if field not in event:
-                errors.append(f"Event {i}: Missing required field '{field}'")
+                errors.append(f"Event {event_index}: Missing required field '{field}'")
     
     if not errors:
         print("[✓] All events have required fields")
     
     # Check 2: Timestamps sequential
-    timestamps = [e.get('timestamp') for e in events if 'timestamp' in e]
+    timestamps = [event.get('timestamp') for event in events if 'timestamp' in event]
     if timestamps == sorted(timestamps):
         print("[✓] All timestamps are sequential")
     else:
@@ -160,7 +160,7 @@ def cmd_verify():
     # Check 3: Complete order cycles
     incomplete = []
     for order_id, order_events in orders.items():
-        event_types = {e['event_type'] for e in order_events}
+        event_types = {event['event_type'] for event in order_events}
         expected = {'order_created', 'payment_confirmed', 'order_fulfilled'}
         if not expected.issubset(event_types):
             incomplete.append(order_id)
@@ -173,7 +173,7 @@ def cmd_verify():
     # Check 4: Amounts consistent
     amount_mismatches = []
     for order_id, order_events in orders.items():
-        amounts = {e.get('amount') for e in order_events if 'amount' in e}
+        amounts = {event.get('amount') for event in order_events if 'amount' in event}
         if len(amounts) > 1:
             amount_mismatches.append(order_id)
     
@@ -186,7 +186,7 @@ def cmd_verify():
     print("[✓] All events properly linked by order_id")
     
     # Check 6: No duplicates
-    event_signatures = [(e.get('order_id'), e.get('event_type')) for e in events]
+    event_signatures = [(event.get('order_id'), event.get('event_type')) for event in events]
     if len(event_signatures) == len(set(event_signatures)):
         print("[✓] No duplicate events detected")
     else:
@@ -197,7 +197,7 @@ def cmd_verify():
     
     # Check 8: Status validity
     valid_statuses = {'pending_payment', 'paid', 'fulfilled', 'refunded'}
-    invalid_statuses = [e for e in events if e.get('status') not in valid_statuses]
+    invalid_statuses = [event for event in events if event.get('status') not in valid_statuses]
     if not invalid_statuses:
         print("[✓] All statuses are valid")
     else:
@@ -234,7 +234,7 @@ def cmd_verify():
         print("❌ AUDIT LOG HAS ISSUES")
 
 
-def cmd_customers():
+def analyze_customer_activity():
     """Customer activity analysis."""
     print("=" * 80)
     print("CUSTOMER ANALYSIS")
@@ -256,7 +256,7 @@ def cmd_customers():
         customer_id = order_events[0].get('customer_id', 'unknown')
         
         # Get fulfilled events for revenue
-        fulfilled = [e for e in order_events if e.get('event_type') == 'order_fulfilled']
+        fulfilled = [event for event in order_events if event.get('event_type') == 'order_fulfilled']
         if fulfilled:
             revenue = fulfilled[0].get('amount', 0)
             timestamp = fulfilled[0].get('timestamp')
@@ -274,10 +274,10 @@ def cmd_customers():
     print("Customer Activity:")
     
     # Sort by revenue
-    sorted_customers = sorted(customer_data.items(), key=lambda x: x[1]['revenue'], reverse=True)
+    sorted_customers = sorted(customer_data.items(), key=lambda customer_tuple: customer_tuple[1]['revenue'], reverse=True)
     
-    for i, (customer_id, data) in enumerate(sorted_customers, 1):
-        print(f"{i}. {customer_id}")
+    for customer_index, (customer_id, data) in enumerate(sorted_customers, 1):
+        print(f"{customer_index}. {customer_id}")
         print(f"   Orders: {len(data['orders'])}")
         print(f"   Revenue: ${data['revenue']:.2f}")
         if data['orders']:
@@ -292,14 +292,14 @@ def cmd_customers():
     # Summary stats
     if sorted_customers:
         top_customer = sorted_customers[0]
-        total_revenue = sum(d['revenue'] for _, d in sorted_customers)
+        total_revenue = sum(customer_data['revenue'] for _, customer_data in sorted_customers)
         print(f"Top Customer: {top_customer[0]} (${top_customer[1]['revenue']:.2f}, {top_customer[1]['revenue']/total_revenue*100:.0f}% of revenue)")
         
-        total_orders = sum(len(d['orders']) for _, d in sorted_customers)
+        total_orders = sum(len(customer_data['orders']) for _, customer_data in sorted_customers)
         print(f"Average orders per customer: {total_orders/len(sorted_customers):.2f}")
 
 
-def cmd_revenue():
+def generate_revenue_report():
     """Revenue breakdown and analysis."""
     print("=" * 80)
     print("REVENUE REPORT")
@@ -311,13 +311,13 @@ def cmd_revenue():
         print("No events found.")
         return
     
-    fulfilled_events = [e for e in events if e.get('event_type') == 'order_fulfilled']
+    fulfilled_events = [event for event in events if event.get('event_type') == 'order_fulfilled']
     
     if not fulfilled_events:
         print("No fulfilled orders found.")
         return
     
-    total_revenue = sum(e.get('amount', 0) for e in fulfilled_events)
+    total_revenue = sum(event.get('amount', 0) for event in fulfilled_events)
     print(f"Total Revenue: ${total_revenue:.2f}")
     print()
     
@@ -359,14 +359,14 @@ def cmd_revenue():
         order_id = event.get('order_id')
         orders = group_by_order(events)
         if order_id in orders:
-            created = [e for e in orders[order_id] if e.get('event_type') == 'order_created']
+            created = [event for event in orders[order_id] if event.get('event_type') == 'order_created']
             if created:
                 method = created[0].get('metadata', {}).get('payment_method', 'unknown')
                 payment_methods[method] += event.get('amount', 0)
     
     if payment_methods:
         print("Payment Methods:")
-        for method, amount in sorted(payment_methods.items(), key=lambda x: x[1], reverse=True):
+        for method, amount in sorted(payment_methods.items(), key=lambda method_tuple: method_tuple[1], reverse=True):
             pct = (amount / total_revenue) * 100
             print(f"  {method}: ${amount:.2f} ({pct:.0f}%)")
         print()
@@ -379,20 +379,20 @@ def cmd_revenue():
     
     if service_types:
         print("Service Types:")
-        for service, amount in sorted(service_types.items(), key=lambda x: x[1], reverse=True):
+        for service, amount in sorted(service_types.items(), key=lambda service_tuple: service_tuple[1], reverse=True):
             pct = (amount / total_revenue) * 100
             print(f"  {service}: ${amount:.2f} ({pct:.0f}%)")
         print()
     
     # Transaction statistics
-    amounts = [e.get('amount', 0) for e in fulfilled_events]
+    amounts = [event.get('amount', 0) for event in fulfilled_events]
     if amounts:
         print(f"Average Transaction: ${sum(amounts)/len(amounts):.2f}")
         print(f"Largest Transaction: ${max(amounts):.2f}")
         print(f"Smallest Transaction: ${min(amounts):.2f}")
 
 
-def cmd_watch():
+def monitor_audit_log_realtime():
     """Real-time monitoring of audit log."""
     print("=" * 80)
     print(f"REAL-TIME AUDIT LOG MONITORING")
@@ -441,9 +441,9 @@ def cmd_watch():
                 last_events = current_events
                 
                 # Show daily total
-                fulfilled = [e for e in current_events if e.get('event_type') == 'order_fulfilled']
+                fulfilled = [event for event in current_events if event.get('event_type') == 'order_fulfilled']
                 if fulfilled:
-                    today_revenue = sum(e.get('amount', 0) for e in fulfilled)
+                    today_revenue = sum(event.get('amount', 0) for event in fulfilled)
                     print(f"Total revenue: ${today_revenue:.2f}")
                     print()
     
@@ -451,7 +451,7 @@ def cmd_watch():
         print("\nMonitoring stopped.")
 
 
-def cmd_report():
+def generate_comprehensive_report():
     """Generate comprehensive report."""
     print("=" * 80)
     print("COMPREHENSIVE AUDIT LOG REPORT")
@@ -459,13 +459,13 @@ def cmd_report():
     print()
     
     # Run all analysis
-    cmd_summary()
+    display_audit_log_summary()
     print("\n")
-    cmd_verify()
+    verify_audit_log_integrity()
     print("\n")
-    cmd_customers()
+    analyze_customer_activity()
     print("\n")
-    cmd_revenue()
+    generate_revenue_report()
     
     # Order details
     print("=" * 80)
@@ -476,34 +476,34 @@ def cmd_report():
     events = parse_orders()
     orders = group_by_order(events)
     
-    for i, (order_id, order_events) in enumerate(sorted(orders.items()), 1):
-        print(f"Order #{i}: {order_id}")
+    for order_index, (order_id, order_events) in enumerate(sorted(orders.items()), 1):
+        print(f"Order #{order_index}: {order_id}")
         
         # Get details
-        created = [e for e in order_events if e.get('event_type') == 'order_created']
-        paid = [e for e in order_events if e.get('event_type') == 'payment_confirmed']
-        fulfilled = [e for e in order_events if e.get('event_type') == 'order_fulfilled']
+        created = [event for event in order_events if event.get('event_type') == 'order_created']
+        paid = [event for event in order_events if event.get('event_type') == 'payment_confirmed']
+        fulfilled = [event for event in order_events if event.get('event_type') == 'order_fulfilled']
         
         if created:
-            e = created[0]
-            print(f"  Customer: {e.get('customer_id', 'unknown')}")
-            print(f"  Amount: ${e.get('amount', 0):.2f}")
-            print(f"  Created: {format_timestamp(e.get('timestamp', 0))}")
+            event = created[0]
+            print(f"  Customer: {event.get('customer_id', 'unknown')}")
+            print(f"  Amount: ${event.get('amount', 0):.2f}")
+            print(f"  Created: {format_timestamp(event.get('timestamp', 0))}")
         
         if paid:
-            e = paid[0]
+            event = paid[0]
             created_time = created[0].get('timestamp') if created else 0
-            time_diff = e.get('timestamp', 0) - created_time
-            print(f"  Paid: {format_timestamp(e.get('timestamp', 0))} (+{time_diff:.1f}s)")
+            time_diff = event.get('timestamp', 0) - created_time
+            print(f"  Paid: {format_timestamp(event.get('timestamp', 0))} (+{time_diff:.1f}s)")
         
         if fulfilled:
-            e = fulfilled[0]
+            event = fulfilled[0]
             created_time = created[0].get('timestamp') if created else 0
-            time_diff = e.get('timestamp', 0) - created_time
-            print(f"  Fulfilled: {format_timestamp(e.get('timestamp', 0))} (+{time_diff:.1f}s)")
+            time_diff = event.get('timestamp', 0) - created_time
+            print(f"  Fulfilled: {format_timestamp(event.get('timestamp', 0))} (+{time_diff:.1f}s)")
             print(f"  Total time: {time_diff:.1f}s")
             
-            token = e.get('metadata', {}).get('access_token')
+            token = event.get('metadata', {}).get('access_token')
             if token:
                 print(f"  Access token: {token}")
         
@@ -542,12 +542,12 @@ def main():
     command = sys.argv[1].lower()
     
     commands = {
-        'summary': cmd_summary,
-        'verify': cmd_verify,
-        'customers': cmd_customers,
-        'revenue': cmd_revenue,
-        'watch': cmd_watch,
-        'report': cmd_report,
+        'summary': display_audit_log_summary,
+        'verify': verify_audit_log_integrity,
+        'customers': analyze_customer_activity,
+        'revenue': generate_revenue_report,
+        'watch': monitor_audit_log_realtime,
+        'report': generate_comprehensive_report,
     }
     
     if command not in commands:

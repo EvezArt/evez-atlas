@@ -18,7 +18,7 @@ from datetime import datetime
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'src'))
 
 
-def cmd_order():
+def create_complete_order():
     """Create a complete order flow with minimal input"""
     print("=" * 80)
     print("CREATING ORDER")
@@ -83,7 +83,7 @@ def cmd_order():
         return 1
 
 
-def cmd_status():
+def display_system_status():
     """Show complete system status"""
     print("=" * 80)
     print("COMPLETE SYSTEM STATUS")
@@ -98,8 +98,8 @@ def cmd_status():
         # Parse orders.jsonl to get stats
         orders_file = "src/memory/orders.jsonl"
         if os.path.exists(orders_file):
-            with open(orders_file, 'r') as f:
-                events = [json.loads(line) for line in f if line.strip()]
+            with open(orders_file, 'r') as file_handle:
+                events = [json.loads(line) for line in file_handle if line.strip()]
             
             orders_created = len([e for e in events if e['event_type'] == 'order_created'])
             orders_paid = len([e for e in events if e['event_type'] == 'payment_confirmed'])
@@ -160,7 +160,7 @@ def cmd_status():
         return 1
 
 
-def cmd_wealth():
+def show_wealth_projections():
     """Show wealth projections"""
     print("=" * 80)
     print("WEALTH PROJECTIONS")
@@ -171,8 +171,8 @@ def cmd_wealth():
         # Get current revenue
         orders_file = "src/memory/orders.jsonl"
         if os.path.exists(orders_file):
-            with open(orders_file, 'r') as f:
-                events = [json.loads(line) for line in f if line.strip()]
+            with open(orders_file, 'r') as file_handle:
+                events = [json.loads(line) for line in file_handle if line.strip()]
             
             total_revenue = sum(e['amount'] for e in events if e['event_type'] == 'payment_confirmed')
             orders_count = len([e for e in events if e['event_type'] == 'payment_confirmed'])
@@ -279,9 +279,9 @@ def main():
     command = sys.argv[1].lower()
     
     commands = {
-        'order': cmd_order,
-        'status': cmd_status,
-        'wealth': cmd_wealth,
+        'order': create_complete_order,
+        'status': display_system_status,
+        'wealth': show_wealth_projections,
         'help': show_usage,
     }
     

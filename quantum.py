@@ -257,8 +257,8 @@ def encode_features(
 
 
 def quantum_kernel_estimation(
-    x1: List[float],
-    x2: List[float],
+    first_feature_vector: List[float],
+    second_feature_vector: List[float],
     feature_dimension: int = 10,
     reps: int = 2
 ) -> float:
@@ -269,8 +269,8 @@ def quantum_kernel_estimation(
     in the quantum feature space, which can capture non-linear relationships.
     
     Args:
-        x1: First feature vector
-        x2: Second feature vector
+        first_feature_vector: First feature vector
+        second_feature_vector: Second feature vector
         feature_dimension: Dimension of the feature map
         reps: Number of feature map repetitions
         
@@ -279,8 +279,8 @@ def quantum_kernel_estimation(
     """
     feature_map = QuantumFeatureMap(feature_dimension, reps)
     
-    state1 = feature_map.encode(x1)
-    state2 = feature_map.encode(x2)
+    state1 = feature_map.encode(first_feature_vector)
+    state2 = feature_map.encode(second_feature_vector)
     
     # Compute fidelity (inner product magnitude squared)
     inner_product = sum(
@@ -346,7 +346,7 @@ def manifold_projection(
     total = sum(similarities)
     if total == 0:
         return [1.0 / len(anchors)] * len(anchors)
-    return [value / total for value in similarities]
+    return [similarity_value / total for similarity_value in similarities]
 
 
 def sequence_embedding(
@@ -369,7 +369,7 @@ def sequence_embedding(
         return [0.0] * feature_dimension
     _validate_decay(decay)
     
-    weights = [decay ** idx for idx in range(len(sequence))]
+    weights = [decay ** step_index for step_index in range(len(sequence))]
     weights.reverse()
     total_weight = sum(weights)
     if total_weight == 0:
@@ -377,9 +377,9 @@ def sequence_embedding(
     
     embedding = [0.0] * feature_dimension
     for weight, step in zip(weights, sequence):
-        for idx in range(feature_dimension):
-            embedding[idx] += weight * (step[idx] if idx < len(step) else 0.0)
-    return [value / total_weight for value in embedding]
+        for feature_index in range(feature_dimension):
+            embedding[feature_index] += weight * (step[feature_index] if feature_index < len(step) else 0.0)
+    return [embedding_value / total_weight for embedding_value in embedding]
 
 
 def predict_navigation_probabilities(
@@ -411,7 +411,7 @@ def predict_navigation_probabilities(
         return [1.0 / len(candidates)] * len(candidates)
     _validate_decay(decay)
     
-    weights = [decay ** idx for idx in range(len(sequence))]
+    weights = [decay ** step_index for step_index in range(len(sequence))]
     weights.reverse()
     
     scores = []
@@ -469,7 +469,7 @@ def evaluate_navigation_sequence(
     
     ranked = sorted(
         range(len(probabilities)),
-        key=lambda idx: probabilities[idx],
+        key=lambda candidate_index: probabilities[candidate_index],
         reverse=True,
     )
     
@@ -541,10 +541,10 @@ def recursive_navigation_evaluation(
                 evaluation["entropy"],
                 evaluation["projection_entropy"],
             )
-        top_idx = evaluation["top_candidate"]
-        if top_idx is None:
+        top_candidate_index = evaluation["top_candidate"]
+        if top_candidate_index is None:
             break
-        current_sequence.append(candidates[top_idx])
+        current_sequence.append(candidates[top_candidate_index])
     
     return history
 
@@ -590,7 +590,7 @@ try:
                 print("Falling back to classical simulation", file=sys.stderr)
                 return None
     
-    def execute_quantum_kernel_ibm(x1: List[float], x2: List[float]) -> float:
+    def execute_quantum_kernel_ibm(first_feature_vector: List[float], second_feature_vector: List[float]) -> float:
         """
         Execute quantum kernel on real IBM hardware.
         
@@ -598,8 +598,8 @@ try:
         between two feature vectors on actual quantum hardware.
         
         Args:
-            x1: First feature vector
-            x2: Second feature vector
+            first_feature_vector: First feature vector
+            second_feature_vector: Second feature vector
             
         Returns:
             Kernel value (fidelity between encoded states)
@@ -607,15 +607,15 @@ try:
         backend = get_ibm_backend()
         if not backend:
             # Fallback to classical simulation
-            return quantum_kernel_estimation(x1, x2)
+            return quantum_kernel_estimation(first_feature_vector, second_feature_vector)
         
         try:
             # Build quantum circuit
-            n_qubits = min(len(x1), len(x2), 10)  # Limit to 10 qubits
-            x1_trimmed = x1[:n_qubits]
-            x2_trimmed = x2[:n_qubits]
+            number_of_qubits = min(len(first_feature_vector), len(second_feature_vector), 10)  # Limit to 10 qubits
+            x1_trimmed = first_feature_vector[:number_of_qubits]
+            x2_trimmed = second_feature_vector[:number_of_qubits]
             
-            feature_map = ZZFeatureMap(feature_dimension=n_qubits, reps=2)
+            feature_map = ZZFeatureMap(feature_dimension=number_of_qubits, reps=2)
             qc1 = feature_map.assign_parameters(x1_trimmed)
             qc2 = feature_map.assign_parameters(x2_trimmed)
             
@@ -630,15 +630,15 @@ try:
             counts = result.get_counts()
             
             # Fidelity = P(all zeros) - perfect overlap yields all 0s
-            zero_state = '0' * n_qubits
+            zero_state = '0' * number_of_qubits
             fidelity = counts.get(zero_state, 0) / 1024
             
             return fidelity
         except Exception:
             # Fallback on error
-            return quantum_kernel_estimation(x1, x2)
+            return quantum_kernel_estimation(first_feature_vector, second_feature_vector)
     
-    def ctc_fixed_point_oracle(state: List[float], n_qubits: int = 5) -> Dict:
+    def ctc_fixed_point_oracle(state: List[float], number_of_qubits: int = 5) -> Dict:
         """
         Temporal CTC (Closed Timelike Curve) oracle for retrocausal swarm.
         
@@ -647,7 +647,7 @@ try:
         
         Args:
             state: Initial quantum state vector
-            n_qubits: Number of qubits (default 5)
+            number_of_qubits: Number of qubits (default 5)
             
         Returns:
             Dictionary containing CTC fixed-point results
@@ -663,26 +663,26 @@ try:
         
         try:
             # Create superposition of timelines
-            qc = QuantumCircuit(n_qubits)
-            qc.h(range(n_qubits))  # Superpose all timelines
+            qc = QuantumCircuit(number_of_qubits)
+            qc.h(range(number_of_qubits))  # Superpose all timelines
             
             # Oracle: encode state as rotation angles
             # Normalize state values to [0,1] range for valid rotation angles
-            for i, val in enumerate(state[:n_qubits]):
+            for qubit_index, value in enumerate(state[:number_of_qubits]):
                 # Clamp value to [0,1] range to ensure valid rotation angle
-                normalized_val = max(0.0, min(1.0, float(val)))
-                qc.ry(normalized_val * math.pi, i)  # RY rotation based on state
+                normalized_val = max(0.0, min(1.0, float(value)))
+                qc.ry(normalized_val * math.pi, qubit_index)  # RY rotation based on state
             
             # Grover-style amplification (simplified)
             for _ in range(2):  # 2 Grover iterations
                 # Diffusion operator
-                qc.h(range(n_qubits))
-                qc.x(range(n_qubits))
-                qc.h(n_qubits - 1)
-                qc.mcx(list(range(n_qubits - 1)), n_qubits - 1)
-                qc.h(n_qubits - 1)
-                qc.x(range(n_qubits))
-                qc.h(range(n_qubits))
+                qc.h(range(number_of_qubits))
+                qc.x(range(number_of_qubits))
+                qc.h(number_of_qubits - 1)
+                qc.mcx(list(range(number_of_qubits - 1)), number_of_qubits - 1)
+                qc.h(number_of_qubits - 1)
+                qc.x(range(number_of_qubits))
+                qc.h(range(number_of_qubits))
             
             qc.measure_all()
             
@@ -719,11 +719,11 @@ except ImportError:
         """IBM backend not available (qiskit not installed)."""
         return None
     
-    def execute_quantum_kernel_ibm(x1: List[float], x2: List[float]) -> float:
+    def execute_quantum_kernel_ibm(first_feature_vector: List[float], second_feature_vector: List[float]) -> float:
         """Fallback to classical quantum kernel estimation."""
-        return quantum_kernel_estimation(x1, x2)
+        return quantum_kernel_estimation(first_feature_vector, second_feature_vector)
     
-    def ctc_fixed_point_oracle(state: List[float], n_qubits: int = 5) -> Dict:
+    def ctc_fixed_point_oracle(state: List[float], number_of_qubits: int = 5) -> Dict:
         """Classical fallback for CTC oracle."""
         return {
             "fixed_point": state,

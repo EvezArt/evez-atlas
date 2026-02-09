@@ -121,11 +121,11 @@ class OrderService:
         
         return None
     
-    def _generate_order_id(self, customer_id: str, timestamp: float) -> str:
+def _generate_order_id(self, customer_id: str, timestamp: float) -> str:
         """Generate unique order ID."""
         raw = f"{customer_id}{timestamp}{time.time()}"
-        hash_val = hashlib.sha256(raw.encode()).hexdigest()[:12]
-        return f"ord_{hash_val}"
+        hash_value = hashlib.sha256(raw.encode()).hexdigest()[:12]
+        return f"ord_{hash_value}"
     
     def _generate_payment_url(self, order_id: str, amount: float, method: str) -> str:
         """Generate payment URL based on method."""
@@ -138,25 +138,25 @@ class OrderService:
         else:
             return ""
     
-    def _check_rate_limit(self, ip: str) -> bool:
+    def _check_rate_limit(self, ip_address: str) -> bool:
         """Check if IP is within rate limit (10 req/min)."""
         now = time.time()
         
-        if ip not in self.rate_limit_cache:
-            self.rate_limit_cache[ip] = []
+        if ip_address not in self.rate_limit_cache:
+            self.rate_limit_cache[ip_address] = []
         
         # Clean old requests (older than 60 seconds)
-        self.rate_limit_cache[ip] = [
-            req_time for req_time in self.rate_limit_cache[ip]
+        self.rate_limit_cache[ip_address] = [
+            req_time for req_time in self.rate_limit_cache[ip_address]
             if now - req_time < 60
         ]
         
         # Check limit
-        if len(self.rate_limit_cache[ip]) >= 10:
+        if len(self.rate_limit_cache[ip_address]) >= 10:
             return False
         
         # Add current request
-        self.rate_limit_cache[ip].append(now)
+        self.rate_limit_cache[ip_address].append(now)
         return True
     
     def _append_audit_log(self, event: Dict):
