@@ -187,7 +187,8 @@ def cmd_verify():
     
     # Check 6: No duplicates
     event_signatures = [(e.get('order_id'), e.get('event_type')) for e in events]
-    if len(event_signatures) == len(set(event_signatures)):
+    event_signatures_set = set(event_signatures)
+    if len(event_signatures) == len(event_signatures_set):
         print("[✓] No duplicate events detected")
     else:
         warnings.append("Duplicate events detected")
@@ -354,10 +355,11 @@ def cmd_revenue():
     
     # Payment methods
     payment_methods = defaultdict(float)
+    # Parse orders once before the loop to avoid O(n²) complexity
+    orders = group_by_order(events)
     for event in fulfilled_events:
         # Try to get payment method from order creation
         order_id = event.get('order_id')
-        orders = group_by_order(events)
         if order_id in orders:
             created = [e for e in orders[order_id] if e.get('event_type') == 'order_created']
             if created:
@@ -403,9 +405,16 @@ def cmd_watch():
     print()
     
     try:
-        # Get current size
-        last_size = Path(LOG_FILE).stat().st_size if Path(LOG_FILE).exists() else 0
-        last_events = parse_orders()
+        # Track file position for efficient incremental reads
+        last_position = 0
+        if Path(LOG_FILE).exists():
+            # Initialize with current file end position
+            with open(LOG_FILE, 'r') as f:
+                f.seek(0, 2)  # Seek to end
+                last_position = f.tell()
+        
+        # Keep track of daily revenue accumulation
+        total_daily_revenue = 0
         
         while True:
             time.sleep(1)
@@ -413,12 +422,21 @@ def cmd_watch():
             if not Path(LOG_FILE).exists():
                 continue
             
-            current_size = Path(LOG_FILE).stat().st_size
-            if current_size != last_size:
-                # File changed, read new events
-                current_events = parse_orders()
-                new_events = current_events[len(last_events):]
-                
+            # Only read new lines added to the file
+            new_events = []
+            with open(LOG_FILE, 'r') as f:
+                f.seek(last_position)
+                for line in f:
+                    if line.strip():
+                        try:
+                            event = json.loads(line)
+                            new_events.append(event)
+                        except json.JSONDecodeError:
+                            continue
+                last_position = f.tell()
+            
+            # Process only new events
+            if new_events:
                 for event in new_events:
                     timestamp = event.get('timestamp', time.time())
                     time_str = format_timestamp(timestamp)
@@ -435,16 +453,12 @@ def cmd_watch():
                     
                     if event_type == 'order_fulfilled':
                         print(f"  ✅ Order complete!")
+                        total_daily_revenue += amount
                     print()
                 
-                last_size = current_size
-                last_events = current_events
-                
                 # Show daily total
-                fulfilled = [e for e in current_events if e.get('event_type') == 'order_fulfilled']
-                if fulfilled:
-                    today_revenue = sum(e.get('amount', 0) for e in fulfilled)
-                    print(f"Total revenue: ${today_revenue:.2f}")
+                if total_daily_revenue > 0:
+                    print(f"Total revenue: ${total_daily_revenue:.2f}")
                     print()
     
     except KeyboardInterrupt:

@@ -101,11 +101,21 @@ def cmd_status():
             with open(orders_file, 'r') as f:
                 events = [json.loads(line) for line in f if line.strip()]
             
-            orders_created = len([e for e in events if e['event_type'] == 'order_created'])
-            orders_paid = len([e for e in events if e['event_type'] == 'payment_confirmed'])
-            orders_fulfilled = len([e for e in events if e['event_type'] == 'order_fulfilled'])
+            # Single pass through events instead of multiple list comprehensions
+            orders_created = 0
+            orders_paid = 0
+            orders_fulfilled = 0
+            total_revenue = 0
             
-            total_revenue = sum(e['amount'] for e in events if e['event_type'] == 'payment_confirmed')
+            for e in events:
+                event_type = e['event_type']
+                if event_type == 'order_created':
+                    orders_created += 1
+                elif event_type == 'payment_confirmed':
+                    orders_paid += 1
+                    total_revenue += e['amount']
+                elif event_type == 'order_fulfilled':
+                    orders_fulfilled += 1
             
             print(f"  Orders created:    {orders_created}")
             print(f"  Orders paid:       {orders_paid}")
@@ -174,8 +184,13 @@ def cmd_wealth():
             with open(orders_file, 'r') as f:
                 events = [json.loads(line) for line in f if line.strip()]
             
-            total_revenue = sum(e['amount'] for e in events if e['event_type'] == 'payment_confirmed')
-            orders_count = len([e for e in events if e['event_type'] == 'payment_confirmed'])
+            # Single pass through events instead of multiple list comprehensions
+            total_revenue = 0
+            orders_count = 0
+            for e in events:
+                if e['event_type'] == 'payment_confirmed':
+                    total_revenue += e['amount']
+                    orders_count += 1
         else:
             total_revenue = 0
             orders_count = 0

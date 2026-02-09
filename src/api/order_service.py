@@ -23,6 +23,10 @@ class OrderService:
         self.idempotency_cache = {}
         self.rate_limit_cache = {}
         
+        # In-memory order cache to avoid O(n) file scans
+        self.order_cache = {}
+        self._load_order_cache()
+        
     def create_order(
         self,
         customer_id: str,
@@ -88,7 +92,7 @@ class OrderService:
         }
         
         # 5. Log to audit trail
-        self._append_audit_log({
+        event = {
             "timestamp": timestamp,
             "event_type": "order_created",
             "order_id": order_id,
@@ -100,26 +104,35 @@ class OrderService:
                 "payment_method": payment_method,
                 "idempotency_key": idempotency_key
             }
-        })
+        }
+        self._append_audit_log(event)
         
-        # 6. Cache for idempotency
+        # 6. Cache for idempotency and order lookups
         if idempotency_key:
             self.idempotency_cache[idempotency_key] = order
+        self.order_cache[order_id] = event
         
         return order
     
-    def get_order(self, order_id: str) -> Optional[Dict]:
-        """Retrieve order by ID from audit log."""
+    def _load_order_cache(self):
+        """Load all orders into memory cache on initialization."""
         if not self.orders_log.exists():
-            return None
+            return
         
         with open(self.orders_log, 'r') as f:
             for line in f:
-                event = json.loads(line)
-                if event.get('order_id') == order_id:
-                    return event
-        
-        return None
+                if line.strip():
+                    try:
+                        event = json.loads(line)
+                        order_id = event.get('order_id')
+                        if order_id:
+                            self.order_cache[order_id] = event
+                    except json.JSONDecodeError:
+                        continue
+    
+    def get_order(self, order_id: str) -> Optional[Dict]:
+        """Retrieve order by ID from cache (O(1) lookup instead of O(n) file scan)."""
+        return self.order_cache.get(order_id)
     
     def _generate_order_id(self, customer_id: str, timestamp: float) -> str:
         """Generate unique order ID."""

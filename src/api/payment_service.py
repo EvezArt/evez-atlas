@@ -18,6 +18,10 @@ class PaymentService:
         self.orders_log = Path(orders_log_path)
         self.orders_log.parent.mkdir(parents=True, exist_ok=True)
         
+        # In-memory order cache to avoid O(n) file scans
+        self.order_cache = {}
+        self._load_order_cache()
+        
     def confirm_payment(
         self,
         order_id: str,
@@ -67,7 +71,7 @@ class PaymentService:
         
         # 4. Mark order as paid
         timestamp = time.time()
-        self._append_audit_log({
+        event = {
             "timestamp": timestamp,
             "event_type": "payment_confirmed",
             "order_id": order_id,
@@ -78,7 +82,12 @@ class PaymentService:
                 "payment_proof": payment_proof,
                 "sandbox": sandbox
             }
-        })
+        }
+        self._append_audit_log(event)
+        
+        # Update cache
+        if order_id in self.order_cache:
+            self.order_cache[order_id]['status'] = "paid"
         
         # 5. Return confirmation
         return {
@@ -91,30 +100,36 @@ class PaymentService:
             "next_step": "fulfillment_triggered"
         }
     
-    def _get_order(self, order_id: str) -> Optional[Dict]:
-        """Get most recent order state from audit log."""
+    def _load_order_cache(self):
+        """Load all orders into memory cache on initialization."""
         if not self.orders_log.exists():
-            return None
+            return
         
-        order_state = None
         with open(self.orders_log, 'r') as f:
             for line in f:
-                event = json.loads(line)
-                if event.get('order_id') == order_id:
-                    # Build up order state from events
-                    if not order_state:
-                        order_state = {
-                            'order_id': order_id,
-                            'customer_id': event.get('customer_id'),
-                            'amount': event.get('amount'),
-                            'status': event.get('status'),
-                            'created_at': event.get('timestamp')
-                        }
-                    else:
-                        # Update with latest status
-                        order_state['status'] = event.get('status', order_state['status'])
-        
-        return order_state
+                if line.strip():
+                    try:
+                        event = json.loads(line)
+                        order_id = event.get('order_id')
+                        if order_id:
+                            # Keep latest state for each order
+                            if order_id not in self.order_cache:
+                                self.order_cache[order_id] = {
+                                    'order_id': order_id,
+                                    'customer_id': event.get('customer_id'),
+                                    'amount': event.get('amount'),
+                                    'status': event.get('status'),
+                                    'created_at': event.get('timestamp')
+                                }
+                            else:
+                                # Update with latest status
+                                self.order_cache[order_id]['status'] = event.get('status', self.order_cache[order_id]['status'])
+                    except json.JSONDecodeError:
+                        continue
+    
+    def _get_order(self, order_id: str) -> Optional[Dict]:
+        """Get order state from cache (O(1) lookup instead of O(n) file scan)."""
+        return self.order_cache.get(order_id)
     
     def _verify_payment_proof(self, order: Dict, payment_proof: Optional[str]) -> bool:
         """Verify payment proof (stub for production integration)."""
