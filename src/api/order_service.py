@@ -110,7 +110,14 @@ class OrderService:
         # 6. Cache for idempotency and order lookups
         if idempotency_key:
             self.idempotency_cache[idempotency_key] = order
-        self.order_cache[order_id] = event
+        # Store structured order state in cache (consistent with payment_service)
+        self.order_cache[order_id] = {
+            'order_id': order_id,
+            'customer_id': customer_id,
+            'amount': amount,
+            'status': 'pending_payment',
+            'created_at': timestamp
+        }
         
         return order
     
@@ -126,7 +133,18 @@ class OrderService:
                         event = json.loads(line)
                         order_id = event.get('order_id')
                         if order_id:
-                            self.order_cache[order_id] = event
+                            # Build structured order state (consistent with payment_service)
+                            if order_id not in self.order_cache:
+                                self.order_cache[order_id] = {
+                                    'order_id': order_id,
+                                    'customer_id': event.get('customer_id'),
+                                    'amount': event.get('amount'),
+                                    'status': event.get('status'),
+                                    'created_at': event.get('timestamp')
+                                }
+                            else:
+                                # Update with latest status from subsequent events
+                                self.order_cache[order_id]['status'] = event.get('status', self.order_cache[order_id]['status'])
                     except json.JSONDecodeError:
                         continue
     

@@ -413,8 +413,8 @@ def cmd_watch():
                 f.seek(0, 2)  # Seek to end
                 last_position = f.tell()
         
-        # Keep track of daily revenue accumulation
-        total_daily_revenue = 0
+        # Keep track of session revenue accumulation
+        total_session_revenue = 0
         
         while True:
             time.sleep(1)
@@ -453,12 +453,12 @@ def cmd_watch():
                     
                     if event_type == 'order_fulfilled':
                         print(f"  ✅ Order complete!")
-                        total_daily_revenue += amount
+                        total_session_revenue += amount
                     print()
                 
-                # Show daily total
-                if total_daily_revenue > 0:
-                    print(f"Total revenue: ${total_daily_revenue:.2f}")
+                # Show session total
+                if total_session_revenue > 0:
+                    print(f"Total revenue: ${total_session_revenue:.2f}")
                     print()
     
     except KeyboardInterrupt:

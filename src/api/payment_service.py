@@ -85,9 +85,12 @@ class PaymentService:
         }
         self._append_audit_log(event)
         
-        # Update cache
+        # Update cache (reload from log if not present, e.g., from previous service instance)
         if order_id in self.order_cache:
             self.order_cache[order_id]['status'] = "paid"
+        else:
+            # Order was created before cache initialization - reload it
+            self._load_order_cache()
         
         # 5. Return confirmation
         return {
