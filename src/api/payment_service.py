@@ -89,7 +89,10 @@ class PaymentService:
         if order_id in self.order_cache:
             self.order_cache[order_id]['status'] = "paid"
         else:
-            # Order was created before cache initialization - reload it
+            # Order was created before cache initialization
+            # This is unusual and may indicate data inconsistency - log warning
+            import logging
+            logging.warning(f"Order {order_id} not in cache during payment confirmation. Reloading cache.")
             self._load_order_cache()
         
         # 5. Return confirmation
@@ -125,8 +128,11 @@ class PaymentService:
                                     'created_at': event.get('timestamp')
                                 }
                             else:
-                                # Update with latest status
-                                self.order_cache[order_id]['status'] = event.get('status', self.order_cache[order_id]['status'])
+                                # Update with latest status only if present in event
+                                if 'status' in event:
+                                    self.order_cache[order_id]['status'] = event['status']
+                                # Note: If status is missing, we keep the existing cache value
+                                # This maintains the last known state rather than overwriting with None
                     except json.JSONDecodeError:
                         continue
     

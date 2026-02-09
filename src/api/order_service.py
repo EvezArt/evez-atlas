@@ -111,6 +111,8 @@ class OrderService:
         if idempotency_key:
             self.idempotency_cache[idempotency_key] = order
         # Store structured order state in cache (consistent with payment_service)
+        # Note: Cache reflects order creation state. Subsequent updates (payment, fulfillment)
+        # are tracked by payment_service which maintains the full order lifecycle state.
         self.order_cache[order_id] = {
             'order_id': order_id,
             'customer_id': customer_id,
@@ -143,8 +145,11 @@ class OrderService:
                                     'created_at': event.get('timestamp')
                                 }
                             else:
-                                # Update with latest status from subsequent events
-                                self.order_cache[order_id]['status'] = event.get('status', self.order_cache[order_id]['status'])
+                                # Update with latest status from subsequent events only if present
+                                if 'status' in event:
+                                    self.order_cache[order_id]['status'] = event['status']
+                                # Note: If status is missing, we keep the existing cache value
+                                # This maintains the last known state rather than overwriting with None
                     except json.JSONDecodeError:
                         continue
     
