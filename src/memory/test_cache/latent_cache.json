@@ -1,0 +1,119 @@
+{
+  "entries": [
+    {
+      "key": "test_key",
+      "value": {
+        "data": "test_value"
+      },
+      "created_at": 1770651525.4595864,
+      "expires_at": 1770655125.4595864,
+      "access_count": 1,
+      "last_accessed": 1770651525.4597857
+    },
+    {
+      "key": "offline_key",
+      "value": {
+        "offline": true
+      },
+      "created_at": 1770651525.4597926,
+      "expires_at": 1770655125.4597926,
+      "access_count": 1,
+      "last_accessed": 1770651525.4600525
+    },
+    {
+      "key": "scan_test",
+      "value": {
+        "status": "completed",
+        "results": [
+          1,
+          2,
+          3
+        ]
+      },
+      "created_at": 1770651525.4606714,
+      "expires_at": 1770655125.4606714,
+      "access_count": 1,
+      "last_accessed": 1770651525.4610128
+    },
+    {
+      "key": "match_test",
+      "value": {
+        "matched": true,
+        "score": 0.95
+      },
+      "created_at": 1770651525.4610143,
+      "expires_at": 1770655125.4610143,
+      "access_count": 1,
+      "last_accessed": 1770651525.4613585
+    },
+    {
+      "key": "sim_test",
+      "value": {
+        "iterations": 1000,
+        "result": "converged"
+      },
+      "created_at": 1770651525.4613607,
+      "expires_at": 1770655125.4613607,
+      "access_count": 1,
+      "last_accessed": 1770651525.4617682
+    },
+    {
+      "key": "ledger_test",
+      "value": {
+        "balance": 100.5,
+        "currency": "USD"
+      },
+      "created_at": 1770651525.4617698,
+      "expires_at": 1770655125.4617698,
+      "access_count": 1,
+      "last_accessed": 1770651525.4621658
+    },
+    {
+      "key": "scan_operation",
+      "value": {
+        "type": "scan",
+        "target": "test_001"
+      },
+      "created_at": 1770651525.4623961,
+      "expires_at": 1770655125.4623961,
+      "access_count": 0,
+      "last_accessed": 1770651525.4623961
+    },
+    {
+      "key": "match_operation",
+      "value": {
+        "type": "match",
+        "pattern": "test_pattern"
+      },
+      "created_at": 1770651525.4627635,
+      "expires_at": 1770655125.4627635,
+      "access_count": 0,
+      "last_accessed": 1770651525.4627635
+    },
+    {
+      "key": "sim_operation",
+      "value": {
+        "type": "simulation",
+        "params": {
+          "iterations": 100
+        }
+      },
+      "created_at": 1770651525.4631221,
+      "expires_at": 1770655125.4631221,
+      "access_count": 0,
+      "last_accessed": 1770651525.4631221
+    },
+    {
+      "key": "ledger_operation",
+      "value": {
+        "type": "ledger",
+        "transaction_id": "tx_001"
+      },
+      "created_at": 1770651525.4639177,
+      "expires_at": 1770655125.4639177,
+      "access_count": 0,
+      "last_accessed": 1770651525.4639177
+    }
+  ],
+  "saved_at": 1770651525.463926
+}
