@@ -25,7 +25,7 @@ export interface NavLogEntry {
   threshold: 'wealth' | 'info' | 'myth';
   latency_ms: number;
   breach_attempts: number;
-  route_status: 'primary' | 'failover' | 'local';
+  route_status: 'primary' | 'secondary' | 'failover' | 'local';
   timestamp: number;
 }
 

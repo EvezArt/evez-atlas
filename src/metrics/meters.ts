@@ -65,7 +65,7 @@ export class Meters {
     };
 
     // Store reading
-    if (!history) {
+    if (!this.readings.has(meterName)) {
       this.readings.set(meterName, []);
     }
 
