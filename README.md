@@ -11,9 +11,16 @@ This repository includes experimental and conceptual systems. Read `ETHICAL_FRAM
 This repository contains multiple integrated projects:
 
 ### 1. Python Quantum Threat Detection System
-A quantum-inspired threat detection system with machine learning capabilities.
+A comprehensive quantum-inspired threat detection system with full entanglement stack scanning, error correction, and visual monitoring capabilities.
 
 **Key Features:**
+- **Full Entanglement Stack Scanning**: Comprehensive threat detection across all quantum-entangled entities
+- **Error Correction**: Automatic quantum error correction with state normalization
+- **3D Threat Mapping**: Spatial visualization with voxel-based threat maps
+- **Radar Visualization**: Real-time radar-style monitoring with concentric threat rings
+- **Continuous Monitoring**: Automated scanning loops with configurable intervals
+- **Historical Analysis**: Trend analysis and pattern detection
+- **Alert Generation**: Intelligent threat alerting with severity levels
 - Quantum feature maps for encoding classical data
 - Threat fingerprinting with cryptographic hashing
 - Navigation sequence evaluation
@@ -24,15 +31,26 @@ A quantum-inspired threat detection system with machine learning capabilities.
 # Install Python dependencies
 pip install -r requirements.txt
 
-# Run Python tests
-pytest src/tests/python/ -v
+# Run quantum threat detection tests
+python3 tests/test_quantum_entanglement_scanner.py
 
-# Run demo
+# Run comprehensive demo
+python3 demo_quantum_threat_detection.py
+
+# Run original demo
 python demo.py
 
 # Start API server
 ./scripts/deploy-all.sh
 ```
+
+**New Quantum Threat Detection Components:**
+- `quantum_entanglement_scanner.py` - Core threat scanner
+- `quantum_threat_integration.py` - System integration layer
+- `quantum_threat_visualization.py` - Visualization API
+- `demo_quantum_threat_detection.py` - Full pipeline demo
+
+See [Quantum Threat Detection Documentation](docs/QUANTUM_THREAT_DETECTION.md) for complete details.
 
 ### 2. TypeScript Legion Registry
 A TypeScript module for managing tiered access control and trace depth limiting.
