@@ -74,3 +74,7 @@ data/shared_reality_plane.jsonl
 data/resource_manager.jsonl
 skills/__pycache__/
 data/replication.jsonl
+
+# Memory/log artifacts from tests
+src/api/src/
+src/memory/

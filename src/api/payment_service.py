@@ -10,13 +10,14 @@ import time
 from typing import Dict, Optional
 from pathlib import Path
 
+from base_service import BaseService
 
-class PaymentService:
+
+class PaymentService(BaseService):
     """Handles payment confirmation and order updates."""
     
     def __init__(self, orders_log_path: str = "src/memory/orders.jsonl"):
-        self.orders_log = Path(orders_log_path)
-        self.orders_log.parent.mkdir(parents=True, exist_ok=True)
+        super().__init__(orders_log_path)
         
     def confirm_payment(
         self,
@@ -91,31 +92,6 @@ class PaymentService:
             "next_step": "fulfillment_triggered"
         }
     
-    def _get_order(self, order_id: str) -> Optional[Dict]:
-        """Get most recent order state from audit log."""
-        if not self.orders_log.exists():
-            return None
-        
-        order_state = None
-        with open(self.orders_log, 'r') as f:
-            for line in f:
-                event = json.loads(line)
-                if event.get('order_id') == order_id:
-                    # Build up order state from events
-                    if not order_state:
-                        order_state = {
-                            'order_id': order_id,
-                            'customer_id': event.get('customer_id'),
-                            'amount': event.get('amount'),
-                            'status': event.get('status'),
-                            'created_at': event.get('timestamp')
-                        }
-                    else:
-                        # Update with latest status
-                        order_state['status'] = event.get('status', order_state['status'])
-        
-        return order_state
-    
     def _verify_payment_proof(self, order: Dict, payment_proof: Optional[str]) -> bool:
         """Verify payment proof (stub for production integration)."""
         # In production, this would:
@@ -129,11 +105,6 @@ class PaymentService:
         
         # For now, basic validation
         return len(payment_proof) > 10
-    
-    def _append_audit_log(self, event: Dict):
-        """Append event to immutable audit log."""
-        with open(self.orders_log, 'a') as f:
-            f.write(json.dumps(event) + '\n')
 
 
 def confirm_payment_endpoint(request_data: Dict) -> Dict:
