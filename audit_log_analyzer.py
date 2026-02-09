@@ -517,6 +517,96 @@ def cmd_report():
     print(f"All {len(orders)} orders processed!")
 
 
+def cmd_hashchain():
+    """Verify all hash chains across the system."""
+    print("=" * 80)
+    print("HASH CHAIN VERIFICATION")
+    print("=" * 80)
+    print()
+    
+    all_logs = {
+        'orders.jsonl': 'src/memory/orders.jsonl',
+        'engine_state.jsonl': 'src/memory/engine_state.jsonl',
+        'gate_log.jsonl': 'src/memory/gate_log.jsonl',
+        'entities.jsonl': 'src/memory/entities.jsonl',
+        'trajectory_log.jsonl': 'src/memory/trajectory_log.jsonl',
+        'provenance_log.jsonl': 'src/memory/provenance_log.jsonl',
+    }
+    
+    results = {}
+    
+    for log_name, log_path in all_logs.items():
+        if not Path(log_path).exists():
+            results[log_name] = ('SKIP', 'File does not exist')
+            continue
+        
+        try:
+            with open(log_path, 'r') as f:
+                events = [json.loads(line) for line in f if line.strip()]
+            
+            if not events:
+                results[log_name] = ('SKIP', 'Empty log')
+                continue
+            
+            # Verify first event has no parent
+            if events[0].get('parent_hash') is not None:
+                results[log_name] = ('FAIL', 'First event has parent hash')
+                continue
+            
+            # Verify chain
+            chain_valid = True
+            for i in range(1, len(events)):
+                expected_parent = events[i-1].get('event_hash')
+                actual_parent = events[i].get('parent_hash')
+                
+                if expected_parent != actual_parent:
+                    results[log_name] = ('FAIL', f'Break at event {i}')
+                    chain_valid = False
+                    break
+            
+            if chain_valid:
+                results[log_name] = ('PASS', f'{len(events)} events verified')
+        
+        except Exception as e:
+            results[log_name] = ('ERROR', str(e))
+    
+    # Display results
+    print("VERIFICATION RESULTS")
+    print("-" * 80)
+    
+    pass_count = 0
+    fail_count = 0
+    
+    for log_name, (status, message) in sorted(results.items()):
+        if status == 'PASS':
+            icon = '✅'
+            pass_count += 1
+        elif status == 'FAIL':
+            icon = '❌'
+            fail_count += 1
+        elif status == 'ERROR':
+            icon = '⚠️ '
+            fail_count += 1
+        else:  # SKIP
+            icon = '⊘ '
+        
+        print(f"  {icon} {log_name:25} {message}")
+    
+    print()
+    print("SUMMARY")
+    print("-" * 80)
+    print(f"  Total logs checked:  {len(results)}")
+    print(f"  Passed:              {pass_count}")
+    print(f"  Failed:              {fail_count}")
+    print(f"  Skipped:             {len(results) - pass_count - fail_count}")
+    print()
+    
+    if fail_count == 0:
+        print("✅ ALL HASH CHAINS VERIFIED")
+    else:
+        print("❌ SOME HASH CHAINS FAILED")
+
+
 def main():
     """Main entry point."""
     if len(sys.argv) < 2:
@@ -532,11 +622,12 @@ def main():
         print("  revenue    - Revenue breakdown")
         print("  watch      - Real-time log monitoring")
         print("  report     - Complete comprehensive report")
+        print("  hashchain  - Verify all hash chains")
         print()
         print("Examples:")
         print("  python audit_log_analyzer.py summary")
         print("  python audit_log_analyzer.py verify")
-        print("  python audit_log_analyzer.py watch")
+        print("  python audit_log_analyzer.py hashchain")
         sys.exit(1)
     
     command = sys.argv[1].lower()
@@ -548,6 +639,7 @@ def main():
         'revenue': cmd_revenue,
         'watch': cmd_watch,
         'report': cmd_report,
+        'hashchain': cmd_hashchain,
     }
     
     if command not in commands:
