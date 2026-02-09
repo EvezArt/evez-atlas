@@ -10,7 +10,10 @@ import time
 from typing import Dict, Optional
 from pathlib import Path
 
-from base_service import BaseService
+try:
+    from .base_service import BaseService
+except ImportError:
+    from base_service import BaseService
 
 
 class PaymentService(BaseService):

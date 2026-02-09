@@ -12,7 +12,10 @@ import random
 from typing import Dict, Optional, List
 from pathlib import Path
 
-from base_service import BaseService
+try:
+    from .base_service import BaseService
+except ImportError:
+    from base_service import BaseService
 
 
 class FulfillmentService(BaseService):
