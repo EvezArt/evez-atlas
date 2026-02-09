@@ -2,6 +2,8 @@
 """
 Entity Lifecycle Manager
 Manages entity states (hibernation/active), task pacing, and temporal tracking.
+
+Now integrated with root trace system for deeper lifecycle observation.
 """
 
 import json
@@ -11,6 +13,19 @@ from datetime import datetime, timedelta
 from enum import Enum
 from typing import Any, Dict, List, Optional
 from dataclasses import dataclass, asdict
+
+
+# Import tracer for root trace integration
+try:
+    import sys
+    sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'recursive-observer', 'src'))
+    from recursive_observer.tracer import record_lifecycle_event
+    TRACER_AVAILABLE = True
+except ImportError:
+    TRACER_AVAILABLE = False
+    # Fallback if tracer not available
+    def record_lifecycle_event(event_type: str, entity_id: str, state: str, metadata: dict = None):
+        pass
 
 
 class EntityState(Enum):
@@ -93,6 +108,15 @@ class EntityLifecycleManager:
         )
         self.entities[entity_id] = entity
         self._save_entity(entity)
+        
+        # Root trace: Record entity creation
+        record_lifecycle_event(
+            event_type='entity_created',
+            entity_id=entity_id,
+            state=EntityState.HIBERNATING.value,
+            metadata={'role': role, 'domain': domain}
+        )
+        
         return entity
     
     def awaken_entity(self, entity_id: str) -> Optional[Entity]:
@@ -106,10 +130,26 @@ class EntityLifecycleManager:
         entity.hibernation_depth = 0
         self._save_entity(entity)
         
+        # Root trace: Record awakening
+        record_lifecycle_event(
+            event_type='entity_awakening',
+            entity_id=entity_id,
+            state=EntityState.AWAKENING.value,
+            metadata={'hibernation_depth': entity.hibernation_depth}
+        )
+        
         # Transition to active after awakening
         time.sleep(0.1)  # Symbolic awakening delay
         entity.state = EntityState.ACTIVE
         self._save_entity(entity)
+        
+        # Root trace: Record activation
+        record_lifecycle_event(
+            event_type='entity_activated',
+            entity_id=entity_id,
+            state=EntityState.ACTIVE.value,
+            metadata={'role': entity.role, 'domain': entity.domain}
+        )
         
         return entity
     
@@ -124,6 +164,14 @@ class EntityLifecycleManager:
         entity.last_active = datetime.utcnow().isoformat()
         self._save_entity(entity)
         
+        # Root trace: Record hibernation
+        record_lifecycle_event(
+            event_type='entity_hibernated',
+            entity_id=entity_id,
+            state=EntityState.HIBERNATING.value,
+            metadata={'hibernation_depth': depth}
+        )
+        
         return entity
     
     def error_correction_mode(self, entity_id: str) -> Optional[Entity]:
@@ -137,6 +185,14 @@ class EntityLifecycleManager:
         entity.last_active = datetime.utcnow().isoformat()
         self._save_entity(entity)
         
+        # Root trace: Record error correction
+        record_lifecycle_event(
+            event_type='entity_error_correction',
+            entity_id=entity_id,
+            state=EntityState.ERROR_CORRECTION.value,
+            metadata={'error_count': entity.error_count}
+        )
+        
         return entity
     
     def offline_adapt(self, entity_id: str) -> Optional[Entity]:
@@ -148,6 +204,14 @@ class EntityLifecycleManager:
         entity.state = EntityState.OFFLINE_ADAPTING
         entity.last_active = datetime.utcnow().isoformat()
         self._save_entity(entity)
+        
+        # Root trace: Record offline adaptation
+        record_lifecycle_event(
+            event_type='entity_offline_adapt',
+            entity_id=entity_id,
+            state=EntityState.OFFLINE_ADAPTING.value,
+            metadata={'domain': entity.domain}
+        )
         
         return entity
     
@@ -161,6 +225,14 @@ class EntityLifecycleManager:
         entity.domain = domain
         entity.last_active = datetime.utcnow().isoformat()
         self._save_entity(entity)
+        
+        # Root trace: Record quantum entanglement
+        record_lifecycle_event(
+            event_type='entity_quantum_entangled',
+            entity_id=entity_id,
+            state=entity.state.value,
+            metadata={'domain': domain, 'quantum_entangled': True}
+        )
         
         return entity
     

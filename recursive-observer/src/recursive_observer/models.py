@@ -26,6 +26,7 @@ class RuntimeTrace:
     events: list[tuple[str, int, str]]
     timing: dict[str, float]
     variable_snapshots: list[dict[str, Any]]
+    lifecycle_events: list[dict[str, Any]] | None = None  # Track entity lifecycle events
 
 
 @dataclass
