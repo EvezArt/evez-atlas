@@ -1,0 +1,99 @@
+{
+  "entries": [
+    {
+      "key": "scan_operation",
+      "value": {
+        "type": "scan",
+        "target": "test_001"
+      },
+      "created_at": 1770651864.9274018,
+      "expires_at": 1770655464.9274018,
+      "access_count": 0,
+      "last_accessed": 1770651864.9274018
+    },
+    {
+      "key": "match_operation",
+      "value": {
+        "type": "match",
+        "pattern": "test_pattern"
+      },
+      "created_at": 1770651864.9277074,
+      "expires_at": 1770655464.9277074,
+      "access_count": 0,
+      "last_accessed": 1770651864.9277074
+    },
+    {
+      "key": "sim_operation",
+      "value": {
+        "type": "simulation",
+        "params": {
+          "iterations": 100
+        }
+      },
+      "created_at": 1770651864.9280612,
+      "expires_at": 1770655464.9280612,
+      "access_count": 0,
+      "last_accessed": 1770651864.9280612
+    },
+    {
+      "key": "ledger_operation",
+      "value": {
+        "type": "ledger",
+        "transaction_id": "tx_001"
+      },
+      "created_at": 1770651864.9285555,
+      "expires_at": 1770655464.9285555,
+      "access_count": 0,
+      "last_accessed": 1770651864.9285555
+    },
+    {
+      "key": "scan_test",
+      "value": {
+        "status": "completed",
+        "results": [
+          1,
+          2,
+          3
+        ]
+      },
+      "created_at": 1770651864.9296148,
+      "expires_at": 1770655464.9296148,
+      "access_count": 1,
+      "last_accessed": 1770651864.92996
+    },
+    {
+      "key": "match_test",
+      "value": {
+        "matched": true,
+        "score": 0.95
+      },
+      "created_at": 1770651864.9299617,
+      "expires_at": 1770655464.9299617,
+      "access_count": 1,
+      "last_accessed": 1770651864.930366
+    },
+    {
+      "key": "sim_test",
+      "value": {
+        "iterations": 1000,
+        "result": "converged"
+      },
+      "created_at": 1770651864.9303677,
+      "expires_at": 1770655464.9303677,
+      "access_count": 1,
+      "last_accessed": 1770651864.9307559
+    },
+    {
+      "key": "ledger_test",
+      "value": {
+        "balance": 100.5,
+        "currency": "USD"
+      },
+      "created_at": 1770651864.9307573,
+      "expires_at": 1770655464.9307573,
+      "access_count": 0,
+      "last_accessed": 1770651864.9307573
+    }
+  ],
+  "saved_at": 1770651864.930761
+}
