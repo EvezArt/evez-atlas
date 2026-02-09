@@ -352,9 +352,11 @@ class ResourceEngine:
         else:
             self.health_checks['error_rate'] = 0.0
         
-        # Simulate CPU/memory (would use psutil in production)
+        # Simplified CPU approximation based on resource pool utilization
+        # Note: This averages pool utilization as a proxy for CPU usage.
+        # In production, use psutil.cpu_percent() for actual CPU monitoring.
         self.health_checks['cpu'] = sum(p.get_utilization() for p in self.pools.values()) / len(self.pools)
-        self.health_checks['memory'] = self.health_checks['cpu'] * 0.8  # Approximate
+        self.health_checks['memory'] = self.health_checks['cpu'] * 0.8  # Approximate correlation
     
     def is_healthy(self) -> bool:
         """Check if engine is healthy."""

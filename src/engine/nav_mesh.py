@@ -46,12 +46,14 @@ class NavigationToken:
     """JWT-style token for gate access."""
     
     def __init__(self, domain: ThresholdDomain, user_id: str, 
-                 secret: str = "evez666_secret_key"):
+                 secret: str = None):
         self.domain = domain
         self.user_id = user_id
         self.issued_at = time.time()
         self.expires_at = self.issued_at + 3600  # 1 hour expiry
-        self.secret = secret
+        # Use environment variable or default for development only
+        import os
+        self.secret = secret or os.environ.get('NAV_MESH_SECRET', 'evez666_dev_secret_change_in_production')
         
     def encode(self) -> str:
         """Encode token as JWT-style string."""
@@ -77,8 +79,10 @@ class NavigationToken:
         return f"{header}.{payload_b64}.{signature}"
     
     @staticmethod
-    def decode(token: str, secret: str = "evez666_secret_key") -> Optional[Dict]:
+    def decode(token: str, secret: str = None) -> Optional[Dict]:
         """Decode and verify token."""
+        import os
+        secret = secret or os.environ.get('NAV_MESH_SECRET', 'evez666_dev_secret_change_in_production')
         try:
             parts = token.split('.')
             if len(parts) != 3:

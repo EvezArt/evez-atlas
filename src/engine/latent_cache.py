@@ -156,7 +156,10 @@ class LatentCache:
                         entry = CacheEntry.from_dict(entry_data)
                         if not entry.is_expired():
                             self.cache[entry.key] = entry
-            except Exception:
+            except Exception as e:
+                # Cache load failure - start with empty cache
+                # In production, log this error for debugging
+                self.cache = {}
                 pass
     
     def _save_cache(self):
@@ -175,7 +178,10 @@ class LatentCache:
                 with open(self.queue_file, 'r') as f:
                     data = json.load(f)
                     self.queue = [QueuedOperation.from_dict(op) for op in data.get('operations', [])]
-            except Exception:
+            except Exception as e:
+                # Queue load failure - start with empty queue
+                # In production, log this error for debugging
+                self.queue = []
                 pass
     
     def _save_queue(self):

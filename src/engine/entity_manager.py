@@ -170,7 +170,9 @@ class EntityManager:
                     if lines:
                         last_event = json.loads(lines[-1])
                         self.last_event_hash = last_event.get('event_hash')
-            except Exception:
+            except Exception as e:
+                # Hash load failure - start fresh chain
+                # In production, log this error for debugging
                 self.last_event_hash = None
     
     def _calculate_event_hash(self, event: Dict) -> str:

@@ -498,7 +498,7 @@ if __name__ == "__main__":
     # Run tests with pytest if available, otherwise run basic tests
     try:
         pytest.main([__file__, '-v'])
-    except:
+    except Exception as e:
         print("pytest not available, running basic tests...")
         import tempfile
         

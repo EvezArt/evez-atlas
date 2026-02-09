@@ -24,7 +24,7 @@ class Fact:
     """Represents a fact in the knowledge base."""
     symbol: str
     value: Any
-    timestamp: float = field(default_factory=time.time)
+    timestamp: float = field(default_factory=lambda: time.time())
     
     def __hash__(self):
         return hash((self.symbol, str(self.value)))
