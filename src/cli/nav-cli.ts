@@ -6,7 +6,6 @@
 'use strict';
 
 import { getOfflineStore } from '../pwa/offline-store';
-import { getZeroTrustGate } from '../gates/zero-trust';
 import { getThresholdRouter } from '../gates/threshold-router';
 import { getGauges } from '../metrics/gauges';
 import { getScopePolygon } from '../metrics/scope-polygon';
@@ -28,9 +27,6 @@ export class NavCLI {
     report: string;
   }> {
     console.log(`[NavCLI] Simulating ${durationHours}h air-gap test...`);
-
-    const startTime = Date.now();
-    const endTime = startTime + (durationHours * 3600 * 1000);
 
     // Initialize store
     const store = await getOfflineStore();

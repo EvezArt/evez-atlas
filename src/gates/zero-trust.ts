@@ -78,7 +78,7 @@ export class ZeroTrustGate {
   validateGate(
     cell: CellType,
     token: string | null,
-    context: GateContext
+    _context: GateContext
   ): GateValidationResult {
     // JWT validation
     if (!token) {

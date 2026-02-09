@@ -148,7 +148,7 @@ export class ThresholdRouter {
     threshold: ThresholdType,
     endpoint: string,
     status: RouteStatus,
-    payload: any
+    _payload: any
   ): Promise<RouteResult> {
     const startTime = Date.now();
     const metricsKey = `${threshold}:${status}`;
@@ -186,7 +186,7 @@ export class ThresholdRouter {
    */
   private async attemptLocalRoute(
     threshold: ThresholdType,
-    payload: any
+    _payload: any
   ): Promise<RouteResult> {
     const startTime = Date.now();
     const metricsKey = `${threshold}:local`;
