@@ -1,0 +1,69 @@
+{
+  "timestamp": 1770628288.3485606,
+  "grid_resolution": 10,
+  "scan_radius": 50.0,
+  "max_threat": 0.1567107021131043,
+  "threat_map": {
+    "3,3,3": 0.15671049528498693
+  },
+  "total_measurements": 4,
+  "hotspots": [],
+  "measurement_history": [
+    {
+      "timestamp": 1770628288.3480625,
+      "entity_id": "entity_alpha",
+      "threat_level": 0.15671021454711004,
+      "entanglement_quality": 0.82,
+      "error_count": 0,
+      "state_coherence": 1.0,
+      "domain": "entity_beta",
+      "location": [
+        17.677669529663685,
+        17.677669529663685,
+        17.677669529663685
+      ]
+    },
+    {
+      "timestamp": 1770628288.3480995,
+      "entity_id": "entity_beta",
+      "threat_level": 0.156710466078711,
+      "entanglement_quality": 0.76,
+      "error_count": 0,
+      "state_coherence": 1.0,
+      "domain": "entity_alpha",
+      "location": [
+        17.677669529663685,
+        17.677669529663685,
+        17.677669529663685
+      ]
+    },
+    {
+      "timestamp": 1770628288.348126,
+      "entity_id": "entity_gamma",
+      "threat_level": 0.1567105984010224,
+      "entanglement_quality": 0.82,
+      "error_count": 0,
+      "state_coherence": 1.0,
+      "domain": "entity_alpha",
+      "location": [
+        17.677669529663685,
+        17.677669529663685,
+        17.677669529663685
+      ]
+    },
+    {
+      "timestamp": 1770628288.3481472,
+      "entity_id": "entity_delta",
+      "threat_level": 0.1567107021131043,
+      "entanglement_quality": 0.76,
+      "error_count": 0,
+      "state_coherence": 1.0,
+      "domain": "entity_gamma",
+      "location": [
+        17.677669529663685,
+        17.677669529663685,
+        17.677669529663685
+      ]
+    }
+  ]
+}

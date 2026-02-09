@@ -1,0 +1,52 @@
+{
+  "timestamp": 1770628395.014221,
+  "total_entities": 3,
+  "threats_detected": 0,
+  "corrections_needed": 0,
+  "measurements": [
+    {
+      "timestamp": 1770628395.0142362,
+      "entity_id": "detector_1",
+      "threat_level": 0.1567116855897431,
+      "entanglement_quality": 0.82,
+      "error_count": 0,
+      "state_coherence": 1.0,
+      "domain": "detector_2",
+      "location": [
+        17.677669529663685,
+        17.677669529663685,
+        17.677669529663685
+      ]
+    },
+    {
+      "timestamp": 1770628395.0142612,
+      "entity_id": "detector_2",
+      "threat_level": 0.15671182864089056,
+      "entanglement_quality": 0.82,
+      "error_count": 0,
+      "state_coherence": 1.0,
+      "domain": "detector_1",
+      "location": [
+        17.677669529663685,
+        17.677669529663685,
+        17.677669529663685
+      ]
+    },
+    {
+      "timestamp": 1770628395.01428,
+      "entity_id": "detector_3",
+      "threat_level": 0.15671193235297248,
+      "entanglement_quality": 0.82,
+      "error_count": 0,
+      "state_coherence": 1.0,
+      "domain": "detector_1",
+      "location": [
+        17.677669529663685,
+        17.677669529663685,
+        17.677669529663685
+      ]
+    }
+  ],
+  "overall_coherence": 1.0,
+  "safety_level": 1.0
+}
