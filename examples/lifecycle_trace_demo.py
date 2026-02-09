@@ -98,7 +98,7 @@ def main():
             print(f"   Entity: {entity_id}")
             print(f"   State: {state}")
             if metadata:
-                print(f"   Metadata: {json.dumps(metadata, indent=11)}")
+                print(f"   Metadata: {json.dumps(metadata, indent=2)}")
     else:
         print("\n⚠️  No lifecycle events in trace (tracer may not be integrated)")
     

@@ -2,18 +2,20 @@ from __future__ import annotations
 
 import sys
 import time
+import threading
 from types import FrameType
 from typing import Any, Callable
 
 from recursive_observer.models import RuntimeTrace
 
 
-# Global lifecycle event tracker for root trace
+# Global lifecycle event tracker for root trace (thread-safe)
 _lifecycle_events: list[dict[str, Any]] = []
+_lifecycle_lock = threading.Lock()
 
 
 def record_lifecycle_event(event_type: str, entity_id: str, state: str, metadata: dict[str, Any] | None = None):
-    """Record a lifecycle event at the root trace level.
+    """Record a lifecycle event at the root trace level (thread-safe).
     
     This creates a deeper connection between entity lifecycle and execution traces.
     """
@@ -24,20 +26,28 @@ def record_lifecycle_event(event_type: str, entity_id: str, state: str, metadata
         'state': state,
         'metadata': metadata or {}
     }
-    _lifecycle_events.append(event)
+    with _lifecycle_lock:
+        _lifecycle_events.append(event)
 
 
 def get_lifecycle_events() -> list[dict[str, Any]]:
-    """Get all recorded lifecycle events."""
-    return _lifecycle_events.copy()
+    """Get all recorded lifecycle events (thread-safe)."""
+    with _lifecycle_lock:
+        return _lifecycle_events.copy()
 
 
 def clear_lifecycle_events():
-    """Clear all lifecycle events."""
-    _lifecycle_events.clear()
+    """Clear all lifecycle events (thread-safe)."""
+    with _lifecycle_lock:
+        _lifecycle_events.clear()
 
 
 def trace_execution(target: Callable[..., Any], *args: Any, **kwargs: Any) -> RuntimeTrace:
+    """Trace execution of a target function, capturing both call events and lifecycle events.
+    
+    Note: In multi-threaded environments, lifecycle events are shared globally. 
+    For thread-safe isolated tracing, consider using thread-local storage in future versions.
+    """
     if sys.gettrace() is not None:
         raise RuntimeError("Tracer already active")
 
@@ -47,6 +57,7 @@ def trace_execution(target: Callable[..., Any], *args: Any, **kwargs: Any) -> Ru
     start_times: dict[int, float] = {}
     
     # Clear lifecycle events before starting trace to capture only events during execution
+    # WARNING: This is not thread-safe for concurrent traces
     clear_lifecycle_events()
 
     def tracer(frame: FrameType, event: str, arg: Any):

@@ -28,7 +28,7 @@ def test_lifecycle_trace_integration():
     
     # Verify trace has lifecycle events
     assert trace.lifecycle_events is not None, "Lifecycle events should be captured"
-    assert len(trace.lifecycle_events) >= 3, "Should have at least 3 lifecycle events (create, awakening, activated)"
+    assert len(trace.lifecycle_events) == 3, "Should have exactly 3 lifecycle events (create, awakening, activated)"
     
     # Verify event types
     event_types = [e['event_type'] for e in trace.lifecycle_events]

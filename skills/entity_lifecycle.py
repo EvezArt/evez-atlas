@@ -16,13 +16,13 @@ from dataclasses import dataclass, asdict
 
 
 # Import tracer for root trace integration
+# Note: This uses dynamic import to avoid hard dependency on recursive-observer
+TRACER_AVAILABLE = False
 try:
-    import sys
-    sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'recursive-observer', 'src'))
+    # Try importing from installed package
     from recursive_observer.tracer import record_lifecycle_event
     TRACER_AVAILABLE = True
 except ImportError:
-    TRACER_AVAILABLE = False
     # Fallback if tracer not available
     def record_lifecycle_event(event_type: str, entity_id: str, state: str, metadata: dict = None):
         pass
