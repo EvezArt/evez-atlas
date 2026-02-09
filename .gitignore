@@ -52,6 +52,11 @@ __pycache__/
 *.pyc
 *.pyo
 
+# Engine test logs (in src/memory/test_*)
+src/memory/test_*.jsonl
+src/memory/test_cache/
+src/memory/cache/
+
 # Node.js / TypeScript
 node_modules/
 npm-debug.log*
