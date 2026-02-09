@@ -176,7 +176,6 @@ PYTHONPATH=. python -m pytest tests/test_omnimeta_v2.py -v
 
 ### Created
 - `tests/test_omnimeta_v2.py` (9,735 bytes)
-- `src/mastra/agents/omnimeta_entity_old.py` (backup)
 - `docs/OMNIMETA_NEUTRAL_LANGUAGE.md` (this file)
 
 ## Status
