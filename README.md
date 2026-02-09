@@ -117,10 +117,11 @@ See [Moltbook Integration Guide](docs/MOLTBOOK_INTEGRATION.md) for complete deta
 
 ### Enhanced Autonomous Capabilities
 
-**New in this version**: Advanced entity lifecycle management, quantum domain signaling, and temporal correlation.
+**New in this version**: Advanced entity lifecycle management with deep root trace integration, quantum domain signaling, and temporal correlation.
 
 **Key Features:**
 - Entity golem system with hibernation/active states
+- **NEW**: Deep connection to root trace system - complete lifecycle observability
 - Task queue with iterative error correction
 - Quantum domain signaling with retrocausal links
 - Temporal correlation across all operations
@@ -141,9 +142,12 @@ python3 -c "from skills.jubilee import process_task_queue; \
 
 # Run demonstration
 python3 scripts/demo_autonomy.py
+
+# NEW: Demonstrate lifecycle root trace integration
+python3 examples/lifecycle_trace_demo.py
 ```
 
-See [Enhanced Autonomy Guide](docs/enhanced-autonomy-guide.md) for complete documentation.
+See [Enhanced Autonomy Guide](docs/enhanced-autonomy-guide.md) and [Lifecycle Root Trace Integration](docs/LIFECYCLE_ROOT_TRACE_INTEGRATION.md) for complete documentation.
 
 ### 4. Omnimetamiraculaous Entity (Value Creation & Resource Coordination)
 
