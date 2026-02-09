@@ -292,10 +292,10 @@ def analyze_customer_activity():
     # Summary stats
     if sorted_customers:
         top_customer = sorted_customers[0]
-        total_revenue = sum(customer_data['revenue'] for _, customer_data in sorted_customers)
+        total_revenue = sum(customer_info['revenue'] for _, customer_info in sorted_customers)
         print(f"Top Customer: {top_customer[0]} (${top_customer[1]['revenue']:.2f}, {top_customer[1]['revenue']/total_revenue*100:.0f}% of revenue)")
         
-        total_orders = sum(len(customer_data['orders']) for _, customer_data in sorted_customers)
+        total_orders = sum(len(customer_info['orders']) for _, customer_info in sorted_customers)
         print(f"Average orders per customer: {total_orders/len(sorted_customers):.2f}")
 
 
