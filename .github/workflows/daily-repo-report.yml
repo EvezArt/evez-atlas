@@ -11,6 +11,8 @@ on:
 jobs:
   fetch:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     env:
       OWNER: EvezArt
       PER_PAGE: 100
