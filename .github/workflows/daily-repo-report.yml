@@ -1,0 +1,85 @@
+# GitHub Actions workflow: daily report of repos for OWNER (EvezArt).
+# Save this file to .github/workflows/daily-repo-report.yml in the repository.
+# Set repository secret REPORT_TOKEN (personal access token with 'repo' scope) if you need private-repo access.
+name: Daily Repo Report
+
+on:
+  schedule:
+    - cron: '0 6 * * *'   # daily at 06:00 UTC
+  workflow_dispatch: {}
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    env:
+      OWNER: EvezArt
+      PER_PAGE: 100
+    steps:
+      - name: Install jq
+        run: sudo apt-get update && sudo apt-get install -y jq
+
+      - name: Fetch repos (paginated)
+        shell: bash
+        run: |
+          OWNER=${{ env.OWNER }}
+          PER_PAGE=${{ env.PER_PAGE }}
+          TYPE="all"
+          SORT="updated"
+          DIRECTION="desc"
+          TOKEN="${{ secrets.REPORT_TOKEN || github.token }}"
+
+          page=1
+          all_json="[]"
+          echo "Fetching repos for ${OWNER}..."
+          while :; do
+            url="https://api.github.com/users/${OWNER}/repos?type=${TYPE}&sort=${SORT}&direction=${DIRECTION}&per_page=${PER_PAGE}&page=${page}"
+            if [ -n "$TOKEN" ]; then
+              page_json=$(curl -s -H "Accept: application/vnd.github+json" -H "Authorization: Bearer $TOKEN" "$url")
+            else
+              page_json=$(curl -s -H "Accept: application/vnd.github+json" "$url")
+            fi
+            count=$(echo "$page_json" | jq 'length')
+            if [ "$count" -eq 0 ]; then
+              break
+            fi
+            all_json=$(jq -s '.[0] + .[1]' <(echo "$all_json") <(echo "$page_json"))
+            echo "Fetched page ${page} (${count} repos)"
+            page=$((page+1))
+          done
+
+          OUT_JSON="${OWNER}_repos_full.json"
+          OUT_CSV="${OWNER}_repos_summary.csv"
+
+          echo "$all_json" | jq '.' > "$OUT_JSON"
+          echo "$all_json" | jq -r '.[] | [
+            .name,
+            .full_name,
+            (.private // false),
+            (.fork // false),
+            (.archived // false),
+            .html_url,
+            .ssh_url,
+            (.language // ""),
+            (.topics // [] | join(";")),
+            (.created_at // ""),
+            (.updated_at // ""),
+            (.pushed_at // ""),
+            (.description // "" | gsub("\""; "'"))
+          ] | @csv' > "$OUT_CSV"
+
+          ls -lah
+          echo "Created: $OUT_JSON and $OUT_CSV"
+
+      - name: Upload JSON artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: repo-report-json
+          path: |
+            EvezArt_repos_full.json
+
+      - name: Upload CSV artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: repo-report-csv
+          path: |
+            EvezArt_repos_summary.csv
