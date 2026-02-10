@@ -108,9 +108,11 @@ jobs:
           # Display summary
           echo "Report Summary:"
           echo "==============="
-          echo "$all_repos" | jq -r '"Total repositories: " + (. | length | tostring)'
-          echo "$all_repos" | jq -r '"Private repositories: " + ([.[] | select(.private == true)] | length | tostring)'
-          echo "$all_repos" | jq -r '"Public repositories: " + ([.[] | select(.private == false)] | length | tostring)'
+          echo "$all_repos" | jq -r '
+            "Total repositories: " + (. | length | tostring),
+            "Private repositories: " + ([.[] | select(.private == true)] | length | tostring),
+            "Public repositories: " + ([.[] | select(.private == false)] | length | tostring)
+          '
       
       - name: Upload JSON report
         uses: actions/upload-artifact@v4
