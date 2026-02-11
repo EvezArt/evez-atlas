@@ -544,4 +544,4 @@ messages:
       If you tell me the Mac provider + the job type, I’ll give you a minimal
       working workflow + runner setup steps (and, if needed, a small dispatcher
       service design).
-model: openai/gpt-4o
+model: microsoft/mai-ds-r1
