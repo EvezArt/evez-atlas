@@ -1,6 +1,21 @@
 # Quantum Threat Detection System Dependencies
-# Core dependencies (no external packages required for the simulator)
-# The system runs with Python 3.8+ standard library only
+# Core dependencies for the causal chain API and tooling.
+
+fastapi>=0.110
+httpx>=0.26
+pydantic>=2.6
+python-dotenv>=1.0
+slowapi>=0.1.9
+uvicorn>=0.27
+
+# Testing utilities
+pytest>=8.0
+pytest-asyncio>=0.23
+
+# Semantic Possibility Space dependencies
+sentence-transformers==3.0.1
+torch==2.1.2
+numpy==1.26.4
 
 # Optional: For production use with real quantum hardware:
 # qiskit>=1.0
@@ -9,7 +24,6 @@
 
 # Optional: For data processing:
 # pandas
-# numpy
 # scikit-learn
 
 # Optional: For visualization:

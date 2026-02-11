@@ -1,0 +1,20 @@
+{"type": "semantic_synthesis", "timestamp": 1769941341.7293959, "data": {"component_count": 5, "confidence": 0.7, "ambiguity": 0.2}}
+{"type": "causal_synthesis", "timestamp": 1769941341.7295105, "data": {"paradox_count": 4, "fundamental_ambiguity": 0.25}}
+{"type": "path_synthesis", "timestamp": 1769941341.729552, "data": {"path_count": 3, "optimal_convergence": 0.6666666666666667}}
+{"type": "unified_synthesis", "timestamp": 1769941341.7295814, "data": {"total_components": 12, "semantic_count": 5, "causal_count": 4, "path_count": 3, "final_confidence": 0.5833333333333334, "preserved_ambiguity": 0.08333333333333333}}
+{"type": "semantic_synthesis", "timestamp": 1769941440.2142975, "data": {"component_count": 5, "confidence": 0.7, "ambiguity": 0.2}}
+{"type": "causal_synthesis", "timestamp": 1769941440.2143683, "data": {"paradox_count": 4, "fundamental_ambiguity": 0.25}}
+{"type": "path_synthesis", "timestamp": 1769941440.2144017, "data": {"path_count": 3, "optimal_convergence": 0.6666666666666667}}
+{"type": "unified_synthesis", "timestamp": 1769941440.2144318, "data": {"total_components": 12, "semantic_count": 5, "causal_count": 4, "path_count": 3, "final_confidence": 0.5833333333333334, "preserved_ambiguity": 0.08333333333333333}}
+{"type": "semantic_synthesis", "timestamp": 1769941440.216029, "data": {"component_count": 5, "confidence": 0.7, "ambiguity": 0.2}}
+{"type": "causal_synthesis", "timestamp": 1769941440.216078, "data": {"paradox_count": 1, "fundamental_ambiguity": 0.0}}
+{"type": "path_synthesis", "timestamp": 1769941440.2161086, "data": {"path_count": 3, "optimal_convergence": 0.6666666666666667}}
+{"type": "unified_synthesis", "timestamp": 1769941440.2161374, "data": {"total_components": 9, "semantic_count": 5, "causal_count": 1, "path_count": 3, "final_confidence": 0.6111111111111112, "preserved_ambiguity": 0.1111111111111111}}
+{"type": "semantic_synthesis", "timestamp": 1769941558.6450176, "data": {"component_count": 5, "confidence": 0.7, "ambiguity": 0.2}}
+{"type": "causal_synthesis", "timestamp": 1769941558.6450677, "data": {"paradox_count": 4, "fundamental_ambiguity": 0.25}}
+{"type": "path_synthesis", "timestamp": 1769941558.6451004, "data": {"path_count": 3, "optimal_convergence": 0.6666666666666667}}
+{"type": "unified_synthesis", "timestamp": 1769941558.6451387, "data": {"total_components": 12, "semantic_count": 5, "causal_count": 4, "path_count": 3, "final_confidence": 0.5833333333333334, "preserved_ambiguity": 0.08333333333333333}}
+{"type": "semantic_synthesis", "timestamp": 1769941558.6465538, "data": {"component_count": 5, "confidence": 0.7, "ambiguity": 0.2}}
+{"type": "causal_synthesis", "timestamp": 1769941558.646602, "data": {"paradox_count": 1, "fundamental_ambiguity": 0.0}}
+{"type": "path_synthesis", "timestamp": 1769941558.646632, "data": {"path_count": 3, "optimal_convergence": 0.6666666666666667}}
+{"type": "unified_synthesis", "timestamp": 1769941558.646661, "data": {"total_components": 9, "semantic_count": 5, "causal_count": 1, "path_count": 3, "final_confidence": 0.6111111111111112, "preserved_ambiguity": 0.1111111111111111}}
