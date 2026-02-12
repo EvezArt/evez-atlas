@@ -1,0 +1,89 @@
+{
+  "name": "Evez666 Multi-Language Development Environment",
+  "image": "mcr.microsoft.com/devcontainers/universal:2-linux",
+  
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "20"
+    },
+    "ghcr.io/devcontainers/features/python:1": {
+      "version": "3.11"
+    },
+    "ghcr.io/devcontainers/features/go:1": {
+      "version": "1.21"
+    },
+    "ghcr.io/devcontainers/features/rust:1": {
+      "version": "latest"
+    },
+    "ghcr.io/devcontainers/features/java:1": {
+      "version": "17",
+      "jdkDistro": "ms"
+    },
+    "ghcr.io/devcontainers/features/git:1": {
+      "version": "latest"
+    },
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {
+      "version": "latest"
+    }
+  },
+
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+          "source.fixAll.eslint": true
+        },
+        "files.eol": "\n",
+        "typescript.tsdk": "node_modules/typescript/lib",
+        "python.linting.enabled": true,
+        "python.linting.pylintEnabled": true,
+        "python.formatting.provider": "black",
+        "go.useLanguageServer": true,
+        "[rust]": {
+          "editor.defaultFormatter": "rust-lang.rust-analyzer"
+        }
+      },
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "golang.go",
+        "rust-lang.rust-analyzer",
+        "vscjava.vscode-java-pack",
+        "ms-vscode.vscode-typescript-next",
+        "esbenp.prettier-vscode",
+        "github.copilot",
+        "github.vscode-pull-request-github",
+        "ms-azuretools.vscode-docker"
+      ]
+    }
+  },
+
+  "postCreateCommand": "bash .devcontainer/setup.sh",
+
+  "remoteUser": "codespace",
+
+  "containerEnv": {
+    "JUBILEE_MODE": "qsvc-ibm",
+    "NODE_ENV": "development"
+  },
+
+  "forwardPorts": [8000, 3000, 8080],
+
+  "portsAttributes": {
+    "8000": {
+      "label": "Jubilee API",
+      "onAutoForward": "notify"
+    },
+    "3000": {
+      "label": "Dev Server",
+      "onAutoForward": "silent"
+    },
+    "8080": {
+      "label": "Ops Stack",
+      "onAutoForward": "notify"
+    }
+  }
+}

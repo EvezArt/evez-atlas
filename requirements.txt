@@ -17,6 +17,9 @@ sentence-transformers==3.0.1
 torch==2.1.2
 numpy==1.26.4
 
+# Canonical JSON hashing (RFC 8785)
+rfc8785>=0.1.2
+
 # Optional: For production use with real quantum hardware:
 # qiskit>=1.0
 # qiskit-machine-learning
