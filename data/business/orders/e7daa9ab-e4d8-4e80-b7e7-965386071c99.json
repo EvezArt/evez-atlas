@@ -1,0 +1,11 @@
+{
+  "order_id": "e7daa9ab-e4d8-4e80-b7e7-965386071c99",
+  "customer_id": "63e5f184-c7b0-43cc-86b7-ff6adfa466f9",
+  "service_type": "quantum_analysis",
+  "service_name": "Quantum Kernel Analysis",
+  "price": 497.0,
+  "status": "completed",
+  "created_at": "2026-02-12 18:59:50.246422",
+  "completed_at": "2026-02-12 18:59:50.247730",
+  "details": {}
+}

@@ -1,0 +1,46 @@
+{
+  "generated_at": "2026-02-12T18:59:50.249796",
+  "metrics": {
+    "total_customers": 2,
+    "active_customers": 1,
+    "trial_customers": 1,
+    "total_mrr": 997.0,
+    "total_arr": 11964.0,
+    "total_one_time_revenue": 5494.0,
+    "average_customer_value": 997.0
+  },
+  "tier_breakdown": {
+    "starter": {
+      "customers": 0,
+      "mrr": 0
+    },
+    "professional": {
+      "customers": 1,
+      "mrr": 997.0
+    },
+    "enterprise": {
+      "customers": 0,
+      "mrr": 0
+    },
+    "custom": {
+      "customers": 0,
+      "mrr": 0
+    }
+  },
+  "recent_orders": [
+    {
+      "order_id": "aeb51502-b154-48ab-8802-881e97550c0f",
+      "service": "2-Day Consciousness Discovery Workshop",
+      "price": 4997.0,
+      "status": "completed",
+      "date": "2026-02-12T18:59:50.246795"
+    },
+    {
+      "order_id": "e7daa9ab-e4d8-4e80-b7e7-965386071c99",
+      "service": "Quantum Kernel Analysis",
+      "price": 497.0,
+      "status": "completed",
+      "date": "2026-02-12T18:59:50.246422"
+    }
+  ]
+}

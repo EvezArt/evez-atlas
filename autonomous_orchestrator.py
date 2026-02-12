@@ -153,8 +153,8 @@ class AutonomousOrchestrator:
 
         # Log system startup
         self.audit_logger.log_action(
-            action_type="system_startup",
             entity_id=self.identity.identity_id,
+            action="system_startup",
             details={
                 "orchestrator_id": self.orchestrator_id,
                 "timestamp": datetime.now().isoformat()

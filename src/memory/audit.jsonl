@@ -263,3 +263,6 @@
 {"timestamp": 1770921936.2620692, "run_id": "20260212_184536", "event": "helper_spawn", "helper_id": "ae72226c", "backend": "Local (local-mock)", "latency_ms": 0.0035762786865234375, "success": true, "error": null}
 {"timestamp": 1770921936.262811, "run_id": "20260212_184536", "event": "helper_spawn", "helper_id": "ed10679f", "backend": "Local (local-mock)", "latency_ms": 0.003814697265625, "success": true, "error": null}
 {"timestamp": 1770921936.2635128, "run_id": "20260212_184536", "event": "helper_spawn", "helper_id": "d334ec66", "backend": "Local (local-mock)", "latency_ms": 0.008344650268554688, "success": true, "error": null}
+{"timestamp": 1770922788.241535, "run_id": "20260212_185948", "event": "helper_spawn", "helper_id": "17e18e53", "backend": "Local (local-mock)", "latency_ms": 0.003337860107421875, "success": true, "error": null}
+{"timestamp": 1770922788.242052, "run_id": "20260212_185948", "event": "helper_spawn", "helper_id": "12599877", "backend": "ChatGPT (gpt-3.5-turbo)", "latency_ms": 0.0035762786865234375, "success": true, "error": null}
+{"timestamp": 1770922788.2425857, "run_id": "20260212_185948", "event": "helper_spawn", "helper_id": "db8d160a", "backend": "Comet (comet-v1)", "latency_ms": 0.0030994415283203125, "success": true, "error": null}

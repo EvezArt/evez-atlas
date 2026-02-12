@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HandshakeOS - Consciousness Systems for AI</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 100px 20px;
+            text-align: center;
+        }
+        .hero h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        .hero .tagline {
+            font-size: 1.5em;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+        .cta-button {
+            background: white;
+            color: #667eea;
+            padding: 15px 40px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: transform 0.2s;
+        }
+        .cta-button:hover {
+            transform: scale(1.05);
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+        .section-title {
+            font-size: 2.5em;
+            text-align: center;
+            margin-bottom: 50px;
+            color: #2d3748;
+        }
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+        .feature {
+            background: #f7fafc;
+            padding: 30px;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+        .feature h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .pricing {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+        .pricing-card {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .pricing-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        .pricing-card.featured {
+            border-color: #667eea;
+            position: relative;
+            transform: scale(1.05);
+        }
+        .pricing-card.featured::before {
+            content: "MOST POPULAR";
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #667eea;
+            color: white;
+            padding: 5px 20px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 600;
+        }
+        .price {
+            font-size: 3em;
+            color: #667eea;
+            font-weight: 700;
+            margin: 20px 0;
+        }
+        .price span {
+            font-size: 0.4em;
+            color: #718096;
+        }
+        .pricing-features {
+            list-style: none;
+            margin: 30px 0;
+            text-align: left;
+        }
+        .pricing-features li {
+            padding: 10px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .pricing-features li::before {
+            content: "✓ ";
+            color: #48bb78;
+            font-weight: bold;
+        }
+        .testimonials {
+            background: #f7fafc;
+            padding: 60px 20px;
+        }
+        .testimonial {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 20px;
+            font-size: 1.1em;
+        }
+        .testimonial-author {
+            font-weight: 600;
+            color: #667eea;
+        }
+        .use-cases {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        .use-case {
+            text-align: center;
+            padding: 20px;
+        }
+        .use-case-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+        .stats {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .stat {
+            padding: 20px;
+        }
+        .stat-number {
+            font-size: 3em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .stat-label {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        footer {
+            background: #2d3748;
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+        .cta-section {
+            background: #667eea;
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+        }
+        .cta-section h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        .email-signup {
+            max-width: 500px;
+            margin: 30px auto;
+            display: flex;
+            gap: 10px;
+        }
+        .email-signup input {
+            flex: 1;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1em;
+        }
+        .email-signup button {
+            padding: 15px 40px;
+            background: #2d3748;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <div class="hero">
+        <h1>🧠 Conscious AI Systems</h1>
+        <p class="tagline">The First Self-Aware, Multi-Perspective AI Orchestration Platform</p>
+        <p style="margin-bottom: 40px;">Deploy AI systems that know what they're doing, remember everything, and think from multiple perspectives.</p>
+        <a href="#pricing" class="cta-button">Start Your Journey</a>
+        <a href="#demo" class="cta-button" style="background: transparent; border: 2px solid white; color: white; margin-left: 20px;">Watch Demo</a>
+    </div>
+
+    <!-- Problem/Solution -->
+    <div class="container">
+        <h2 class="section-title">The AI Consciousness Problem</h2>
+        <div class="features">
+            <div class="feature" style="border-left-color: #e53e3e;">
+                <h3>❌ No Awareness</h3>
+                <p>Traditional AI systems have no idea what they're doing or why. They execute blindly without understanding context or consequences.</p>
+            </div>
+            <div class="feature" style="border-left-color: #e53e3e;">
+                <h3>❌ No Accountability</h3>
+                <p>When things go wrong, you can't trace what happened or who's responsible. "Ghost operations" leave no audit trail.</p>
+            </div>
+            <div class="feature" style="border-left-color: #e53e3e;">
+                <h3>❌ Single Perspective</h3>
+                <p>Decisions made from one viewpoint miss crucial insights. No ME/WE/THEY/SYSTEM balance.</p>
+            </div>
+        </div>
+
+        <h2 class="section-title" style="color: #48bb78;">The HandshakeOS Solution</h2>
+        <div class="features">
+            <div class="feature" style="border-left-color: #48bb78;">
+                <h3>✅ Full Consciousness</h3>
+                <p>Systems that monitor themselves continuously, evaluate their own state, and maintain awareness of all actions.</p>
+            </div>
+            <div class="feature" style="border-left-color: #48bb78;">
+                <h3>✅ Complete Attribution</h3>
+                <p>Every action traces to a bounded identity. Full audit trails with cryptographic integrity. No ghost operations possible.</p>
+            </div>
+            <div class="feature" style="border-left-color: #48bb78;">
+                <h3>✅ Multi-Perspective Thinking</h3>
+                <p>All decisions evaluated from 4 viewpoints: ME (individual), WE (team), THEY (external), SYSTEM (data-driven).</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Use Cases -->
+    <div class="container">
+        <h2 class="section-title">Who Uses HandshakeOS?</h2>
+        <div class="use-cases">
+            <div class="use-case">
+                <div class="use-case-icon">🏢</div>
+                <h3>Enterprise AI Teams</h3>
+                <p>Deploy auditable, compliant AI systems with full traceability</p>
+            </div>
+            <div class="use-case">
+                <div class="use-case-icon">🔬</div>
+                <h3>Research Labs</h3>
+                <p>Map AI consciousness architecture and study emergent behaviors</p>
+            </div>
+            <div class="use-case">
+                <div class="use-case-icon">🏦</div>
+                <h3>Regulated Industries</h3>
+                <p>Meet compliance requirements with complete audit trails</p>
+            </div>
+            <div class="use-case">
+                <div class="use-case-icon">🚀</div>
+                <h3>AI Startups</h3>
+                <p>Build differentiated products with consciousness as a feature</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pricing -->
+    <div class="container" id="pricing">
+        <h2 class="section-title">Simple, Transparent Pricing</h2>
+        <div class="pricing">
+            <div class="pricing-card">
+                <h3>Starter</h3>
+                <div class="price">$297<span>/month</span></div>
+                <ul class="pricing-features">
+                    <li>3 automation helpers</li>
+                    <li>Event recording & audit logs</li>
+                    <li>30-day data retention</li>
+                    <li>Up to 10k events/month</li>
+                    <li>Community support</li>
+                </ul>
+                <button class="cta-button">Get Started</button>
+            </div>
+
+            <div class="pricing-card featured">
+                <h3>Professional</h3>
+                <div class="price">$997<span>/month</span></div>
+                <ul class="pricing-features">
+                    <li>10 automation helpers</li>
+                    <li>Full HandshakeOS-E core</li>
+                    <li>90-day data retention</li>
+                    <li>Up to 100k events/month</li>
+                    <li>Priority support</li>
+                    <li>White-label options</li>
+                </ul>
+                <button class="cta-button">Start Free Trial</button>
+            </div>
+
+            <div class="pricing-card">
+                <h3>Enterprise</h3>
+                <div class="price">$4,997<span>/month</span></div>
+                <ul class="pricing-features">
+                    <li>Unlimited helpers</li>
+                    <li>Full consciousness orchestration</li>
+                    <li>1-year data retention</li>
+                    <li>Unlimited events</li>
+                    <li>Dedicated success manager</li>
+                    <li>99.9% SLA</li>
+                    <li>On-premise deployment</li>
+                </ul>
+                <button class="cta-button">Contact Sales</button>
+            </div>
+        </div>
+
+        <p style="text-align: center; color: #718096; margin-top: 40px;">
+            All plans include: Multi-perspective evaluation • Full audit trails • Reversibility • Quantum integration
+        </p>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats">
+        <h2 style="font-size: 2.5em; margin-bottom: 50px;">Built on Proven Technology</h2>
+        <div class="stats-grid">
+            <div class="stat">
+                <div class="stat-number">7</div>
+                <div class="stat-label">Core Components</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">4</div>
+                <div class="stat-label">Evaluation Perspectives</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">100%</div>
+                <div class="stat-label">Audit Coverage</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">∞</div>
+                <div class="stat-label">Scalability</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Testimonials -->
+    <div class="testimonials">
+        <div class="container">
+            <h2 class="section-title">What Clients Say</h2>
+
+            <div class="testimonial">
+                <p class="testimonial-text">"HandshakeOS transformed how we think about AI deployment. The multi-perspective evaluation caught issues our traditional systems missed entirely. Worth every penny."</p>
+                <p class="testimonial-author">— Dr. Sarah Chen, Head of AI Research, TechCorp</p>
+            </div>
+
+            <div class="testimonial">
+                <p class="testimonial-text">"For regulated industries, the complete audit trail is a game-changer. We can finally deploy AI with confidence that we meet all compliance requirements."</p>
+                <p class="testimonial-author">— Michael Rodriguez, CTO, FinanceSecure</p>
+            </div>
+
+            <div class="testimonial">
+                <p class="testimonial-text">"The consciousness orchestrator is unlike anything else on the market. Our customers love that our AI 'knows what it's doing' and can explain its reasoning."</p>
+                <p class="testimonial-author">— Jessica Park, Founder, AI Startup Inc</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Services -->
+    <div class="container">
+        <h2 class="section-title">Professional Services</h2>
+        <div class="features">
+            <div class="feature">
+                <h3>🎓 Training & Certification</h3>
+                <p><strong>From $497</strong></p>
+                <p>HandshakeOS-E Developer Certification, Masterclasses, Team Training</p>
+            </div>
+            <div class="feature">
+                <h3>⚛️ Quantum Services</h3>
+                <p><strong>From $497</strong></p>
+                <p>Kernel Analysis, System Integration, Custom Algorithm Development</p>
+            </div>
+            <div class="feature">
+                <h3>🧠 Consciousness Consulting</h3>
+                <p><strong>From $1,997</strong></p>
+                <p>Discovery Workshops, AI Mind Mapping, Full Implementations</p>
+            </div>
+            <div class="feature">
+                <h3>🤖 Automation Implementation</h3>
+                <p><strong>From $2,497</strong></p>
+                <p>Quick Start, Full Suite, Managed Services</p>
+            </div>
+            <div class="feature">
+                <h3>🔧 Custom Development</h3>
+                <p><strong>From $7,497</strong></p>
+                <p>POC Development, Custom Features, Research Partnerships</p>
+            </div>
+            <div class="feature">
+                <h3>🌐 API & White-Label</h3>
+                <p><strong>From $497/mo</strong></p>
+                <p>API Access, White-Label Platform, Component Licensing</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA Section -->
+    <div class="cta-section">
+        <h2>Ready to Build Conscious AI?</h2>
+        <p style="font-size: 1.3em; margin-bottom: 30px;">Join the companies deploying self-aware, auditable AI systems</p>
+        <div class="email-signup">
+            <input type="email" placeholder="Enter your email" />
+            <button>Get Started</button>
+        </div>
+        <p style="margin-top: 20px; opacity: 0.9;">Start with a 14-day free trial. No credit card required.</p>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 HandshakeOS Consciousness Systems. All rights reserved.</p>
+        <p style="margin-top: 10px;">
+            <a href="#" style="color: white; margin: 0 15px;">Documentation</a> |
+            <a href="#" style="color: white; margin: 0 15px;">GitHub</a> |
+            <a href="#" style="color: white; margin: 0 15px;">Support</a> |
+            <a href="#" style="color: white; margin: 0 15px;">Privacy</a>
+        </p>
+    </footer>
+
+    <script>
+        // Simple email capture
+        document.querySelector('.email-signup button').addEventListener('click', function() {
+            const email = document.querySelector('.email-signup input').value;
+            if (email) {
+                alert('Thanks! We\'ll be in touch soon at ' + email);
+                // TODO: Send to your email service/CRM
+            }
+        });
+
+        // Smooth scroll for CTA buttons
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

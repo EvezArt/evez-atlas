@@ -1,0 +1,22 @@
+{
+  "customer_id": "1ca7e4a6-4566-4066-9fff-19b76bfba6b6",
+  "name": "Bob Smith",
+  "email": "bob@startupinc.com",
+  "company": "Startup Inc",
+  "tier": "starter",
+  "status": "trial",
+  "created_at": "2026-02-12 18:59:48.238902",
+  "max_helpers": 3,
+  "max_events_per_month": 10000,
+  "data_retention_days": 30,
+  "monthly_recurring_revenue": 297.0,
+  "billing_cycle_start": null,
+  "last_payment_date": null,
+  "orchestrator_id": null,
+  "api_key": "hsos_f1d7e619f8fa4b17a571d77ad9ccc6ee",
+  "total_events": 0,
+  "total_intents": 0,
+  "total_hypotheses": 0,
+  "notes": [],
+  "tags": []
+}

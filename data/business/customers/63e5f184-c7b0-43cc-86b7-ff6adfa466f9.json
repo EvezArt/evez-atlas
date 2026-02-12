@@ -1,0 +1,22 @@
+{
+  "customer_id": "63e5f184-c7b0-43cc-86b7-ff6adfa466f9",
+  "name": "Alice Johnson",
+  "email": "alice@techcorp.com",
+  "company": "TechCorp",
+  "tier": "professional",
+  "status": "active",
+  "created_at": "2026-02-12 18:59:48.238099",
+  "max_helpers": 10,
+  "max_events_per_month": 100000,
+  "data_retention_days": 90,
+  "monthly_recurring_revenue": 997.0,
+  "billing_cycle_start": "2026-02-12 18:59:50.245934",
+  "last_payment_date": null,
+  "orchestrator_id": "consciousness_orchestrator",
+  "api_key": "hsos_2c82d7e1ea6e4faeaae369433f61010a",
+  "total_events": 0,
+  "total_intents": 0,
+  "total_hypotheses": 0,
+  "notes": [],
+  "tags": []
+}
