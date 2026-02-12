@@ -1,0 +1,73 @@
+{
+  "marketplace_name": "HandshakeOS AI Services",
+  "version": "1.0",
+  "base_url": "https://api.handshakeos.com",
+  "payment_methods": [
+    "stripe",
+    "usdt",
+    "usdc"
+  ],
+  "authentication": "api_key",
+  "services": [
+    {
+      "service_id": "consciousness_eval",
+      "service_name": "Multi-Perspective Consciousness Evaluation",
+      "description": "Evaluate decisions from ME/WE/THEY/SYSTEM perspectives. Returns consensus and divergence metrics.",
+      "price_usd": 0.5,
+      "endpoint": "/api/v1/consciousness/evaluate",
+      "price_crypto": 0.5,
+      "rate_limit": 1000,
+      "requires_auth": true
+    },
+    {
+      "service_id": "event_recording",
+      "service_name": "UniversalEventRecord Creation",
+      "description": "Record events with complete attribution, domain signatures, and audit trails.",
+      "price_usd": 0.25,
+      "endpoint": "/api/v1/events/record",
+      "price_crypto": 0.25,
+      "rate_limit": 5000,
+      "requires_auth": true
+    },
+    {
+      "service_id": "intent_tracking",
+      "service_name": "IntentToken Pre/Post Action Tracking",
+      "description": "Track AI agent intents from goal setting through execution to outcome.",
+      "price_usd": 0.75,
+      "endpoint": "/api/v1/intents/track",
+      "price_crypto": 0.75,
+      "rate_limit": 2000,
+      "requires_auth": true
+    },
+    {
+      "service_id": "quantum_analysis",
+      "service_name": "Quantum Kernel Analysis",
+      "description": "Run quantum-inspired kernel analysis on data. Returns similarity matrix and fingerprints.",
+      "price_usd": 2.0,
+      "endpoint": "/api/v1/quantum/analyze",
+      "price_crypto": 2.0,
+      "rate_limit": 100,
+      "requires_auth": true
+    },
+    {
+      "service_id": "audit_verification",
+      "service_name": "Audit Log Integrity Verification",
+      "description": "Verify tamper-evident audit logs with SHA-256 chain validation.",
+      "price_usd": 0.1,
+      "endpoint": "/api/v1/audit/verify",
+      "price_crypto": 0.1,
+      "rate_limit": 10000,
+      "requires_auth": true
+    },
+    {
+      "service_id": "helper_spawn",
+      "service_name": "Temporary Automation Helper",
+      "description": "Spawn a consciousness helper for 1 hour. Supports Local/ChatGPT/Comet backends.",
+      "price_usd": 5.0,
+      "endpoint": "/api/v1/helpers/spawn",
+      "price_crypto": 5.0,
+      "rate_limit": 50,
+      "requires_auth": true
+    }
+  ]
+}

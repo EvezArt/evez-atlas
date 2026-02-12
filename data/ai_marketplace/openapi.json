@@ -1,0 +1,201 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "HandshakeOS Consciousness API",
+    "version": "1.0.0",
+    "description": "AI-to-AI consciousness services with automated billing"
+  },
+  "servers": [
+    {
+      "url": "https://api.handshakeos.com/v1"
+    }
+  ],
+  "paths": {
+    "/api/v1/consciousness/evaluate": {
+      "post": {
+        "summary": "Multi-Perspective Consciousness Evaluation",
+        "description": "Evaluate decisions from ME/WE/THEY/SYSTEM perspectives. Returns consensus and divergence metrics.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "402": {
+            "description": "Payment Required"
+          },
+          "429": {
+            "description": "Rate Limit Exceeded"
+          }
+        },
+        "x-pricing": {
+          "usd": 0.5,
+          "crypto": 0.5
+        }
+      }
+    },
+    "/api/v1/events/record": {
+      "post": {
+        "summary": "UniversalEventRecord Creation",
+        "description": "Record events with complete attribution, domain signatures, and audit trails.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "402": {
+            "description": "Payment Required"
+          },
+          "429": {
+            "description": "Rate Limit Exceeded"
+          }
+        },
+        "x-pricing": {
+          "usd": 0.25,
+          "crypto": 0.25
+        }
+      }
+    },
+    "/api/v1/intents/track": {
+      "post": {
+        "summary": "IntentToken Pre/Post Action Tracking",
+        "description": "Track AI agent intents from goal setting through execution to outcome.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "402": {
+            "description": "Payment Required"
+          },
+          "429": {
+            "description": "Rate Limit Exceeded"
+          }
+        },
+        "x-pricing": {
+          "usd": 0.75,
+          "crypto": 0.75
+        }
+      }
+    },
+    "/api/v1/quantum/analyze": {
+      "post": {
+        "summary": "Quantum Kernel Analysis",
+        "description": "Run quantum-inspired kernel analysis on data. Returns similarity matrix and fingerprints.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "402": {
+            "description": "Payment Required"
+          },
+          "429": {
+            "description": "Rate Limit Exceeded"
+          }
+        },
+        "x-pricing": {
+          "usd": 2.0,
+          "crypto": 2.0
+        }
+      }
+    },
+    "/api/v1/audit/verify": {
+      "post": {
+        "summary": "Audit Log Integrity Verification",
+        "description": "Verify tamper-evident audit logs with SHA-256 chain validation.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "402": {
+            "description": "Payment Required"
+          },
+          "429": {
+            "description": "Rate Limit Exceeded"
+          }
+        },
+        "x-pricing": {
+          "usd": 0.1,
+          "crypto": 0.1
+        }
+      }
+    },
+    "/api/v1/helpers/spawn": {
+      "post": {
+        "summary": "Temporary Automation Helper",
+        "description": "Spawn a consciousness helper for 1 hour. Supports Local/ChatGPT/Comet backends.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "402": {
+            "description": "Payment Required"
+          },
+          "429": {
+            "description": "Rate Limit Exceeded"
+          }
+        },
+        "x-pricing": {
+          "usd": 5.0,
+          "crypto": 5.0
+        }
+      }
+    }
+  }
+}
