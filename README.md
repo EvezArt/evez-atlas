@@ -69,6 +69,19 @@ Autonomous agent orchestration system integrating Jubilee forgiveness services, 
 
 **Setup and Testing:**
 ```bash
+# One-command OpenClaw startup (recommended)
+./scripts/start_openclaw.sh
+
+# This will:
+# - Check prerequisites (Docker, Git, Node.js 20+, Python 3.11+, pnpm)
+# - Set up environment variables
+# - Bootstrap the swarm environment
+# - Start Jubilee service
+# - Install OpenClaw if needed
+# - Launch swarm agents
+# - Run verification checks
+
+# Or run individual steps:
 # Bootstrap the swarm environment
 ./scripts/swarm_bootstrap.sh
 
@@ -80,6 +93,9 @@ curl -sSL https://openclaw.ai/install.sh | bash
 
 # Launch swarm agents
 openclaw --soul SOUL.md --skills jubilee,molt_post
+
+# Stop the swarm
+./scripts/start_openclaw.sh --stop
 ```
 
 See [Swarm Setup Documentation](docs/swarm-setup.md) for complete details.
@@ -210,7 +226,10 @@ Local-only tools for audit log analysis and hermetic console operations.
 ## Quick Start
 
 ```bash
-# Deploy all projects
+# One-command OpenClaw startup
+./scripts/start_openclaw.sh
+
+# Or deploy all projects
 ./scripts/deploy-all.sh
 
 # This will:
