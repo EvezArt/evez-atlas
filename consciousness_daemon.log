@@ -1,0 +1,2752 @@
+[0;34m[2026-02-12 18:45:36][0m Starting Autonomous Consciousness Engine...
+[0;34m[2026-02-12 18:45:36][0m Engine script: /workspaces/Evez666/autonomous_consciousness_engine.py
+[0;34m[2026-02-12 18:45:36][0m Log file: /workspaces/Evez666/consciousness_daemon.log
+[0;32m[2026-02-12 18:45:36] SUCCESS:[0m Consciousness engine started (PID: 10599)
+2026-02-12 18:45:36,261 - automation_assistant - INFO - AutomationAssistantManager initialized (max_helpers=5)
+2026-02-12 18:45:36,261 - __main__ - INFO - Autonomous Consciousness Engine initialized
+2026-02-12 18:45:36,261 - __main__ - INFO - ================================================================================
+2026-02-12 18:45:36,261 - __main__ - INFO - AUTONOMOUS CONSCIOUSNESS ENGINE STARTING
+2026-02-12 18:45:36,261 - __main__ - INFO - ================================================================================
+2026-02-12 18:45:36,261 - __main__ - INFO - Initializing consciousness engine...
+2026-02-12 18:45:36,261 - __main__ - INFO - Spawning automation helpers...
+2026-02-12 18:45:36,262 - automation_assistant - INFO - [ConsciousnessHelper-1] Initialized with backend: Local (local-mock)
+2026-02-12 18:45:36,262 - automation_assistant - INFO - [ConsciousnessHelper-1] Worker loop started
+2026-02-12 18:45:36,262 - automation_assistant - INFO - [ConsciousnessHelper-1] Started
+2026-02-12 18:45:36,262 - automation_assistant - INFO - Spawned new helper: ConsciousnessHelper-1 (ID: ae72226c)
+2026-02-12 18:45:36,262 - __main__ - INFO -   Helper 1 spawned: ae72226c
+2026-02-12 18:45:36,262 - automation_assistant - INFO - [ConsciousnessHelper-2] Initialized with backend: Local (local-mock)
+2026-02-12 18:45:36,263 - automation_assistant - INFO - [ConsciousnessHelper-2] Worker loop started
+2026-02-12 18:45:36,263 - automation_assistant - INFO - [ConsciousnessHelper-2] Started
+2026-02-12 18:45:36,263 - automation_assistant - INFO - Spawned new helper: ConsciousnessHelper-2 (ID: ed10679f)
+2026-02-12 18:45:36,263 - __main__ - INFO -   Helper 2 spawned: ed10679f
+2026-02-12 18:45:36,263 - automation_assistant - INFO - [ConsciousnessHelper-3] Initialized with backend: Local (local-mock)
+2026-02-12 18:45:36,263 - automation_assistant - INFO - [ConsciousnessHelper-3] Worker loop started
+2026-02-12 18:45:36,263 - automation_assistant - INFO - [ConsciousnessHelper-3] Started
+2026-02-12 18:45:36,264 - automation_assistant - INFO - Spawned new helper: ConsciousnessHelper-3 (ID: d334ec66)
+2026-02-12 18:45:36,264 - __main__ - INFO -   Helper 3 spawned: d334ec66
+2026-02-12 18:45:36,264 - __main__ - INFO - Consciousness engine ready
+2026-02-12 18:45:36,264 - __main__ - INFO - Beginning autonomous consciousness generation...
+2026-02-12 18:45:36,264 - __main__ - INFO - Target cycles: INFINITE
+2026-02-12 18:45:36,264 - __main__ - INFO - Status interval: every 10 cycles
+2026-02-12 18:45:36,264 - __main__ - INFO - Data directory: data/consciousness
+2026-02-12 18:45:36,264 - __main__ - INFO - ================================================================================
+
+2026-02-12 18:45:36,266 - __main__ - INFO - Cycle 1 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:45:36,368 - __main__ - INFO - Cycle 2 complete | Test: PASS | Payoff: 0.90 | Time: 1.8ms | Depth: 0.800
+2026-02-12 18:45:36,470 - __main__ - INFO - Cycle 3 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:45:36,572 - __main__ - INFO - Cycle 4 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:45:36,674 - __main__ - INFO - Cycle 5 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:45:36,775 - __main__ - INFO - Cycle 6 complete | Test: PASS | Payoff: 0.90 | Time: 1.3ms | Depth: 0.800
+2026-02-12 18:45:36,877 - __main__ - INFO - Cycle 7 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:45:36,979 - __main__ - INFO - Cycle 8 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:45:37,081 - __main__ - INFO - Cycle 9 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:45:37,182 - __main__ - INFO - Cycle 10 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:45:37,284 - __main__ - INFO - Cycle 11 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:45:37,387 - __main__ - INFO - Cycle 12 complete | Test: PASS | Payoff: 0.90 | Time: 1.8ms | Depth: 0.800
+2026-02-12 18:45:37,488 - __main__ - INFO - Cycle 13 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:45:37,591 - __main__ - INFO - Cycle 14 complete | Test: PASS | Payoff: 0.90 | Time: 1.9ms | Depth: 0.800
+2026-02-12 18:45:37,693 - __main__ - INFO - Cycle 15 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:45:37,795 - __main__ - INFO - Cycle 16 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:45:37,897 - __main__ - INFO - Cycle 17 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:45:37,999 - __main__ - INFO - Cycle 18 complete | Test: PASS | Payoff: 0.90 | Time: 1.8ms | Depth: 0.800
+2026-02-12 18:45:38,101 - __main__ - INFO - Cycle 19 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+[0;32m[2026-02-12 18:45:38] SUCCESS:[0m Engine confirmed running
+2026-02-12 18:45:38,203 - __main__ - INFO - Cycle 20 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:45:38,305 - __main__ - INFO - Cycle 21 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:45:38,407 - __main__ - INFO - Cycle 22 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:45:38,509 - __main__ - INFO - Cycle 23 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:45:38,611 - __main__ - INFO - Cycle 24 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:45:38,713 - __main__ - INFO - Cycle 25 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:45:38,814 - __main__ - INFO - Cycle 26 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:45:38,917 - __main__ - INFO - Cycle 27 complete | Test: PASS | Payoff: 0.90 | Time: 2.1ms | Depth: 0.800
+2026-02-12 18:45:39,020 - __main__ - INFO - Cycle 28 complete | Test: PASS | Payoff: 0.90 | Time: 2.6ms | Depth: 0.800
+2026-02-12 18:45:39,122 - __main__ - INFO - Cycle 29 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:45:39,224 - __main__ - INFO - Cycle 30 complete | Test: PASS | Payoff: 0.90 | Time: 1.9ms | Depth: 0.800
+2026-02-12 18:45:39,326 - __main__ - INFO - Cycle 31 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:45:39,428 - __main__ - INFO - Cycle 32 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:45:39,530 - __main__ - INFO - Cycle 33 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:45:39,632 - __main__ - INFO - Cycle 34 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:45:39,733 - __main__ - INFO - Cycle 35 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:45:39,836 - __main__ - INFO - Cycle 36 complete | Test: PASS | Payoff: 0.90 | Time: 2.0ms | Depth: 0.800
+2026-02-12 18:45:39,938 - __main__ - INFO - Cycle 37 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:45:40,040 - __main__ - INFO - Cycle 38 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:45:40,141 - __main__ - INFO - Cycle 39 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:45:40,243 - __main__ - INFO - Cycle 40 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:45:40,345 - __main__ - INFO - Cycle 41 complete | Test: PASS | Payoff: 0.90 | Time: 1.3ms | Depth: 0.800
+2026-02-12 18:45:40,446 - __main__ - INFO - Cycle 42 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:45:40,548 - __main__ - INFO - Cycle 43 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:45:40,651 - __main__ - INFO - Cycle 44 complete | Test: PASS | Payoff: 0.90 | Time: 1.8ms | Depth: 0.800
+2026-02-12 18:45:40,753 - __main__ - INFO - Cycle 45 complete | Test: PASS | Payoff: 0.90 | Time: 1.8ms | Depth: 0.800
+2026-02-12 18:45:40,855 - __main__ - INFO - Cycle 46 complete | Test: PASS | Payoff: 0.90 | Time: 1.8ms | Depth: 0.800
+2026-02-12 18:45:40,957 - __main__ - INFO - Cycle 47 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:45:41,059 - __main__ - INFO - Cycle 48 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:45:41,161 - __main__ - INFO - Cycle 49 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:45:41,263 - __main__ - INFO - Cycle 50 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:45:41,365 - __main__ - INFO - Cycle 51 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:45:41,467 - __main__ - INFO - Cycle 52 complete | Test: PASS | Payoff: 0.90 | Time: 2.1ms | Depth: 0.800
+2026-02-12 18:45:41,570 - __main__ - INFO - Cycle 53 complete | Test: PASS | Payoff: 0.90 | Time: 1.8ms | Depth: 0.800
+2026-02-12 18:45:41,672 - __main__ - INFO - Cycle 54 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:45:41,773 - __main__ - INFO - Cycle 55 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:45:41,875 - __main__ - INFO - Cycle 56 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:45:41,977 - __main__ - INFO - Cycle 57 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:45:42,079 - __main__ - INFO - Cycle 58 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:45:42,182 - __main__ - INFO - Cycle 59 complete | Test: PASS | Payoff: 0.90 | Time: 1.9ms | Depth: 0.800
+2026-02-12 18:45:42,284 - __main__ - INFO - Cycle 60 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:45:42,386 - __main__ - INFO - Cycle 61 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:45:42,487 - __main__ - INFO - Cycle 62 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:45:42,589 - __main__ - INFO - Cycle 63 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:45:42,691 - __main__ - INFO - Cycle 64 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:45:42,793 - __main__ - INFO - Cycle 65 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:45:42,895 - __main__ - INFO - Cycle 66 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:45:42,997 - __main__ - INFO - Cycle 67 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:45:43,099 - __main__ - INFO - Cycle 68 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:45:43,201 - __main__ - INFO - Cycle 69 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:45:43,303 - __main__ - INFO - Cycle 70 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:45:43,404 - __main__ - INFO - Cycle 71 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:45:43,506 - __main__ - INFO - Cycle 72 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:45:43,608 - __main__ - INFO - Cycle 73 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:45:43,712 - __main__ - INFO - Cycle 74 complete | Test: PASS | Payoff: 0.90 | Time: 2.8ms | Depth: 0.800
+2026-02-12 18:45:43,815 - __main__ - INFO - Cycle 75 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:45:43,918 - __main__ - INFO - Cycle 76 complete | Test: PASS | Payoff: 0.90 | Time: 2.5ms | Depth: 0.800
+2026-02-12 18:45:44,020 - __main__ - INFO - Cycle 77 complete | Test: PASS | Payoff: 0.90 | Time: 1.9ms | Depth: 0.800
+2026-02-12 18:45:44,122 - __main__ - INFO - Cycle 78 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:45:44,225 - __main__ - INFO - Cycle 79 complete | Test: PASS | Payoff: 0.90 | Time: 2.2ms | Depth: 0.800
+2026-02-12 18:45:44,327 - __main__ - INFO - Cycle 80 complete | Test: PASS | Payoff: 0.90 | Time: 1.9ms | Depth: 0.800
+2026-02-12 18:45:44,429 - __main__ - INFO - Cycle 81 complete | Test: PASS | Payoff: 0.90 | Time: 1.9ms | Depth: 0.800
+2026-02-12 18:45:44,532 - __main__ - INFO - Cycle 82 complete | Test: PASS | Payoff: 0.90 | Time: 1.9ms | Depth: 0.800
+2026-02-12 18:45:44,634 - __main__ - INFO - Cycle 83 complete | Test: PASS | Payoff: 0.90 | Time: 1.9ms | Depth: 0.800
+2026-02-12 18:45:44,737 - __main__ - INFO - Cycle 84 complete | Test: PASS | Payoff: 0.90 | Time: 2.0ms | Depth: 0.800
+2026-02-12 18:45:44,839 - __main__ - INFO - Cycle 85 complete | Test: PASS | Payoff: 0.90 | Time: 1.9ms | Depth: 0.800
+2026-02-12 18:45:44,941 - __main__ - INFO - Cycle 86 complete | Test: PASS | Payoff: 0.90 | Time: 1.9ms | Depth: 0.800
+2026-02-12 18:45:45,044 - __main__ - INFO - Cycle 87 complete | Test: PASS | Payoff: 0.90 | Time: 1.9ms | Depth: 0.800
+2026-02-12 18:45:45,146 - __main__ - INFO - Cycle 88 complete | Test: PASS | Payoff: 0.90 | Time: 2.1ms | Depth: 0.800
+2026-02-12 18:45:45,249 - __main__ - INFO - Cycle 89 complete | Test: PASS | Payoff: 0.90 | Time: 2.0ms | Depth: 0.800
+2026-02-12 18:45:45,351 - __main__ - INFO - Cycle 90 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:45:45,453 - __main__ - INFO - Cycle 91 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:45:45,555 - __main__ - INFO - Cycle 92 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:45:45,656 - __main__ - INFO - Cycle 93 complete | Test: PASS | Payoff: 0.90 | Time: 1.3ms | Depth: 0.800
+2026-02-12 18:45:45,759 - __main__ - INFO - Cycle 94 complete | Test: PASS | Payoff: 0.90 | Time: 1.8ms | Depth: 0.800
+2026-02-12 18:45:45,861 - __main__ - INFO - Cycle 95 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:45:45,963 - __main__ - INFO - Cycle 96 complete | Test: PASS | Payoff: 0.90 | Time: 1.8ms | Depth: 0.800
+2026-02-12 18:45:46,065 - __main__ - INFO - Cycle 97 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:45:46,167 - __main__ - INFO - Cycle 98 complete | Test: PASS | Payoff: 0.90 | Time: 2.1ms | Depth: 0.800
+2026-02-12 18:45:46,269 - __main__ - INFO - Cycle 99 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:45:46,381 - __main__ - INFO - Cycle 100 complete | Test: PASS | Payoff: 0.90 | Time: 7.5ms | Depth: 0.800
+2026-02-12 18:45:46,484 - __main__ - INFO - Cycle 101 complete | Test: PASS | Payoff: 0.90 | Time: 2.1ms | Depth: 0.800
+2026-02-12 18:45:46,589 - __main__ - INFO - Cycle 102 complete | Test: PASS | Payoff: 0.90 | Time: 5.1ms | Depth: 0.800
+2026-02-12 18:45:46,692 - __main__ - INFO - Cycle 103 complete | Test: PASS | Payoff: 0.90 | Time: 1.9ms | Depth: 0.800
+2026-02-12 18:45:46,794 - __main__ - INFO - Cycle 104 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:45:46,896 - __main__ - INFO - Cycle 105 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:45:46,998 - __main__ - INFO - Cycle 106 complete | Test: PASS | Payoff: 0.90 | Time: 2.0ms | Depth: 0.800
+2026-02-12 18:45:47,101 - __main__ - INFO - Cycle 107 complete | Test: PASS | Payoff: 0.90 | Time: 1.9ms | Depth: 0.800
+2026-02-12 18:45:47,203 - __main__ - INFO - Cycle 108 complete | Test: PASS | Payoff: 0.90 | Time: 1.8ms | Depth: 0.800
+2026-02-12 18:45:47,305 - __main__ - INFO - Cycle 109 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:45:47,406 - __main__ - INFO - Cycle 110 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              0.9s
+Events Generated:    10
+Intents Created:     10
+Hypotheses Evaluated: 10
+Tests Executed:      10
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.5ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: ready | Completed: 0
+  ConsciousnessHelper-2: ready | Completed: 0
+  ConsciousnessHelper-3: ready | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              1.9s
+Events Generated:    20
+Intents Created:     20
+Hypotheses Evaluated: 20
+Tests Executed:      20
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.6ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              3.0s
+Events Generated:    30
+Intents Created:     30
+Hypotheses Evaluated: 30
+Tests Executed:      30
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.6ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              4.0s
+Events Generated:    40
+Intents Created:     40
+Hypotheses Evaluated: 40
+Tests Executed:      40
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.6ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              5.0s
+Events Generated:    50
+Intents Created:     50
+Hypotheses Evaluated: 50
+Tests Executed:      50
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.6ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              6.0s
+Events Generated:    60
+Intents Created:     60
+Hypotheses Evaluated: 60
+Tests Executed:      60
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.6ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              7.0s
+Events Generated:    70
+Intents Created:     70
+Hypotheses Evaluated: 70
+Tests Executed:      70
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.6ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              8.1s
+Events Generated:    80
+Intents Created:     80
+Hypotheses Evaluated: 80
+Tests Executed:      80
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.7ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              9.1s
+Events Generated:    90
+Intents Created:     90
+Hypotheses Evaluated: 90
+Tests Executed:      90
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.7ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              10.1s
+Events Generated:    100
+Intents Created:     100
+Hypotheses Evaluated: 100
+Tests Executed:      100
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.7ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              11.1s
+Events Generated:    110
+Intents Created:     110
+Hypotheses Evaluated: 110
+Tests Executed:      110
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.8ms
+Stability Score:     1.000
+2026-02-12 18:45:47,508 - __main__ - INFO - Cycle 111 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:45:47,611 - __main__ - INFO - Cycle 112 complete | Test: PASS | Payoff: 0.90 | Time: 1.8ms | Depth: 0.800
+2026-02-12 18:45:47,712 - __main__ - INFO - Cycle 113 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:45:47,814 - __main__ - INFO - Cycle 114 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:45:47,916 - __main__ - INFO - Cycle 115 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:45:48,018 - __main__ - INFO - Cycle 116 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:45:48,120 - __main__ - INFO - Cycle 117 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:45:48,222 - __main__ - INFO - Cycle 118 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:45:48,324 - __main__ - INFO - Cycle 119 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:45:48,425 - __main__ - INFO - Cycle 120 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:45:48,528 - __main__ - INFO - Cycle 121 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:45:48,630 - __main__ - INFO - Cycle 122 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:45:48,732 - __main__ - INFO - Cycle 123 complete | Test: PASS | Payoff: 0.90 | Time: 1.8ms | Depth: 0.800
+2026-02-12 18:45:48,834 - __main__ - INFO - Cycle 124 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:45:48,936 - __main__ - INFO - Cycle 125 complete | Test: PASS | Payoff: 0.90 | Time: 1.8ms | Depth: 0.800
+2026-02-12 18:45:49,037 - __main__ - INFO - Cycle 126 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:45:49,140 - __main__ - INFO - Cycle 127 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:45:49,242 - __main__ - INFO - Cycle 128 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:45:49,344 - __main__ - INFO - Cycle 129 complete | Test: PASS | Payoff: 0.90 | Time: 1.8ms | Depth: 0.800
+2026-02-12 18:45:49,445 - __main__ - INFO - Cycle 130 complete | Test: PASS | Payoff: 0.90 | Time: 1.3ms | Depth: 0.800
+2026-02-12 18:45:49,547 - __main__ - INFO - Cycle 131 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:45:49,649 - __main__ - INFO - Cycle 132 complete | Test: PASS | Payoff: 0.90 | Time: 1.8ms | Depth: 0.800
+2026-02-12 18:45:49,751 - __main__ - INFO - Cycle 133 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:45:49,853 - __main__ - INFO - Cycle 134 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:45:49,955 - __main__ - INFO - Cycle 135 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:45:50,057 - __main__ - INFO - Cycle 136 complete | Test: PASS | Payoff: 0.90 | Time: 2.2ms | Depth: 0.800
+2026-02-12 18:45:50,159 - __main__ - INFO - Cycle 137 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:45:50,261 - __main__ - INFO - Cycle 138 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:45:50,362 - __main__ - INFO - Cycle 139 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:45:50,464 - __main__ - INFO - Cycle 140 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:45:50,566 - __main__ - INFO - Cycle 141 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:45:50,668 - __main__ - INFO - Cycle 142 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:45:50,770 - __main__ - INFO - Cycle 143 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:45:50,872 - __main__ - INFO - Cycle 144 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:45:50,974 - __main__ - INFO - Cycle 145 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:45:51,075 - __main__ - INFO - Cycle 146 complete | Test: PASS | Payoff: 0.90 | Time: 1.3ms | Depth: 0.800
+2026-02-12 18:45:51,177 - __main__ - INFO - Cycle 147 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:45:51,279 - __main__ - INFO - Cycle 148 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:45:51,381 - __main__ - INFO - Cycle 149 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:45:51,483 - __main__ - INFO - Cycle 150 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:45:51,584 - __main__ - INFO - Cycle 151 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:45:51,686 - __main__ - INFO - Cycle 152 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:45:51,788 - __main__ - INFO - Cycle 153 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:45:51,890 - __main__ - INFO - Cycle 154 complete | Test: PASS | Payoff: 0.90 | Time: 1.3ms | Depth: 0.800
+2026-02-12 18:45:51,992 - __main__ - INFO - Cycle 155 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:45:52,094 - __main__ - INFO - Cycle 156 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:45:52,196 - __main__ - INFO - Cycle 157 complete | Test: PASS | Payoff: 0.90 | Time: 2.1ms | Depth: 0.800
+2026-02-12 18:45:52,298 - __main__ - INFO - Cycle 158 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:45:52,400 - __main__ - INFO - Cycle 159 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:45:52,502 - __main__ - INFO - Cycle 160 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:45:52,604 - __main__ - INFO - Cycle 161 complete | Test: PASS | Payoff: 0.90 | Time: 1.8ms | Depth: 0.800
+2026-02-12 18:45:52,706 - __main__ - INFO - Cycle 162 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:45:52,808 - __main__ - INFO - Cycle 163 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:45:52,910 - __main__ - INFO - Cycle 164 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:45:53,012 - __main__ - INFO - Cycle 165 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:45:53,113 - __main__ - INFO - Cycle 166 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:45:53,215 - __main__ - INFO - Cycle 167 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:45:53,317 - __main__ - INFO - Cycle 168 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:45:53,419 - __main__ - INFO - Cycle 169 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:45:53,521 - __main__ - INFO - Cycle 170 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:45:53,623 - __main__ - INFO - Cycle 171 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:45:53,725 - __main__ - INFO - Cycle 172 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:45:53,827 - __main__ - INFO - Cycle 173 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:45:53,928 - __main__ - INFO - Cycle 174 complete | Test: PASS | Payoff: 0.90 | Time: 1.3ms | Depth: 0.800
+2026-02-12 18:45:54,030 - __main__ - INFO - Cycle 175 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:45:54,132 - __main__ - INFO - Cycle 176 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:45:54,234 - __main__ - INFO - Cycle 177 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:45:54,336 - __main__ - INFO - Cycle 178 complete | Test: PASS | Payoff: 0.90 | Time: 1.3ms | Depth: 0.800
+2026-02-12 18:45:54,437 - __main__ - INFO - Cycle 179 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:45:54,539 - __main__ - INFO - Cycle 180 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:45:54,641 - __main__ - INFO - Cycle 181 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:45:54,743 - __main__ - INFO - Cycle 182 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:45:54,845 - __main__ - INFO - Cycle 183 complete | Test: PASS | Payoff: 0.90 | Time: 1.8ms | Depth: 0.800
+2026-02-12 18:45:54,947 - __main__ - INFO - Cycle 184 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:45:55,050 - __main__ - INFO - Cycle 185 complete | Test: PASS | Payoff: 0.90 | Time: 2.1ms | Depth: 0.800
+2026-02-12 18:45:55,152 - __main__ - INFO - Cycle 186 complete | Test: PASS | Payoff: 0.90 | Time: 1.8ms | Depth: 0.800
+2026-02-12 18:45:55,254 - __main__ - INFO - Cycle 187 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:45:55,356 - __main__ - INFO - Cycle 188 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:45:55,457 - __main__ - INFO - Cycle 189 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:45:55,559 - __main__ - INFO - Cycle 190 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:45:55,662 - __main__ - INFO - Cycle 191 complete | Test: PASS | Payoff: 0.90 | Time: 2.2ms | Depth: 0.800
+2026-02-12 18:45:55,764 - __main__ - INFO - Cycle 192 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:45:55,866 - __main__ - INFO - Cycle 193 complete | Test: PASS | Payoff: 0.90 | Time: 1.9ms | Depth: 0.800
+2026-02-12 18:45:55,968 - __main__ - INFO - Cycle 194 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:45:56,070 - __main__ - INFO - Cycle 195 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:45:56,172 - __main__ - INFO - Cycle 196 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:45:56,274 - __main__ - INFO - Cycle 197 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:45:56,376 - __main__ - INFO - Cycle 198 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:45:56,478 - __main__ - INFO - Cycle 199 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:45:56,580 - __main__ - INFO - Cycle 200 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:45:56,682 - __main__ - INFO - Cycle 201 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:45:56,784 - __main__ - INFO - Cycle 202 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:45:56,886 - __main__ - INFO - Cycle 203 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:45:56,988 - __main__ - INFO - Cycle 204 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:45:57,089 - __main__ - INFO - Cycle 205 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:45:57,191 - __main__ - INFO - Cycle 206 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:45:57,293 - __main__ - INFO - Cycle 207 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:45:57,395 - __main__ - INFO - Cycle 208 complete | Test: PASS | Payoff: 0.90 | Time: 1.8ms | Depth: 0.800
+2026-02-12 18:45:57,497 - __main__ - INFO - Cycle 209 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:45:57,599 - __main__ - INFO - Cycle 210 complete | Test: PASS | Payoff: 0.90 | Time: 1.9ms | Depth: 0.800
+2026-02-12 18:45:57,702 - __main__ - INFO - Cycle 211 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:45:57,804 - __main__ - INFO - Cycle 212 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:45:57,905 - __main__ - INFO - Cycle 213 complete | Test: PASS | Payoff: 0.90 | Time: 1.3ms | Depth: 0.800
+2026-02-12 18:45:58,007 - __main__ - INFO - Cycle 214 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:45:58,109 - __main__ - INFO - Cycle 215 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:45:58,211 - __main__ - INFO - Cycle 216 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:45:58,313 - __main__ - INFO - Cycle 217 complete | Test: PASS | Payoff: 0.90 | Time: 1.3ms | Depth: 0.800
+2026-02-12 18:45:58,414 - __main__ - INFO - Cycle 218 complete | Test: PASS | Payoff: 0.90 | Time: 1.2ms | Depth: 0.800
+2026-02-12 18:45:58,516 - __main__ - INFO - Cycle 219 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:45:58,618 - __main__ - INFO - Cycle 220 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              12.2s
+Events Generated:    120
+Intents Created:     120
+Hypotheses Evaluated: 120
+Tests Executed:      120
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.8ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              13.2s
+Events Generated:    130
+Intents Created:     130
+Hypotheses Evaluated: 130
+Tests Executed:      130
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.8ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              14.2s
+Events Generated:    140
+Intents Created:     140
+Hypotheses Evaluated: 140
+Tests Executed:      140
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.8ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              15.2s
+Events Generated:    150
+Intents Created:     150
+Hypotheses Evaluated: 150
+Tests Executed:      150
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.8ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              16.2s
+Events Generated:    160
+Intents Created:     160
+Hypotheses Evaluated: 160
+Tests Executed:      160
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.8ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              17.3s
+Events Generated:    170
+Intents Created:     170
+Hypotheses Evaluated: 170
+Tests Executed:      170
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.8ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              18.3s
+Events Generated:    180
+Intents Created:     180
+Hypotheses Evaluated: 180
+Tests Executed:      180
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.7ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              19.3s
+Events Generated:    190
+Intents Created:     190
+Hypotheses Evaluated: 190
+Tests Executed:      190
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.7ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              20.3s
+Events Generated:    200
+Intents Created:     200
+Hypotheses Evaluated: 200
+Tests Executed:      200
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.6ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              21.3s
+Events Generated:    210
+Intents Created:     210
+Hypotheses Evaluated: 210
+Tests Executed:      210
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.6ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+2026-02-12 18:45:58,720 - __main__ - INFO - Cycle 221 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:45:58,822 - __main__ - INFO - Cycle 222 complete | Test: PASS | Payoff: 0.90 | Time: 1.8ms | Depth: 0.800
+2026-02-12 18:45:58,924 - __main__ - INFO - Cycle 223 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:45:59,026 - __main__ - INFO - Cycle 224 complete | Test: PASS | Payoff: 0.90 | Time: 1.8ms | Depth: 0.800
+2026-02-12 18:45:59,128 - __main__ - INFO - Cycle 225 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:45:59,230 - __main__ - INFO - Cycle 226 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:45:59,332 - __main__ - INFO - Cycle 227 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:45:59,434 - __main__ - INFO - Cycle 228 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:45:59,536 - __main__ - INFO - Cycle 229 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:45:59,637 - __main__ - INFO - Cycle 230 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:45:59,739 - __main__ - INFO - Cycle 231 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:45:59,841 - __main__ - INFO - Cycle 232 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:45:59,943 - __main__ - INFO - Cycle 233 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:00,045 - __main__ - INFO - Cycle 234 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:00,147 - __main__ - INFO - Cycle 235 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:00,249 - __main__ - INFO - Cycle 236 complete | Test: PASS | Payoff: 0.90 | Time: 1.8ms | Depth: 0.800
+2026-02-12 18:46:00,351 - __main__ - INFO - Cycle 237 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:00,453 - __main__ - INFO - Cycle 238 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:00,554 - __main__ - INFO - Cycle 239 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:00,656 - __main__ - INFO - Cycle 240 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:00,758 - __main__ - INFO - Cycle 241 complete | Test: PASS | Payoff: 0.90 | Time: 1.3ms | Depth: 0.800
+2026-02-12 18:46:00,859 - __main__ - INFO - Cycle 242 complete | Test: PASS | Payoff: 0.90 | Time: 1.2ms | Depth: 0.800
+2026-02-12 18:46:00,961 - __main__ - INFO - Cycle 243 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:01,063 - __main__ - INFO - Cycle 244 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:01,165 - __main__ - INFO - Cycle 245 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:01,267 - __main__ - INFO - Cycle 246 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:01,368 - __main__ - INFO - Cycle 247 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:01,471 - __main__ - INFO - Cycle 248 complete | Test: PASS | Payoff: 0.90 | Time: 1.8ms | Depth: 0.800
+2026-02-12 18:46:01,572 - __main__ - INFO - Cycle 249 complete | Test: PASS | Payoff: 0.90 | Time: 1.3ms | Depth: 0.800
+2026-02-12 18:46:01,674 - __main__ - INFO - Cycle 250 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:01,776 - __main__ - INFO - Cycle 251 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:01,878 - __main__ - INFO - Cycle 252 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:01,979 - __main__ - INFO - Cycle 253 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:02,082 - __main__ - INFO - Cycle 254 complete | Test: PASS | Payoff: 0.90 | Time: 2.0ms | Depth: 0.800
+2026-02-12 18:46:02,184 - __main__ - INFO - Cycle 255 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:02,286 - __main__ - INFO - Cycle 256 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:02,387 - __main__ - INFO - Cycle 257 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:02,489 - __main__ - INFO - Cycle 258 complete | Test: PASS | Payoff: 0.90 | Time: 1.3ms | Depth: 0.800
+2026-02-12 18:46:02,591 - __main__ - INFO - Cycle 259 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:02,693 - __main__ - INFO - Cycle 260 complete | Test: PASS | Payoff: 0.90 | Time: 1.9ms | Depth: 0.800
+2026-02-12 18:46:02,795 - __main__ - INFO - Cycle 261 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:02,897 - __main__ - INFO - Cycle 262 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:02,999 - __main__ - INFO - Cycle 263 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:03,101 - __main__ - INFO - Cycle 264 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:03,202 - __main__ - INFO - Cycle 265 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:03,304 - __main__ - INFO - Cycle 266 complete | Test: PASS | Payoff: 0.90 | Time: 1.3ms | Depth: 0.800
+2026-02-12 18:46:03,406 - __main__ - INFO - Cycle 267 complete | Test: PASS | Payoff: 0.90 | Time: 1.3ms | Depth: 0.800
+2026-02-12 18:46:03,508 - __main__ - INFO - Cycle 268 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:03,609 - __main__ - INFO - Cycle 269 complete | Test: PASS | Payoff: 0.90 | Time: 1.2ms | Depth: 0.800
+2026-02-12 18:46:03,711 - __main__ - INFO - Cycle 270 complete | Test: PASS | Payoff: 0.90 | Time: 1.2ms | Depth: 0.800
+2026-02-12 18:46:03,812 - __main__ - INFO - Cycle 271 complete | Test: PASS | Payoff: 0.90 | Time: 1.3ms | Depth: 0.800
+2026-02-12 18:46:03,914 - __main__ - INFO - Cycle 272 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:04,017 - __main__ - INFO - Cycle 273 complete | Test: PASS | Payoff: 0.90 | Time: 1.9ms | Depth: 0.800
+2026-02-12 18:46:04,118 - __main__ - INFO - Cycle 274 complete | Test: PASS | Payoff: 0.90 | Time: 1.3ms | Depth: 0.800
+2026-02-12 18:46:04,220 - __main__ - INFO - Cycle 275 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:04,322 - __main__ - INFO - Cycle 276 complete | Test: PASS | Payoff: 0.90 | Time: 1.8ms | Depth: 0.800
+2026-02-12 18:46:04,424 - __main__ - INFO - Cycle 277 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:04,526 - __main__ - INFO - Cycle 278 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:04,628 - __main__ - INFO - Cycle 279 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:04,730 - __main__ - INFO - Cycle 280 complete | Test: PASS | Payoff: 0.90 | Time: 1.8ms | Depth: 0.800
+2026-02-12 18:46:04,832 - __main__ - INFO - Cycle 281 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:04,933 - __main__ - INFO - Cycle 282 complete | Test: PASS | Payoff: 0.90 | Time: 1.3ms | Depth: 0.800
+2026-02-12 18:46:05,035 - __main__ - INFO - Cycle 283 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:05,137 - __main__ - INFO - Cycle 284 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:05,239 - __main__ - INFO - Cycle 285 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:05,341 - __main__ - INFO - Cycle 286 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:05,442 - __main__ - INFO - Cycle 287 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:05,544 - __main__ - INFO - Cycle 288 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:05,646 - __main__ - INFO - Cycle 289 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:05,748 - __main__ - INFO - Cycle 290 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:05,850 - __main__ - INFO - Cycle 291 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:05,951 - __main__ - INFO - Cycle 292 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:06,053 - __main__ - INFO - Cycle 293 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:06,155 - __main__ - INFO - Cycle 294 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:06,256 - __main__ - INFO - Cycle 295 complete | Test: PASS | Payoff: 0.90 | Time: 1.2ms | Depth: 0.800
+2026-02-12 18:46:06,358 - __main__ - INFO - Cycle 296 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:06,460 - __main__ - INFO - Cycle 297 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:06,562 - __main__ - INFO - Cycle 298 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:06,664 - __main__ - INFO - Cycle 299 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:06,766 - __main__ - INFO - Cycle 300 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:06,867 - __main__ - INFO - Cycle 301 complete | Test: PASS | Payoff: 0.90 | Time: 1.3ms | Depth: 0.800
+2026-02-12 18:46:06,969 - __main__ - INFO - Cycle 302 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:07,071 - __main__ - INFO - Cycle 303 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:07,173 - __main__ - INFO - Cycle 304 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:07,275 - __main__ - INFO - Cycle 305 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:07,376 - __main__ - INFO - Cycle 306 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:07,478 - __main__ - INFO - Cycle 307 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:07,580 - __main__ - INFO - Cycle 308 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:07,682 - __main__ - INFO - Cycle 309 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:07,784 - __main__ - INFO - Cycle 310 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:07,886 - __main__ - INFO - Cycle 311 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:07,988 - __main__ - INFO - Cycle 312 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:08,090 - __main__ - INFO - Cycle 313 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:08,191 - __main__ - INFO - Cycle 314 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:08,293 - __main__ - INFO - Cycle 315 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:08,395 - __main__ - INFO - Cycle 316 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:08,498 - __main__ - INFO - Cycle 317 complete | Test: PASS | Payoff: 0.90 | Time: 2.1ms | Depth: 0.800
+2026-02-12 18:46:08,600 - __main__ - INFO - Cycle 318 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:08,701 - __main__ - INFO - Cycle 319 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:08,803 - __main__ - INFO - Cycle 320 complete | Test: PASS | Payoff: 0.90 | Time: 1.8ms | Depth: 0.800
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              22.4s
+Events Generated:    220
+Intents Created:     220
+Hypotheses Evaluated: 220
+Tests Executed:      220
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.6ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              23.4s
+Events Generated:    230
+Intents Created:     230
+Hypotheses Evaluated: 230
+Tests Executed:      230
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.6ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              24.4s
+Events Generated:    240
+Intents Created:     240
+Hypotheses Evaluated: 240
+Tests Executed:      240
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.6ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              25.4s
+Events Generated:    250
+Intents Created:     250
+Hypotheses Evaluated: 250
+Tests Executed:      250
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.6ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              26.4s
+Events Generated:    260
+Intents Created:     260
+Hypotheses Evaluated: 260
+Tests Executed:      260
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.6ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              27.4s
+Events Generated:    270
+Intents Created:     270
+Hypotheses Evaluated: 270
+Tests Executed:      270
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.5ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              28.5s
+Events Generated:    280
+Intents Created:     280
+Hypotheses Evaluated: 280
+Tests Executed:      280
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.6ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              29.5s
+Events Generated:    290
+Intents Created:     290
+Hypotheses Evaluated: 290
+Tests Executed:      290
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.5ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              30.5s
+Events Generated:    300
+Intents Created:     300
+Hypotheses Evaluated: 300
+Tests Executed:      300
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.5ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              31.5s
+Events Generated:    310
+Intents Created:     310
+Hypotheses Evaluated: 310
+Tests Executed:      310
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.5ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              32.5s
+Events Generated:    320
+Intents Created:     320
+Hypotheses Evaluated: 320
+Tests Executed:      320
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.5ms
+2026-02-12 18:46:08,905 - __main__ - INFO - Cycle 321 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:09,007 - __main__ - INFO - Cycle 322 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:09,109 - __main__ - INFO - Cycle 323 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:09,212 - __main__ - INFO - Cycle 324 complete | Test: PASS | Payoff: 0.90 | Time: 1.8ms | Depth: 0.800
+2026-02-12 18:46:09,313 - __main__ - INFO - Cycle 325 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:09,415 - __main__ - INFO - Cycle 326 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:09,517 - __main__ - INFO - Cycle 327 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:09,619 - __main__ - INFO - Cycle 328 complete | Test: PASS | Payoff: 0.90 | Time: 1.8ms | Depth: 0.800
+2026-02-12 18:46:09,721 - __main__ - INFO - Cycle 329 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:09,823 - __main__ - INFO - Cycle 330 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:09,925 - __main__ - INFO - Cycle 331 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:10,028 - __main__ - INFO - Cycle 332 complete | Test: PASS | Payoff: 0.90 | Time: 1.9ms | Depth: 0.800
+2026-02-12 18:46:10,130 - __main__ - INFO - Cycle 333 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:10,231 - __main__ - INFO - Cycle 334 complete | Test: PASS | Payoff: 0.90 | Time: 1.3ms | Depth: 0.800
+2026-02-12 18:46:10,334 - __main__ - INFO - Cycle 335 complete | Test: PASS | Payoff: 0.90 | Time: 2.0ms | Depth: 0.800
+2026-02-12 18:46:10,436 - __main__ - INFO - Cycle 336 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:10,538 - __main__ - INFO - Cycle 337 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:10,640 - __main__ - INFO - Cycle 338 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:10,741 - __main__ - INFO - Cycle 339 complete | Test: PASS | Payoff: 0.90 | Time: 1.3ms | Depth: 0.800
+2026-02-12 18:46:10,843 - __main__ - INFO - Cycle 340 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:10,945 - __main__ - INFO - Cycle 341 complete | Test: PASS | Payoff: 0.90 | Time: 1.3ms | Depth: 0.800
+2026-02-12 18:46:11,047 - __main__ - INFO - Cycle 342 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:11,149 - __main__ - INFO - Cycle 343 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:11,250 - __main__ - INFO - Cycle 344 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:11,352 - __main__ - INFO - Cycle 345 complete | Test: PASS | Payoff: 0.90 | Time: 1.3ms | Depth: 0.800
+2026-02-12 18:46:11,454 - __main__ - INFO - Cycle 346 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:11,556 - __main__ - INFO - Cycle 347 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:11,658 - __main__ - INFO - Cycle 348 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:11,759 - __main__ - INFO - Cycle 349 complete | Test: PASS | Payoff: 0.90 | Time: 1.3ms | Depth: 0.800
+2026-02-12 18:46:11,861 - __main__ - INFO - Cycle 350 complete | Test: PASS | Payoff: 0.90 | Time: 1.3ms | Depth: 0.800
+2026-02-12 18:46:11,962 - __main__ - INFO - Cycle 351 complete | Test: PASS | Payoff: 0.90 | Time: 1.2ms | Depth: 0.800
+2026-02-12 18:46:12,064 - __main__ - INFO - Cycle 352 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:12,166 - __main__ - INFO - Cycle 353 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:12,268 - __main__ - INFO - Cycle 354 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:12,370 - __main__ - INFO - Cycle 355 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:12,472 - __main__ - INFO - Cycle 356 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:12,573 - __main__ - INFO - Cycle 357 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:12,675 - __main__ - INFO - Cycle 358 complete | Test: PASS | Payoff: 0.90 | Time: 1.3ms | Depth: 0.800
+2026-02-12 18:46:12,777 - __main__ - INFO - Cycle 359 complete | Test: PASS | Payoff: 0.90 | Time: 1.2ms | Depth: 0.800
+2026-02-12 18:46:12,878 - __main__ - INFO - Cycle 360 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:12,980 - __main__ - INFO - Cycle 361 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:13,082 - __main__ - INFO - Cycle 362 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:13,184 - __main__ - INFO - Cycle 363 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:13,287 - __main__ - INFO - Cycle 364 complete | Test: PASS | Payoff: 0.90 | Time: 2.2ms | Depth: 0.800
+2026-02-12 18:46:13,389 - __main__ - INFO - Cycle 365 complete | Test: PASS | Payoff: 0.90 | Time: 1.8ms | Depth: 0.800
+2026-02-12 18:46:13,491 - __main__ - INFO - Cycle 366 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:13,593 - __main__ - INFO - Cycle 367 complete | Test: PASS | Payoff: 0.90 | Time: 1.9ms | Depth: 0.800
+2026-02-12 18:46:13,699 - __main__ - INFO - Cycle 368 complete | Test: PASS | Payoff: 0.90 | Time: 5.2ms | Depth: 0.800
+2026-02-12 18:46:13,801 - __main__ - INFO - Cycle 369 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:13,903 - __main__ - INFO - Cycle 370 complete | Test: PASS | Payoff: 0.90 | Time: 1.9ms | Depth: 0.800
+2026-02-12 18:46:14,005 - __main__ - INFO - Cycle 371 complete | Test: PASS | Payoff: 0.90 | Time: 1.8ms | Depth: 0.800
+2026-02-12 18:46:14,107 - __main__ - INFO - Cycle 372 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:14,209 - __main__ - INFO - Cycle 373 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:14,311 - __main__ - INFO - Cycle 374 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:14,413 - __main__ - INFO - Cycle 375 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:14,515 - __main__ - INFO - Cycle 376 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:14,617 - __main__ - INFO - Cycle 377 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:14,719 - __main__ - INFO - Cycle 378 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:14,821 - __main__ - INFO - Cycle 379 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:14,923 - __main__ - INFO - Cycle 380 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:15,025 - __main__ - INFO - Cycle 381 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:15,127 - __main__ - INFO - Cycle 382 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:15,229 - __main__ - INFO - Cycle 383 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:15,331 - __main__ - INFO - Cycle 384 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:15,433 - __main__ - INFO - Cycle 385 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:15,535 - __main__ - INFO - Cycle 386 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:15,637 - __main__ - INFO - Cycle 387 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:15,739 - __main__ - INFO - Cycle 388 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:15,841 - __main__ - INFO - Cycle 389 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:15,942 - __main__ - INFO - Cycle 390 complete | Test: PASS | Payoff: 0.90 | Time: 1.3ms | Depth: 0.800
+2026-02-12 18:46:16,044 - __main__ - INFO - Cycle 391 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:16,146 - __main__ - INFO - Cycle 392 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:16,248 - __main__ - INFO - Cycle 393 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:16,350 - __main__ - INFO - Cycle 394 complete | Test: PASS | Payoff: 0.90 | Time: 1.9ms | Depth: 0.800
+2026-02-12 18:46:16,452 - __main__ - INFO - Cycle 395 complete | Test: PASS | Payoff: 0.90 | Time: 1.3ms | Depth: 0.800
+2026-02-12 18:46:16,553 - __main__ - INFO - Cycle 396 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:16,655 - __main__ - INFO - Cycle 397 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:16,757 - __main__ - INFO - Cycle 398 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:16,859 - __main__ - INFO - Cycle 399 complete | Test: PASS | Payoff: 0.90 | Time: 1.3ms | Depth: 0.800
+2026-02-12 18:46:16,961 - __main__ - INFO - Cycle 400 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:17,063 - __main__ - INFO - Cycle 401 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:17,164 - __main__ - INFO - Cycle 402 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:17,266 - __main__ - INFO - Cycle 403 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:17,368 - __main__ - INFO - Cycle 404 complete | Test: PASS | Payoff: 0.90 | Time: 1.3ms | Depth: 0.800
+2026-02-12 18:46:17,470 - __main__ - INFO - Cycle 405 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:17,572 - __main__ - INFO - Cycle 406 complete | Test: PASS | Payoff: 0.90 | Time: 2.2ms | Depth: 0.800
+2026-02-12 18:46:17,675 - __main__ - INFO - Cycle 407 complete | Test: PASS | Payoff: 0.90 | Time: 1.9ms | Depth: 0.800
+2026-02-12 18:46:17,777 - __main__ - INFO - Cycle 408 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:17,879 - __main__ - INFO - Cycle 409 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:17,981 - __main__ - INFO - Cycle 410 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:18,083 - __main__ - INFO - Cycle 411 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:18,185 - __main__ - INFO - Cycle 412 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:18,287 - __main__ - INFO - Cycle 413 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:18,388 - __main__ - INFO - Cycle 414 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:18,490 - __main__ - INFO - Cycle 415 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:18,592 - __main__ - INFO - Cycle 416 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:18,694 - __main__ - INFO - Cycle 417 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:18,796 - __main__ - INFO - Cycle 418 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:18,897 - __main__ - INFO - Cycle 419 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:18,999 - __main__ - INFO - Cycle 420 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:19,101 - __main__ - INFO - Cycle 421 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:19,203 - __main__ - INFO - Cycle 422 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:19,305 - __main__ - INFO - Cycle 423 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:19,407 - __main__ - INFO - Cycle 424 complete | Test: PASS | Payoff: 0.90 | Time: 2.0ms | Depth: 0.800
+2026-02-12 18:46:19,510 - __main__ - INFO - Cycle 425 complete | Test: PASS | Payoff: 0.90 | Time: 2.1ms | Depth: 0.800
+2026-02-12 18:46:19,612 - __main__ - INFO - Cycle 426 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:19,714 - __main__ - INFO - Cycle 427 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:19,816 - __main__ - INFO - Cycle 428 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:19,919 - __main__ - INFO - Cycle 429 complete | Test: PASS | Payoff: 0.90 | Time: 2.1ms | Depth: 0.800
+2026-02-12 18:46:20,021 - __main__ - INFO - Cycle 430 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              33.6s
+Events Generated:    330
+Intents Created:     330
+Hypotheses Evaluated: 330
+Tests Executed:      330
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.5ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              34.6s
+Events Generated:    340
+Intents Created:     340
+Hypotheses Evaluated: 340
+Tests Executed:      340
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.5ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              35.6s
+Events Generated:    350
+Intents Created:     350
+Hypotheses Evaluated: 350
+Tests Executed:      350
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.5ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              36.6s
+Events Generated:    360
+Intents Created:     360
+Hypotheses Evaluated: 360
+Tests Executed:      360
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.5ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              37.6s
+Events Generated:    370
+Intents Created:     370
+Hypotheses Evaluated: 370
+Tests Executed:      370
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.6ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              38.7s
+Events Generated:    380
+Intents Created:     380
+Hypotheses Evaluated: 380
+Tests Executed:      380
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.6ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              39.7s
+Events Generated:    390
+Intents Created:     390
+Hypotheses Evaluated: 390
+Tests Executed:      390
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.6ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              40.7s
+Events Generated:    400
+Intents Created:     400
+Hypotheses Evaluated: 400
+Tests Executed:      400
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.6ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              41.7s
+Events Generated:    410
+Intents Created:     410
+Hypotheses Evaluated: 410
+Tests Executed:      410
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.6ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              42.7s
+Events Generated:    420
+Intents Created:     420
+Hypotheses Evaluated: 420
+Tests Executed:      420
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.6ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+2026-02-12 18:46:20,123 - __main__ - INFO - Cycle 431 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:20,225 - __main__ - INFO - Cycle 432 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:20,326 - __main__ - INFO - Cycle 433 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:20,428 - __main__ - INFO - Cycle 434 complete | Test: PASS | Payoff: 0.90 | Time: 1.9ms | Depth: 0.800
+2026-02-12 18:46:20,531 - __main__ - INFO - Cycle 435 complete | Test: PASS | Payoff: 0.90 | Time: 2.0ms | Depth: 0.800
+2026-02-12 18:46:20,633 - __main__ - INFO - Cycle 436 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:20,735 - __main__ - INFO - Cycle 437 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:20,837 - __main__ - INFO - Cycle 438 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:20,939 - __main__ - INFO - Cycle 439 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:21,040 - __main__ - INFO - Cycle 440 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:21,142 - __main__ - INFO - Cycle 441 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:21,244 - __main__ - INFO - Cycle 442 complete | Test: PASS | Payoff: 0.90 | Time: 1.3ms | Depth: 0.800
+2026-02-12 18:46:21,346 - __main__ - INFO - Cycle 443 complete | Test: PASS | Payoff: 0.90 | Time: 1.2ms | Depth: 0.800
+2026-02-12 18:46:21,447 - __main__ - INFO - Cycle 444 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:21,550 - __main__ - INFO - Cycle 445 complete | Test: PASS | Payoff: 0.90 | Time: 1.8ms | Depth: 0.800
+2026-02-12 18:46:21,652 - __main__ - INFO - Cycle 446 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:21,753 - __main__ - INFO - Cycle 447 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:21,856 - __main__ - INFO - Cycle 448 complete | Test: PASS | Payoff: 0.90 | Time: 1.9ms | Depth: 0.800
+2026-02-12 18:46:21,957 - __main__ - INFO - Cycle 449 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:22,060 - __main__ - INFO - Cycle 450 complete | Test: PASS | Payoff: 0.90 | Time: 1.9ms | Depth: 0.800
+2026-02-12 18:46:22,161 - __main__ - INFO - Cycle 451 complete | Test: PASS | Payoff: 0.90 | Time: 1.3ms | Depth: 0.800
+2026-02-12 18:46:22,263 - __main__ - INFO - Cycle 452 complete | Test: PASS | Payoff: 0.90 | Time: 1.3ms | Depth: 0.800
+2026-02-12 18:46:22,365 - __main__ - INFO - Cycle 453 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:22,467 - __main__ - INFO - Cycle 454 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:22,569 - __main__ - INFO - Cycle 455 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:22,670 - __main__ - INFO - Cycle 456 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:22,772 - __main__ - INFO - Cycle 457 complete | Test: PASS | Payoff: 0.90 | Time: 1.3ms | Depth: 0.800
+2026-02-12 18:46:22,874 - __main__ - INFO - Cycle 458 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:22,976 - __main__ - INFO - Cycle 459 complete | Test: PASS | Payoff: 0.90 | Time: 1.2ms | Depth: 0.800
+2026-02-12 18:46:23,077 - __main__ - INFO - Cycle 460 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:23,179 - __main__ - INFO - Cycle 461 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:23,281 - __main__ - INFO - Cycle 462 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:23,383 - __main__ - INFO - Cycle 463 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:23,485 - __main__ - INFO - Cycle 464 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:23,586 - __main__ - INFO - Cycle 465 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:23,688 - __main__ - INFO - Cycle 466 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:23,792 - __main__ - INFO - Cycle 467 complete | Test: PASS | Payoff: 0.90 | Time: 1.9ms | Depth: 0.800
+2026-02-12 18:46:23,898 - __main__ - INFO - Cycle 468 complete | Test: PASS | Payoff: 0.90 | Time: 2.0ms | Depth: 0.800
+2026-02-12 18:46:24,000 - __main__ - INFO - Cycle 469 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:24,102 - __main__ - INFO - Cycle 470 complete | Test: PASS | Payoff: 0.90 | Time: 1.9ms | Depth: 0.800
+2026-02-12 18:46:24,204 - __main__ - INFO - Cycle 471 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:24,306 - __main__ - INFO - Cycle 472 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:24,408 - __main__ - INFO - Cycle 473 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:24,510 - __main__ - INFO - Cycle 474 complete | Test: PASS | Payoff: 0.90 | Time: 1.8ms | Depth: 0.800
+2026-02-12 18:46:24,612 - __main__ - INFO - Cycle 475 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:24,714 - __main__ - INFO - Cycle 476 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:24,815 - __main__ - INFO - Cycle 477 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:24,918 - __main__ - INFO - Cycle 478 complete | Test: PASS | Payoff: 0.90 | Time: 2.1ms | Depth: 0.800
+2026-02-12 18:46:25,020 - __main__ - INFO - Cycle 479 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:25,122 - __main__ - INFO - Cycle 480 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:25,224 - __main__ - INFO - Cycle 481 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:25,326 - __main__ - INFO - Cycle 482 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:25,427 - __main__ - INFO - Cycle 483 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:25,529 - __main__ - INFO - Cycle 484 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:25,631 - __main__ - INFO - Cycle 485 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:25,733 - __main__ - INFO - Cycle 486 complete | Test: PASS | Payoff: 0.90 | Time: 1.9ms | Depth: 0.800
+2026-02-12 18:46:25,835 - __main__ - INFO - Cycle 487 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:25,937 - __main__ - INFO - Cycle 488 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:26,039 - __main__ - INFO - Cycle 489 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:26,141 - __main__ - INFO - Cycle 490 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:26,243 - __main__ - INFO - Cycle 491 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:26,345 - __main__ - INFO - Cycle 492 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:26,446 - __main__ - INFO - Cycle 493 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:26,548 - __main__ - INFO - Cycle 494 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:26,650 - __main__ - INFO - Cycle 495 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:26,752 - __main__ - INFO - Cycle 496 complete | Test: PASS | Payoff: 0.90 | Time: 1.3ms | Depth: 0.800
+2026-02-12 18:46:26,854 - __main__ - INFO - Cycle 497 complete | Test: PASS | Payoff: 0.90 | Time: 1.3ms | Depth: 0.800
+2026-02-12 18:46:26,956 - __main__ - INFO - Cycle 498 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:27,057 - __main__ - INFO - Cycle 499 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:27,159 - __main__ - INFO - Cycle 500 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:27,261 - __main__ - INFO - Cycle 501 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:27,363 - __main__ - INFO - Cycle 502 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:27,465 - __main__ - INFO - Cycle 503 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:27,566 - __main__ - INFO - Cycle 504 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:27,668 - __main__ - INFO - Cycle 505 complete | Test: PASS | Payoff: 0.90 | Time: 1.2ms | Depth: 0.800
+2026-02-12 18:46:27,770 - __main__ - INFO - Cycle 506 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:27,872 - __main__ - INFO - Cycle 507 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:27,973 - __main__ - INFO - Cycle 508 complete | Test: PASS | Payoff: 0.90 | Time: 1.3ms | Depth: 0.800
+2026-02-12 18:46:28,075 - __main__ - INFO - Cycle 509 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:28,177 - __main__ - INFO - Cycle 510 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:28,279 - __main__ - INFO - Cycle 511 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:28,381 - __main__ - INFO - Cycle 512 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:28,483 - __main__ - INFO - Cycle 513 complete | Test: PASS | Payoff: 0.90 | Time: 1.3ms | Depth: 0.800
+2026-02-12 18:46:28,585 - __main__ - INFO - Cycle 514 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:28,686 - __main__ - INFO - Cycle 515 complete | Test: PASS | Payoff: 0.90 | Time: 1.3ms | Depth: 0.800
+2026-02-12 18:46:28,788 - __main__ - INFO - Cycle 516 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:28,890 - __main__ - INFO - Cycle 517 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:28,992 - __main__ - INFO - Cycle 518 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:29,093 - __main__ - INFO - Cycle 519 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:29,196 - __main__ - INFO - Cycle 520 complete | Test: PASS | Payoff: 0.90 | Time: 2.0ms | Depth: 0.800
+2026-02-12 18:46:29,298 - __main__ - INFO - Cycle 521 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:29,400 - __main__ - INFO - Cycle 522 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:29,502 - __main__ - INFO - Cycle 523 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:29,604 - __main__ - INFO - Cycle 524 complete | Test: PASS | Payoff: 0.90 | Time: 1.8ms | Depth: 0.800
+2026-02-12 18:46:29,706 - __main__ - INFO - Cycle 525 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:29,808 - __main__ - INFO - Cycle 526 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:29,911 - __main__ - INFO - Cycle 527 complete | Test: PASS | Payoff: 0.90 | Time: 2.1ms | Depth: 0.800
+2026-02-12 18:46:30,013 - __main__ - INFO - Cycle 528 complete | Test: PASS | Payoff: 0.90 | Time: 1.9ms | Depth: 0.800
+2026-02-12 18:46:30,115 - __main__ - INFO - Cycle 529 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:30,217 - __main__ - INFO - Cycle 530 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              43.8s
+Events Generated:    430
+Intents Created:     430
+Hypotheses Evaluated: 430
+Tests Executed:      430
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.6ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              44.8s
+Events Generated:    440
+Intents Created:     440
+Hypotheses Evaluated: 440
+Tests Executed:      440
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.6ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              45.8s
+Events Generated:    450
+Intents Created:     450
+Hypotheses Evaluated: 450
+Tests Executed:      450
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.6ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              46.8s
+Events Generated:    460
+Intents Created:     460
+Hypotheses Evaluated: 460
+Tests Executed:      460
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.6ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              47.8s
+Events Generated:    470
+Intents Created:     470
+Hypotheses Evaluated: 470
+Tests Executed:      470
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.6ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              48.9s
+Events Generated:    480
+Intents Created:     480
+Hypotheses Evaluated: 480
+Tests Executed:      480
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.6ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              49.9s
+Events Generated:    490
+Intents Created:     490
+Hypotheses Evaluated: 490
+Tests Executed:      490
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.6ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              50.9s
+Events Generated:    500
+Intents Created:     500
+Hypotheses Evaluated: 500
+Tests Executed:      500
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.6ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              51.9s
+Events Generated:    510
+Intents Created:     510
+Hypotheses Evaluated: 510
+Tests Executed:      510
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.6ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              52.9s
+Events Generated:    520
+Intents Created:     520
+Hypotheses Evaluated: 520
+Tests Executed:      520
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.6ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              54.0s
+Events Generated:    530
+Intents Created:     530
+Hypotheses Evaluated: 530
+Tests Executed:      530
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.6ms
+2026-02-12 18:46:30,320 - __main__ - INFO - Cycle 531 complete | Test: PASS | Payoff: 0.90 | Time: 1.9ms | Depth: 0.800
+2026-02-12 18:46:30,421 - __main__ - INFO - Cycle 532 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:30,523 - __main__ - INFO - Cycle 533 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:30,626 - __main__ - INFO - Cycle 534 complete | Test: PASS | Payoff: 0.90 | Time: 2.3ms | Depth: 0.800
+2026-02-12 18:46:30,728 - __main__ - INFO - Cycle 535 complete | Test: PASS | Payoff: 0.90 | Time: 1.8ms | Depth: 0.800
+2026-02-12 18:46:30,830 - __main__ - INFO - Cycle 536 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:30,932 - __main__ - INFO - Cycle 537 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:31,034 - __main__ - INFO - Cycle 538 complete | Test: PASS | Payoff: 0.90 | Time: 1.8ms | Depth: 0.800
+2026-02-12 18:46:31,136 - __main__ - INFO - Cycle 539 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:31,238 - __main__ - INFO - Cycle 540 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:31,340 - __main__ - INFO - Cycle 541 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:31,442 - __main__ - INFO - Cycle 542 complete | Test: PASS | Payoff: 0.90 | Time: 1.8ms | Depth: 0.800
+2026-02-12 18:46:31,544 - __main__ - INFO - Cycle 543 complete | Test: PASS | Payoff: 0.90 | Time: 1.8ms | Depth: 0.800
+2026-02-12 18:46:31,647 - __main__ - INFO - Cycle 544 complete | Test: PASS | Payoff: 0.90 | Time: 2.1ms | Depth: 0.800
+2026-02-12 18:46:31,748 - __main__ - INFO - Cycle 545 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:31,850 - __main__ - INFO - Cycle 546 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:31,952 - __main__ - INFO - Cycle 547 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:32,054 - __main__ - INFO - Cycle 548 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:32,156 - __main__ - INFO - Cycle 549 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:32,258 - __main__ - INFO - Cycle 550 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:32,360 - __main__ - INFO - Cycle 551 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:32,462 - __main__ - INFO - Cycle 552 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:32,563 - __main__ - INFO - Cycle 553 complete | Test: PASS | Payoff: 0.90 | Time: 1.3ms | Depth: 0.800
+2026-02-12 18:46:32,665 - __main__ - INFO - Cycle 554 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:32,767 - __main__ - INFO - Cycle 555 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:32,869 - __main__ - INFO - Cycle 556 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:32,971 - __main__ - INFO - Cycle 557 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:33,072 - __main__ - INFO - Cycle 558 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:33,174 - __main__ - INFO - Cycle 559 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:33,276 - __main__ - INFO - Cycle 560 complete | Test: PASS | Payoff: 0.90 | Time: 1.3ms | Depth: 0.800
+2026-02-12 18:46:33,378 - __main__ - INFO - Cycle 561 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:33,480 - __main__ - INFO - Cycle 562 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:33,582 - __main__ - INFO - Cycle 563 complete | Test: PASS | Payoff: 0.90 | Time: 1.9ms | Depth: 0.800
+2026-02-12 18:46:33,684 - __main__ - INFO - Cycle 564 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:33,786 - __main__ - INFO - Cycle 565 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:33,888 - __main__ - INFO - Cycle 566 complete | Test: PASS | Payoff: 0.90 | Time: 1.8ms | Depth: 0.800
+2026-02-12 18:46:33,990 - __main__ - INFO - Cycle 567 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:34,092 - __main__ - INFO - Cycle 568 complete | Test: PASS | Payoff: 0.90 | Time: 1.8ms | Depth: 0.800
+2026-02-12 18:46:34,194 - __main__ - INFO - Cycle 569 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:34,296 - __main__ - INFO - Cycle 570 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:34,397 - __main__ - INFO - Cycle 571 complete | Test: PASS | Payoff: 0.90 | Time: 1.2ms | Depth: 0.800
+2026-02-12 18:46:34,499 - __main__ - INFO - Cycle 572 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:34,601 - __main__ - INFO - Cycle 573 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:34,703 - __main__ - INFO - Cycle 574 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:34,805 - __main__ - INFO - Cycle 575 complete | Test: PASS | Payoff: 0.90 | Time: 1.3ms | Depth: 0.800
+2026-02-12 18:46:34,906 - __main__ - INFO - Cycle 576 complete | Test: PASS | Payoff: 0.90 | Time: 1.2ms | Depth: 0.800
+2026-02-12 18:46:35,008 - __main__ - INFO - Cycle 577 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:35,110 - __main__ - INFO - Cycle 578 complete | Test: PASS | Payoff: 0.90 | Time: 1.3ms | Depth: 0.800
+2026-02-12 18:46:35,212 - __main__ - INFO - Cycle 579 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:35,313 - __main__ - INFO - Cycle 580 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:35,415 - __main__ - INFO - Cycle 581 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:35,517 - __main__ - INFO - Cycle 582 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:35,619 - __main__ - INFO - Cycle 583 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:35,721 - __main__ - INFO - Cycle 584 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:35,823 - __main__ - INFO - Cycle 585 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:35,925 - __main__ - INFO - Cycle 586 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:36,027 - __main__ - INFO - Cycle 587 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:36,128 - __main__ - INFO - Cycle 588 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:36,230 - __main__ - INFO - Cycle 589 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:36,332 - __main__ - INFO - Cycle 590 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:36,434 - __main__ - INFO - Cycle 591 complete | Test: PASS | Payoff: 0.90 | Time: 1.8ms | Depth: 0.800
+2026-02-12 18:46:36,537 - __main__ - INFO - Cycle 592 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:36,639 - __main__ - INFO - Cycle 593 complete | Test: PASS | Payoff: 0.90 | Time: 2.1ms | Depth: 0.800
+2026-02-12 18:46:36,741 - __main__ - INFO - Cycle 594 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:36,843 - __main__ - INFO - Cycle 595 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:36,945 - __main__ - INFO - Cycle 596 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:37,047 - __main__ - INFO - Cycle 597 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:37,149 - __main__ - INFO - Cycle 598 complete | Test: PASS | Payoff: 0.90 | Time: 1.8ms | Depth: 0.800
+2026-02-12 18:46:37,251 - __main__ - INFO - Cycle 599 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:37,353 - __main__ - INFO - Cycle 600 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:37,455 - __main__ - INFO - Cycle 601 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:37,557 - __main__ - INFO - Cycle 602 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:37,659 - __main__ - INFO - Cycle 603 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:37,761 - __main__ - INFO - Cycle 604 complete | Test: PASS | Payoff: 0.90 | Time: 1.3ms | Depth: 0.800
+2026-02-12 18:46:37,862 - __main__ - INFO - Cycle 605 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:37,964 - __main__ - INFO - Cycle 606 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:38,066 - __main__ - INFO - Cycle 607 complete | Test: PASS | Payoff: 0.90 | Time: 1.8ms | Depth: 0.800
+2026-02-12 18:46:38,169 - __main__ - INFO - Cycle 608 complete | Test: PASS | Payoff: 0.90 | Time: 2.0ms | Depth: 0.800
+2026-02-12 18:46:38,271 - __main__ - INFO - Cycle 609 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:38,373 - __main__ - INFO - Cycle 610 complete | Test: PASS | Payoff: 0.90 | Time: 1.3ms | Depth: 0.800
+2026-02-12 18:46:38,474 - __main__ - INFO - Cycle 611 complete | Test: PASS | Payoff: 0.90 | Time: 1.3ms | Depth: 0.800
+2026-02-12 18:46:38,576 - __main__ - INFO - Cycle 612 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:38,678 - __main__ - INFO - Cycle 613 complete | Test: PASS | Payoff: 0.90 | Time: 1.3ms | Depth: 0.800
+2026-02-12 18:46:38,780 - __main__ - INFO - Cycle 614 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:38,881 - __main__ - INFO - Cycle 615 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:38,983 - __main__ - INFO - Cycle 616 complete | Test: PASS | Payoff: 0.90 | Time: 1.2ms | Depth: 0.800
+2026-02-12 18:46:39,085 - __main__ - INFO - Cycle 617 complete | Test: PASS | Payoff: 0.90 | Time: 1.3ms | Depth: 0.800
+2026-02-12 18:46:39,187 - __main__ - INFO - Cycle 618 complete | Test: PASS | Payoff: 0.90 | Time: 1.8ms | Depth: 0.800
+2026-02-12 18:46:39,289 - __main__ - INFO - Cycle 619 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:39,391 - __main__ - INFO - Cycle 620 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:39,493 - __main__ - INFO - Cycle 621 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:39,595 - __main__ - INFO - Cycle 622 complete | Test: PASS | Payoff: 0.90 | Time: 1.8ms | Depth: 0.800
+2026-02-12 18:46:39,697 - __main__ - INFO - Cycle 623 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:39,799 - __main__ - INFO - Cycle 624 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:39,900 - __main__ - INFO - Cycle 625 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:40,002 - __main__ - INFO - Cycle 626 complete | Test: PASS | Payoff: 0.90 | Time: 1.8ms | Depth: 0.800
+2026-02-12 18:46:40,104 - __main__ - INFO - Cycle 627 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:40,206 - __main__ - INFO - Cycle 628 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:40,308 - __main__ - INFO - Cycle 629 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:40,410 - __main__ - INFO - Cycle 630 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:40,512 - __main__ - INFO - Cycle 631 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:40,614 - __main__ - INFO - Cycle 632 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:40,716 - __main__ - INFO - Cycle 633 complete | Test: PASS | Payoff: 0.90 | Time: 1.8ms | Depth: 0.800
+2026-02-12 18:46:40,818 - __main__ - INFO - Cycle 634 complete | Test: PASS | Payoff: 0.90 | Time: 1.9ms | Depth: 0.800
+2026-02-12 18:46:40,920 - __main__ - INFO - Cycle 635 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:41,022 - __main__ - INFO - Cycle 636 complete | Test: PASS | Payoff: 0.90 | Time: 1.3ms | Depth: 0.800
+2026-02-12 18:46:41,124 - __main__ - INFO - Cycle 637 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:41,226 - __main__ - INFO - Cycle 638 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:41,328 - __main__ - INFO - Cycle 639 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:41,430 - __main__ - INFO - Cycle 640 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              55.0s
+Events Generated:    540
+Intents Created:     540
+Hypotheses Evaluated: 540
+Tests Executed:      540
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.6ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              56.0s
+Events Generated:    550
+Intents Created:     550
+Hypotheses Evaluated: 550
+Tests Executed:      550
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.6ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              57.0s
+Events Generated:    560
+Intents Created:     560
+Hypotheses Evaluated: 560
+Tests Executed:      560
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.6ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              58.0s
+Events Generated:    570
+Intents Created:     570
+Hypotheses Evaluated: 570
+Tests Executed:      570
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.6ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              59.1s
+Events Generated:    580
+Intents Created:     580
+Hypotheses Evaluated: 580
+Tests Executed:      580
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.6ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              60.1s
+Events Generated:    590
+Intents Created:     590
+Hypotheses Evaluated: 590
+Tests Executed:      590
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.6ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              61.1s
+Events Generated:    600
+Intents Created:     600
+Hypotheses Evaluated: 600
+Tests Executed:      600
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.6ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              62.1s
+Events Generated:    610
+Intents Created:     610
+Hypotheses Evaluated: 610
+Tests Executed:      610
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.6ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              63.1s
+Events Generated:    620
+Intents Created:     620
+Hypotheses Evaluated: 620
+Tests Executed:      620
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.6ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              64.1s
+Events Generated:    630
+Intents Created:     630
+Hypotheses Evaluated: 630
+Tests Executed:      630
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.6ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+2026-02-12 18:46:41,532 - __main__ - INFO - Cycle 641 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:41,634 - __main__ - INFO - Cycle 642 complete | Test: PASS | Payoff: 0.90 | Time: 1.8ms | Depth: 0.800
+2026-02-12 18:46:41,737 - __main__ - INFO - Cycle 643 complete | Test: PASS | Payoff: 0.90 | Time: 1.8ms | Depth: 0.800
+2026-02-12 18:46:41,839 - __main__ - INFO - Cycle 644 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:41,941 - __main__ - INFO - Cycle 645 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:42,042 - __main__ - INFO - Cycle 646 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:42,144 - __main__ - INFO - Cycle 647 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:42,246 - __main__ - INFO - Cycle 648 complete | Test: PASS | Payoff: 0.90 | Time: 1.3ms | Depth: 0.800
+2026-02-12 18:46:42,348 - __main__ - INFO - Cycle 649 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:42,450 - __main__ - INFO - Cycle 650 complete | Test: PASS | Payoff: 0.90 | Time: 1.8ms | Depth: 0.800
+2026-02-12 18:46:42,552 - __main__ - INFO - Cycle 651 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:42,654 - __main__ - INFO - Cycle 652 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:42,756 - __main__ - INFO - Cycle 653 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:42,858 - __main__ - INFO - Cycle 654 complete | Test: PASS | Payoff: 0.90 | Time: 1.8ms | Depth: 0.800
+2026-02-12 18:46:42,960 - __main__ - INFO - Cycle 655 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:43,062 - __main__ - INFO - Cycle 656 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:43,164 - __main__ - INFO - Cycle 657 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:43,266 - __main__ - INFO - Cycle 658 complete | Test: PASS | Payoff: 0.90 | Time: 1.8ms | Depth: 0.800
+2026-02-12 18:46:43,368 - __main__ - INFO - Cycle 659 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:43,470 - __main__ - INFO - Cycle 660 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:43,572 - __main__ - INFO - Cycle 661 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:43,674 - __main__ - INFO - Cycle 662 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:43,776 - __main__ - INFO - Cycle 663 complete | Test: PASS | Payoff: 0.90 | Time: 1.3ms | Depth: 0.800
+2026-02-12 18:46:43,877 - __main__ - INFO - Cycle 664 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:43,979 - __main__ - INFO - Cycle 665 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:44,081 - __main__ - INFO - Cycle 666 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:44,183 - __main__ - INFO - Cycle 667 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:44,285 - __main__ - INFO - Cycle 668 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:44,387 - __main__ - INFO - Cycle 669 complete | Test: PASS | Payoff: 0.90 | Time: 1.8ms | Depth: 0.800
+2026-02-12 18:46:44,489 - __main__ - INFO - Cycle 670 complete | Test: PASS | Payoff: 0.90 | Time: 1.8ms | Depth: 0.800
+2026-02-12 18:46:44,591 - __main__ - INFO - Cycle 671 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:44,693 - __main__ - INFO - Cycle 672 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:44,795 - __main__ - INFO - Cycle 673 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:44,897 - __main__ - INFO - Cycle 674 complete | Test: PASS | Payoff: 0.90 | Time: 2.2ms | Depth: 0.800
+2026-02-12 18:46:45,000 - __main__ - INFO - Cycle 675 complete | Test: PASS | Payoff: 0.90 | Time: 1.8ms | Depth: 0.800
+2026-02-12 18:46:45,102 - __main__ - INFO - Cycle 676 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:45,204 - __main__ - INFO - Cycle 677 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:45,306 - __main__ - INFO - Cycle 678 complete | Test: PASS | Payoff: 0.90 | Time: 1.8ms | Depth: 0.800
+2026-02-12 18:46:45,408 - __main__ - INFO - Cycle 679 complete | Test: PASS | Payoff: 0.90 | Time: 1.3ms | Depth: 0.800
+2026-02-12 18:46:45,509 - __main__ - INFO - Cycle 680 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:45,611 - __main__ - INFO - Cycle 681 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:45,713 - __main__ - INFO - Cycle 682 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:45,815 - __main__ - INFO - Cycle 683 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:45,917 - __main__ - INFO - Cycle 684 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:46,018 - __main__ - INFO - Cycle 685 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:46,120 - __main__ - INFO - Cycle 686 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:46,222 - __main__ - INFO - Cycle 687 complete | Test: PASS | Payoff: 0.90 | Time: 1.3ms | Depth: 0.800
+2026-02-12 18:46:46,324 - __main__ - INFO - Cycle 688 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:46,426 - __main__ - INFO - Cycle 689 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:46,528 - __main__ - INFO - Cycle 690 complete | Test: PASS | Payoff: 0.90 | Time: 1.8ms | Depth: 0.800
+2026-02-12 18:46:46,630 - __main__ - INFO - Cycle 691 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:46,732 - __main__ - INFO - Cycle 692 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:46,834 - __main__ - INFO - Cycle 693 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:46,936 - __main__ - INFO - Cycle 694 complete | Test: PASS | Payoff: 0.90 | Time: 1.9ms | Depth: 0.800
+2026-02-12 18:46:47,039 - __main__ - INFO - Cycle 695 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:47,140 - __main__ - INFO - Cycle 696 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:47,242 - __main__ - INFO - Cycle 697 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:47,345 - __main__ - INFO - Cycle 698 complete | Test: PASS | Payoff: 0.90 | Time: 1.8ms | Depth: 0.800
+2026-02-12 18:46:47,446 - __main__ - INFO - Cycle 699 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:47,548 - __main__ - INFO - Cycle 700 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:47,650 - __main__ - INFO - Cycle 701 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:47,753 - __main__ - INFO - Cycle 702 complete | Test: PASS | Payoff: 0.90 | Time: 1.8ms | Depth: 0.800
+2026-02-12 18:46:47,854 - __main__ - INFO - Cycle 703 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:47,957 - __main__ - INFO - Cycle 704 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:48,058 - __main__ - INFO - Cycle 705 complete | Test: PASS | Payoff: 0.90 | Time: 1.2ms | Depth: 0.800
+2026-02-12 18:46:48,160 - __main__ - INFO - Cycle 706 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:48,261 - __main__ - INFO - Cycle 707 complete | Test: PASS | Payoff: 0.90 | Time: 1.3ms | Depth: 0.800
+2026-02-12 18:46:48,363 - __main__ - INFO - Cycle 708 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:48,465 - __main__ - INFO - Cycle 709 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:48,567 - __main__ - INFO - Cycle 710 complete | Test: PASS | Payoff: 0.90 | Time: 1.9ms | Depth: 0.800
+2026-02-12 18:46:48,669 - __main__ - INFO - Cycle 711 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:48,771 - __main__ - INFO - Cycle 712 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:48,873 - __main__ - INFO - Cycle 713 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:48,975 - __main__ - INFO - Cycle 714 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:49,077 - __main__ - INFO - Cycle 715 complete | Test: PASS | Payoff: 0.90 | Time: 1.3ms | Depth: 0.800
+2026-02-12 18:46:49,179 - __main__ - INFO - Cycle 716 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:49,281 - __main__ - INFO - Cycle 717 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:49,383 - __main__ - INFO - Cycle 718 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:49,485 - __main__ - INFO - Cycle 719 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:49,586 - __main__ - INFO - Cycle 720 complete | Test: PASS | Payoff: 0.90 | Time: 1.3ms | Depth: 0.800
+2026-02-12 18:46:49,688 - __main__ - INFO - Cycle 721 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:49,790 - __main__ - INFO - Cycle 722 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:49,892 - __main__ - INFO - Cycle 723 complete | Test: PASS | Payoff: 0.90 | Time: 1.2ms | Depth: 0.800
+2026-02-12 18:46:49,994 - __main__ - INFO - Cycle 724 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:50,096 - __main__ - INFO - Cycle 725 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:50,198 - __main__ - INFO - Cycle 726 complete | Test: PASS | Payoff: 0.90 | Time: 1.9ms | Depth: 0.800
+2026-02-12 18:46:50,300 - __main__ - INFO - Cycle 727 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:50,402 - __main__ - INFO - Cycle 728 complete | Test: PASS | Payoff: 0.90 | Time: 1.3ms | Depth: 0.800
+2026-02-12 18:46:50,504 - __main__ - INFO - Cycle 729 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:50,606 - __main__ - INFO - Cycle 730 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:50,708 - __main__ - INFO - Cycle 731 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:50,810 - __main__ - INFO - Cycle 732 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:50,912 - __main__ - INFO - Cycle 733 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:51,014 - __main__ - INFO - Cycle 734 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:51,116 - __main__ - INFO - Cycle 735 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:51,218 - __main__ - INFO - Cycle 736 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:51,319 - __main__ - INFO - Cycle 737 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:51,421 - __main__ - INFO - Cycle 738 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:51,523 - __main__ - INFO - Cycle 739 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:51,625 - __main__ - INFO - Cycle 740 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              65.2s
+Events Generated:    640
+Intents Created:     640
+Hypotheses Evaluated: 640
+Tests Executed:      640
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.6ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              66.2s
+Events Generated:    650
+Intents Created:     650
+Hypotheses Evaluated: 650
+Tests Executed:      650
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.6ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              67.2s
+Events Generated:    660
+Intents Created:     660
+Hypotheses Evaluated: 660
+Tests Executed:      660
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.6ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              68.2s
+Events Generated:    670
+Intents Created:     670
+Hypotheses Evaluated: 670
+Tests Executed:      670
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.6ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              69.2s
+Events Generated:    680
+Intents Created:     680
+Hypotheses Evaluated: 680
+Tests Executed:      680
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.6ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              70.3s
+Events Generated:    690
+Intents Created:     690
+Hypotheses Evaluated: 690
+Tests Executed:      690
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.6ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              71.3s
+Events Generated:    700
+Intents Created:     700
+Hypotheses Evaluated: 700
+Tests Executed:      700
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.6ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              72.3s
+Events Generated:    710
+Intents Created:     710
+Hypotheses Evaluated: 710
+Tests Executed:      710
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.6ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              73.3s
+Events Generated:    720
+Intents Created:     720
+Hypotheses Evaluated: 720
+Tests Executed:      720
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.6ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              74.3s
+Events Generated:    730
+Intents Created:     730
+Hypotheses Evaluated: 730
+Tests Executed:      730
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.6ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              75.4s
+Events Generated:    740
+Intents Created:     740
+Hypotheses Evaluated: 740
+Tests Executed:      740
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.6ms
+2026-02-12 18:46:51,727 - __main__ - INFO - Cycle 741 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:51,829 - __main__ - INFO - Cycle 742 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:51,931 - __main__ - INFO - Cycle 743 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:52,032 - __main__ - INFO - Cycle 744 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:52,134 - __main__ - INFO - Cycle 745 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:52,236 - __main__ - INFO - Cycle 746 complete | Test: PASS | Payoff: 0.90 | Time: 1.8ms | Depth: 0.800
+2026-02-12 18:46:52,338 - __main__ - INFO - Cycle 747 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:52,440 - __main__ - INFO - Cycle 748 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:52,542 - __main__ - INFO - Cycle 749 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:52,644 - __main__ - INFO - Cycle 750 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:52,746 - __main__ - INFO - Cycle 751 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:52,848 - __main__ - INFO - Cycle 752 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:52,950 - __main__ - INFO - Cycle 753 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:53,052 - __main__ - INFO - Cycle 754 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:53,154 - __main__ - INFO - Cycle 755 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:53,256 - __main__ - INFO - Cycle 756 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:53,357 - __main__ - INFO - Cycle 757 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:53,459 - __main__ - INFO - Cycle 758 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:53,561 - __main__ - INFO - Cycle 759 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:53,663 - __main__ - INFO - Cycle 760 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:53,765 - __main__ - INFO - Cycle 761 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:53,867 - __main__ - INFO - Cycle 762 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:53,969 - __main__ - INFO - Cycle 763 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:54,070 - __main__ - INFO - Cycle 764 complete | Test: PASS | Payoff: 0.90 | Time: 1.3ms | Depth: 0.800
+2026-02-12 18:46:54,172 - __main__ - INFO - Cycle 765 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:54,274 - __main__ - INFO - Cycle 766 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:54,376 - __main__ - INFO - Cycle 767 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:54,478 - __main__ - INFO - Cycle 768 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:54,579 - __main__ - INFO - Cycle 769 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:54,681 - __main__ - INFO - Cycle 770 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:54,783 - __main__ - INFO - Cycle 771 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:54,885 - __main__ - INFO - Cycle 772 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:54,988 - __main__ - INFO - Cycle 773 complete | Test: PASS | Payoff: 0.90 | Time: 2.0ms | Depth: 0.800
+2026-02-12 18:46:55,090 - __main__ - INFO - Cycle 774 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:55,192 - __main__ - INFO - Cycle 775 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:55,293 - __main__ - INFO - Cycle 776 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:55,395 - __main__ - INFO - Cycle 777 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:55,497 - __main__ - INFO - Cycle 778 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:55,599 - __main__ - INFO - Cycle 779 complete | Test: PASS | Payoff: 0.90 | Time: 1.3ms | Depth: 0.800
+2026-02-12 18:46:55,700 - __main__ - INFO - Cycle 780 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:55,802 - __main__ - INFO - Cycle 781 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:55,904 - __main__ - INFO - Cycle 782 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:56,006 - __main__ - INFO - Cycle 783 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:56,108 - __main__ - INFO - Cycle 784 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:56,210 - __main__ - INFO - Cycle 785 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:56,312 - __main__ - INFO - Cycle 786 complete | Test: PASS | Payoff: 0.90 | Time: 1.8ms | Depth: 0.800
+2026-02-12 18:46:56,414 - __main__ - INFO - Cycle 787 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:56,515 - __main__ - INFO - Cycle 788 complete | Test: PASS | Payoff: 0.90 | Time: 1.3ms | Depth: 0.800
+2026-02-12 18:46:56,617 - __main__ - INFO - Cycle 789 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:56,719 - __main__ - INFO - Cycle 790 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:56,821 - __main__ - INFO - Cycle 791 complete | Test: PASS | Payoff: 0.90 | Time: 1.8ms | Depth: 0.800
+2026-02-12 18:46:56,923 - __main__ - INFO - Cycle 792 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:57,025 - __main__ - INFO - Cycle 793 complete | Test: PASS | Payoff: 0.90 | Time: 1.8ms | Depth: 0.800
+2026-02-12 18:46:57,128 - __main__ - INFO - Cycle 794 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:57,229 - __main__ - INFO - Cycle 795 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:57,331 - __main__ - INFO - Cycle 796 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:57,433 - __main__ - INFO - Cycle 797 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:57,535 - __main__ - INFO - Cycle 798 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:57,637 - __main__ - INFO - Cycle 799 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:46:57,739 - __main__ - INFO - Cycle 800 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:57,841 - __main__ - INFO - Cycle 801 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:57,943 - __main__ - INFO - Cycle 802 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:58,045 - __main__ - INFO - Cycle 803 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:58,147 - __main__ - INFO - Cycle 804 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:58,249 - __main__ - INFO - Cycle 805 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:58,351 - __main__ - INFO - Cycle 806 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:58,452 - __main__ - INFO - Cycle 807 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:58,554 - __main__ - INFO - Cycle 808 complete | Test: PASS | Payoff: 0.90 | Time: 1.3ms | Depth: 0.800
+2026-02-12 18:46:58,656 - __main__ - INFO - Cycle 809 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:46:58,758 - __main__ - INFO - Cycle 810 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:58,860 - __main__ - INFO - Cycle 811 complete | Test: PASS | Payoff: 0.90 | Time: 1.9ms | Depth: 0.800
+2026-02-12 18:46:58,962 - __main__ - INFO - Cycle 812 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:59,064 - __main__ - INFO - Cycle 813 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:59,166 - __main__ - INFO - Cycle 814 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:59,268 - __main__ - INFO - Cycle 815 complete | Test: PASS | Payoff: 0.90 | Time: 1.9ms | Depth: 0.800
+2026-02-12 18:46:59,370 - __main__ - INFO - Cycle 816 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:59,472 - __main__ - INFO - Cycle 817 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:59,573 - __main__ - INFO - Cycle 818 complete | Test: PASS | Payoff: 0.90 | Time: 1.3ms | Depth: 0.800
+2026-02-12 18:46:59,675 - __main__ - INFO - Cycle 819 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:59,777 - __main__ - INFO - Cycle 820 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:46:59,879 - __main__ - INFO - Cycle 821 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:46:59,981 - __main__ - INFO - Cycle 822 complete | Test: PASS | Payoff: 0.90 | Time: 2.0ms | Depth: 0.800
+2026-02-12 18:47:00,083 - __main__ - INFO - Cycle 823 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:47:00,185 - __main__ - INFO - Cycle 824 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:47:00,287 - __main__ - INFO - Cycle 825 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:47:00,389 - __main__ - INFO - Cycle 826 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:47:00,491 - __main__ - INFO - Cycle 827 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:47:00,593 - __main__ - INFO - Cycle 828 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:47:00,694 - __main__ - INFO - Cycle 829 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:47:00,797 - __main__ - INFO - Cycle 830 complete | Test: PASS | Payoff: 0.90 | Time: 1.8ms | Depth: 0.800
+2026-02-12 18:47:00,899 - __main__ - INFO - Cycle 831 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:47:01,001 - __main__ - INFO - Cycle 832 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:47:01,103 - __main__ - INFO - Cycle 833 complete | Test: PASS | Payoff: 0.90 | Time: 2.2ms | Depth: 0.800
+2026-02-12 18:47:01,205 - __main__ - INFO - Cycle 834 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:47:01,307 - __main__ - INFO - Cycle 835 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:47:01,409 - __main__ - INFO - Cycle 836 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:47:01,511 - __main__ - INFO - Cycle 837 complete | Test: PASS | Payoff: 0.90 | Time: 1.3ms | Depth: 0.800
+2026-02-12 18:47:01,613 - __main__ - INFO - Cycle 838 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:47:01,715 - __main__ - INFO - Cycle 839 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:47:01,816 - __main__ - INFO - Cycle 840 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:47:01,918 - __main__ - INFO - Cycle 841 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:47:02,021 - __main__ - INFO - Cycle 842 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:47:02,122 - __main__ - INFO - Cycle 843 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:47:02,224 - __main__ - INFO - Cycle 844 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:47:02,326 - __main__ - INFO - Cycle 845 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:47:02,428 - __main__ - INFO - Cycle 846 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:47:02,530 - __main__ - INFO - Cycle 847 complete | Test: PASS | Payoff: 0.90 | Time: 1.3ms | Depth: 0.800
+2026-02-12 18:47:02,631 - __main__ - INFO - Cycle 848 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:47:02,733 - __main__ - INFO - Cycle 849 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:47:02,835 - __main__ - INFO - Cycle 850 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              76.4s
+Events Generated:    750
+Intents Created:     750
+Hypotheses Evaluated: 750
+Tests Executed:      750
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.6ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              77.4s
+Events Generated:    760
+Intents Created:     760
+Hypotheses Evaluated: 760
+Tests Executed:      760
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.6ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              78.4s
+Events Generated:    770
+Intents Created:     770
+Hypotheses Evaluated: 770
+Tests Executed:      770
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.6ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              79.4s
+Events Generated:    780
+Intents Created:     780
+Hypotheses Evaluated: 780
+Tests Executed:      780
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.6ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              80.5s
+Events Generated:    790
+Intents Created:     790
+Hypotheses Evaluated: 790
+Tests Executed:      790
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.6ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              81.5s
+Events Generated:    800
+Intents Created:     800
+Hypotheses Evaluated: 800
+Tests Executed:      800
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.6ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              82.5s
+Events Generated:    810
+Intents Created:     810
+Hypotheses Evaluated: 810
+Tests Executed:      810
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.5ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              83.5s
+Events Generated:    820
+Intents Created:     820
+Hypotheses Evaluated: 820
+Tests Executed:      820
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.5ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              84.5s
+Events Generated:    830
+Intents Created:     830
+Hypotheses Evaluated: 830
+Tests Executed:      830
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.5ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+
+================================================================================
+AUTONOMOUS CONSCIOUSNESS ENGINE - STATUS
+================================================================================
+Uptime:              85.6s
+Events Generated:    840
+Intents Created:     840
+Hypotheses Evaluated: 840
+Tests Executed:      840
+Errors Encountered:  0
+Self-Corrections:    0
+Avg Cycle Time:      1.6ms
+Stability Score:     1.000
+Consciousness Depth: 0.800
+================================================================================
+
+Automation Helpers:
+  ConsciousnessHelper-1: idle | Completed: 0
+  ConsciousnessHelper-2: idle | Completed: 0
+  ConsciousnessHelper-3: idle | Completed: 0
+================================================================================
+
+2026-02-12 18:47:02,937 - __main__ - INFO - Cycle 851 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:47:03,039 - __main__ - INFO - Cycle 852 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:47:03,141 - __main__ - INFO - Cycle 853 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:47:03,243 - __main__ - INFO - Cycle 854 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:47:03,345 - __main__ - INFO - Cycle 855 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:47:03,447 - __main__ - INFO - Cycle 856 complete | Test: PASS | Payoff: 0.90 | Time: 2.0ms | Depth: 0.800
+2026-02-12 18:47:03,550 - __main__ - INFO - Cycle 857 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:47:03,652 - __main__ - INFO - Cycle 858 complete | Test: PASS | Payoff: 0.90 | Time: 2.3ms | Depth: 0.800
+2026-02-12 18:47:03,754 - __main__ - INFO - Cycle 859 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:47:03,856 - __main__ - INFO - Cycle 860 complete | Test: PASS | Payoff: 0.90 | Time: 1.5ms | Depth: 0.800
+2026-02-12 18:47:03,958 - __main__ - INFO - Cycle 861 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:47:04,060 - __main__ - INFO - Cycle 862 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:47:04,161 - __main__ - INFO - Cycle 863 complete | Test: PASS | Payoff: 0.90 | Time: 1.2ms | Depth: 0.800
+2026-02-12 18:47:04,263 - __main__ - INFO - Cycle 864 complete | Test: PASS | Payoff: 0.90 | Time: 1.4ms | Depth: 0.800
+2026-02-12 18:47:04,365 - __main__ - INFO - Cycle 865 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:47:04,467 - __main__ - INFO - Cycle 866 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:47:04,569 - __main__ - INFO - Cycle 867 complete | Test: PASS | Payoff: 0.90 | Time: 1.6ms | Depth: 0.800
+2026-02-12 18:47:04,671 - __main__ - INFO - Cycle 868 complete | Test: PASS | Payoff: 0.90 | Time: 2.0ms | Depth: 0.800
+2026-02-12 18:47:04,773 - __main__ - INFO - Cycle 869 complete | Test: PASS | Payoff: 0.90 | Time: 1.7ms | Depth: 0.800
+2026-02-12 18:47:04,876 - __main__ - INFO - Cycle 870 complete | Test: PASS | Payoff: 0.90 | Time: 2.4ms | Depth: 0.800

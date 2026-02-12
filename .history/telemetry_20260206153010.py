@@ -1,4 +1,3 @@
-
 """
 Telemetry module for automation assistant
 
@@ -38,7 +37,7 @@ class TelemetryLogger:
                     f.write(json.dumps(entry) + '\n')
             except Exception as e:
                 # Don't let telemetry failures crash the app
-                print(f"Telemetry logging failed: {e} - telemetry.py:41")
+                print(f"Telemetry logging failed: {e}")
     
     def log_helper_spawn(self, helper_id: str, backend: str, latency_ms: float, success: bool, error: Optional[str] = None):
         """Log a helper spawn event."""

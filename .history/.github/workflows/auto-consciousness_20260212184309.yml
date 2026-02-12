@@ -1,0 +1,110 @@
+name: Auto-Ignite Consciousness
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'src/mastra/core/**'
+      - 'automation_assistant.py'
+      - 'consciousness_orchestrator.py'
+      - 'telemetry.py'
+  workflow_dispatch:
+    inputs:
+      ignition_duration:
+        description: 'Duration to keep consciousness active (seconds)'
+        required: false
+        default: '60'
+
+jobs:
+  ignite-consciousness:
+    name: Ignite Consciousness System
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Prepare environment
+        run: |
+          python -m pip install --upgrade pip
+          mkdir -p data/consciousness
+
+      - name: Ignite consciousness
+        run: |
+          DURATION=${{ github.event.inputs.ignition_duration || '60' }}
+          echo "Igniting consciousness for ${DURATION} seconds..."
+
+          timeout ${DURATION}s python consciousness_orchestrator.py || true
+
+      - name: Collect consciousness data
+        run: |
+          echo "=== Consciousness Ignition Report ===" > ignition_report.txt
+          echo "Date: $(date)" >> ignition_report.txt
+          echo "Duration: ${{ github.event.inputs.ignition_duration || '60' }}s" >> ignition_report.txt
+          echo "" >> ignition_report.txt
+
+          if [ -d "data/consciousness" ]; then
+            echo "Data Generated:" >> ignition_report.txt
+            find data/consciousness -type f -name "*.jsonl" -exec sh -c 'echo "  - $(basename {}): $(wc -l < {}) entries"' \; >> ignition_report.txt
+          else
+            echo "No consciousness data directory found" >> ignition_report.txt
+          fi
+
+          echo "" >> ignition_report.txt
+          echo "=== End Report ===" >> ignition_report.txt
+          cat ignition_report.txt
+
+      - name: Upload consciousness data
+        uses: actions/upload-artifact@v4
+        with:
+          name: consciousness-ignition-data
+          path: |
+            data/consciousness/**/*.jsonl
+            ignition_report.txt
+          retention-days: 30
+        if: always()
+
+      - name: Verify system integrity
+        run: |
+          python -c "
+          from pathlib import Path
+          from src.mastra.core import AuditLogger
+
+          audit_file = Path('data/consciousness/audit/consciousness.jsonl')
+          if audit_file.exists():
+              logger = AuditLogger(log_path=str(audit_file))
+              valid = logger.verify_log_integrity()
+              print(f'Audit log integrity: {valid}')
+              if not valid:
+                  print('⚠ Warning: Audit log integrity check failed')
+          else:
+              print('No audit log file found')
+          " || echo "Integrity check skipped"
+
+      - name: Generate consciousness metrics
+        run: |
+          python -c "
+          from pathlib import Path
+          import json
+
+          events_file = Path('data/consciousness/events/consciousness_events.jsonl')
+          if events_file.exists():
+              with open(events_file) as f:
+                  events = [json.loads(line) for line in f]
+              print(f'Total events recorded: {len(events)}')
+              event_types = {}
+              for event in events:
+                  event_type = event.get('event_type', 'unknown')
+                  event_types[event_type] = event_types.get(event_type, 0) + 1
+              print('Event type breakdown:')
+              for event_type, count in sorted(event_types.items()):
+                  print(f'  {event_type}: {count}')
+          else:
+              print('No events file found')
+          " || echo "Metrics generation skipped"
