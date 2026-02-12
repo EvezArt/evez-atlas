@@ -291,6 +291,9 @@ else
         exit 1
     fi
     
+    # Ensure data directory exists
+    mkdir -p data
+    
     # Launch openclaw in the background
     info "Starting: openclaw --soul SOUL.md --skills jubilee,molt_post"
     info "This will run in the background. Check logs in data/ directory"
