@@ -1,0 +1,109 @@
+name: Daily Metrics Report
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # Daily at midnight UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  discussions: write
+  issues: read
+  pull-requests: read
+
+jobs:
+  generate-metrics:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Gather repository metrics
+        id: metrics
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          REPO=${{ github.repository }}
+          
+          # Get basic repo stats
+          REPO_DATA=$(gh api repos/$REPO)
+          STARS=$(echo "$REPO_DATA" | jq -r '.stargazers_count')
+          FORKS=$(echo "$REPO_DATA" | jq -r '.forks_count')
+          WATCHERS=$(echo "$REPO_DATA" | jq -r '.watchers_count')
+          OPEN_ISSUES=$(echo "$REPO_DATA" | jq -r '.open_issues_count')
+          
+          # Get PR stats
+          OPEN_PRS=$(gh pr list --repo $REPO --state open --json number --jq 'length')
+          MERGED_PRS_TODAY=$(gh pr list --repo $REPO --state merged --limit 100 --json mergedAt --jq "map(select(.mergedAt | fromdateiso8601 > (now - 86400))) | length")
+          
+          # Get issue stats
+          ISSUES_OPENED_TODAY=$(gh issue list --repo $REPO --limit 100 --json createdAt --jq "map(select(.createdAt | fromdateiso8601 > (now - 86400))) | length")
+          ISSUES_CLOSED_TODAY=$(gh issue list --repo $REPO --state closed --limit 100 --json closedAt --jq "map(select(.closedAt | fromdateiso8601 > (now - 86400))) | length")
+          
+          # Get commit activity (last 24 hours)
+          SINCE_DATE=$(date -u -d '1 day ago' '+%Y-%m-%dT%H:%M:%SZ')
+          COMMITS_TODAY=$(gh api repos/$REPO/commits?since=$SINCE_DATE --jq 'length')
+          
+          # Get traffic data (if available)
+          VIEWS=$(gh api repos/$REPO/traffic/views --jq '.count // 0' 2>/dev/null || echo "0")
+          UNIQUE_VISITORS=$(gh api repos/$REPO/traffic/views --jq '.uniques // 0' 2>/dev/null || echo "0")
+          CLONES=$(gh api repos/$REPO/traffic/clones --jq '.count // 0' 2>/dev/null || echo "0")
+          
+          # Save metrics to file
+          cat > metrics-report.md << EOF
+          # Daily Metrics Report - $(date +%Y-%m-%d)
+          
+          ## 📊 Repository Overview
+          - **Stars**: $STARS ⭐
+          - **Forks**: $FORKS 🔱
+          - **Watchers**: $WATCHERS 👁️
+          - **Open Issues**: $OPEN_ISSUES 📋
+          - **Open PRs**: $OPEN_PRS 🔀
+          
+          ## 📈 Activity (Last 24 Hours)
+          - **Commits**: $COMMITS_TODAY 💻
+          - **PRs Merged**: $MERGED_PRS_TODAY ✅
+          - **Issues Opened**: $ISSUES_OPENED_TODAY 🆕
+          - **Issues Closed**: $ISSUES_CLOSED_TODAY ✔️
+          
+          ## 🌐 Traffic (Last 14 Days)
+          - **Total Views**: $VIEWS 👀
+          - **Unique Visitors**: $UNIQUE_VISITORS 👤
+          - **Clones**: $CLONES 📥
+          
+          ## 🎯 Key Metrics
+          - **Community Health**: $((STARS + FORKS + WATCHERS)) points
+          - **Daily Velocity**: $COMMITS_TODAY commits
+          - **Issue Resolution Rate**: $((ISSUES_CLOSED_TODAY > 0 ? ISSUES_CLOSED_TODAY : 0)) closed / $((ISSUES_OPENED_TODAY > 0 ? ISSUES_OPENED_TODAY : 0)) opened
+          
+          ## 💡 Insights
+          $(if [ "$MERGED_PRS_TODAY" -gt 0 ]; then echo "✨ Great job! $MERGED_PRS_TODAY PR(s) merged today"; fi)
+          $(if [ "$COMMITS_TODAY" -gt 10 ]; then echo "🔥 High activity day with $COMMITS_TODAY commits"; fi)
+          $(if [ "$STARS" -gt 0 ]; then echo "⭐ Growing community with $STARS stars"; fi)
+          $(if [ "$UNIQUE_VISITORS" -gt 0 ]; then echo "👥 Repository attracting $UNIQUE_VISITORS unique visitors"; fi)
+          
+          ---
+          *Generated automatically by Daily Metrics workflow*
+          EOF
+          
+          echo "Report generated successfully"
+      
+      - name: Post metrics to repository
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Create issue with metrics (alternative to discussions if discussions not enabled)
+          gh issue create \
+            --repo ${{ github.repository }} \
+            --title "📊 Daily Metrics: $(date +%Y-%m-%d)" \
+            --label "metrics,automation" \
+            --body "$(cat metrics-report.md)"
+          
+          echo "✅ Metrics report posted"
+      
+      - name: Upload metrics artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: daily-metrics-$(date +%Y-%m-%d)
+          path: metrics-report.md
+          retention-days: 30

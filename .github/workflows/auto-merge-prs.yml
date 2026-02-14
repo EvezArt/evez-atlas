@@ -1,0 +1,69 @@
+name: Auto-Merge PRs
+
+on:
+  pull_request_review:
+    types: [submitted]
+  check_suite:
+    types: [completed]
+  pull_request:
+    types: [ready_for_review]
+
+permissions:
+  pull-requests: write
+  contents: write
+  checks: read
+
+jobs:
+  auto-merge:
+    if: github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get PR details
+        id: pr-details
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          PR_NUMBER=${{ github.event.pull_request.number }}
+          
+          # Get PR review state
+          REVIEWS=$(gh api repos/${{ github.repository }}/pulls/$PR_NUMBER/reviews --jq '[.[] | select(.state == "APPROVED")] | length')
+          echo "approved_reviews=$REVIEWS" >> $GITHUB_OUTPUT
+          
+          # Check if PR is mergeable
+          MERGEABLE=$(gh api repos/${{ github.repository }}/pulls/$PR_NUMBER --jq '.mergeable')
+          echo "mergeable=$MERGEABLE" >> $GITHUB_OUTPUT
+          
+          echo "Approved reviews: $REVIEWS"
+          echo "Mergeable: $MERGEABLE"
+      
+      - name: Check CI status
+        id: ci-status
+        if: steps.pr-details.outputs.approved_reviews > 0 && steps.pr-details.outputs.mergeable == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          PR_NUMBER=${{ github.event.pull_request.number }}
+          HEAD_SHA=$(gh api repos/${{ github.repository }}/pulls/$PR_NUMBER --jq '.head.sha')
+          
+          # Get all check runs
+          CHECKS=$(gh api \
+            repos/${{ github.repository }}/commits/$HEAD_SHA/check-runs \
+            --jq '.check_runs[] | select(.status == "completed") | .conclusion')
+          
+          # Count failures
+          FAILURES=$(echo "$CHECKS" | grep -v -E "^(success|skipped|neutral)$" | wc -l || echo 0)
+          
+          echo "failures=$FAILURES" >> $GITHUB_OUTPUT
+          echo "CI check failures: $FAILURES"
+      
+      - name: Enable auto-merge
+        if: |
+          steps.pr-details.outputs.approved_reviews > 0 && 
+          steps.pr-details.outputs.mergeable == 'true' && 
+          steps.ci-status.outputs.failures == '0'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh pr merge ${{ github.event.pull_request.number }} \
+            --auto --squash --repo ${{ github.repository }}
+          echo "✅ Auto-merge enabled for PR #${{ github.event.pull_request.number }}"

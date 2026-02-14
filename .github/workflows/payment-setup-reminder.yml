@@ -1,0 +1,95 @@
+name: Payment Setup Reminder
+
+on:
+  schedule:
+    - cron: '0 12 * * *'  # Daily at noon UTC
+  workflow_dispatch:
+
+permissions:
+  issues: write
+  contents: read
+
+jobs:
+  check-payment-setup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check GitHub Sponsors status
+        id: sponsors
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Check if GitHub Sponsors is enabled
+          # Note: This is a placeholder - actual GraphQL query would be needed
+          # For now, we'll check if the sponsorship endpoint returns valid data
+          SPONSORS_CHECK=$(gh api graphql -f query='
+            query {
+              user(login: "EvezArt") {
+                isGitHubStar
+                hasSponsorsListing
+              }
+            }' --jq '.data.user.hasSponsorsListing' || echo "false")
+          
+          echo "sponsors_enabled=$SPONSORS_CHECK" >> $GITHUB_OUTPUT
+          echo "GitHub Sponsors enabled: $SPONSORS_CHECK"
+      
+      - name: Check for existing reminder issues
+        id: check-issues
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Check if there's already an open reminder issue
+          EXISTING=$(gh issue list \
+            --repo ${{ github.repository }} \
+            --label "payment-reminder" \
+            --state open \
+            --json number \
+            --jq 'length')
+          
+          echo "existing_issues=$EXISTING" >> $GITHUB_OUTPUT
+          echo "Existing reminder issues: $EXISTING"
+      
+      - name: Create reminder issue
+        if: steps.sponsors.outputs.sponsors_enabled == 'false' && steps.check-issues.outputs.existing_issues == '0'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh issue create \
+            --repo ${{ github.repository }} \
+            --title "🔔 [REMINDER] Complete Payment Platform Setup" \
+            --label "payment-reminder,automation" \
+            --body "## Payment Platform Setup Reminder
+
+          **Ko-fi** ✅ and **PayPal** ✅ are live and configured!
+
+          However, **GitHub Sponsors** still needs completion:
+
+          ### Action Required (5 minutes)
+
+          1. **GitHub Sponsors Setup**
+             - Visit: https://github.com/sponsors/EvezArt
+             - Connect your Stripe account
+             - Complete bank verification
+             - Activate sponsorship tiers
+
+          ### Current Status
+          - ✅ Ko-fi: https://ko-fi.com/evez666
+          - ✅ PayPal: https://paypal.me/evezart
+          - ⏳ GitHub Sponsors: Pending Stripe connection
+          - ⏳ Gumroad: Account needs creation
+
+          ### Why This Matters
+          - GitHub Sponsors enables recurring revenue
+          - Stripe provides professional payment processing
+          - Integration with GitHub ecosystem
+          - Tax reporting and compliance
+
+          ### Next Steps
+          After completing GitHub Sponsors:
+          1. Create Gumroad account at https://gumroad.com/signup
+          2. Use username: evezart
+          3. Upload premium product listings (auto-generated)
+
+          ---
+          *This reminder will be posted daily until setup is complete. Close this issue once GitHub Sponsors is activated.*
+          "
+          echo "✅ Payment setup reminder issue created"
