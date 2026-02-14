@@ -1,0 +1,79 @@
+name: Viral Growth Engine
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    # Every 6 hours
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: read
+
+jobs:
+  engage:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+      
+      - name: Thank new stars
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [ -f scripts/engagement/thank_stars.py ]; then
+            python scripts/engagement/thank_stars.py
+          else
+            echo "Star appreciation script not yet implemented"
+          fi
+      
+      - name: Check milestones
+        id: milestones
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: |
+          python scripts/engagement/check_milestones.py
+      
+      - name: Post to social media if milestone reached
+        if: steps.milestones.outputs.milestone_reached == 'true'
+        env:
+          TWITTER_API_KEY: ${{ secrets.TWITTER_API_KEY }}
+          TWITTER_API_SECRET: ${{ secrets.TWITTER_API_SECRET }}
+          TWITTER_ACCESS_TOKEN: ${{ secrets.TWITTER_ACCESS_TOKEN }}
+          TWITTER_ACCESS_SECRET: ${{ secrets.TWITTER_ACCESS_SECRET }}
+          MILESTONE_TYPE: ${{ steps.milestones.outputs.milestone_type }}
+          MILESTONE_COUNT: ${{ steps.milestones.outputs.milestone_count }}
+        run: |
+          if [ -n "$TWITTER_API_KEY" ]; then
+            python scripts/engagement/post_to_social.py --milestone
+          else
+            echo "Social media credentials not configured"
+          fi
+      
+      - name: Update engagement metrics
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: |
+          python scripts/engagement/update_metrics.py
+      
+      - name: Generate weekly report
+        if: github.event.schedule == '0 14 * * 1'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: |
+          python scripts/engagement/generate_engagement_report.py

@@ -1,0 +1,52 @@
+name: Thank New Stargazers
+
+on:
+  watch:
+    types: [started]
+  workflow_dispatch:
+
+permissions:
+  issues: write
+  contents: read
+
+jobs:
+  thank:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Get stargazer info
+        id: get_user
+        run: |
+          USER=${{ github.event.sender.login }}
+          echo "user=$USER" >> $GITHUB_OUTPUT
+          echo "New star from @$USER"
+      
+      - name: Create personalized issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+          USER: ${{ steps.get_user.outputs.user }}
+        run: |
+          gh issue create \
+            --repo ${{ github.repository }} \
+            --title "Thanks @$USER for the star! 🌟" \
+            --body "Hey @$USER! Thanks for starring Evez666.
+          
+          Want to dive deeper? Check out:
+          - [📖 Cognitive Engine Spec](https://github.com/EvezArt/Evez666/issues/82)
+          - [💰 Become a Sponsor](https://github.com/sponsors/EvezArt)
+          - [📦 Premium Products](https://ko-fi.com/evezart)
+          - [💵 Support on PayPal](https://www.paypal.me/evezart)
+          
+          **What is Evez666?**
+          A cognitive engine that monitors its own state, predicts future needs, and evolves via GitHub Copilot automation. From concept to revenue generation in 24 hours using AI-first development.
+          
+          **Get Involved:**
+          - ⭐ Star more repositories
+          - 🍴 Fork and experiment
+          - 💬 Join discussions
+          - 🐛 Report issues
+          - 🎯 Become a sponsor
+          
+          Questions? Just reply here or open an issue!"

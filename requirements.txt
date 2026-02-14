@@ -28,3 +28,8 @@ numpy==1.26.4
 
 # Optional: For visualization:
 # matplotlib
+
+# Viral Growth & Engagement System dependencies
+tweepy>=4.14.0  # Twitter/X API
+praw>=7.7.0     # Reddit API
+requests>=2.31.0  # HTTP requests for APIs
