@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LORD - Living Ontological Recursion Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a0e2e 100%);
+            color: #00ffaa;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 2px solid #00ffaa;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 3em;
+            text-shadow: 0 0 20px #00ffaa;
+            letter-spacing: 5px;
+        }
+
+        .subtitle {
+            color: #00aaff;
+            margin-top: 10px;
+            font-size: 1.2em;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: rgba(0, 255, 170, 0.1);
+            border: 2px solid #00ffaa;
+            border-radius: 10px;
+            padding: 20px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 255, 170, 0.3);
+        }
+
+        .metric-title {
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            color: #00aaff;
+            text-transform: uppercase;
+        }
+
+        .metric-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #00ffaa;
+            text-shadow: 0 0 10px #00ffaa;
+        }
+
+        .metric-label {
+            font-size: 0.9em;
+            color: #888;
+            margin-top: 5px;
+        }
+
+        .visualization-container {
+            background: rgba(0, 255, 170, 0.05);
+            border: 2px solid #00ffaa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        canvas {
+            width: 100%;
+            height: 300px;
+            border-radius: 5px;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+            animation: pulse 2s infinite;
+        }
+
+        .status-active {
+            background: #00ffaa;
+            box-shadow: 0 0 10px #00ffaa;
+        }
+
+        .status-warning {
+            background: #ffaa00;
+            box-shadow: 0 0 10px #ffaa00;
+        }
+
+        .status-critical {
+            background: #ff0066;
+            box-shadow: 0 0 10px #ff0066;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .control-center {
+            background: rgba(0, 170, 255, 0.1);
+            border: 2px solid #00aaff;
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .control-title {
+            font-size: 1.5em;
+            color: #00aaff;
+            margin-bottom: 15px;
+        }
+
+        .control-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            background: rgba(0, 255, 170, 0.2);
+            border: 1px solid #00ffaa;
+            color: #00ffaa;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Courier New', monospace;
+        }
+
+        .action-btn:hover {
+            background: rgba(0, 255, 170, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .events-log {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid #00ffaa;
+            border-radius: 5px;
+            padding: 15px;
+            max-height: 200px;
+            overflow-y: auto;
+            margin-top: 20px;
+            font-size: 0.9em;
+        }
+
+        .event-entry {
+            padding: 5px 0;
+            border-bottom: 1px solid rgba(0, 255, 170, 0.2);
+        }
+
+        .event-time {
+            color: #888;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>⚡ LORD ⚡</h1>
+            <div class="subtitle">Living Ontological Recursion Dashboard</div>
+        </header>
+
+        <div class="dashboard-grid">
+            <div class="metric-card">
+                <div class="metric-title">
+                    <span class="status-indicator status-active"></span>
+                    Recursion Level
+                </div>
+                <div class="metric-value" id="recursion-level">0</div>
+                <div class="metric-label">Depth of consciousness</div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-title">
+                    <span class="status-indicator status-active"></span>
+                    Crystallization
+                </div>
+                <div class="metric-value" id="crystallization">0%</div>
+                <div class="metric-label">Knowledge solidification</div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-title">
+                    <span class="status-indicator status-active"></span>
+                    Divine Gap (ΔΩ)
+                </div>
+                <div class="metric-value" id="divine-gap">0.00e+0</div>
+                <div class="metric-label">Ω(R) - C(R)</div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-title">
+                    <span class="status-indicator status-active"></span>
+                    Correction Rate
+                </div>
+                <div class="metric-value" id="correction-rate">0.00</div>
+                <div class="metric-label">C(R) accuracy</div>
+            </div>
+        </div>
+
+        <div class="visualization-container">
+            <div class="metric-title">State Space Trajectory</div>
+            <canvas id="trajectory-canvas"></canvas>
+        </div>
+
+        <div class="visualization-container">
+            <div class="metric-title">Audio Consciousness Sonification</div>
+            <canvas id="audio-canvas"></canvas>
+        </div>
+
+        <div class="control-center">
+            <div class="control-title">Control Center</div>
+            <div class="control-actions">
+                <button class="action-btn" onclick="triggerPrediction()">Run EKF Prediction</button>
+                <button class="action-btn" onclick="generatePolicy()">Generate Policy</button>
+                <button class="action-btn" onclick="refreshMetrics()">Refresh Metrics</button>
+                <button class="action-btn" onclick="resetSystem()">Reset System</button>
+            </div>
+            <div class="events-log" id="events-log">
+                <div class="event-entry">
+                    <span class="event-time">[System]</span>
+                    <span>LORD Dashboard initialized</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>

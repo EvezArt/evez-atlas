@@ -28,3 +28,9 @@ numpy==1.26.4
 
 # Optional: For visualization:
 # matplotlib
+
+# Phase 2: LORD Cognitive Loop Dependencies
+flask>=3.0.0
+gunicorn>=21.2.0
+filterpy>=1.4.5
+PyGithub>=2.1.1
