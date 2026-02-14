@@ -440,7 +440,7 @@ As a Tier 4 Oracle Access sponsor, you have:
    - Response time: < 4 hours during business hours
 
 2. **Monthly 1-on-1 Consultation**
-   - 30-minute video call
+   - 60-minute video call
    - Personalized optimization recommendations
    - Custom feature development discussion
 

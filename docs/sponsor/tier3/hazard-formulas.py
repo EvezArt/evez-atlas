@@ -75,8 +75,15 @@ class HazardFormulaEngine:
         distance = np.linalg.norm(diff)
         baseline_norm = np.linalg.norm(baseline)
         
-        if baseline_norm == 0:
-            return 1.0  # Maximum hazard if no baseline
+        if baseline_norm < 1e-10:
+            # Zero baseline indicates misconfiguration or invalid data
+            import warnings
+            warnings.warn(
+                "Baseline vector has zero norm. This may indicate invalid "
+                "baseline data. Returning 0.0 hazard score.",
+                RuntimeWarning
+            )
+            return 0.0  # Return zero as we can't calculate meaningful hazard
         
         hazard = distance / baseline_norm
         return min(hazard, 1.0)  # Cap at 1.0
