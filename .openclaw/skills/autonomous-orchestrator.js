@@ -212,9 +212,17 @@ export default {
     console.log('[Orchestrator] Starting autonomous monitoring loop');
     
     const interval = parseInt(process.env.ORCHESTRATOR_INTERVAL || '600000', 10); // 10 minutes default
+    const maxIterations = parseInt(process.env.ORCHESTRATOR_MAX_ITERATIONS || '0', 10); // 0 = unlimited
+    let iterations = 0;
     
-    while (true) {
+    // Track if shutdown was requested
+    this.shouldStop = false;
+    
+    while (!this.shouldStop && (maxIterations === 0 || iterations < maxIterations)) {
       try {
+        iterations++;
+        console.log(`[Orchestrator] Monitoring iteration ${iterations}${maxIterations > 0 ? `/${maxIterations}` : ''}`);
+        
         // Get current state
         let state = null;
         if (this.hasSkill(agent, 'self-awareness') && agent.skills && agent.skills['self-awareness']) {
@@ -239,6 +247,12 @@ export default {
       
       // Wait before next iteration
       await new Promise(resolve => setTimeout(resolve, interval));
+    }
+    
+    if (this.shouldStop) {
+      console.log('[Orchestrator] Autonomous loop stopped by shutdown request');
+    } else if (maxIterations > 0) {
+      console.log(`[Orchestrator] Autonomous loop completed after ${maxIterations} iterations`);
     }
   },
   
@@ -265,7 +279,10 @@ export default {
     
     // Start autonomous loop if enabled
     if (process.env.AUTONOMOUS_LOOP !== 'false') {
-      console.log(`   Autonomous loop: ✓ Starting (interval: ${parseInt(process.env.ORCHESTRATOR_INTERVAL || '600000', 10) / 1000}s)`);
+      const maxIterations = parseInt(process.env.ORCHESTRATOR_MAX_ITERATIONS || '0', 10);
+      const intervalMsg = `${parseInt(process.env.ORCHESTRATOR_INTERVAL || '600000', 10) / 1000}s`;
+      const maxIterMsg = maxIterations > 0 ? `, max ${maxIterations} iterations` : '';
+      console.log(`   Autonomous loop: ✓ Starting (interval: ${intervalMsg}${maxIterMsg})`);
       this.autonomousLoop(agent).catch(e => {
         console.error('[Orchestrator] Fatal error in autonomous loop:', e);
       });
@@ -279,5 +296,6 @@ export default {
    */
   async onUnload() {
     console.log('🎭 Autonomous orchestrator disabled');
+    this.shouldStop = true;
   }
 };

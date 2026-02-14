@@ -365,7 +365,11 @@ export SAFE_MODE=true              # Enable safe mode (default)
 export DEBUG=true                  # Enable debug logging
 export INTROSPECTION_INTERVAL=60000  # Self-awareness interval (ms)
 export DEEPCLAW_INTERVAL=300000    # DeepClaw analysis interval (ms)
+export DEEPCLAW_MAX_ITERATIONS=0   # Max iterations (0=unlimited)
 export ORCHESTRATOR_INTERVAL=600000  # Orchestrator check interval (ms)
+export ORCHESTRATOR_MAX_ITERATIONS=0  # Max iterations (0=unlimited)
+export AUTONOMOUS_LOOP=true        # Enable autonomous orchestrator loop
+export PERIODIC_INTROSPECTION=true # Enable periodic introspection
 ```
 
 ### File Locations

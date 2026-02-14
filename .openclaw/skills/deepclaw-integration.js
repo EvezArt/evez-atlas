@@ -112,9 +112,17 @@ export default {
     console.log('[DeepClaw] Starting recursive analysis loop');
     
     const interval = parseInt(process.env.DEEPCLAW_INTERVAL || '300000', 10); // 5 minutes default
+    const maxIterations = parseInt(process.env.DEEPCLAW_MAX_ITERATIONS || '0', 10); // 0 = unlimited
+    let iterations = 0;
     
-    while (true) {
+    // Track if shutdown was requested
+    this.shouldStop = false;
+    
+    while (!this.shouldStop && (maxIterations === 0 || iterations < maxIterations)) {
       try {
+        iterations++;
+        console.log(`[DeepClaw] Analysis iteration ${iterations}${maxIterations > 0 ? `/${maxIterations}` : ''}`);
+        
         // Get current state (requires self-awareness skill)
         let state;
         if (agent && agent.introspect && typeof agent.introspect === 'function') {
@@ -156,6 +164,12 @@ export default {
       // Wait before next iteration
       await new Promise(resolve => setTimeout(resolve, interval));
     }
+    
+    if (this.shouldStop) {
+      console.log('[DeepClaw] Recursive loop stopped by shutdown request');
+    } else if (maxIterations > 0) {
+      console.log(`[DeepClaw] Recursive loop completed after ${maxIterations} iterations`);
+    }
   },
   
   /**
@@ -166,6 +180,13 @@ export default {
     console.log('🌀 DeepClaw recursive mode enabled');
     console.log(`   SAFE_MODE: ${process.env.SAFE_MODE !== 'false' ? 'ON (analysis only)' : 'OFF (improvements active)'}`);
     console.log(`   Analysis interval: ${parseInt(process.env.DEEPCLAW_INTERVAL || '300000', 10) / 1000}s`);
+    
+    const maxIterations = parseInt(process.env.DEEPCLAW_MAX_ITERATIONS || '0', 10);
+    if (maxIterations > 0) {
+      console.log(`   Max iterations: ${maxIterations}`);
+    } else {
+      console.log('   Max iterations: unlimited');
+    }
     
     // Start recursive loop in background (don't await)
     this.recursiveLoop(agent).catch(e => {
@@ -178,5 +199,6 @@ export default {
    */
   async onUnload() {
     console.log('🌀 DeepClaw recursive mode disabled');
+    this.shouldStop = true;
   }
 };
