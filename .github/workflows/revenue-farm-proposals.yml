@@ -1,0 +1,71 @@
+name: Revenue Farm - Generate Proposals
+
+on:
+  schedule:
+    # Run weekly on Monday at 9 AM UTC
+    - cron: '0 9 * * 1'
+  workflow_dispatch:  # Allow manual trigger
+
+permissions:
+  contents: write  # For creating proposals
+
+jobs:
+  generate-proposals:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Need full history for analysis
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+      
+      - name: Generate revenue proposals
+        run: |
+          python revenue_farm/orchestrator.py --mode=proposal
+      
+      - name: Commit proposals
+        run: |
+          git config --local user.name "GitHub Actions"
+          git config --local user.email "actions@github.com"
+          git add revenue_farm/proposals/
+          git add revenue_farm/audit.log
+          
+          # Only commit if there are changes
+          if git diff --staged --quiet; then
+            echo "No new proposals generated"
+          else
+            git commit -m "Generate weekly revenue proposals [automated]"
+            git push
+          fi
+      
+      - name: Create summary comment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const path = require('path');
+            
+            // Find the latest summary file
+            const proposalsDir = 'revenue_farm/proposals';
+            const files = fs.readdirSync(proposalsDir);
+            const summaryFiles = files.filter(f => f.startsWith('summary_'));
+            
+            if (summaryFiles.length > 0) {
+              // Sort by timestamp (filename) and get latest
+              const latest = summaryFiles.sort().reverse()[0];
+              const summaryPath = path.join(proposalsDir, latest);
+              const summary = fs.readFileSync(summaryPath, 'utf8');
+              
+              // Output summary
+              console.log('📊 Latest Revenue Proposals Summary:');
+              console.log(summary.substring(0, 1000));  // First 1000 chars
+            }

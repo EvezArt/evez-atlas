@@ -6,6 +6,39 @@ Evez666 contains working notes and runbooks for controlled, authorized security 
 
 This repository includes experimental and conceptual systems. Read `ETHICAL_FRAMEWORK.md` before using any advanced autonomous agent features. All "miraculous" or "impossible" capabilities are metaphorical descriptions of advanced but feasible techniques.
 
+## 💰 Autonomous Revenue Farm (NEW)
+
+**Level-1 Safe Implementation**: Generate income from repository activity with full human control.
+
+The autonomous revenue farm creates **proposals** for monetizing your repository without any risky auto-spending or auto-publishing. All actions require human approval.
+
+### Revenue Streams
+- 📝 **Content Farm**: Blog posts and technical documentation
+- 🔧 **GitHub Action Marketplace**: Packaged workflow actions
+- 📊 **Training Data**: Anonymized datasets for AI companies
+- 💳 **Product Wiring**: GitHub Sponsors, Ko-fi, Gumroad setup
+
+### Quick Start
+```bash
+# Generate revenue proposals
+python revenue_farm/orchestrator.py --mode=proposal
+
+# Review proposals
+cat revenue_farm/proposals/summary_*.md
+
+# Check status
+python revenue_farm/orchestrator.py --status
+```
+
+**Documentation**:
+- [Quick Start Guide](revenue_farm/QUICK_START.md) - Get started in 15 minutes
+- [Implementation Guide](revenue_farm/IMPLEMENTATION_GUIDE.md) - Comprehensive playbooks
+- [Configuration](revenue_farm/configs/) - Customize revenue streams
+
+**Safety**: Level-1 mode ensures no auto-spending, no auto-publishing, and full human control over all actions.
+
+---
+
 ## Projects
 
 This repository contains multiple integrated projects:
