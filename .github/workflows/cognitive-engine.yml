@@ -1,0 +1,63 @@
+name: Cognitive Engine
+
+# Run the Cognitive Engine on a schedule to continuously monitor and adapt
+on:
+  schedule:
+    # Run every 5 minutes during active hours
+    - cron: '*/5 * * * *'
+  
+  # Manual trigger
+  workflow_dispatch:
+  
+  # Also run on significant events
+  push:
+    branches: [main, master]
+  pull_request:
+    types: [opened, synchronize, closed]
+  issues:
+    types: [opened, labeled]
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+  actions: read
+
+jobs:
+  run-cognitive-engine:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Build TypeScript
+        run: npm run build
+      
+      - name: Run Cognitive Engine
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO_OWNER: ${{ github.repository_owner }}
+          REPO_NAME: ${{ github.event.repository.name }}
+        run: |
+          echo "🚀 Starting Cognitive Engine..."
+          node dist/cognitive-engine/runner.js
+          echo "✅ Cognitive Engine execution complete"
+      
+      - name: Upload engine logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cognitive-engine-logs-${{ github.run_id }}
+          path: cognitive-engine.log
+          retention-days: 7
+          if-no-files-found: ignore
