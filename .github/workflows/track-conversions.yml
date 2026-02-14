@@ -1,0 +1,281 @@
+name: Track Sponsor Conversions
+
+# Track profile views -> stars -> sponsors conversion funnel
+on:
+  schedule:
+    - cron: '0 */6 * * *'  # Every 6 hours
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  track-conversions:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Fetch traffic stats
+        id: traffic
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OWNER: EvezArt
+          REPO: Evez666
+        run: |
+          echo "Fetching traffic statistics..."
+          
+          # Get repository views (last 14 days)
+          views=$(gh api repos/$OWNER/$REPO/traffic/views --jq '.uniques')
+          total_views=$(gh api repos/$OWNER/$REPO/traffic/views --jq '.count')
+          echo "views=$views" >> $GITHUB_OUTPUT
+          echo "total_views=$total_views" >> $GITHUB_OUTPUT
+          
+          # Get repository clones
+          clones=$(gh api repos/$OWNER/$REPO/traffic/clones --jq '.uniques')
+          total_clones=$(gh api repos/$OWNER/$REPO/traffic/clones --jq '.count')
+          echo "clones=$clones" >> $GITHUB_OUTPUT
+          echo "total_clones=$total_clones" >> $GITHUB_OUTPUT
+          
+          # Get referring sites
+          referrers=$(gh api repos/$OWNER/$REPO/traffic/popular/referrers --jq 'length')
+          echo "referrers=$referrers" >> $GITHUB_OUTPUT
+          
+          echo "Traffic Stats:"
+          echo "- Unique views: $views"
+          echo "- Total views: $total_views"
+          echo "- Unique clones: $clones"
+          echo "- Total clones: $total_clones"
+          echo "- Referrers: $referrers"
+      
+      - name: Fetch engagement metrics
+        id: engagement
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OWNER: EvezArt
+          REPO: Evez666
+        run: |
+          echo "Fetching engagement metrics..."
+          
+          # Get stargazers
+          stars=$(gh api repos/$OWNER/$REPO --jq '.stargazers_count')
+          echo "stars=$stars" >> $GITHUB_OUTPUT
+          
+          # Get watchers
+          watchers=$(gh api repos/$OWNER/$REPO --jq '.watchers_count')
+          echo "watchers=$watchers" >> $GITHUB_OUTPUT
+          
+          # Get forks
+          forks=$(gh api repos/$OWNER/$REPO --jq '.forks_count')
+          echo "forks=$forks" >> $GITHUB_OUTPUT
+          
+          # Get open issues
+          open_issues=$(gh api repos/$OWNER/$REPO --jq '.open_issues_count')
+          echo "open_issues=$open_issues" >> $GITHUB_OUTPUT
+          
+          echo "Engagement Metrics:"
+          echo "- Stars: $stars"
+          echo "- Watchers: $watchers"
+          echo "- Forks: $forks"
+          echo "- Open issues: $open_issues"
+      
+      - name: Fetch sponsor count
+        id: sponsors
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OWNER: EvezArt
+        run: |
+          echo "Fetching sponsor information..."
+          
+          # Try to get sponsor count via GraphQL
+          sponsor_count=$(gh api graphql -f query='
+            query {
+              user(login: "'$OWNER'") {
+                sponsors {
+                  totalCount
+                }
+                sponsorsListing {
+                  id
+                  isPublic
+                }
+              }
+            }
+          ' --jq '.data.user.sponsors.totalCount' 2>/dev/null || echo "0")
+          
+          echo "sponsor_count=$sponsor_count" >> $GITHUB_OUTPUT
+          echo "Sponsors: $sponsor_count"
+      
+      - name: Calculate conversion rates
+        id: conversions
+        env:
+          VIEWS: ${{ steps.traffic.outputs.views }}
+          STARS: ${{ steps.engagement.outputs.stars }}
+          SPONSORS: ${{ steps.sponsors.outputs.sponsor_count }}
+        run: |
+          echo "Calculating conversion funnel..."
+          
+          # Calculate view -> star conversion (%)
+          if [ "$VIEWS" -gt 0 ]; then
+            view_to_star=$(echo "scale=2; ($STARS / $VIEWS) * 100" | bc)
+          else
+            view_to_star="0.00"
+          fi
+          echo "view_to_star=$view_to_star" >> $GITHUB_OUTPUT
+          
+          # Calculate star -> sponsor conversion (%)
+          if [ "$STARS" -gt 0 ]; then
+            star_to_sponsor=$(echo "scale=2; ($SPONSORS / $STARS) * 100" | bc)
+          else
+            star_to_sponsor="0.00"
+          fi
+          echo "star_to_sponsor=$star_to_sponsor" >> $GITHUB_OUTPUT
+          
+          # Calculate overall view -> sponsor conversion (%)
+          if [ "$VIEWS" -gt 0 ]; then
+            view_to_sponsor=$(echo "scale=2; ($SPONSORS / $VIEWS) * 100" | bc)
+          else
+            view_to_sponsor="0.00"
+          fi
+          echo "view_to_sponsor=$view_to_sponsor" >> $GITHUB_OUTPUT
+          
+          echo "Conversion Funnel:"
+          echo "- Views: $VIEWS"
+          echo "- Stars: $STARS (${view_to_star}% from views)"
+          echo "- Sponsors: $SPONSORS (${star_to_sponsor}% from stars, ${view_to_sponsor}% from views)"
+      
+      - name: Create conversion report
+        env:
+          VIEWS: ${{ steps.traffic.outputs.views }}
+          TOTAL_VIEWS: ${{ steps.traffic.outputs.total_views }}
+          CLONES: ${{ steps.traffic.outputs.clones }}
+          STARS: ${{ steps.engagement.outputs.stars }}
+          WATCHERS: ${{ steps.engagement.outputs.watchers }}
+          FORKS: ${{ steps.engagement.outputs.forks }}
+          SPONSORS: ${{ steps.sponsors.outputs.sponsor_count }}
+          VIEW_TO_STAR: ${{ steps.conversions.outputs.view_to_star }}
+          STAR_TO_SPONSOR: ${{ steps.conversions.outputs.star_to_sponsor }}
+          VIEW_TO_SPONSOR: ${{ steps.conversions.outputs.view_to_sponsor }}
+        run: |
+          mkdir -p data/conversions
+          TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+          
+          # Create JSON conversion report
+          cat > data/conversions/latest.json <<EOF
+          {
+            "timestamp": "$TIMESTAMP",
+            "traffic": {
+              "unique_views": $VIEWS,
+              "total_views": $TOTAL_VIEWS,
+              "unique_clones": $CLONES
+            },
+            "engagement": {
+              "stars": $STARS,
+              "watchers": $WATCHERS,
+              "forks": $FORKS
+            },
+            "sponsors": {
+              "count": $SPONSORS
+            },
+            "conversions": {
+              "view_to_star_percent": $VIEW_TO_STAR,
+              "star_to_sponsor_percent": $STAR_TO_SPONSOR,
+              "view_to_sponsor_percent": $VIEW_TO_SPONSOR
+            }
+          }
+          EOF
+          
+          echo "Conversion report created:"
+          cat data/conversions/latest.json
+          
+          # Append to history file
+          if [ ! -f data/conversions/history.jsonl ]; then
+            touch data/conversions/history.jsonl
+          fi
+          cat data/conversions/latest.json >> data/conversions/history.jsonl
+          echo "Appended to conversion history"
+      
+      - name: Generate conversion summary
+        env:
+          VIEWS: ${{ steps.traffic.outputs.views }}
+          STARS: ${{ steps.engagement.outputs.stars }}
+          SPONSORS: ${{ steps.sponsors.outputs.sponsor_count }}
+          VIEW_TO_SPONSOR: ${{ steps.conversions.outputs.view_to_sponsor }}
+        run: |
+          mkdir -p data/conversions
+          
+          cat > data/conversions/README.md <<'EOF'
+          # Sponsor Conversion Tracking
+          
+          ## Current Funnel Status
+          
+          ```
+          Profile Views → Repository Stars → GitHub Sponsors
+          ```
+          
+          ### Latest Metrics
+          
+          | Stage | Count | Conversion Rate |
+          |-------|-------|-----------------|
+          | 👁️ Profile Views | ${VIEWS} | - |
+          | ⭐ Stars | ${STARS} | ${VIEW_TO_STAR}% |
+          | 💰 Sponsors | ${SPONSORS} | ${VIEW_TO_SPONSOR}% |
+          
+          ### Target Goals
+          
+          - **Profile Views:** 1,000/month
+          - **Stars:** 30 (3% conversion)
+          - **Sponsor Clicks:** 15 (50% interest)
+          - **Actual Sponsors:** 5-10 (33-66% close rate)
+          
+          ### Revenue Projection
+          
+          With **10 sponsors** at average **$50/month**:
+          - Monthly Revenue: $500
+          - Annual Revenue: $6,000
+          - 5% monthly growth: $1,000/month by month 6
+          
+          ### Optimization Strategies
+          
+          1. **Increase Views:** SEO, social media, developer communities
+          2. **Improve Star Rate:** Better README, demos, documentation
+          3. **Boost Sponsor CTR:** Compelling value props, clear benefits
+          4. **Close Sponsors:** Tier optimization, testimonials, urgency
+          
+          ---
+          
+          _Last updated: $(date -u +"%Y-%m-%d %H:%M UTC")_
+          _Tracked automatically every 6 hours_
+          EOF
+          
+          # Replace placeholders with actual values
+          sed -i "s/\${VIEWS}/$VIEWS/g" data/conversions/README.md
+          sed -i "s/\${STARS}/$STARS/g" data/conversions/README.md
+          sed -i "s/\${SPONSORS}/$SPONSORS/g" data/conversions/README.md
+          sed -i "s/\${VIEW_TO_STAR}/${VIEW_TO_STAR}/g" data/conversions/README.md
+          sed -i "s/\${VIEW_TO_SPONSOR}/${VIEW_TO_SPONSOR}/g" data/conversions/README.md
+          
+          echo "Conversion summary generated"
+      
+      - name: Commit conversion data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          
+          if [ -n "$(git status --porcelain)" ]; then
+            git add data/conversions/
+            git commit -m "chore: Update conversion tracking data [skip ci]"
+            git push
+            echo "Conversion data committed and pushed"
+          else
+            echo "No changes to commit"
+          fi
+      
+      - name: Upload conversion report
+        uses: actions/upload-artifact@v4
+        with:
+          name: conversion-report
+          path: |
+            data/conversions/latest.json
+            data/conversions/README.md
+          retention-days: 90

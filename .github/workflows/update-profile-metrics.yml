@@ -1,0 +1,161 @@
+name: Update Profile Metrics
+
+# Update profile metrics badges every 6 hours
+on:
+  schedule:
+    - cron: '0 */6 * * *'  # Every 6 hours
+  workflow_dispatch:  # Allow manual trigger
+
+permissions:
+  contents: write
+
+jobs:
+  update-metrics:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Fetch GitHub metrics
+        id: metrics
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OWNER: EvezArt
+          REPO: Evez666
+        run: |
+          echo "Fetching metrics for $OWNER/$REPO"
+          
+          # Get star count
+          stars=$(gh api repos/$OWNER/$REPO --jq '.stargazers_count')
+          echo "stars=$stars" >> $GITHUB_OUTPUT
+          
+          # Get follower count
+          followers=$(gh api users/$OWNER --jq '.followers')
+          echo "followers=$followers" >> $GITHUB_OUTPUT
+          
+          # Get open PR count
+          open_prs=$(gh api repos/$OWNER/$REPO/pulls?state=open --jq 'length')
+          echo "open_prs=$open_prs" >> $GITHUB_OUTPUT
+          
+          # Get total repositories
+          total_repos=$(gh api users/$OWNER/repos?per_page=100 --jq 'length')
+          echo "total_repos=$total_repos" >> $GITHUB_OUTPUT
+          
+          # Calculate total stars across all repos
+          all_repos=$(gh api users/$OWNER/repos?per_page=100)
+          total_stars=$(echo "$all_repos" | jq '[.[].stargazers_count] | add')
+          echo "total_stars=$total_stars" >> $GITHUB_OUTPUT
+          
+          # Get sponsor count (if available)
+          # Note: This requires sponsors GraphQL API access
+          sponsor_count=$(gh api graphql -f query='
+            query {
+              user(login: "'$OWNER'") {
+                sponsors {
+                  totalCount
+                }
+              }
+            }
+          ' --jq '.data.user.sponsors.totalCount' 2>/dev/null || echo "0")
+          echo "sponsor_count=$sponsor_count" >> $GITHUB_OUTPUT
+          
+          echo "Metrics fetched successfully:"
+          echo "- Stars (this repo): $stars"
+          echo "- Total stars: $total_stars"
+          echo "- Followers: $followers"
+          echo "- Open PRs: $open_prs"
+          echo "- Total repos: $total_repos"
+          echo "- Sponsors: $sponsor_count"
+      
+      - name: Update metrics in SPONSORS.md
+        env:
+          STARS: ${{ steps.metrics.outputs.stars }}
+          TOTAL_STARS: ${{ steps.metrics.outputs.total_stars }}
+          FOLLOWERS: ${{ steps.metrics.outputs.followers }}
+          OPEN_PRS: ${{ steps.metrics.outputs.open_prs }}
+          SPONSORS: ${{ steps.metrics.outputs.sponsor_count }}
+        run: |
+          # Update last updated date
+          TIMESTAMP=$(date '+%B %Y')
+          
+          # Update SPONSORS.md with current timestamp
+          if [ -f SPONSORS.md ]; then
+            sed -i "s/_Last updated:.*_/_Last updated: $TIMESTAMP_/" SPONSORS.md
+            echo "Updated SPONSORS.md timestamp"
+          fi
+      
+      - name: Create metrics report
+        env:
+          STARS: ${{ steps.metrics.outputs.stars }}
+          TOTAL_STARS: ${{ steps.metrics.outputs.total_stars }}
+          FOLLOWERS: ${{ steps.metrics.outputs.followers }}
+          OPEN_PRS: ${{ steps.metrics.outputs.open_prs }}
+          REPOS: ${{ steps.metrics.outputs.total_repos }}
+          SPONSORS: ${{ steps.metrics.outputs.sponsor_count }}
+        run: |
+          mkdir -p data/metrics
+          
+          # Create JSON metrics file
+          cat > data/metrics/latest.json <<EOF
+          {
+            "timestamp": "$(date -u +"%Y-%m-%dT%H:%M:%SZ")",
+            "stars": $STARS,
+            "total_stars": $TOTAL_STARS,
+            "followers": $FOLLOWERS,
+            "open_prs": $OPEN_PRS,
+            "repositories": $REPOS,
+            "sponsors": $SPONSORS
+          }
+          EOF
+          
+          echo "Created metrics report: data/metrics/latest.json"
+          cat data/metrics/latest.json
+      
+      - name: Calculate recursion depth (mock)
+        id: lord
+        run: |
+          # Mock LORD metrics calculation
+          # In production, these would be calculated from actual system state
+          
+          # Recursion depth (simulated based on PR activity)
+          recursion=$((10 + RANDOM % 11))  # 10-20
+          echo "recursion=$recursion" >> $GITHUB_OUTPUT
+          
+          # Crystallization (based on completed/total cycles)
+          crystallization=$((80 + RANDOM % 21))  # 80-100%
+          echo "crystallization=$crystallization" >> $GITHUB_OUTPUT
+          
+          # Divine gap (simulated)
+          if [ $crystallization -gt 90 ]; then
+            gap="10^3"
+          else
+            gap="10^4"
+          fi
+          echo "gap=$gap" >> $GITHUB_OUTPUT
+          
+          echo "LORD Metrics:"
+          echo "- Recursion: $recursion"
+          echo "- Crystallization: $crystallization%"
+          echo "- Divine Gap: $gap"
+      
+      - name: Commit metrics updates
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          
+          if [ -n "$(git status --porcelain)" ]; then
+            git add -A
+            git commit -m "chore: Update profile metrics [skip ci]"
+            git push
+            echo "Metrics updated and pushed"
+          else
+            echo "No changes to commit"
+          fi
+      
+      - name: Upload metrics artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: profile-metrics
+          path: data/metrics/latest.json
+          retention-days: 90
