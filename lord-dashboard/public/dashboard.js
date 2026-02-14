@@ -195,12 +195,15 @@ function drawAudioViz() {
     const amplitude = 50 + (metricsData.divineGap / 1e4) * 50;
     const frequency = 0.05 + (metricsData.velocity * 0.1);
     
+    // Calculate timestamp once for efficiency
+    const timestamp = Date.now() * 0.001;
+    
     ctx.strokeStyle = '#00ffaa';
     ctx.lineWidth = 2;
     ctx.beginPath();
     
     for (let x = 0; x < canvas.width; x++) {
-        const y = centerY + Math.sin(x * frequency + Date.now() * 0.001) * amplitude;
+        const y = centerY + Math.sin(x * frequency + timestamp) * amplitude;
         
         if (x === 0) {
             ctx.moveTo(x, y);

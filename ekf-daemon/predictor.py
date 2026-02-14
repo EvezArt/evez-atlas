@@ -114,6 +114,10 @@ class CognitiveEKF:
         
         Args:
             observation: dict with 'recursionLevel' and 'crystallization'
+        
+        Note: Uses manual EKF implementation instead of filterpy's predict/update methods
+        due to API compatibility issues with different filterpy versions. This ensures
+        consistent behavior across Python 3.9-3.12 environments.
         """
         # Extract measurements
         z = np.array([
@@ -121,12 +125,12 @@ class CognitiveEKF:
             observation.get('crystallization', 0)
         ])
         
-        # Predict step - use manual calculation since filterpy API varies
+        # Predict step - manual calculation for compatibility
         F = self.jacobian_F(self.ekf.x)
         self.ekf.x = F @ self.ekf.x
         self.ekf.P = F @ self.ekf.P @ F.T + self.ekf.Q
         
-        # Update step
+        # Update step - manual calculation for compatibility
         H = self.jacobian_H(self.ekf.x)
         y = z - H @ self.ekf.x  # Innovation
         S = H @ self.ekf.P @ H.T + self.ekf.R  # Innovation covariance
@@ -281,7 +285,10 @@ class CognitiveEKF:
             body += "4. Create architectural diagrams\n"
         
         body += "\n---\n"
-        body += "*This issue follows SAFE_MODE protocols and requires human approval before execution.*\n"
+        
+        # Only add SAFE_MODE disclaimer if actually in SAFE_MODE
+        if SAFE_MODE:
+            body += "*This issue follows SAFE_MODE protocols and requires human approval before execution.*\n"
         
         return body
 

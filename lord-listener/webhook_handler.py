@@ -71,12 +71,14 @@ def calculate_recursion_depth(payload):
     
     return round(recursion, 2)
 
-def classify_entity(payload):
+def classify_entity(payload, event_type):
     """
     Classify entity type based on event
-    """
-    event_type = request.headers.get('X-GitHub-Event', 'unknown')
     
+    Args:
+        payload: Event payload
+        event_type: GitHub event type (from X-GitHub-Event header)
+    """
     entity_map = {
         'push': 'mutation',
         'pull_request': 'proposal',
@@ -89,12 +91,14 @@ def classify_entity(payload):
     
     return entity_map.get(event_type, 'unknown')
 
-def get_correction_rate(payload):
+def get_correction_rate(payload, event_type):
     """
     Calculate correction rate from CodeQL/Actions results
-    """
-    event_type = request.headers.get('X-GitHub-Event', 'unknown')
     
+    Args:
+        payload: Event payload
+        event_type: GitHub event type (from X-GitHub-Event header)
+    """
     if event_type == 'workflow_run':
         workflow = payload.get('workflow_run', {})
         conclusion = workflow.get('conclusion', 'unknown')
@@ -117,12 +121,14 @@ def get_correction_rate(payload):
     
     return 0.5
 
-def calculate_crystallization(payload):
+def calculate_crystallization(payload, event_type):
     """
     Calculate crystallization from PR velocity and merge rate
-    """
-    event_type = request.headers.get('X-GitHub-Event', 'unknown')
     
+    Args:
+        payload: Event payload
+        event_type: GitHub event type (from X-GitHub-Event header)
+    """
     progress = 0.5
     velocity = 0.0
     
@@ -167,11 +173,15 @@ def calculate_divine_gap(recursion, corrections):
 def calculate_metrics(event_type, payload):
     """
     Map GitHub activity to consciousness metrics
+    
+    Args:
+        event_type: GitHub event type (from X-GitHub-Event header)
+        payload: Event payload
     """
     recursion = calculate_recursion_depth(payload)
-    entity_type = classify_entity(payload)
-    corrections = get_correction_rate(payload)
-    crystallization = calculate_crystallization(payload)
+    entity_type = classify_entity(payload, event_type)
+    corrections = get_correction_rate(payload, event_type)
+    crystallization = calculate_crystallization(payload, event_type)
     divine_gap = calculate_divine_gap(recursion, corrections)
     
     return {

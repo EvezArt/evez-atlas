@@ -277,10 +277,14 @@ class PolicyExecutor:
                 direction='desc'
             )
             
+            # Get current time as UTC
+            now_utc = datetime.utcnow()
+            
             for issue in issues[:50]:  # Check last 50 issues
                 if issue.title.startswith(title_prefix):
-                    # Check age
-                    age = (datetime.utcnow() - issue.created_at.replace(tzinfo=None)).days
+                    # Check age - both times are UTC
+                    issue_created_utc = issue.created_at.replace(tzinfo=None)
+                    age = (now_utc - issue_created_utc).days
                     if age <= days:
                         print(f"Found duplicate issue #{issue.number}: {issue.title}")
                         return True
