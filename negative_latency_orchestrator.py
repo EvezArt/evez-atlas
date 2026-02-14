@@ -42,14 +42,16 @@ class NegativeLatencyOrchestrator:
     Main orchestrator for the entire negative latency system
     """
     
-    def __init__(self, safe_mode: bool = True):
+    def __init__(self, safe_mode: bool = True, coordination_interval: int = 30):
         """
         Initialize the orchestrator and all subsystems
         
         Args:
             safe_mode: Enable SAFE_MODE across all systems
+            coordination_interval: Seconds between coordination loops (default: 30)
         """
         self.safe_mode = safe_mode
+        self.coordination_interval = coordination_interval
         
         print("=" * 70)
         print("NEGATIVE LATENCY SYSTEM - Orchestrator Initializing")
@@ -157,12 +159,12 @@ class NegativeLatencyOrchestrator:
                         trajectory=latest_trajectory.trajectory
                     )
                 
-                # Coordination runs every 30 seconds
-                time.sleep(30)
+                # Coordination runs every N seconds (configurable)
+                time.sleep(self.coordination_interval)
                 
             except Exception as e:
                 print(f"❌ Error in coordination loop: {e}")
-                time.sleep(30)
+                time.sleep(self.coordination_interval)
     
     def handle_event(self, event: Dict[str, Any]) -> Dict[str, Any]:
         """

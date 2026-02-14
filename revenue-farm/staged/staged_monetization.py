@@ -143,12 +143,13 @@ class StagedRevenueActions:
         
         return milestones
     
-    def _generate_product_listing(self, milestone: Dict[str, Any]) -> ProductListing:
+    def _generate_product_listing(self, milestone: Dict[str, Any], platform: str = 'gumroad') -> ProductListing:
         """
         Generate complete product listing for a milestone
         
         Args:
             milestone: Milestone data
+            platform: Platform for listing (gumroad, kofi, github_sponsors)
         
         Returns:
             Pre-generated product listing
@@ -164,7 +165,7 @@ class StagedRevenueActions:
             tags=['automation', 'ai', 'negative-latency', 'guide'],
             milestone=milestone,
             created=False,
-            platform='gumroad'
+            platform=platform  # Use parameterized platform
         )
         
         return product

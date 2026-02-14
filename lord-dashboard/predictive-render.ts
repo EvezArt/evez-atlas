@@ -79,8 +79,8 @@ class LRUCache<K, V> {
     this.cache.set(key, value);
   }
 
-  has(key: string): boolean {
-    return this.cache.has(key as K);
+  has(key: K): boolean {
+    return this.cache.has(key);
   }
 
   clear(): void {
