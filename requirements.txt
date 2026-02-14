@@ -28,3 +28,9 @@ numpy==1.26.4
 
 # Optional: For visualization:
 # matplotlib
+
+# Negative Latency System Dependencies
+filterpy>=1.4.5
+redis>=5.0.0
+websockets>=12.0
+scipy>=1.11.0
