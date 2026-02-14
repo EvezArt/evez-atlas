@@ -3,7 +3,7 @@ name: Cognitive Engine
 # Run the Cognitive Engine on a schedule to continuously monitor and adapt
 on:
   schedule:
-    # Run every 5 minutes during active hours
+    # Run every 5 minutes, 24/7
     - cron: '*/5 * * * *'
   
   # Manual trigger

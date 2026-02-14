@@ -12,10 +12,15 @@ import { GitHubClient } from './github-actions';
 import * as fs from 'fs';
 
 // Configuration from environment
-const GITHUB_TOKEN = process.env.GITHUB_TOKEN || '';
+const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 const REPO_OWNER = process.env.REPO_OWNER || 'EvezArt';
 const REPO_NAME = process.env.REPO_NAME || 'Evez666';
 const AUTO_EXECUTE = process.env.AUTO_EXECUTE_POLICIES === 'true' || false;
+
+// Validate required token
+if (!GITHUB_TOKEN) {
+  throw new Error('GITHUB_TOKEN environment variable is required');
+}
 
 // Initialize Octokit
 const octokit = new Octokit({

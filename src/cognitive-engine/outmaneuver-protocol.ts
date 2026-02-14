@@ -45,6 +45,35 @@ export interface OutmaneuverConfig {
 }
 
 /**
+ * Loop scoring weights
+ * These weights determine how strongly each condition contributes to loop classification
+ */
+export const LOOP_SCORING_WEIGHTS = {
+  // Threat loop indicators (fighting problems)
+  THREAT_HIGH_HAZARD: 3,           // High/critical hazard severity
+  THREAT_HIGH_CORRECTION: 2,       // Correction rate > 70
+  
+  // Control loop indicators (over-correcting)
+  CONTROL_LOW_RECURSION_HIGH_VELOCITY: 3,  // R < 5 and velocity > 5
+  CONTROL_NEGATIVE_GAP: 2,         // Over-correction (ΔΩ < -10)
+  
+  // Worth loop indicators (complexity without stability)
+  WORTH_HIGH_RECURSION_LOW_CRYST: 3,  // R > 15 and crystallization < 50
+  WORTH_LOW_VELOCITY: 2,           // Velocity < 1
+  
+  // Attachment loop indicators (stuck in plateau)
+  ATTACHMENT_HIGH_CORRECTIONS_STALLED: 3,  // C > 60 and velocity < 2
+  ATTACHMENT_PLATEAU: 2,           // Correction rate hasn't changed
+  
+  // Numbing loop indicators (disengaged)
+  NUMBING_LOW_ACTIVITY: 3,         // R < 3 and C < 20
+  NUMBING_NO_MOVEMENT: 2,          // Velocity = 0
+  
+  // Maximum score for normalization
+  MAX_SCORE: 5,
+};
+
+/**
  * Default Outmaneuver Protocol configuration
  */
 export const DEFAULT_OUTMANEUVER_CONFIG: OutmaneuverConfig = {
@@ -110,6 +139,7 @@ export function detectEdge(
  */
 export function classifyLoop(state: FusionState, deltaOmega: number): LoopClassification {
   const indicators: string[] = [];
+  const W = LOOP_SCORING_WEIGHTS;
   const scores = {
     threat: 0,
     control: 0,
@@ -120,54 +150,54 @@ export function classifyLoop(state: FusionState, deltaOmega: number): LoopClassi
   
   // Threat loop: High hazards + high corrections
   if (state.hazards.severity === 'high' || state.hazards.severity === 'critical') {
-    scores.threat += 3;
+    scores.threat += W.THREAT_HIGH_HAZARD;
     indicators.push('High hazard severity');
   }
   if (state.corrections.current > 70) {
-    scores.threat += 2;
+    scores.threat += W.THREAT_HIGH_CORRECTION;
     indicators.push('High correction rate');
   }
   
   // Control loop: Low recursion + high crystallization attempts
   if (state.meta.recursionLevel < 5 && state.crystallization.velocity > 5) {
-    scores.control += 3;
+    scores.control += W.CONTROL_LOW_RECURSION_HIGH_VELOCITY;
     indicators.push('Low recursion with high crystallization pressure');
   }
   if (deltaOmega < -10) {
-    scores.control += 2;
+    scores.control += W.CONTROL_NEGATIVE_GAP;
     indicators.push('Over-correction detected (negative gap)');
   }
   
   // Worth loop: High recursion + low crystallization
   if (state.meta.recursionLevel > 15 && state.crystallization.progress < 50) {
-    scores.worth += 3;
+    scores.worth += W.WORTH_HIGH_RECURSION_LOW_CRYST;
     indicators.push('High recursion without adequate crystallization');
   }
   if (state.crystallization.velocity < 1) {
-    scores.worth += 2;
+    scores.worth += W.WORTH_LOW_VELOCITY;
     indicators.push('Very low crystallization velocity');
   }
   
   // Attachment loop: High corrections but progress stalled
   if (state.corrections.current > 60 && Math.abs(state.crystallization.velocity) < 2) {
-    scores.attachment += 3;
+    scores.attachment += W.ATTACHMENT_HIGH_CORRECTIONS_STALLED;
     indicators.push('High corrections but stalled progress');
   }
   if (state.corrections.history.length > 5) {
     const recentAvg = state.corrections.history.slice(-5).reduce((a, b) => a + b, 0) / 5;
     if (Math.abs(recentAvg - state.corrections.current) < 5) {
-      scores.attachment += 2;
+      scores.attachment += W.ATTACHMENT_PLATEAU;
       indicators.push('Correction rate stuck in plateau');
     }
   }
   
   // Numbing loop: Low everything (system disengaged)
   if (state.meta.recursionLevel < 3 && state.corrections.current < 20) {
-    scores.numbing += 3;
+    scores.numbing += W.NUMBING_LOW_ACTIVITY;
     indicators.push('Low recursion and corrections');
   }
   if (state.crystallization.velocity === 0) {
-    scores.numbing += 2;
+    scores.numbing += W.NUMBING_NO_MOVEMENT;
     indicators.push('No crystallization movement');
   }
   
@@ -180,7 +210,7 @@ export function classifyLoop(state: FusionState, deltaOmega: number): LoopClassi
     const entry = Object.entries(scores).find(([_, score]) => score === maxScore);
     if (entry) {
       loopType = entry[0] as LoopType;
-      confidence = Math.min(1, maxScore / 5); // Normalize to 0-1
+      confidence = Math.min(1, maxScore / W.MAX_SCORE);
     }
   }
   

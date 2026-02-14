@@ -128,8 +128,15 @@ export class WebhookServer {
         return;
       }
       
-      // Verify webhook signature (if configured)
-      // TODO: Implement signature verification
+      // Verify webhook signature if secret is configured
+      const secret = process.env.GITHUB_WEBHOOK_SECRET;
+      if (secret) {
+        const signature = req.headers['x-hub-signature-256'];
+        if (!signature || !this.verifySignature(req.body, signature as string, secret)) {
+          res.status(401).json({ error: 'Invalid signature' });
+          return;
+        }
+      }
       
       // Handle webhook
       await this.webhookHandler.handleWebhook(eventType, req.body);
@@ -142,6 +149,16 @@ export class WebhookServer {
         message: error instanceof Error ? error.message : String(error)
       });
     }
+  }
+  
+  /**
+   * Verify GitHub webhook signature using HMAC-SHA256
+   */
+  private verifySignature(payload: any, signature: string, secret: string): boolean {
+    const crypto = require('crypto');
+    const hmac = crypto.createHmac('sha256', secret);
+    const digest = 'sha256=' + hmac.update(JSON.stringify(payload)).digest('hex');
+    return crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(digest));
   }
   
   /**

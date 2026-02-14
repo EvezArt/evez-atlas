@@ -44,6 +44,28 @@ export interface GitHubMetrics {
 }
 
 /**
+ * Configuration constants for metric scoring
+ */
+export const METRIC_WEIGHTS = {
+  // Recursion level weights (total ~20 points max)
+  COMMIT_FREQUENCY_DIVISOR: 2,      // Normalize commits/day
+  COMMIT_MAX_POINTS: 8,             // Max points from commits
+  ISSUE_ENTROPY_MULTIPLIER: 2,      // Amplify label diversity
+  ISSUE_MAX_POINTS: 6,              // Max points from issues
+  PR_VELOCITY_DIVISOR: 3,           // Normalize PRs/week
+  PR_MAX_POINTS: 4,                 // Max points from PRs
+  OPEN_ISSUE_DIVISOR: 10,           // Normalize open issue count
+  OPEN_ISSUE_MAX_POINTS: 2,         // Max points from open issues
+  
+  // Correction rate weights (total ~100 points max)
+  CI_ERROR_MULTIPLIER: 50,          // Scale error rate to 0-50
+  CODEQL_ALERT_MULTIPLIER: 2,       // Points per alert
+  CODEQL_MAX_POINTS: 30,            // Cap CodeQL contribution
+  CLOSED_ISSUE_DIVISOR: 5,          // Normalize closed issues
+  CLOSED_ISSUE_MAX_POINTS: 20,      // Cap closed issue contribution
+};
+
+/**
  * Transform GitHub metrics into recursion level (1-20 scale)
  * 
  * Higher recursion = more complex/active development:
@@ -52,17 +74,19 @@ export interface GitHubMetrics {
  * - Multiple abstraction layers visible in PRs
  */
 export function computeRecursionLevel(metrics: GitHubMetrics): number {
-  // Base level from commit frequency (0-8 points)
-  const commitScore = Math.min(8, metrics.commits.frequency / 2);
+  const W = METRIC_WEIGHTS;
   
-  // Issue complexity (0-6 points)
-  const issueScore = Math.min(6, metrics.issues.entropy * 2);
+  // Base level from commit frequency
+  const commitScore = Math.min(W.COMMIT_MAX_POINTS, metrics.commits.frequency / W.COMMIT_FREQUENCY_DIVISOR);
   
-  // PR velocity indicates abstraction layers (0-4 points)
-  const prScore = Math.min(4, metrics.pullRequests.velocity / 3);
+  // Issue complexity
+  const issueScore = Math.min(W.ISSUE_MAX_POINTS, metrics.issues.entropy * W.ISSUE_ENTROPY_MULTIPLIER);
   
-  // Open issues suggest ongoing recursion (0-2 points)
-  const openIssueScore = Math.min(2, metrics.issues.openCount / 10);
+  // PR velocity indicates abstraction layers
+  const prScore = Math.min(W.PR_MAX_POINTS, metrics.pullRequests.velocity / W.PR_VELOCITY_DIVISOR);
+  
+  // Open issues suggest ongoing recursion
+  const openIssueScore = Math.min(W.OPEN_ISSUE_MAX_POINTS, metrics.issues.openCount / W.OPEN_ISSUE_DIVISOR);
   
   const total = commitScore + issueScore + prScore + openIssueScore;
   
@@ -76,14 +100,16 @@ export function computeRecursionLevel(metrics: GitHubMetrics): number {
  * More errors = higher correction rate (system is actively fixing issues)
  */
 export function computeCorrectionsFromCI(metrics: GitHubMetrics): number {
+  const W = METRIC_WEIGHTS;
+  
   // Base correction from CI failures
-  const ciCorrections = metrics.ci.errorRate * 50; // 0-50 points
+  const ciCorrections = metrics.ci.errorRate * W.CI_ERROR_MULTIPLIER;
   
   // CodeQL findings require corrections
-  const codeqlCorrections = Math.min(30, metrics.codeql.alertCount * 2); // 0-30 points
+  const codeqlCorrections = Math.min(W.CODEQL_MAX_POINTS, metrics.codeql.alertCount * W.CODEQL_ALERT_MULTIPLIER);
   
   // Active fixing (closed issues) shows corrections happening
-  const fixingCorrections = Math.min(20, metrics.issues.closedCount / 5); // 0-20 points
+  const fixingCorrections = Math.min(W.CLOSED_ISSUE_MAX_POINTS, metrics.issues.closedCount / W.CLOSED_ISSUE_DIVISOR);
   
   return Math.min(100, ciCorrections + codeqlCorrections + fixingCorrections);
 }
