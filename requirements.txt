@@ -28,3 +28,6 @@ numpy==1.26.4
 
 # Optional: For visualization:
 # matplotlib
+
+# Revenue Farm Dependencies
+pyyaml>=6.0

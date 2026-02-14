@@ -1,0 +1,248 @@
+# Revenue Farm Configuration
+# Level-1 Safe Implementation - All high-risk actions require human approval
+
+# Global Settings
+global:
+  mode: proposal  # Options: proposal, semi-auto (never: auto)
+  output_dir: revenue_farm/proposals
+  log_level: INFO
+  audit_log: revenue_farm/audit.log
+
+# Revenue Stream Configuration
+revenue_streams:
+  
+  # 1. Content Farm - AI-generated technical content
+  content_farm:
+    enabled: true
+    schedule: daily  # How often to check for content opportunities
+    max_proposals_per_day: 5
+    
+    blog_posts:
+      enabled: true
+      min_commit_count: 5  # Generate blog post after N commits
+      platforms:
+        - dev.to  # Proposal only - no auto-publish
+        - medium  # Proposal only - no auto-publish
+        - hashnode  # Proposal only - no auto-publish
+      topics:
+        - cognitive-systems
+        - github-automation
+        - ai-development
+        - lord-protocol
+        - negative-latency
+    
+    documentation:
+      enabled: true
+      auto_generate: true  # Safe: only generates local docs
+      formats:
+        - markdown
+        - pdf
+      include:
+        - api-reference
+        - tutorials
+        - architecture-guides
+    
+    video_scripts:
+      enabled: true
+      max_duration: 5min  # Short explainer videos
+      platforms:
+        - youtube  # Proposal only
+        - tiktok  # Proposal only
+  
+  # 2. GitHub Action Marketplace
+  action_marketplace:
+    enabled: true
+    auto_package: true  # Safe: only creates local packages
+    
+    action_templates:
+      - name: lord-monitor
+        description: Monitor LORD consciousness metrics in CI/CD
+        category: monitoring
+      - name: cognitive-health-check
+        description: Check cognitive engine health
+        category: testing
+      - name: autonomous-pr-review
+        description: AI-powered PR review with LORD metrics
+        category: code-quality
+      - name: training-data-export
+        description: Export anonymized training data
+        category: utilities
+      - name: revenue-report
+        description: Generate revenue stream reports
+        category: analytics
+    
+    marketplace_config:
+      branding:
+        icon: activity
+        color: purple
+      categories:
+        - Monitoring
+        - Testing
+        - Code Quality
+  
+  # 3. Training Data Marketplace
+  training_data:
+    enabled: true
+    auto_package: true  # Safe: generates local packages
+    anonymization: required  # Always anonymize
+    
+    datasets:
+      repo_evolution:
+        enabled: true
+        description: Repository evolution trajectories
+        update_frequency: weekly
+        anonymize:
+          - commit_messages
+          - author_names
+          - file_paths
+        pricing_model: per-download
+        
+      consciousness_metrics:
+        enabled: true
+        description: LORD consciousness time series
+        update_frequency: daily
+        include:
+          - recursion_depth
+          - crystallization_velocity
+          - divine_gap
+          - entity_types
+        pricing_model: subscription
+        
+      collaboration_patterns:
+        enabled: true
+        description: Human-AI collaboration patterns
+        update_frequency: weekly
+        anonymize:
+          - user_identifiers
+          - timestamps_fuzzy  # Fuzz to nearest hour
+        pricing_model: one-time
+    
+    export_formats:
+      - jsonl
+      - csv
+      - parquet
+  
+  # 4. Sponsor/Ko-fi/Gumroad Product Wiring
+  product_wiring:
+    enabled: true
+    auto_generate_metadata: true  # Safe: only generates descriptions
+    
+    platforms:
+      github_sponsors:
+        enabled: true
+        tiers:
+          - name: Awareness Patron
+            price: 5
+            benefits:
+              - Public LORD documentation access
+              - Monthly newsletter
+              - SPONSORS.md listing
+          - name: Hybrid Entity
+            price: 25
+            benefits:
+              - Private repo access
+              - LORD dashboard source
+              - Priority support
+          - name: Quantum Developer
+            price: 100
+            benefits:
+              - Custom Copilot templates
+              - EKF source code
+              - 1-on-1 consultation
+          - name: Oracle Access
+            price: 500
+            benefits:
+              - Full deployment kit
+              - Custom feature development
+              - Direct priority access
+      
+      ko_fi:
+        enabled: true
+        link_to_github_sponsors: true
+        shop_enabled: true
+      
+      gumroad:
+        enabled: true
+        products:
+          - name: Complete LORD Integration Guide
+            price: 47
+            type: digital-download
+          - name: Negative Latency Blueprint
+            price: 97
+            type: digital-download
+          - name: Self-Modifying Architecture
+            price: 197
+            type: digital-download
+          - name: Quantum Entity Development Kit
+            price: 497
+            type: bundle
+    
+    affiliate_program:
+      enabled: false  # Disabled for Level-1 safety
+      commission_rate: 0.20
+
+# Disabled Revenue Streams (High-Risk)
+disabled_streams:
+  
+  # DISABLED: Autonomous Consulting Matchmaker
+  consulting_matcher:
+    reason: Requires direct client communication - too risky for automation
+    alternative: Generate lead lists for manual outreach
+  
+  # DISABLED: Crypto Trading Bot
+  crypto_trader:
+    reason: Financial risk - explicitly excluded from Level-1
+    alternative: Document strategies for manual execution
+  
+  # DISABLED: Affiliate Network
+  affiliate_network:
+    reason: Automated spending on ads - not approved for Level-1
+    alternative: Generate affiliate link suggestions only
+
+# Monitoring & Reporting
+monitoring:
+  enabled: true
+  metrics:
+    - proposals_generated
+    - proposals_approved
+    - revenue_potential
+    - content_quality_score
+  
+  dashboard:
+    enabled: true
+    refresh_rate: 1hour
+  
+  alerts:
+    email_on_high_value_opportunity: false  # Set to true after configuring email
+    slack_webhook: null  # Optional: Add Slack webhook for notifications
+
+# Integration Settings
+integrations:
+  github:
+    api_base: https://api.github.com
+    rate_limit_buffer: 100  # Keep 100 requests in reserve
+  
+  # Payment platforms - configure only when ready to connect
+  stripe:
+    enabled: false
+    api_key_env: STRIPE_API_KEY
+  
+  paypal:
+    enabled: false
+    client_id_env: PAYPAL_CLIENT_ID
+
+# Ethical Compliance
+ethics:
+  ai_content_labeling: required
+  data_anonymization: required
+  human_review_threshold: all  # Level-1: review everything
+  gdpr_compliance: true
+  attribution_required: true
+  quality_threshold: 0.8  # 0-1 scale
+
+# Output Settings
+output:
+  proposal_format: markdown
+  include_execution_instructions: true
+  include_revenue_estimates: true
+  include_risk_assessment: true
