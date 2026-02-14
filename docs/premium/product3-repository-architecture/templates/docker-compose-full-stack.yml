@@ -1,0 +1,159 @@
+version: '3.8'
+
+# Self-Modifying Repository Architecture - Appendix D
+# Complete deployment stack for cognitive engine with LORD integration
+
+services:
+  # LORD Dashboard
+  lord-dashboard:
+    build: ./lord-dashboard
+    container_name: lord-dashboard
+    ports:
+      - "3000:3000"
+      - "3001:3001"
+    environment:
+      - NODE_ENV=production
+      - REDIS_URL=redis://redis:6379
+      - DATABASE_URL=postgresql://postgres:password@postgres:5432/lord
+      - WEBHOOK_SECRET=${WEBHOOK_SECRET}
+    volumes:
+      - ./data/lord:/app/data
+      - ./config/lord:/app/config
+    depends_on:
+      - redis
+      - postgres
+    networks:
+      - cognitive-network
+    restart: unless-stopped
+
+  # Cognitive Engine
+  cognitive-engine:
+    build: ./cognitive-engine
+    container_name: cognitive-engine
+    environment:
+      - PYTHON_ENV=production
+      - REDIS_URL=redis://redis:6379
+      - GITHUB_TOKEN=${GITHUB_TOKEN}
+      - LORD_API_URL=http://lord-dashboard:3000
+      - SAFETY_THRESHOLD=0.8
+    volumes:
+      - ./repos:/app/repos
+      - ./data/engine:/app/data
+      - ./logs:/app/logs
+    depends_on:
+      - redis
+      - lord-dashboard
+    networks:
+      - cognitive-network
+    restart: unless-stopped
+
+  # Webhook Receiver
+  webhook-receiver:
+    build: ./webhook-receiver
+    container_name: webhook-receiver
+    ports:
+      - "3002:3002"
+    environment:
+      - NODE_ENV=production
+      - WEBHOOK_SECRET=${WEBHOOK_SECRET}
+      - REDIS_URL=redis://redis:6379
+      - WS_URL=ws://lord-dashboard:3001
+    depends_on:
+      - redis
+      - lord-dashboard
+    networks:
+      - cognitive-network
+    restart: unless-stopped
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    container_name: cognitive-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    command: redis-server --appendonly yes
+    networks:
+      - cognitive-network
+    restart: unless-stopped
+
+  # PostgreSQL Database
+  postgres:
+    image: postgres:16-alpine
+    container_name: cognitive-postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=lord
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./init-db.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - cognitive-network
+    restart: unless-stopped
+
+  # Prometheus Monitoring
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: cognitive-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus-data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+    networks:
+      - cognitive-network
+    restart: unless-stopped
+
+  # Grafana Dashboards
+  grafana:
+    image: grafana/grafana:latest
+    container_name: cognitive-grafana
+    ports:
+      - "3003:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./config/grafana/dashboards:/etc/grafana/provisioning/dashboards
+      - ./config/grafana/datasources:/etc/grafana/provisioning/datasources
+    depends_on:
+      - prometheus
+    networks:
+      - cognitive-network
+    restart: unless-stopped
+
+  # Nginx Reverse Proxy
+  nginx:
+    image: nginx:alpine
+    container_name: cognitive-nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./config/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./ssl:/etc/nginx/ssl
+    depends_on:
+      - lord-dashboard
+      - webhook-receiver
+      - grafana
+    networks:
+      - cognitive-network
+    restart: unless-stopped
+
+networks:
+  cognitive-network:
+    driver: bridge
+
+volumes:
+  redis-data:
+  postgres-data:
+  prometheus-data:
+  grafana-data:

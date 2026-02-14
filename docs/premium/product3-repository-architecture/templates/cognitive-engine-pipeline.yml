@@ -1,0 +1,241 @@
+name: Self-Modifying Repository CI/CD Pipeline
+# Self-Modifying Repository Architecture - Appendix B
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: '0 0 * * *'  # Daily cognitive engine analysis
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  # Stage 1: Analyze repository state
+  analyze-state:
+    runs-on: ubuntu-latest
+    outputs:
+      health-score: ${{ steps.analyze.outputs.health_score }}
+      needs-modification: ${{ steps.analyze.outputs.needs_modification }}
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Analyze repository health
+        id: analyze
+        run: |
+          python scripts/cognitive_engine/analyze.py \
+            --output health-report.json
+          
+          # Extract metrics
+          HEALTH_SCORE=$(jq -r '.health_score' health-report.json)
+          NEEDS_MOD=$(jq -r '.needs_modification' health-report.json)
+          
+          echo "health_score=$HEALTH_SCORE" >> $GITHUB_OUTPUT
+          echo "needs_modification=$NEEDS_MOD" >> $GITHUB_OUTPUT
+          
+          # Upload report
+          cat health-report.json
+      
+      - name: Upload health report
+        uses: actions/upload-artifact@v4
+        with:
+          name: health-report
+          path: health-report.json
+
+  # Stage 2: Propose modifications
+  propose-modifications:
+    runs-on: ubuntu-latest
+    needs: analyze-state
+    if: needs.analyze-state.outputs.needs-modification == 'true'
+    outputs:
+      proposal-count: ${{ steps.propose.outputs.count }}
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Generate modification proposals
+        id: propose
+        run: |
+          python scripts/cognitive_engine/propose.py \
+            --threshold 0.8 \
+            --output proposals.json
+          
+          PROPOSAL_COUNT=$(jq '. | length' proposals.json)
+          echo "count=$PROPOSAL_COUNT" >> $GITHUB_OUTPUT
+          
+          echo "📝 Generated $PROPOSAL_COUNT modification proposals"
+      
+      - name: Upload proposals
+        uses: actions/upload-artifact@v4
+        with:
+          name: proposals
+          path: proposals.json
+
+  # Stage 3: Validate safety
+  validate-safety:
+    runs-on: ubuntu-latest
+    needs: propose-modifications
+    if: needs.propose-modifications.outputs.proposal-count > 0
+    outputs:
+      safe-proposals: ${{ steps.validate.outputs.safe_count }}
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Download proposals
+        uses: actions/download-artifact@v4
+        with:
+          name: proposals
+      
+      - name: Validate proposals
+        id: validate
+        run: |
+          python scripts/cognitive_engine/validate.py \
+            --input proposals.json \
+            --output safe-proposals.json \
+            --safety-threshold 0.8
+          
+          SAFE_COUNT=$(jq '. | length' safe-proposals.json)
+          echo "safe_count=$SAFE_COUNT" >> $GITHUB_OUTPUT
+          
+          echo "✅ $SAFE_COUNT proposals passed safety validation"
+      
+      - name: Upload safe proposals
+        uses: actions/upload-artifact@v4
+        with:
+          name: safe-proposals
+          path: safe-proposals.json
+
+  # Stage 4: Execute modifications
+  execute-modifications:
+    runs-on: ubuntu-latest
+    needs: validate-safety
+    if: needs.validate-safety.outputs.safe-proposals > 0
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Download safe proposals
+        uses: actions/download-artifact@v4
+        with:
+          name: safe-proposals
+      
+      - name: Execute modifications
+        run: |
+          python scripts/cognitive_engine/execute.py \
+            --input safe-proposals.json \
+            --dry-run false
+          
+          echo "⚙️  Modifications executed"
+      
+      - name: Run tests
+        run: |
+          # Run test suite to verify modifications
+          npm test || python -m pytest
+      
+      - name: Commit changes
+        run: |
+          git config --local user.email "cognitive-engine[bot]@users.noreply.github.com"
+          git config --local user.name "Cognitive Engine Bot"
+          
+          git add .
+          git commit -m "🤖 Auto-modifications by cognitive engine [skip ci]" || echo "No changes to commit"
+          git push
+
+  # Stage 5: Update LORD dashboard
+  update-dashboard:
+    runs-on: ubuntu-latest
+    needs: execute-modifications
+    if: always()
+    
+    steps:
+      - name: Notify LORD dashboard
+        run: |
+          curl -X POST ${{ secrets.LORD_WEBHOOK_URL }} \
+            -H "Content-Type: application/json" \
+            -d '{
+              "event": "cognitive_engine_run",
+              "repository": "${{ github.repository }}",
+              "run_id": "${{ github.run_id }}",
+              "status": "${{ job.status }}"
+            }'
+
+  # Stage 6: Generate report
+  generate-report:
+    runs-on: ubuntu-latest
+    needs: [analyze-state, propose-modifications, validate-safety, execute-modifications]
+    if: always()
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+      
+      - name: Generate comprehensive report
+        run: |
+          python scripts/cognitive_engine/report.py \
+            --health-report health-report/health-report.json \
+            --proposals proposals/proposals.json \
+            --safe-proposals safe-proposals/safe-proposals.json \
+            --output cognitive-engine-report.md
+      
+      - name: Create or update issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const report = fs.readFileSync('cognitive-engine-report.md', 'utf8');
+            
+            // Find existing issue
+            const issues = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: ['cognitive-engine'],
+              state: 'open'
+            });
+            
+            const title = '🤖 Cognitive Engine Daily Report';
+            
+            if (issues.data.length > 0) {
+              // Update existing issue
+              await github.rest.issues.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issues.data[0].number,
+                body: report
+              });
+            } else {
+              // Create new issue
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: title,
+                body: report,
+                labels: ['cognitive-engine', 'automation']
+              });
+            }

@@ -1,0 +1,42 @@
+{
+  "generated_at": "2026-02-14T02:58:26.282811",
+  "version": "1.0.0",
+  "bundles": [
+    {
+      "id": "lord-guide",
+      "name": "Complete LORD Integration Guide",
+      "price": 47,
+      "filename": "lord-guide-v1.0.0.zip",
+      "size_bytes": 7978,
+      "size_mb": 0.01,
+      "download_url": "https://gumroad.com/l/lord-guide"
+    },
+    {
+      "id": "latency-blueprint",
+      "name": "Negative Latency Implementation Blueprint",
+      "price": 97,
+      "filename": "latency-blueprint-v1.0.0.zip",
+      "size_bytes": 9023,
+      "size_mb": 0.01,
+      "download_url": "https://gumroad.com/l/latency-blueprint"
+    },
+    {
+      "id": "repository-architecture",
+      "name": "Self-Modifying Repository Architecture",
+      "price": 197,
+      "filename": "repository-architecture-v1.0.0.zip",
+      "size_bytes": 10244,
+      "size_mb": 0.01,
+      "download_url": "https://gumroad.com/l/repository-architecture"
+    },
+    {
+      "id": "quantum-dev-kit",
+      "name": "Quantum Entity Development Kit",
+      "price": 497,
+      "filename": "quantum-dev-kit-v1.0.0.zip",
+      "size_bytes": 24237,
+      "size_mb": 0.02,
+      "download_url": "https://gumroad.com/l/quantum-dev-kit"
+    }
+  ]
+}
