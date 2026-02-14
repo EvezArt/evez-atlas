@@ -35,6 +35,7 @@ export interface GitHubClient {
  */
 export class PolicyExecutor {
   private client: GitHubClient;
+  // Note: repoOwner and repoName reserved for future use (e.g., logging, metrics)
   
   constructor(client: GitHubClient, _repoOwner: string, _repoName: string) {
     this.client = client;

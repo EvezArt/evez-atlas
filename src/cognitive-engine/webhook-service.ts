@@ -7,6 +7,7 @@
 
 import { CognitiveEngine } from './index';
 import { GitHubRepositoryData } from './github-transformer';
+import * as crypto from 'crypto';
 
 /**
  * Webhook event types we care about
@@ -155,7 +156,6 @@ export class WebhookServer {
    * Verify GitHub webhook signature using HMAC-SHA256
    */
   private verifySignature(payload: any, signature: string, secret: string): boolean {
-    const crypto = require('crypto');
     const hmac = crypto.createHmac('sha256', secret);
     const digest = 'sha256=' + hmac.update(JSON.stringify(payload)).digest('hex');
     return crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(digest));
