@@ -168,12 +168,7 @@ def main():
     if milestones.get('overall'):
         overall = milestones['overall']
         
-        # Set GitHub Actions outputs
-        print(f"::set-output name=milestone_reached::true")
-        print(f"::set-output name=milestone_type::{overall['type']}")
-        print(f"::set-output name=milestone_count::{overall['count']}")
-        
-        # Also use newer syntax
+        # Use GitHub Actions outputs (GITHUB_OUTPUT file method)
         if os.getenv('GITHUB_OUTPUT'):
             with open(os.getenv('GITHUB_OUTPUT'), 'a') as f:
                 f.write(f"milestone_reached=true\n")
@@ -182,8 +177,6 @@ def main():
         
         print(f"\n🎉 Milestone reached: {overall['count']} {overall['type']}!")
     else:
-        print(f"::set-output name=milestone_reached::false")
-        
         if os.getenv('GITHUB_OUTPUT'):
             with open(os.getenv('GITHUB_OUTPUT'), 'a') as f:
                 f.write(f"milestone_reached=false\n")

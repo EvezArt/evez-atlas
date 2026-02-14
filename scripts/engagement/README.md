@@ -55,6 +55,8 @@ python scripts/engagement/post_to_reddit.py --progress --title "Update Title" --
 - `REDDIT_USERNAME`
 - `REDDIT_PASSWORD`
 
+**Note:** Reddit posting includes 10-minute delays between posts to respect rate limits. This is a blocking operation that may cause long workflow run times. For production use, consider implementing a queue-based approach or splitting posts across multiple workflow runs.
+
 #### `post_to_hn.py`
 Submits to Hacker News for major milestones.
 

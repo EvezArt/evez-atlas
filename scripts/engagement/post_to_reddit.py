@@ -93,9 +93,12 @@ AMA about the process!
                 print(f"✓ Posted to r/{sub}")
                 success_count += 1
                 
-                # Wait 10 minutes between posts to avoid rate limiting
+                # Note: Sleeping between posts to avoid rate limiting
+                # In production, consider using a queue-based approach
+                # or splitting into separate workflow runs
                 if sub != self.subreddits[-1]:
                     print("Waiting 10 minutes before next post...")
+                    print("⚠️  Note: This is a blocking operation. Consider async queue for production.")
                     time.sleep(600)
                     
             except Exception as e:
@@ -134,6 +137,8 @@ AMA about the process!
             for sub in target_subs:
                 self.reddit.subreddit(sub).submit(title, selftext=content)
                 print(f"✓ Posted update to r/{sub}")
+                
+                # Note: Rate limiting - see post_major_updates() for production notes
                 time.sleep(600)  # 10 min between posts
             
             return True
