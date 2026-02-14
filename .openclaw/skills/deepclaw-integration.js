@@ -117,6 +117,7 @@ export default {
     
     // Track if shutdown was requested
     this.shouldStop = false;
+    this.timeoutId = null;
     
     while (!this.shouldStop && (maxIterations === 0 || iterations < maxIterations)) {
       try {
@@ -162,7 +163,9 @@ export default {
       }
       
       // Wait before next iteration
-      await new Promise(resolve => setTimeout(resolve, interval));
+      await new Promise(resolve => {
+        this.timeoutId = setTimeout(resolve, interval);
+      });
     }
     
     if (this.shouldStop) {
@@ -200,5 +203,9 @@ export default {
   async onUnload() {
     console.log('🌀 DeepClaw recursive mode disabled');
     this.shouldStop = true;
+    if (this.timeoutId) {
+      clearTimeout(this.timeoutId);
+      this.timeoutId = null;
+    }
   }
 };

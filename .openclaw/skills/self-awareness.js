@@ -97,7 +97,7 @@ export default {
     const interval = parseInt(process.env.INTROSPECTION_INTERVAL || '60000', 10);
     
     if (process.env.PERIODIC_INTROSPECTION !== 'false') {
-      setInterval(async () => {
+      this.intervalId = setInterval(async () => {
         try {
           const state = await this.introspect(agent);
           await this.log(agent, { event: 'periodic_check', state });
@@ -115,5 +115,9 @@ export default {
    */
   async onUnload() {
     console.log('🧠 Self-awareness skill disabled');
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+      this.intervalId = null;
+    }
   }
 };
