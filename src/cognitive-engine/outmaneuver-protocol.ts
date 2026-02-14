@@ -9,9 +9,6 @@ import {
   FusionState,
   ControlPolicy,
   LoopType,
-  PolicyAction,
-  computeDivineGap,
-  classifyGap,
   computeUrgency,
 } from './lord-protocol';
 

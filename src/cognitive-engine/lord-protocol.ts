@@ -118,7 +118,7 @@ export function computeDivineOptimum(recursionLevel: number): number {
  * Positive gap: System is below optimum (needs improvement)
  * Negative gap: System is above optimum (over-correcting)
  */
-export function computeDivineGap(recursionLevel: number, correctionRate: number, entityType: EntityType): number {
+export function computeDivineGap(recursionLevel: number, correctionRate: number): number {
   const omega = computeDivineOptimum(recursionLevel);
   return omega - correctionRate;
 }

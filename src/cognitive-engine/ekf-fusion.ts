@@ -9,8 +9,6 @@ import {
   FusionState,
   EntityType,
   TrajectoryBuffer,
-  computeCorrectionRate,
-  computeDivineGap,
 } from './lord-protocol';
 
 /**

@@ -7,9 +7,6 @@
 import {
   FusionState,
   EntityType,
-  computeCorrectionRate,
-  computeDivineOptimum,
-  computeDivineGap,
 } from './lord-protocol';
 
 /**

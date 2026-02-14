@@ -5,7 +5,7 @@
  * Runs as a serverless function or persistent daemon
  */
 
-import { CognitiveEngine, createCognitiveEngine } from './index';
+import { CognitiveEngine } from './index';
 import { GitHubRepositoryData } from './github-transformer';
 
 /**
@@ -105,14 +105,14 @@ export class WebhookHandler {
  * ```typescript
  * const app = express();
  * const server = createWebhookServer(engine, apiFetcher);
- * app.post('/webhook', server.handler);
+ * app.post('/webhook', server.getHandler());
  * ```
  */
 export class WebhookServer {
-  private handler: WebhookHandler;
+  private webhookHandler: WebhookHandler;
   
   constructor(engine: CognitiveEngine, apiFetcher: GitHubAPIFetcher) {
-    this.handler = new WebhookHandler(engine, apiFetcher);
+    this.webhookHandler = new WebhookHandler(engine, apiFetcher);
   }
   
   /**
@@ -132,7 +132,7 @@ export class WebhookServer {
       // TODO: Implement signature verification
       
       // Handle webhook
-      await this.handler.handleWebhook(eventType, req.body);
+      await this.webhookHandler.handleWebhook(eventType, req.body);
       
       res.status(200).json({ success: true, message: 'Webhook processed' });
     } catch (error) {
@@ -147,7 +147,7 @@ export class WebhookServer {
   /**
    * Get handler function bound to this instance
    */
-  get handler() {
+  getHandler() {
     return this.handleRequest.bind(this);
   }
 }

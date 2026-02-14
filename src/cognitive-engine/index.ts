@@ -7,10 +7,8 @@
 import {
   FusionState,
   FusionUpdateEvent,
-  ControlPolicy,
   computeDivineGap,
   computeUrgency,
-  TrajectoryBuffer,
 } from './lord-protocol';
 
 import {
@@ -37,7 +35,6 @@ import {
   PolicyExecutor,
   PolicyGenerator,
   GitHubClient,
-  GitHubActionResult,
 } from './github-actions';
 
 /**
@@ -143,8 +140,7 @@ export class CognitiveEngine {
     // Compute divine gap
     const deltaOmega = computeDivineGap(
       state.meta.recursionLevel,
-      state.corrections.current,
-      state.meta.entityType
+      state.corrections.current
     );
     
     // Compute urgency
@@ -154,7 +150,7 @@ export class CognitiveEngine {
     const basePolicy = this.policyGenerator.generatePolicy(state, deltaOmega, urgency);
     
     // Apply Outmaneuver Protocol
-    const { policy, edge, loopClassification, defuseMessage } = applyOutmaneuverProtocol(
+    const { policy, edge, loopClassification } = applyOutmaneuverProtocol(
       state,
       deltaOmega,
       basePolicy,

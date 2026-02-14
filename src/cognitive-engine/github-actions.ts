@@ -35,13 +35,9 @@ export interface GitHubClient {
  */
 export class PolicyExecutor {
   private client: GitHubClient;
-  private repoOwner: string;
-  private repoName: string;
   
-  constructor(client: GitHubClient, repoOwner: string, repoName: string) {
+  constructor(client: GitHubClient, _repoOwner: string, _repoName: string) {
     this.client = client;
-    this.repoOwner = repoOwner;
-    this.repoName = repoName;
   }
   
   /**
@@ -103,7 +99,7 @@ export class PolicyExecutor {
    */
   private async executeCreateIssue(
     action: PolicyAction,
-    policy: ControlPolicy
+    _policy: ControlPolicy
   ): Promise<GitHubActionResult> {
     const { title, body, labels } = action.payload;
     
@@ -155,7 +151,7 @@ export class PolicyExecutor {
    */
   private async executeRefactorProposal(
     action: PolicyAction,
-    policy: ControlPolicy
+    _policy: ControlPolicy
   ): Promise<GitHubActionResult> {
     const { module, reason, targetRecursion } = action.payload;
     
@@ -164,9 +160,8 @@ export class PolicyExecutor {
 ## Refactor Proposal
 
 **Module**: ${module}
-**Current Recursion**: ${policy.targetRecursionLevel}
 **Target Recursion**: ${targetRecursion}
-**Urgency**: ${policy.urgency}
+**Urgency**: ${_policy.urgency}
 
 ### Reason
 ${reason}
@@ -187,7 +182,7 @@ Add a new abstraction layer in module ${module} to increase code recursion depth
     const issue = await this.client.createIssue(title, body, [
       'task:refactor',
       'cognitive-engine',
-      `urgency:${policy.urgency}`,
+      `urgency:${_policy.urgency}`,
     ]);
     
     return {
@@ -202,7 +197,7 @@ Add a new abstraction layer in module ${module} to increase code recursion depth
    */
   private async executeStabilize(
     action: PolicyAction,
-    policy: ControlPolicy
+    _policy: ControlPolicy
   ): Promise<GitHubActionResult> {
     const { area, issues } = action.payload;
     
@@ -211,8 +206,8 @@ Add a new abstraction layer in module ${module} to increase code recursion depth
 ## Stabilization Task
 
 **Area**: ${area}
-**Urgency**: ${policy.urgency}
-**Loop Type**: ${policy.loopType || 'none'}
+**Urgency**: ${_policy.urgency}
+**Loop Type**: ${_policy.loopType || 'none'}
 
 ### Issues Detected
 ${issues.map((i: string) => `- ${i}`).join('\n')}
@@ -230,7 +225,7 @@ ${issues.map((i: string) => `- ${i}`).join('\n')}
     const issue = await this.client.createIssue(title, body, [
       'task:stabilize',
       'cognitive-engine',
-      `urgency:${policy.urgency}`,
+      `urgency:${_policy.urgency}`,
     ]);
     
     return {
