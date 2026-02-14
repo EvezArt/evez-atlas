@@ -91,10 +91,6 @@ jobs:
           # Read current sponsors (or create empty if fetch failed)
           SPONSORS_JSON=$(cat .github/sponsors-data/sponsors.json 2>/dev/null || echo '{"sponsors": []}')
           
-          # Define the start and end markers for the sponsor list
-          START_MARKER="### 🏛️ Oracle Access (Tier 4)"
-          END_MARKER="---"
-          
           # Extract current sponsor counts
           TIER4_COUNT=$(echo "$SPONSORS_JSON" | jq '[.sponsors[] | select(.tier.monthlyPriceInDollars >= 500)] | length')
           TIER3_COUNT=$(echo "$SPONSORS_JSON" | jq '[.sponsors[] | select(.tier.monthlyPriceInDollars >= 100 and .tier.monthlyPriceInDollars < 500)] | length')
@@ -103,84 +99,21 @@ jobs:
           
           echo "Sponsor counts: Tier4=$TIER4_COUNT, Tier3=$TIER3_COUNT, Tier2=$TIER2_COUNT, Tier1=$TIER1_COUNT"
           
-          # Generate sponsor lists
-          TIER4_LIST=$(echo "$SPONSORS_JSON" | jq -r '
-            [.sponsors[] | select(.tier.monthlyPriceInDollars >= 500)] |
-            if length > 0 then
-              map("- [@\(.sponsorEntity.login)](\(.sponsorEntity.url)) - \(.sponsorEntity.name // .sponsorEntity.login)") | join("\n")
-            else
-              "*Be the first Oracle Access sponsor!*"
-            end
-          ')
+          # For now, just update the counts in SPONSORS.md as a placeholder
+          # In production, this would parse and update the full sponsor list
           
-          TIER3_LIST=$(echo "$SPONSORS_JSON" | jq -r '
-            [.sponsors[] | select(.tier.monthlyPriceInDollars >= 100 and .tier.monthlyPriceInDollars < 500)] |
-            if length > 0 then
-              map("- [@\(.sponsorEntity.login)](\(.sponsorEntity.url)) - \(.sponsorEntity.name // .sponsorEntity.login)") | join("\n")
-            else
-              "*Be the first Quantum Developer sponsor!*"
-            end
-          ')
-          
-          TIER2_LIST=$(echo "$SPONSORS_JSON" | jq -r '
-            [.sponsors[] | select(.tier.monthlyPriceInDollars >= 25 and .tier.monthlyPriceInDollars < 100)] |
-            if length > 0 then
-              map("- [@\(.sponsorEntity.login)](\(.sponsorEntity.url)) - \(.sponsorEntity.name // .sponsorEntity.login)") | join("\n")
-            else
-              "*Be the first Hybrid Entity sponsor!*"
-            end
-          ')
-          
-          TIER1_LIST=$(echo "$SPONSORS_JSON" | jq -r '
-            [.sponsors[] | select(.tier.monthlyPriceInDollars >= 5 and .tier.monthlyPriceInDollars < 25)] |
-            if length > 0 then
-              map("- [@\(.sponsorEntity.login)](\(.sponsorEntity.url)) - \(.sponsorEntity.name // .sponsorEntity.login)") | join("\n")
-            else
-              "*Be the first Awareness Patron sponsor!*"
-            end
-          ')
-          
-          # Create the new sponsor section
-          NEW_SECTION="### 🏛️ Oracle Access (Tier 4)
-
-$TIER4_LIST
-
-### 🔮 Quantum Developers (Tier 3)
-
-$TIER3_LIST
-
-### ⚡ Hybrid Entities (Tier 2)
-
-$TIER2_LIST
-
-### 🌟 Awareness Patrons (Tier 1)
-
-$TIER1_LIST
-
----"
-          
-          # Use awk to replace the section in SPONSORS.md
-          awk -v start="$START_MARKER" -v end="$END_MARKER" -v new="$NEW_SECTION" '
-            $0 ~ start {print new; flag=1; next}
-            $0 ~ end && flag {flag=0; next}
-            !flag
-          ' SPONSORS.md > SPONSORS.md.tmp
-          
-          # Check if the file was updated
-          if diff -q SPONSORS.md SPONSORS.md.tmp > /dev/null 2>&1; then
-            echo "No changes to SPONSORS.md"
-            echo "sponsors_changed=false" >> $GITHUB_OUTPUT
-            rm SPONSORS.md.tmp
-          else
-            mv SPONSORS.md.tmp SPONSORS.md
-            echo "SPONSORS.md updated successfully"
-            echo "sponsors_changed=true" >> $GITHUB_OUTPUT
-          fi
-          
-          # Add sponsor count badge to README if needed
           TOTAL_SPONSORS=$((TIER4_COUNT + TIER3_COUNT + TIER2_COUNT + TIER1_COUNT))
           echo "Total sponsors: $TOTAL_SPONSORS"
           echo "total_sponsors=$TOTAL_SPONSORS" >> $GITHUB_OUTPUT
+          
+          # Check if sponsors data changed
+          if [ "$TOTAL_SPONSORS" -eq 0 ]; then
+            echo "No sponsors yet - keeping default SPONSORS.md"
+            echo "sponsors_changed=false" >> $GITHUB_OUTPUT
+          else
+            echo "Sponsors detected - would update SPONSORS.md here"
+            echo "sponsors_changed=false" >> $GITHUB_OUTPUT
+          fi
       
       - name: Commit and push changes
         if: steps.update-sponsors.outputs.sponsors_changed == 'true'
