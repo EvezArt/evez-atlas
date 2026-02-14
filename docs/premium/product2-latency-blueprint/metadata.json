@@ -1,0 +1,10 @@
+{
+  "product_id": "product2",
+  "name": "Negative Latency Implementation Blueprint",
+  "price": 97,
+  "pages": "120-150",
+  "description": "EKF fusion loop theory, predictive trajectory sampling, and ring buffer optimization",
+  "generated_at": "2026-02-14T02:53:59.744487",
+  "version": "1.0.0",
+  "includes": []
+}

@@ -1,6 +1,23 @@
 # Evez666
 
+[![Premium Docs](https://img.shields.io/badge/Premium%20Docs-Available-gold?style=for-the-badge)](docs/premium/README.md)
+[![LORD Guide](https://img.shields.io/badge/LORD%20Guide-$47-blue)](docs/premium/product1-lord-guide/README.md)
+[![Latency Blueprint](https://img.shields.io/badge/Latency%20Blueprint-$97-blue)](docs/premium/product2-latency-blueprint/README.md)
+[![Repository Architecture](https://img.shields.io/badge/Repository%20Architecture-$197-blue)](docs/premium/product3-repository-architecture/README.md)
+[![Quantum Dev Kit](https://img.shields.io/badge/Quantum%20Dev%20Kit-$497-purple)](docs/premium/product4-quantum-dev-kit/README.md)
+
 Evez666 contains working notes and runbooks for controlled, authorized security exercises, advanced autonomous agent systems, and quantum-inspired computational research.
+
+## 📚 Premium Documentation Products
+
+**Professional guides to advanced cognitive engine implementation** → [View All Products](docs/premium/README.md)
+
+- **[$47] Complete LORD Integration Guide** - Dashboard setup, audio visualization, 3D WebGL
+- **[$97] Negative Latency Implementation** - EKF fusion loops, predictive algorithms
+- **[$197] Self-Modifying Repository Architecture** - Cognitive engine, closed-loop systems
+- **[$497] Quantum Entity Development Kit** - Complete bundle + community + support
+
+🛒 **Purchase:** [Gumroad](https://gumroad.com/evezart) | [Ko-fi](https://ko-fi.com/evezart/shop)
 
 ## ⚠️ Important Notice
 
