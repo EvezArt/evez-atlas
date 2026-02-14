@@ -101,9 +101,13 @@ jobs:
           
           echo "✅ Metrics report posted"
       
+      - name: Get current date
+        id: date
+        run: echo "date=$(date +%Y-%m-%d)" >> $GITHUB_OUTPUT
+      
       - name: Upload metrics artifact
         uses: actions/upload-artifact@v4
         with:
-          name: daily-metrics-$(date +%Y-%m-%d)
+          name: daily-metrics-${{ steps.date.outputs.date }}
           path: metrics-report.md
           retention-days: 30
