@@ -604,7 +604,6 @@ print(result)  # Should be anonymized
 
 - **Issues**: https://github.com/EvezArt/Evez666/issues
 - **Discussions**: https://github.com/EvezArt/Evez666/discussions
-- **Email**: [Maintainer email]
 
 ---
 

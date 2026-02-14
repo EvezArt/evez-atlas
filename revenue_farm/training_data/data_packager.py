@@ -67,7 +67,7 @@ class DataAnonymizer:
             # Round to nearest hour
             dt = dt.replace(minute=0, second=0, microsecond=0)
             return dt.isoformat()
-        except:
+        except (ValueError, TypeError):
             return timestamp
 
 
