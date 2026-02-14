@@ -404,7 +404,7 @@ def generate_product_index(product_id: str) -> str:
 - **Early Access** - Be first to try new features
 """
     
-    content += """
+    content += f"""
 
 ## Purchase
 
@@ -421,7 +421,7 @@ For questions or support:
 
 ---
 
-*Generated on {datetime.datetime.now().strftime("%Y-%m-%d")}*
+*Generated on {datetime.datetime.now().strftime('%Y-%m-%d')}*
 """
     
     return content

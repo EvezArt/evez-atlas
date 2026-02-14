@@ -173,7 +173,7 @@ def create_bundle(product_id: str, product_key: str):
             # Include all products for bundle
             for other_key in ['product1', 'product2', 'product3']:
                 other_id = PRODUCTS[other_key]['id']
-                other_dir = PREMIUM_DIR / f"{other_key.replace('product', 'product')}-{other_id}"
+                other_dir = PREMIUM_DIR / f"{other_key}-{other_id}"
                 if other_dir.exists():
                     add_product_to_zip(zipf, other_dir, other_id)
         else:
