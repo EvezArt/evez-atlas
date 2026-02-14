@@ -1,0 +1,20 @@
+version: 1
+
+# Minimal "skills" manifest scaffold.
+# Treat each skill as a module with an explicit risk level and required approvals.
+
+skills:
+  - id: repo_report
+    description: Generate daily repo status report (internal)
+    risk: low
+    requires:
+      - github_read
+    safe_mode_supported: true
+
+  - id: external_posting
+    description: Generate (proposal-only) social posts; never auto-publish by default
+    risk: high
+    requires:
+      - manual_approval
+      - allowlisted_egress
+    safe_mode_supported: true
