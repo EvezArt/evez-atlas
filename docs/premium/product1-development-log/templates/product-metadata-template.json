@@ -1,0 +1,8 @@
+{
+  "product_id": "product-name",
+  "title": "Product Title",
+  "price": 0,
+  "currency": "USD",
+  "description": "Product description",
+  "version": "1.0.0"
+}

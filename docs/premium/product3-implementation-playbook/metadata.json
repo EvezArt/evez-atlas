@@ -1,0 +1,26 @@
+{
+  "product_id": "product3-implementation-playbook",
+  "title": "Zero-to-Production in 24 Hours",
+  "price": 147,
+  "currency": "USD",
+  "description": "Step-by-step from empty repo to monetized cognitive engine",
+  "features": [
+    "Actual commands, configurations, and decisions used",
+    "Common pitfalls and solutions",
+    "All PRs, issues, and conversation context",
+    "Replicable blueprint for your projects"
+  ],
+  "version": "1.0.0",
+  "created_at": "2026-02-14T03:13:09.105457",
+  "updated_at": "2026-02-14T03:13:09.105461",
+  "format": "digital-download",
+  "license": "Single-user license",
+  "support": "Email support for 30 days",
+  "files_included": [
+    "README.md",
+    "TABLE_OF_CONTENTS.md",
+    "chapters/*.md",
+    "code-examples/*",
+    "templates/*"
+  ]
+}

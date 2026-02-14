@@ -1,0 +1,26 @@
+{
+  "product_id": "product2-methodology-guide",
+  "title": "AI-Assisted Repository Evolution",
+  "price": 97,
+  "currency": "USD",
+  "description": "Methodology for using AI assistants for architectural planning",
+  "features": [
+    "Prompt engineering for Copilot assignments",
+    "Issue-driven development patterns",
+    "Automated documentation generation",
+    "Self-bootstrapping system design"
+  ],
+  "version": "1.0.0",
+  "created_at": "2026-02-14T03:13:09.101670",
+  "updated_at": "2026-02-14T03:13:09.101674",
+  "format": "digital-download",
+  "license": "Single-user license",
+  "support": "Email support for 30 days",
+  "files_included": [
+    "README.md",
+    "TABLE_OF_CONTENTS.md",
+    "chapters/*.md",
+    "code-examples/*",
+    "templates/*"
+  ]
+}

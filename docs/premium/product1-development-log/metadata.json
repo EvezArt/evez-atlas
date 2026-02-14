@@ -1,0 +1,26 @@
+{
+  "product_id": "product1-development-log",
+  "title": "Cognitive Engine Development Log",
+  "price": 67,
+  "currency": "USD",
+  "description": "Cleaned conversation flow showing evolution from concept to implementation",
+  "features": [
+    "Decision points and reasoning for architectural choices",
+    "Troubleshooting and problem-solving examples",
+    "Complete technical evolution timeline",
+    "Anonymized for privacy, maximized for value"
+  ],
+  "version": "1.0.0",
+  "created_at": "2026-02-14T03:13:09.097400",
+  "updated_at": "2026-02-14T03:13:09.097409",
+  "format": "digital-download",
+  "license": "Single-user license",
+  "support": "Email support for 30 days",
+  "files_included": [
+    "README.md",
+    "TABLE_OF_CONTENTS.md",
+    "chapters/*.md",
+    "code-examples/*",
+    "templates/*"
+  ]
+}

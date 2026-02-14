@@ -1,0 +1,27 @@
+{
+  "product_id": "product4-complete-archive",
+  "title": "The Complete Archive",
+  "price": 297,
+  "currency": "USD",
+  "description": "Everything from our conversations - full archive",
+  "features": [
+    "Full conversation transcripts (cleaned)",
+    "All generated specifications and docs",
+    "Every issue, PR, and comment created",
+    "Decision trees and reasoning logs",
+    "Exclusive bonus content"
+  ],
+  "version": "1.0.0",
+  "created_at": "2026-02-14T03:13:09.109221",
+  "updated_at": "2026-02-14T03:13:09.109225",
+  "format": "digital-download",
+  "license": "Single-user license",
+  "support": "Email support for 30 days",
+  "files_included": [
+    "README.md",
+    "TABLE_OF_CONTENTS.md",
+    "chapters/*.md",
+    "code-examples/*",
+    "templates/*"
+  ]
+}
