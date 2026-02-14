@@ -29,7 +29,11 @@
     "ts-jest": "^29.2.0",
     "typescript": "^5.5.0"
   },
-  "dependencies": {},
+  "dependencies": {
+    "openai": "^4.28.0",
+    "@octokit/rest": "^20.0.2",
+    "node-fetch": "^2.7.0"
+  },
   "optionalDependencies": {
     "molthub": "latest"
   }

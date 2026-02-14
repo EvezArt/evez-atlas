@@ -6,6 +6,84 @@ Evez666 contains working notes and runbooks for controlled, authorized security 
 
 This repository includes experimental and conceptual systems. Read `ETHICAL_FRAMEWORK.md` before using any advanced autonomous agent features. All "miraculous" or "impossible" capabilities are metaphorical descriptions of advanced but feasible techniques.
 
+## 🚀 Quick Start
+
+Choose your preferred method to get started:
+
+### Launch in GitHub Codespaces (Easiest)
+
+1. Click the **Code** button → **Codespaces** → **Create codespace on main**
+2. Wait for setup (3-5 minutes) - dependencies install automatically
+3. Set your API keys (optional, for full functionality):
+   ```bash
+   gh codespace set-secret ANTHROPIC_API_KEY
+   gh codespace set-secret OPENAI_API_KEY
+   gh codespace set-secret PERPLEXITY_API_KEY
+   ```
+4. OpenClaw and all skills are ready to use!
+
+### Launch Locally
+
+**Prerequisites:**
+- Node.js 20+
+- Python 3.11+
+- Git
+
+**Setup:**
+```bash
+# Clone repository
+git clone https://github.com/EvezArt/Evez666.git
+cd Evez666
+
+# Install dependencies
+npm install
+pip install -r requirements.txt
+
+# Install OpenClaw (optional)
+npm install -g openclaw@latest clawhub@latest
+
+# Set environment variables
+export OPENAI_API_KEY="sk-..."
+export PERPLEXITY_API_KEY="pplx-..."
+export ANTHROPIC_API_KEY="sk-ant-..."
+export GITHUB_TOKEN="ghp_..."
+export SAFE_MODE=true  # Safety mode (logs only, no API calls)
+
+# Build TypeScript
+npm run build
+
+# Run tests
+npm test
+pytest src/tests/python/ -v
+
+# Start OpenClaw (if installed)
+openclaw gateway start
+```
+
+### First Steps
+
+After setup, try these commands:
+
+```bash
+# Check system health
+node scripts/health-check.js
+
+# View metrics dashboard
+cat docs/METRICS.md
+
+# Run demo
+python demo.py
+
+# Test OpenClaw skills (if installed)
+# Skills will run in SAFE_MODE by default
+```
+
+### Troubleshooting
+
+Having issues? See [docs/TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md) for solutions to common problems.
+
+---
+
 ## Projects
 
 This repository contains multiple integrated projects:

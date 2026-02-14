@@ -8,7 +8,7 @@
     "ghcr.io/devcontainers/features/git:1": {},
     "ghcr.io/devcontainers/features/github-cli:1": {}
   },
-  "postCreateCommand": "npm install -g openclaw@latest clawhub@latest",
+  "postCreateCommand": "npm install -g openclaw@latest clawhub@latest && npm install",
   "postAttachCommand": ".devcontainer/setup-openclaw.sh",
   "forwardPorts": [3000, 8080],
   "customizations": {
