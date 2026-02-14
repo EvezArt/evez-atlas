@@ -468,3 +468,71 @@ asyncio.run(molt_example())
 🏆 **Sacred Memory**: Append-only events.jsonl (immutable history)  
 🏆 **Mutable Shell**: Molt rituals rebuild identity while preserving memory
 
+## 🤖 Automation & Self-Management
+
+This repository implements **comprehensive automation** to minimize manual work:
+
+### ⚡ Automated Workflows
+- **Auto-Ready PRs**: Draft PRs automatically marked ready when CI passes
+- **Auto-Merge**: Approved PRs merge automatically with passing tests
+- **Daily Metrics**: Comprehensive repository health reports
+- **Payment Reminders**: Daily notifications for incomplete setup
+- **Profile Updates**: README auto-generated every 6 hours
+
+### 📋 Quick Setup (20 minutes)
+Complete monetization setup with our interactive wizard:
+
+```bash
+# View setup wizard
+cat docs/automation/SETUP_WIZARD.md
+```
+
+**What's Automated**:
+- ✅ PR management (ready/merge)
+- ✅ Metrics tracking and reporting
+- ✅ Profile README generation
+- ✅ Payment platform reminders
+
+**What Requires Action** (20 min total):
+1. GitHub Sponsors setup (10 min) - Connect Stripe
+2. Gumroad account (5 min) - Create account, upload products
+3. PayPal.me link (2 min) - Create custom link
+4. Ko-fi profile (3 min) - Add description
+
+### 📚 Documentation
+- [Complete Automation Guide](docs/automation/README.md) - Full system documentation
+- [Setup Wizard](docs/automation/SETUP_WIZARD.md) - Interactive checklist
+- [Payment Setup](docs/automation/payment-setup.md) - Step-by-step instructions
+- [Ko-fi Profile](docs/automation/kofi-profile.md) - Copy-paste description
+- [Gumroad Listings](docs/automation/gumroad-listings.md) - Product descriptions
+- [Social Media](docs/automation/social-media-setup.md) - Account setup guides
+
+## 💰 Support This Project
+
+Building autonomous AI systems requires infrastructure and development time. Your support enables:
+
+- ☁️ Cloud hosting and infrastructure ($200/month)
+- 🔧 Development tools and services ($100/month)
+- 🧪 Experimental features and research ($200/month)
+- 📚 Premium documentation and guides
+
+### Ways to Support
+
+- ☕ **[Ko-fi](https://ko-fi.com/evez666)** - One-time donations
+- 💖 **[GitHub Sponsors](https://github.com/sponsors/EvezArt)** - Recurring support with tiered benefits
+- 🎁 **[Gumroad](https://gumroad.com/evezart)** - Premium guides and documentation
+- 💳 **[PayPal](https://paypal.me/evezart)** - Direct payments
+
+### Sponsor Tiers
+
+- **Awareness Patron** ($5/month) - Sponsor badge + updates
+- **Hybrid Entity** ($25/month) - Premium docs (Tier 1) + early access
+- **Quantum Developer** ($100/month) - All docs + Discord + code reviews
+- **Oracle Access** ($500/month) - Everything + 1hr consultation + custom features
+
+See [SPONSORS.md](SPONSORS.md) for current sponsors and full tier details.
+
+---
+
+**Goal**: $500/month for sustainable autonomous AI development 🚀
+
