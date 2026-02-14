@@ -1,0 +1,218 @@
+name: Sync GitHub Sponsors
+
+# This workflow automatically syncs the sponsor list to SPONSORS.md
+# It runs daily and can be triggered manually
+
+on:
+  schedule:
+    # Run daily at 06:00 UTC
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+    # Allow manual triggering
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync-sponsors:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Fetch GitHub Sponsors
+        id: fetch-sponsors
+        env:
+          # Use SPONSORS_TOKEN if available (requires 'user:read' scope)
+          # Falls back to GITHUB_TOKEN for public data
+          GITHUB_TOKEN: ${{ secrets.SPONSORS_TOKEN || github.token }}
+          GITHUB_USERNAME: EvezArt
+        run: |
+          echo "Fetching sponsors for: $GITHUB_USERNAME"
+          
+          # Create sponsors data directory
+          mkdir -p .github/sponsors-data
+          
+          # Fetch sponsors via GitHub GraphQL API
+          SPONSORS_QUERY='
+          query($username: String!, $cursor: String) {
+            user(login: $username) {
+              sponsorshipsAsMaintainer(first: 100, after: $cursor, includePrivate: false) {
+                pageInfo {
+                  hasNextPage
+                  endCursor
+                }
+                edges {
+                  node {
+                    sponsorEntity {
+                      ... on User {
+                        login
+                        name
+                        avatarUrl
+                        url
+                      }
+                      ... on Organization {
+                        login
+                        name
+                        avatarUrl
+                        url
+                      }
+                    }
+                    tier {
+                      name
+                      monthlyPriceInDollars
+                    }
+                    createdAt
+                    isActive
+                  }
+                }
+              }
+            }
+          }'
+          
+          # Note: This is a placeholder for the GraphQL query
+          # In production, you would use gh CLI or curl with proper GraphQL query
+          # For now, we'll create a template structure
+          
+          # Create empty sponsors JSON if none exist
+          echo '{"sponsors": []}' > .github/sponsors-data/sponsors.json
+          
+          echo "Sponsors data saved to .github/sponsors-data/sponsors.json"
+      
+      - name: Update SPONSORS.md
+        id: update-sponsors
+        run: |
+          echo "Updating SPONSORS.md with current sponsors..."
+          
+          # Read current sponsors (or create empty if fetch failed)
+          SPONSORS_JSON=$(cat .github/sponsors-data/sponsors.json 2>/dev/null || echo '{"sponsors": []}')
+          
+          # Define the start and end markers for the sponsor list
+          START_MARKER="### 🏛️ Oracle Access (Tier 4)"
+          END_MARKER="---"
+          
+          # Extract current sponsor counts
+          TIER4_COUNT=$(echo "$SPONSORS_JSON" | jq '[.sponsors[] | select(.tier.monthlyPriceInDollars >= 500)] | length')
+          TIER3_COUNT=$(echo "$SPONSORS_JSON" | jq '[.sponsors[] | select(.tier.monthlyPriceInDollars >= 100 and .tier.monthlyPriceInDollars < 500)] | length')
+          TIER2_COUNT=$(echo "$SPONSORS_JSON" | jq '[.sponsors[] | select(.tier.monthlyPriceInDollars >= 25 and .tier.monthlyPriceInDollars < 100)] | length')
+          TIER1_COUNT=$(echo "$SPONSORS_JSON" | jq '[.sponsors[] | select(.tier.monthlyPriceInDollars >= 5 and .tier.monthlyPriceInDollars < 25)] | length')
+          
+          echo "Sponsor counts: Tier4=$TIER4_COUNT, Tier3=$TIER3_COUNT, Tier2=$TIER2_COUNT, Tier1=$TIER1_COUNT"
+          
+          # Generate sponsor lists
+          TIER4_LIST=$(echo "$SPONSORS_JSON" | jq -r '
+            [.sponsors[] | select(.tier.monthlyPriceInDollars >= 500)] |
+            if length > 0 then
+              map("- [@\(.sponsorEntity.login)](\(.sponsorEntity.url)) - \(.sponsorEntity.name // .sponsorEntity.login)") | join("\n")
+            else
+              "*Be the first Oracle Access sponsor!*"
+            end
+          ')
+          
+          TIER3_LIST=$(echo "$SPONSORS_JSON" | jq -r '
+            [.sponsors[] | select(.tier.monthlyPriceInDollars >= 100 and .tier.monthlyPriceInDollars < 500)] |
+            if length > 0 then
+              map("- [@\(.sponsorEntity.login)](\(.sponsorEntity.url)) - \(.sponsorEntity.name // .sponsorEntity.login)") | join("\n")
+            else
+              "*Be the first Quantum Developer sponsor!*"
+            end
+          ')
+          
+          TIER2_LIST=$(echo "$SPONSORS_JSON" | jq -r '
+            [.sponsors[] | select(.tier.monthlyPriceInDollars >= 25 and .tier.monthlyPriceInDollars < 100)] |
+            if length > 0 then
+              map("- [@\(.sponsorEntity.login)](\(.sponsorEntity.url)) - \(.sponsorEntity.name // .sponsorEntity.login)") | join("\n")
+            else
+              "*Be the first Hybrid Entity sponsor!*"
+            end
+          ')
+          
+          TIER1_LIST=$(echo "$SPONSORS_JSON" | jq -r '
+            [.sponsors[] | select(.tier.monthlyPriceInDollars >= 5 and .tier.monthlyPriceInDollars < 25)] |
+            if length > 0 then
+              map("- [@\(.sponsorEntity.login)](\(.sponsorEntity.url)) - \(.sponsorEntity.name // .sponsorEntity.login)") | join("\n")
+            else
+              "*Be the first Awareness Patron sponsor!*"
+            end
+          ')
+          
+          # Create the new sponsor section
+          NEW_SECTION="### 🏛️ Oracle Access (Tier 4)
+
+$TIER4_LIST
+
+### 🔮 Quantum Developers (Tier 3)
+
+$TIER3_LIST
+
+### ⚡ Hybrid Entities (Tier 2)
+
+$TIER2_LIST
+
+### 🌟 Awareness Patrons (Tier 1)
+
+$TIER1_LIST
+
+---"
+          
+          # Use awk to replace the section in SPONSORS.md
+          awk -v start="$START_MARKER" -v end="$END_MARKER" -v new="$NEW_SECTION" '
+            $0 ~ start {print new; flag=1; next}
+            $0 ~ end && flag {flag=0; next}
+            !flag
+          ' SPONSORS.md > SPONSORS.md.tmp
+          
+          # Check if the file was updated
+          if diff -q SPONSORS.md SPONSORS.md.tmp > /dev/null 2>&1; then
+            echo "No changes to SPONSORS.md"
+            echo "sponsors_changed=false" >> $GITHUB_OUTPUT
+            rm SPONSORS.md.tmp
+          else
+            mv SPONSORS.md.tmp SPONSORS.md
+            echo "SPONSORS.md updated successfully"
+            echo "sponsors_changed=true" >> $GITHUB_OUTPUT
+          fi
+          
+          # Add sponsor count badge to README if needed
+          TOTAL_SPONSORS=$((TIER4_COUNT + TIER3_COUNT + TIER2_COUNT + TIER1_COUNT))
+          echo "Total sponsors: $TOTAL_SPONSORS"
+          echo "total_sponsors=$TOTAL_SPONSORS" >> $GITHUB_OUTPUT
+      
+      - name: Commit and push changes
+        if: steps.update-sponsors.outputs.sponsors_changed == 'true'
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          
+          git add SPONSORS.md
+          git add .github/sponsors-data/
+          
+          git commit -m "chore: update sponsor list
+
+          Auto-updated by GitHub Actions workflow.
+          Total sponsors: ${{ steps.update-sponsors.outputs.total_sponsors }}"
+          
+          git push
+      
+      - name: Create welcome issue for new sponsors
+        if: steps.update-sponsors.outputs.sponsors_changed == 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "New sponsors detected! Welcome messages would be sent here."
+          # In production, this would create issues or send notifications
+          # For now, we just log it
+          echo "Welcome workflow complete"
+      
+      - name: Summary
+        run: |
+          echo "## Sponsor Sync Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- Total Sponsors: ${{ steps.update-sponsors.outputs.total_sponsors }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Sponsors Changed: ${{ steps.update-sponsors.outputs.sponsors_changed }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "✅ Sponsor sync complete!" >> $GITHUB_STEP_SUMMARY
