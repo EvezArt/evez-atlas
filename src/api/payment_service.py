@@ -12,7 +12,7 @@ from pathlib import Path
 
 try:
     from .base_service import BaseService
-except ImportError:
+except ModuleNotFoundError:
     from base_service import BaseService
 
 
