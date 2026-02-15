@@ -14,6 +14,14 @@ from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
 from slowapi.util import get_remote_address
 
+# Import security controls
+from src.api.security_controls import (
+    debug_only,
+    is_production_mode,
+    AgentBehaviorControl,
+    EasterEggControl
+)
+
 load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parents[2]
@@ -185,6 +193,7 @@ def legion_status(request: Request, tier: int = Depends(verify_api_key)):
 
 @app.get("/navigation-ui", response_class=HTMLResponse)
 @limiter.limit(_rate_limit_for_key)
+@debug_only
 def navigation_ui(request: Request, tier: int = Depends(verify_api_key)):
     from demo import build_navigation_ui_state
 
@@ -349,6 +358,7 @@ def navigation_ui(request: Request, tier: int = Depends(verify_api_key)):
 
 @app.get("/navigation-ui/data", response_class=JSONResponse)
 @limiter.limit(_rate_limit_for_key)
+@debug_only
 def navigation_ui_data(request: Request, tier: int = Depends(verify_api_key)):
     from demo import build_navigation_ui_state
 
@@ -398,8 +408,9 @@ async def swarm_websocket(websocket: WebSocket):
 
 # ========== Swarm Status Endpoint ==========
 @app.get("/swarm-status")
+@debug_only
 def swarm_status():
-    """Get current swarm status from the director."""
+    """Get current swarm status from the director. [DEBUG ONLY]"""
     try:
         from src.mastra.agents.swarm_director import director
         status = director.get_swarm_status()
@@ -410,6 +421,25 @@ def swarm_status():
             "error": str(e),
             "websocket_connections": len(active_connections)
         }
+
+
+# ========== Security Configuration Info ==========
+@app.get("/security-info")
+@debug_only
+def security_info():
+    """Get security configuration information. [DEBUG ONLY]"""
+    return {
+        "production_mode": is_production_mode(),
+        "easter_eggs_enabled": EasterEggControl.is_enabled(),
+        "hidden_commands": EasterEggControl.get_hidden_commands(),
+        "console_message_available": EasterEggControl.get_console_message() is not None,
+        "agent_behaviors": {
+            "handoff_blocked": AgentBehaviorControl.should_block_behavior("handoff"),
+            "sources_blocked": AgentBehaviorControl.should_block_behavior("sources"),
+            "workflow_blocked": AgentBehaviorControl.should_block_behavior("workflow"),
+            "system_info_blocked": AgentBehaviorControl.should_block_behavior("system_info"),
+        }
+    }
 
 
 if __name__ == "__main__":
