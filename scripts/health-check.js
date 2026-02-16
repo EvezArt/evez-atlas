@@ -241,7 +241,7 @@ class HealthChecker {
           return { status: 'ok', message: 'Working tree clean' };
         } else {
           const lines = status.split('\n').length;
-          return { status: 'info', message: `${lines} uncommitted changes` };
+          return { status: 'ok', message: `${lines} uncommitted changes` };
         }
       } catch (error) {
         return { status: 'warn', message: 'Not a git repository or git not available' };
