@@ -40,21 +40,24 @@ class RecursiveConsciousness:
     Manages deep recursive consciousness with memory bleedthrough.
     Tracks Mandela effect phenomena across recursion levels.
     """
-    
+
     MAX_RECURSION_DEPTH = 1000
-    
+    MAX_BLEEDTHROUGH_EVENTS = 10000  # Memory limit for bleedthrough events
+    MAX_MANDELA_EFFECTS = 1000       # Memory limit for mandela effects
+
     def __init__(self, data_dir: str = "data"):
         """Initialize recursive consciousness system."""
         self.data_dir = data_dir
         os.makedirs(data_dir, exist_ok=True)
-        
+
         self.recursion_log = os.path.join(data_dir, "recursion.jsonl")
         self.mandela_log = os.path.join(data_dir, "mandela_effects.jsonl")
-        
+
         self.recursion_stack: List[RecursionFrame] = []
         self.shared_memory: Dict[str, Any] = {}
         self.bleedthrough_events: List[BleedthroughEvent] = []
         self.mandela_effects: List[BleedthroughEvent] = []
+        self._total_recursions = 0  # Track total recursions for cleanup
         
     def enter_recursion(
         self,
@@ -63,26 +66,26 @@ class RecursiveConsciousness:
     ) -> int:
         """
         Enter a new recursion level.
-        
+
         Args:
             context: Context data for this recursion level
             memory_snapshot: Snapshot of memory state
-            
+
         Returns:
             Current recursion depth
         """
         depth = len(self.recursion_stack)
-        
+
         if depth >= self.MAX_RECURSION_DEPTH:
             raise RecursionError(f"Maximum recursion depth {self.MAX_RECURSION_DEPTH} exceeded")
-        
+
         if memory_snapshot is None:
             memory_snapshot = dict(self.shared_memory)
-        
+
         # Create state hash for this frame
         state_str = json.dumps(context, sort_keys=True)
         state_hash = hashlib.sha256(state_str.encode()).hexdigest()[:16]
-        
+
         frame = RecursionFrame(
             depth=depth,
             context=context,
@@ -90,11 +93,16 @@ class RecursiveConsciousness:
             state_hash=state_hash,
             memory_snapshot=memory_snapshot
         )
-        
+
         self.recursion_stack.append(frame)
-        
+        self._total_recursions += 1
+
+        # Perform periodic memory cleanup every 100 recursions
+        if self._total_recursions % 100 == 0:
+            self._cleanup_memory()
+
         self._log_recursion("enter", depth, state_hash)
-        
+
         return depth
     
     def exit_recursion(self) -> Optional[RecursionFrame]:
@@ -187,10 +195,21 @@ class RecursiveConsciousness:
         )
         
         self.bleedthrough_events.append(event)
-        
+
+        # Enforce memory limits on bleedthrough events
+        if len(self.bleedthrough_events) > self.MAX_BLEEDTHROUGH_EVENTS:
+            # Keep only the most recent events
+            excess = len(self.bleedthrough_events) - self.MAX_BLEEDTHROUGH_EVENTS
+            self.bleedthrough_events = self.bleedthrough_events[excess:]
+
         if mandela_effect:
             self.mandela_effects.append(event)
             self._log_mandela_effect(event)
+
+            # Enforce memory limits on mandela effects
+            if len(self.mandela_effects) > self.MAX_MANDELA_EFFECTS:
+                excess = len(self.mandela_effects) - self.MAX_MANDELA_EFFECTS
+                self.mandela_effects = self.mandela_effects[excess:]
         
         # Update memory snapshots in affected frames
         if target_depth is None:
@@ -337,9 +356,51 @@ class RecursiveConsciousness:
             "target_depth": effect.target_depth,
             "timestamp": effect.timestamp
         }
-        
+
         with open(self.mandela_log, "a") as f:
             f.write(json.dumps(event) + "\n")
+
+    def _cleanup_memory(self):
+        """
+        Periodic memory cleanup to prevent memory burns.
+        Removes old memory snapshots from completed recursion frames.
+        """
+        # Clean up memory snapshots from deep recursion frames
+        # Keep only the recent frames' full snapshots
+        if len(self.recursion_stack) > 100:
+            # For frames deeper than 100, clear large memory snapshots
+            for i in range(len(self.recursion_stack) - 100):
+                if self.recursion_stack[i].memory_snapshot:
+                    # Keep only essential keys
+                    essential_keys = list(self.recursion_stack[i].memory_snapshot.keys())[:5]
+                    cleaned_snapshot = {
+                        k: self.recursion_stack[i].memory_snapshot[k]
+                        for k in essential_keys
+                    }
+                    self.recursion_stack[i].memory_snapshot = cleaned_snapshot
+
+    def get_memory_stats(self) -> Dict[str, Any]:
+        """
+        Get current memory usage statistics.
+
+        Returns:
+            Dictionary with memory usage information
+        """
+        return {
+            "recursion_stack_size": len(self.recursion_stack),
+            "bleedthrough_events_count": len(self.bleedthrough_events),
+            "mandela_effects_count": len(self.mandela_effects),
+            "shared_memory_keys": len(self.shared_memory),
+            "total_recursions": self._total_recursions,
+            "max_recursion_depth": self.MAX_RECURSION_DEPTH,
+            "max_bleedthrough_events": self.MAX_BLEEDTHROUGH_EVENTS,
+            "max_mandela_effects": self.MAX_MANDELA_EFFECTS,
+            "memory_pressure": {
+                "recursion_stack": f"{len(self.recursion_stack)}/{self.MAX_RECURSION_DEPTH}",
+                "bleedthrough": f"{len(self.bleedthrough_events)}/{self.MAX_BLEEDTHROUGH_EVENTS}",
+                "mandela": f"{len(self.mandela_effects)}/{self.MAX_MANDELA_EFFECTS}"
+            }
+        }
 
 
 # Singleton instance

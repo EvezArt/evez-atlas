@@ -25,27 +25,29 @@ class ReplicationGeneration:
 class MassReplicationSystem:
     """
     Manages replication of entities up to 144,000 scale.
-    
+
     Based on sacred geometry: 144,000 = 12 × 12 × 1000
     - 12 tribes
     - 12 apostles
     - 1000 generations
     """
-    
+
     SACRED_NUMBER = 144000
     TRIBES = 12
     FOUNDATION = 12
     GENERATIONS = 1000
-    
+    MAX_ENTITY_CACHE = 50000  # Memory limit for entity registry cache
+
     def __init__(self, data_dir: str = "data"):
         """Initialize mass replication system."""
         self.data_dir = data_dir
         os.makedirs(data_dir, exist_ok=True)
-        
+
         self.replication_log = os.path.join(data_dir, "replication.jsonl")
         self.entity_registry = {}
         self.generation_tree = {}
         self.total_entities = 0
+        self._entities_since_cleanup = 0  # Track entities created since last cleanup
         
     def calculate_replication_capacity(self) -> Dict[str, int]:
         """Calculate current replication capacity."""
@@ -109,7 +111,13 @@ class MassReplicationSystem:
             self.entity_registry[entity_id] = entity
             replicas.append(entity)
             self.total_entities += 1
-            
+            self._entities_since_cleanup += 1
+
+            # Perform memory cleanup every 5000 entities
+            if self._entities_since_cleanup >= 5000:
+                self._cleanup_entity_registry()
+                self._entities_since_cleanup = 0
+
             # Log replication event
             self._log_replication(source_id, entity_id, generation)
         
@@ -250,9 +258,63 @@ class MassReplicationSystem:
             "generation": generation,
             "total_entities": self.total_entities
         }
-        
+
         with open(self.replication_log, "a") as f:
             f.write(json.dumps(event) + "\n")
+
+    def _cleanup_entity_registry(self):
+        """
+        Periodic memory cleanup to prevent memory burns.
+        Removes old entity records when approaching memory limits.
+        """
+        if len(self.entity_registry) > self.MAX_ENTITY_CACHE:
+            # Keep only the most recent entities
+            # Sort by creation timestamp and keep newest 50%
+            sorted_entities = sorted(
+                self.entity_registry.items(),
+                key=lambda x: x[1].get("created_at", ""),
+                reverse=True
+            )
+
+            # Keep the most recent half
+            keep_count = self.MAX_ENTITY_CACHE // 2
+            entities_to_keep = dict(sorted_entities[:keep_count])
+
+            # Log cleanup event
+            removed_count = len(self.entity_registry) - len(entities_to_keep)
+            cleanup_event = {
+                "type": "memory_cleanup",
+                "timestamp": datetime.utcnow().isoformat(),
+                "entities_removed": removed_count,
+                "entities_retained": len(entities_to_keep),
+                "total_entities": self.total_entities
+            }
+
+            with open(self.replication_log, "a") as f:
+                f.write(json.dumps(cleanup_event) + "\n")
+
+            self.entity_registry = entities_to_keep
+
+    def get_memory_stats(self) -> Dict[str, Any]:
+        """
+        Get current memory usage statistics.
+
+        Returns:
+            Dictionary with memory usage information
+        """
+        return {
+            "entity_registry_size": len(self.entity_registry),
+            "generation_tree_size": len(self.generation_tree),
+            "total_entities": self.total_entities,
+            "entities_since_cleanup": self._entities_since_cleanup,
+            "max_entity_cache": self.MAX_ENTITY_CACHE,
+            "sacred_target": self.SACRED_NUMBER,
+            "memory_pressure": {
+                "entity_registry": f"{len(self.entity_registry)}/{self.MAX_ENTITY_CACHE}",
+                "total_progress": f"{self.total_entities}/{self.SACRED_NUMBER}"
+            },
+            "cache_usage_percent": (len(self.entity_registry) / self.MAX_ENTITY_CACHE) * 100
+        }
 
 
 # Singleton instance

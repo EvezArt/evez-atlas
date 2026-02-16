@@ -209,6 +209,8 @@ Local-only tools for audit log analysis and hermetic console operations.
 
 ## Quick Start
 
+**📘 For a comprehensive guide with all commands, see [QUICK_START.md](QUICK_START.md)**
+
 ```bash
 # Deploy all projects
 ./scripts/deploy-all.sh
@@ -300,6 +302,7 @@ See [SECURITY.md](SECURITY.md) for complete security documentation.
 
 ## Documentation
 
+- [Quick Start Guide](QUICK_START.md) - Complete command reference for tests, demos, and deployment
 - [Initial Access](docs/initial-access.md)
 - [Access Gateway Pipeline](docs/ops/access-gateway.md)
 - [Hermetic Console Operations](docs/ops/hermetic_console.md)
