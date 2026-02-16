@@ -1,5 +1,8 @@
 name: Atlas v3 CI
 
+permissions:
+  contents: read
+
 on:
   push:
     branches: [main, atlas-v3-kernel]
@@ -23,7 +26,7 @@ jobs:
 
       - name: Run recursion loop (dry run)
         run: |
-          ATLAS_TARGET=Evez666 ATLAS_INVARIANTS='coverage>0.8,no_blind_spots' npm run atlas:recursion > spine-output.json
+          ATLAS_TARGET=Evez666 ATLAS_INVARIANTS='coverage>0.8,no_blind_spots' npm run --silent atlas:recursion > spine-output.json
 
       - name: Verify spine integrity
         run: |

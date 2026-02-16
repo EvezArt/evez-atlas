@@ -83,6 +83,21 @@ export class AuthoritativeGameServer {
       return true;
     });
 
+    const reconstructedPlayers: Record<string, { x: number; y: number; health: number }> = {};
+
+    for (const event of targetEvents) {
+      if (event.kind === "PLAYER_JOIN") {
+        reconstructedPlayers[event.payload.playerId] = { x: 0, y: 0, health: 100 };
+      }
+
+      if (event.kind === "PLAYER_MOVE") {
+        const player = reconstructedPlayers[event.payload.playerId];
+        if (!player) continue;
+        player.x = event.payload.next.x;
+        player.y = event.payload.next.y;
+      }
+    }
+
     this.spine.append({
       domain: "game",
       kind: "ROLLBACK",
@@ -94,7 +109,7 @@ export class AuthoritativeGameServer {
       }
     });
 
-    // Replay logic (stub)
+    this.state.players = reconstructedPlayers;
     this.state.tick = toTick;
   }
 
