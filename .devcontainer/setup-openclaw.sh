@@ -3,6 +3,18 @@ set -e
 
 echo "🔧 Setting up OpenClaw in Codespaces..."
 
+# FAIL FAST: Check required secrets
+if [ -z "$ANTHROPIC_API_KEY" ]; then
+  echo "❌ FATAL: ANTHROPIC_API_KEY is not set!"
+  echo "Add it via: GitHub repo → Settings → Secrets → Codespaces → New secret"
+  echo "Then rebuild the Codespace."
+  exit 1
+fi
+
+if [ -z "$GITHUB_TOKEN" ]; then
+  echo "⚠️  WARNING: GITHUB_TOKEN not set - autodevelop will be read-only"
+fi
+
 # Initialize OpenClaw
 if [ ! -d "$HOME/.openclaw" ]; then
   echo "📦 First-time setup: initializing OpenClaw..."
@@ -69,6 +81,11 @@ if [ -n "$CODESPACE_NAME" ]; then
     "enabled": true,
     "maxRecursionDepth": 10,
     "safeMode": true
+  },
+  "autodevelop": {
+    "enabled": true,
+    "maxPRsPerDay": 5,
+    "scanIntervalMinutes": 60
   }
 }
 EOF
@@ -76,9 +93,9 @@ EOF
   # Replace placeholders with actual values
   sed -i "s|GATEWAY_URL_PLACEHOLDER|$GATEWAY_URL|g" ~/.openclaw/openclaw.json
   sed -i "s|ANTHROPIC_API_KEY_PLACEHOLDER|$ANTHROPIC_API_KEY|g" ~/.openclaw/openclaw.json
-  sed -i "s|OPENAI_API_KEY_PLACEHOLDER|$OPENAI_API_KEY|g" ~/.openclaw/openclaw.json
-  sed -i "s|PERPLEXITY_API_KEY_PLACEHOLDER|$PERPLEXITY_API_KEY|g" ~/.openclaw/openclaw.json
-  sed -i "s|GITHUB_TOKEN_PLACEHOLDER|$GITHUB_TOKEN|g" ~/.openclaw/openclaw.json
+  sed -i "s|OPENAI_API_KEY_PLACEHOLDER|${OPENAI_API_KEY:-}|g" ~/.openclaw/openclaw.json
+  sed -i "s|PERPLEXITY_API_KEY_PLACEHOLDER|${PERPLEXITY_API_KEY:-}|g" ~/.openclaw/openclaw.json
+  sed -i "s|GITHUB_TOKEN_PLACEHOLDER|${GITHUB_TOKEN:-$GITHUB_TOKEN}|g" ~/.openclaw/openclaw.json
   
   echo "✅ Configured for Codespaces at: $GATEWAY_URL"
 fi
@@ -98,6 +115,13 @@ npx clawhub@latest install web-search || echo "⚠️ web-search not available"
 if [ -f ".openclaw/skills/self-awareness.js" ]; then
   cp .openclaw/skills/*.js ~/.openclaw/skills/ || true
   echo "✅ Custom skills copied"
+fi
+
+# Copy autodev loop script
+if [ -f ".openclaw/scripts/autodev-loop.sh" ]; then
+  cp .openclaw/scripts/autodev-loop.sh ~/.openclaw/scripts/
+  chmod +x ~/.openclaw/scripts/autodev-loop.sh
+  echo "✅ Autodev loop script installed"
 fi
 
 # Make scripts executable
@@ -121,19 +145,11 @@ echo ""
 echo "🌐 Gateway URL: $GATEWAY_URL"
 echo "🔑 Token: $TOKEN"
 echo ""
-echo "Connect your dashboard:"
-echo "1. Open dashboard at forwarded port 3000"
-echo "2. Paste token above"
-echo "3. Click 'Connect'"
-echo "4. Approve device: openclaw devices list && openclaw devices approve <id>"
-echo ""
 echo "📊 Monitor status:"
 echo "  - Gateway: openclaw gateway status"
 echo "  - Health: openclaw health"
 echo "  - Logs: tail -f ~/.openclaw/logs/gateway.log"
-echo ""
-echo "🔄 Start autonomous mode:"
-echo "  - nohup ~/.openclaw/scripts/keep-alive.sh > ~/.openclaw/logs/keep-alive.log 2>&1 &"
+echo "  - Autodev: tail -f ~/.openclaw/logs/autodev.log"
 echo "═══════════════════════════════════════════════════════════"
 
 # Auto-start keep-alive in background
@@ -143,4 +159,10 @@ if [ -f "$HOME/.openclaw/scripts/keep-alive.sh" ]; then
 elif [ -f ".openclaw/scripts/keep-alive.sh" ]; then
   nohup bash ".openclaw/scripts/keep-alive.sh" > "$HOME/.openclaw/logs/keep-alive.log" 2>&1 &
   echo "✅ Keep-alive monitoring started (PID: $!)"
+fi
+
+# Auto-start autodev loop
+if [ -f "$HOME/.openclaw/scripts/autodev-loop.sh" ]; then
+  nohup bash "$HOME/.openclaw/scripts/autodev-loop.sh" > "$HOME/.openclaw/logs/autodev.log" 2>&1 &
+  echo "🤖 Autodevelop loop started (PID: $!)"
 fi
