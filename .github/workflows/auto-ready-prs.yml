@@ -89,9 +89,19 @@ jobs:
             
             console.log('Check results:', checkResults);
             
+            // Determine if all required checks are present
+            const missingChecks = requiredChecks.filter(
+              (name) => !Object.prototype.hasOwnProperty.call(checkResults, name)
+            );
+            if (missingChecks.length > 0) {
+              console.log('Missing required checks (no runs found yet):', missingChecks);
+            }
+            
+            const allPresent = missingChecks.length === 0;
+            
             // Determine if all required checks passed
-            const allPassed = requiredChecks.every(name => 
-              checkResults[name] === 'success'
+            const allPassed = allPresent && requiredChecks.every(
+              (name) => checkResults[name] === 'success'
             );
             
             core.setOutput('ready', allPassed ? 'true' : 'false');
