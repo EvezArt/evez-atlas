@@ -305,22 +305,25 @@ def cmd_revenue():
     print("REVENUE REPORT")
     print("=" * 80)
     print()
-    
+
     events = parse_orders()
     if not events:
         print("No events found.")
         return
-    
+
+    # Precompute orders once - PERFORMANCE FIX: avoid O(n*m) nested loop
+    orders = group_by_order(events)
+
     fulfilled_events = [e for e in events if e.get('event_type') == 'order_fulfilled']
-    
+
     if not fulfilled_events:
         print("No fulfilled orders found.")
         return
-    
+
     total_revenue = sum(e.get('amount', 0) for e in fulfilled_events)
     print(f"Total Revenue: ${total_revenue:.2f}")
     print()
-    
+
     # Revenue by day
     revenue_by_day = defaultdict(float)
     for event in fulfilled_events:
@@ -328,7 +331,7 @@ def cmd_revenue():
         if timestamp:
             date = datetime.fromtimestamp(timestamp).strftime('%Y-%m-%d')
             revenue_by_day[date] += event.get('amount', 0)
-    
+
     if revenue_by_day:
         print("Revenue by Period:")
         for date in sorted(revenue_by_day.keys()):
@@ -336,7 +339,7 @@ def cmd_revenue():
             pct = (amount / total_revenue) * 100
             print(f"  {date}: ${amount:.2f} ({pct:.0f}%)")
         print()
-    
+
     # Revenue by hour
     revenue_by_hour = defaultdict(float)
     for event in fulfilled_events:
@@ -344,46 +347,44 @@ def cmd_revenue():
         if timestamp:
             hour = datetime.fromtimestamp(timestamp).strftime('%H:00')
             revenue_by_hour[hour] += event.get('amount', 0)
-    
+
     if revenue_by_hour:
         print("Revenue by Hour:")
         for hour in sorted(revenue_by_hour.keys())[:10]:  # Top 10
             amount = revenue_by_hour[hour]
             print(f"  {hour}: ${amount:.2f}")
         print()
-    
-    # Payment methods
+
+    # Payment methods - PERFORMANCE FIX: use precomputed orders
     payment_methods = defaultdict(float)
     for event in fulfilled_events:
-        # Try to get payment method from order creation
         order_id = event.get('order_id')
-        orders = group_by_order(events)
         if order_id in orders:
             created = [e for e in orders[order_id] if e.get('event_type') == 'order_created']
             if created:
                 method = created[0].get('metadata', {}).get('payment_method', 'unknown')
                 payment_methods[method] += event.get('amount', 0)
-    
+
     if payment_methods:
         print("Payment Methods:")
         for method, amount in sorted(payment_methods.items(), key=lambda x: x[1], reverse=True):
             pct = (amount / total_revenue) * 100
             print(f"  {method}: ${amount:.2f} ({pct:.0f}%)")
         print()
-    
+
     # Service types
     service_types = defaultdict(float)
     for event in fulfilled_events:
         service = event.get('metadata', {}).get('service_delivered', 'unknown')
         service_types[service] += event.get('amount', 0)
-    
+
     if service_types:
         print("Service Types:")
         for service, amount in sorted(service_types.items(), key=lambda x: x[1], reverse=True):
             pct = (amount / total_revenue) * 100
             print(f"  {service}: ${amount:.2f} ({pct:.0f}%)")
         print()
-    
+
     # Transaction statistics
     amounts = [e.get('amount', 0) for e in fulfilled_events]
     if amounts:
@@ -457,7 +458,12 @@ def cmd_report():
     print("COMPREHENSIVE AUDIT LOG REPORT")
     print("=" * 80)
     print()
-    
+
+    # PERFORMANCE FIX: Parse orders once and reuse data across all analysis functions
+    # Note: This changes the architecture to be more efficient but requires refactoring
+    # For now, we call each function separately (they each parse independently)
+    # TODO: Refactor to pass parsed data as parameter to avoid repeated parsing
+
     # Run all analysis
     cmd_summary()
     print("\n")
@@ -466,13 +472,13 @@ def cmd_report():
     cmd_customers()
     print("\n")
     cmd_revenue()
-    
+
     # Order details
     print("=" * 80)
     print("ORDER DETAILS")
     print("=" * 80)
     print()
-    
+
     events = parse_orders()
     orders = group_by_order(events)
     

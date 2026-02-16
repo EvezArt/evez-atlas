@@ -8,6 +8,7 @@ using quantum-inspired algorithms and feature maps.
 import hashlib
 import json
 import math
+from functools import lru_cache
 from typing import Any, Dict, List, Optional
 
 # Supported hash algorithms for fingerprinting
@@ -256,6 +257,35 @@ def encode_features(
     return feature_map.encode(features)
 
 
+# PERFORMANCE FIX: Add caching wrapper for quantum kernel estimation
+@lru_cache(maxsize=1024)
+def _cached_quantum_kernel(
+    x1_tuple: tuple,
+    x2_tuple: tuple,
+    feature_dimension: int = 10,
+    reps: int = 2
+) -> float:
+    """
+    Cached version of quantum kernel estimation.
+    Uses tuples for hashability required by lru_cache.
+    """
+    feature_map = QuantumFeatureMap(feature_dimension, reps)
+
+    x1 = list(x1_tuple)
+    x2 = list(x2_tuple)
+
+    state1 = feature_map.encode(x1)
+    state2 = feature_map.encode(x2)
+
+    # Compute fidelity (inner product magnitude squared)
+    inner_product = sum(
+        s1.conjugate() * s2
+        for s1, s2 in zip(state1, state2)
+    )
+
+    return abs(inner_product) ** 2
+
+
 def quantum_kernel_estimation(
     x1: List[float],
     x2: List[float],
@@ -264,31 +294,28 @@ def quantum_kernel_estimation(
 ) -> float:
     """
     Estimate the quantum kernel between two feature vectors.
-    
+
     The quantum kernel measures the similarity between two data points
     in the quantum feature space, which can capture non-linear relationships.
-    
+
+    PERFORMANCE: This function uses caching to avoid redundant computations.
+
     Args:
         x1: First feature vector
         x2: Second feature vector
         feature_dimension: Dimension of the feature map
         reps: Number of feature map repetitions
-        
+
     Returns:
         Kernel value between 0 and 1
     """
-    feature_map = QuantumFeatureMap(feature_dimension, reps)
-    
-    state1 = feature_map.encode(x1)
-    state2 = feature_map.encode(x2)
-    
-    # Compute fidelity (inner product magnitude squared)
-    inner_product = sum(
-        s1.conjugate() * s2 
-        for s1, s2 in zip(state1, state2)
+    # Convert to tuples for caching
+    return _cached_quantum_kernel(
+        tuple(x1),
+        tuple(x2),
+        feature_dimension,
+        reps
     )
-    
-    return abs(inner_product) ** 2
 
 
 def _softmax(scores: List[float]) -> List[float]:
@@ -556,39 +583,50 @@ try:
     from qiskit_ibm_runtime import QiskitRuntimeService
     from qiskit import QuantumCircuit, transpile
     from qiskit.circuit.library import ZZFeatureMap
-    
+    import threading
+
     _ibm_backend_cache = None
-    
+    _backend_lock = threading.Lock()  # PERFORMANCE FIX: Thread-safe backend caching
+
     def get_ibm_backend():
         """
         Get IBM Quantum backend if available.
-        
+
+        PERFORMANCE: Uses thread-safe singleton pattern for backend caching.
+
         Returns:
             IBM Quantum backend or None if unavailable
         """
         global _ibm_backend_cache
+
+        # Double-checked locking pattern for thread safety
         if _ibm_backend_cache is not None:
             return _ibm_backend_cache
-            
-        try:
-            service = QiskitRuntimeService()
-            # Get least busy operational backend
-            backend = service.least_busy(operational=True, simulator=False)
-            _ibm_backend_cache = backend
-            return backend
-        except Exception as e:
-            # Fall back to simulator if available
+
+        with _backend_lock:
+            # Check again after acquiring lock
+            if _ibm_backend_cache is not None:
+                return _ibm_backend_cache
+
             try:
-                backend = service.backend("ibmq_qasm_simulator")
+                service = QiskitRuntimeService()
+                # Get least busy operational backend
+                backend = service.least_busy(operational=True, simulator=False)
                 _ibm_backend_cache = backend
                 return backend
-            except Exception as e2:
-                # Log both errors for debugging
-                import sys
-                print(f"IBM Quantum backend unavailable: {e}", file=sys.stderr)
-                print(f"Simulator also unavailable: {e2}", file=sys.stderr)
-                print("Falling back to classical simulation", file=sys.stderr)
-                return None
+            except Exception as e:
+                # Fall back to simulator if available
+                try:
+                    backend = service.backend("ibmq_qasm_simulator")
+                    _ibm_backend_cache = backend
+                    return backend
+                except Exception as e2:
+                    # Log both errors for debugging
+                    import sys
+                    print(f"IBM Quantum backend unavailable: {e}", file=sys.stderr)
+                    print(f"Simulator also unavailable: {e2}", file=sys.stderr)
+                    print("Falling back to classical simulation", file=sys.stderr)
+                    return None
     
     def execute_quantum_kernel_ibm(x1: List[float], x2: List[float]) -> float:
         """

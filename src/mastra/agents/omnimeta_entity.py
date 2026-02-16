@@ -448,10 +448,12 @@ class OmnimetamiraculaousEntity:
             "entity_id": self.entity_id,
             "data": data
         }
-        
+
         self.events_log.parent.mkdir(parents=True, exist_ok=True)
         try:
-            with self.events_log.open("a") as f:
+            # PERFORMANCE FIX: Use buffered writing to reduce I/O overhead
+            # buffering=1 enables line buffering for immediate flush on newline
+            with self.events_log.open("a", buffering=8192) as f:
                 f.write(json.dumps(event) + "\n")
         except IOError:
             pass

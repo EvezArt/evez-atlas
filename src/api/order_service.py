@@ -8,19 +8,45 @@ Customer → Request → Order Created → Payment → Fulfillment
 import json
 import time
 import hashlib
+from collections import OrderedDict
 from typing import Dict, Optional
 from pathlib import Path
 
 
+# PERFORMANCE FIX: Bounded LRU-style cache implementation
+class BoundedCache:
+    """Simple LRU cache with max size limit to prevent memory leaks."""
+
+    def __init__(self, max_size: int = 1000):
+        self.cache = OrderedDict()
+        self.max_size = max_size
+
+    def get(self, key):
+        if key not in self.cache:
+            return None
+        # Move to end (most recently used)
+        self.cache.move_to_end(key)
+        return self.cache[key]
+
+    def set(self, key, value):
+        if key in self.cache:
+            self.cache.move_to_end(key)
+        self.cache[key] = value
+        # Remove oldest if over limit
+        if len(self.cache) > self.max_size:
+            self.cache.popitem(last=False)
+
+
 class OrderService:
     """Handles order creation with idempotency and rate limiting."""
-    
+
     def __init__(self, orders_log_path: str = "src/memory/orders.jsonl"):
         self.orders_log = Path(orders_log_path)
         self.orders_log.parent.mkdir(parents=True, exist_ok=True)
-        
-        # In-memory cache for idempotency (would use Redis in production)
-        self.idempotency_cache = {}
+
+        # PERFORMANCE FIX: Use bounded caches to prevent memory leaks
+        # In production, use Redis with TTL
+        self.idempotency_cache = BoundedCache(max_size=1000)
         self.rate_limit_cache = {}
         
     def create_order(
@@ -104,7 +130,7 @@ class OrderService:
         
         # 6. Cache for idempotency
         if idempotency_key:
-            self.idempotency_cache[idempotency_key] = order
+            self.idempotency_cache.set(idempotency_key, order)
         
         return order
     
