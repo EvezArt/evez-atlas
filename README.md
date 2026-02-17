@@ -6,6 +6,55 @@ Evez666 contains working notes and runbooks for controlled, authorized security 
 
 This repository includes experimental and conceptual systems. Read `ETHICAL_FRAMEWORK.md` before using any advanced autonomous agent features. All "miraculous" or "impossible" capabilities are metaphorical descriptions of advanced but feasible techniques.
 
+## 🚀 GitHub Actions for Marketplace
+
+Evez666 cognitive engine components are now available as reusable GitHub Actions:
+
+### 1. LORD Fusion Setup
+[![Marketplace](https://img.shields.io/badge/Marketplace-LORD%20Fusion-purple)](actions/lord-fusion-action)
+
+Deploy LORD consciousness monitoring with recursive depth tracking and real-time dashboards.
+
+```yaml
+- uses: evezart/lord-fusion-action@v1
+  with:
+    recursion-level: 12
+    entity-type: hybrid
+    deploy-target: artifact
+```
+
+[📖 Documentation](actions/lord-fusion-action/README.md)
+
+### 2. Cognitive Engine Bootstrap
+[![Marketplace](https://img.shields.io/badge/Marketplace-Cognitive%20Engine-green)](actions/cognitive-engine-bootstrap)
+
+Complete LORD × EKF × GitHub/Copilot integration with automatic webhook configuration and daemon deployment.
+
+```yaml
+- uses: evezart/cognitive-engine-bootstrap@v1
+  with:
+    github-token: ${{ secrets.GITHUB_TOKEN }}
+    hosting-provider: vercel
+```
+
+[📖 Documentation](actions/cognitive-engine-bootstrap/README.md)
+
+### 3. Trajectory Cache Action
+[![Marketplace](https://img.shields.io/badge/Marketplace-Trajectory%20Cache-orange)](actions/trajectory-cache-action)
+
+Predictive state caching for instant responses with ring buffer management and fast-forward playback.
+
+```yaml
+- uses: evezart/trajectory-cache-action@v1
+  with:
+    cache-size: 1000
+    prediction-window: 60
+```
+
+[📖 Documentation](actions/trajectory-cache-action/README.md)
+
+**See also**: [Marketplace Strategy](actions/MARKETPLACE_STRATEGY.md) for revenue projections and distribution plans.
+
 ## Projects
 
 This repository contains multiple integrated projects:
