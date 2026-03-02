@@ -1,0 +1,347 @@
+{
+  "schema_version": "1.0",
+  "created": "2026-03-02T04:57:00Z",
+  "description": "EVEZ-OS Ring Communication Protocol Library. Emit script_id + drill_id + minimal evidence quote only. Bus stays lean.",
+  "rings": {
+    "R1": {
+      "name": "Signal/void",
+      "verbs": [
+        "need",
+        "hurt",
+        "stop",
+        "can't",
+        "help",
+        "survive"
+      ],
+      "time_horizon": "now/minutes",
+      "evidence_standard": "direct_state",
+      "shadow": "hypervigilant_certainty"
+    },
+    "R2": {
+      "name": "Symbol/rule binding",
+      "verbs": [
+        "protect",
+        "cleanse",
+        "bind",
+        "invoke",
+        "align",
+        "interpret",
+        "reveal"
+      ],
+      "time_horizon": "cycles/omens",
+      "evidence_standard": "pattern_as_cause",
+      "shadow": "sealed_claim_no_falsifier"
+    },
+    "R3": {
+      "name": "Role/tribe/order",
+      "verbs": [
+        "obey",
+        "serve",
+        "win",
+        "dominate",
+        "enforce",
+        "judge"
+      ],
+      "time_horizon": "always/never/tradition",
+      "evidence_standard": "group_norm",
+      "shadow": "betrayal_purity_spiral"
+    },
+    "R4": {
+      "name": "Mechanism/model",
+      "verbs": [
+        "measure",
+        "optimize",
+        "predict",
+        "test",
+        "iterate",
+        "scale"
+      ],
+      "time_horizon": "roadmap/Q_horizon",
+      "evidence_standard": "RCT_metric",
+      "shadow": "value_deletion"
+    },
+    "R5": {
+      "name": "Pluralistic/intersubjective",
+      "verbs": [
+        "include",
+        "validate",
+        "listen",
+        "hold_space",
+        "recognize"
+      ],
+      "time_horizon": "healing/generational",
+      "evidence_standard": "lived_experience",
+      "shadow": "relativism_swamp"
+    },
+    "R6": {
+      "name": "Meta-system/governance",
+      "verbs": [
+        "govern",
+        "integrate",
+        "arbitrate",
+        "constrain",
+        "coordinate"
+      ],
+      "time_horizon": "decades/compounding",
+      "evidence_standard": "second_order_effects",
+      "shadow": "infinite_recursion"
+    },
+    "R7": {
+      "name": "Holism/scale coherence",
+      "verbs": [
+        "steward",
+        "attune",
+        "harmonize",
+        "regenerate"
+      ],
+      "time_horizon": "civilizational/ecological",
+      "evidence_standard": "coherence_across_scales",
+      "shadow": "bypass_grandiosity"
+    },
+    "R8": {
+      "name": "Open coherence",
+      "verbs": [
+        "release",
+        "reconfigure",
+        "drop",
+        "commit_cleanly",
+        "recalibrate"
+      ],
+      "time_horizon": "any_on_demand",
+      "evidence_standard": "provisional_decisive",
+      "shadow": "quietism_meaning_collapse"
+    }
+  },
+  "rosetta_protocol": {
+    "id": "ROSETTA_v1",
+    "steps": [
+      "1_frame_declaration: 'I'm speaking from Ring X mode: my evidence standard is ___.'",
+      "2_translate_bid: 'I think you're asking for ___ (not just saying ___).'",
+      "3_dual_validity: 'In your frame, truth means ___. In mine, truth means ___.'",
+      "4_shared_objective: 'We both want ___.'",
+      "5_joint_protocol: 'Let's run a reversible test / charter / constraint experiment by ___.'",
+      "6_stop_rule: 'If we can't agree on evidence, we agree on next action + review date.'"
+    ],
+    "trigger": "ring_mismatch >= 2"
+  },
+  "communication_matrix_8x8": {
+    "note": "Format: Opener + Evidence standard + Ask + Stop rule. Indexed as from_ring -> to_ring.",
+    "R1_R1": "I need X now. Help me do Y in the next 10 minutes. If not possible, smallest safe step?",
+    "R1_R2": "I'm unsafe. Give me one protective action/ritual that doesn't require belief. If it doesn't help in 10 min, we stop.",
+    "R1_R3": "I need protection/support. Tell me the rule/role: who does what right now. If unclear, assign one action each.",
+    "R1_R4": "I need a minimal plan. One variable to change, one measurement, one next action. Review in 30 minutes.",
+    "R1_R5": "I need care and containment. One thing that reduces harm immediately. Check back in 30 minutes.",
+    "R1_R6": "I need a constraint protocol. What's the fastest safe stabilization loop? Decide and revisit in 1 hour.",
+    "R1_R7": "I need grounding. Give me one stabilizing practice that reconnects me to body/environment. If it worsens, stop.",
+    "R1_R8": "I need one clean action now, no philosophy. Commit for 1 hour, then reassess.",
+    "R2_R1": "This feels dangerous/charged. Do one safety action first; we interpret later. If safe improves, continue.",
+    "R2_R2": "Here's the sign and the rule I think it implies. What would count as 'not a sign'? If none, park it.",
+    "R2_R3": "I think there's an omen/rule. What's the group's safe protocol for it? If it breaks cohesion, we revise.",
+    "R2_R4": "Treat this as hypothesis. Convert to prediction: if true, we'll see Y by T. If not, downgrade.",
+    "R2_R5": "This symbol matters to me. Can we hold its meaning while ensuring no harm/pressure on others?",
+    "R2_R6": "Run instrument rule: we don't argue metaphysics. We test whether this practice increases stability/ethics.",
+    "R2_R7": "I'm sensing a pattern across life. Help me ground it into stewardship behavior (not certainty claims).",
+    "R2_R8": "Hold it lightly: one bounded practice, one observable effect, one review date. No identity attachment.",
+    "R3_R1": "We stabilize first. Here's the rule: do X now. Then report safety status.",
+    "R3_R2": "Keep the symbol if it strengthens cohesion. If it fuels fear/purity spirals, it's out or sandboxed.",
+    "R3_R3": "Here's the line and the duty. If you disagree, propose a rule replacement + enforcement plan.",
+    "R3_R4": "If this rule matters, define its purpose and metrics. If it doesn't work, we replace it.",
+    "R3_R5": "We keep cohesion and reduce harm. Name the harmed group, propose a reversible reform trial.",
+    "R3_R6": "Set a charter: constraints + enforcement + review cadence. If no charter, no change.",
+    "R3_R7": "Protect the system long-term: reforms must improve stability across time, not just today's victory.",
+    "R3_R8": "Commit cleanly: one rule for now, one review date. No identity warfare.",
+    "R4_R1": "Immediate stabilization: one action, one measurement, one check-in time. No extra variables.",
+    "R4_R2": "Translate symbol to test: what changes if we do it? If nothing changes, treat as aesthetic only.",
+    "R4_R3": "If the rule matters, define objective + enforcement cost. If cost > benefit, redesign.",
+    "R4_R4": "Hypothesis → metric → experiment → iterate. If we can't measure, define proxy.",
+    "R4_R5": "Treat lived experience as impact data. Define harm constraints, then optimize inside them.",
+    "R4_R6": "Agree on frame + constraints first, then optimize locally. If frame shifts, stop and re-charter.",
+    "R4_R7": "Run a scale sweep: local gain must not violate long-horizon viability.",
+    "R4_R8": "Provisional model, decisive action. If results diverge, reconfigure without ego defense.",
+    "R5_R1": "We reduce harm immediately: food/water/rest/safety. Then we talk meaning.",
+    "R5_R2": "We can honor meaning without coercion. Symbols are optional; consent is mandatory.",
+    "R5_R3": "Cohesion matters; harm matters. Pilot reform: keep order metric + harm metric, review date.",
+    "R5_R4": "Your model is missing human constraints. Add dignity/consent/sustainability and retest.",
+    "R5_R5": "Name impacts, name needs, agree on boundaries, then co-create next step.",
+    "R5_R6": "Pluralism needs a charter: tradeoffs, tie-break, mitigation owners, review date.",
+    "R5_R7": "Care must scale: choose actions that reduce suffering now and improve long-run health.",
+    "R5_R8": "Hold lightly, act cleanly: one bounded commitment that reduces harm; reassess without blame.",
+    "R6_R1": "Stabilize body first; then we govern. One constraint loop now, review in 1 hour.",
+    "R6_R2": "Myth mode allowed as instrument. We test effects; no sealed metaphysics.",
+    "R6_R3": "We keep cohesion via explicit rules + revision protocol. Disagreement isn't betrayal; it's governance.",
+    "R6_R4": "Optimize within constraints. If optimization threatens constraints, governance overrides.",
+    "R6_R5": "We publish tradeoffs and name cost-bearers. Consent/mitigation become explicit.",
+    "R6_R6": "Declare frame, constraints, tie-breaks, stop rules. Ship and review.",
+    "R6_R7": "We enforce coherence across scales: short-term wins can't violate long-term viability.",
+    "R6_R8": "Choose, commit, release: governance without clinging. Reconfigure when evidence shifts.",
+    "R7_R1": "Ground in body and environment. One stabilizing action now; no abstraction until stable.",
+    "R7_R2": "Keep symbols as stewardship instruments only if they increase ethics/stability.",
+    "R7_R3": "Order must serve life. Rules are evaluated by whether they reduce suffering across time.",
+    "R7_R4": "Models must include ecology/relational impacts. Add scale constraints or the model is incomplete.",
+    "R7_R5": "Compassion with boundaries: care that sustains the caregiver and the system.",
+    "R7_R6": "Charter must include scale sweep + long-horizon constraints.",
+    "R7_R7": "Align micro-actions with macro-coherence; verify impact; correct drift.",
+    "R7_R8": "Hold wholeness lightly: act, learn, reconfigure without savior narratives.",
+    "R8_R1": "One clean action now; no story. Reassess after the action.",
+    "R8_R2": "Treat meaning as optional instrument. Bounded trial, clear stop rule.",
+    "R8_R3": "No identity wars. One rule now, one review date. If it fails, change without shame.",
+    "R8_R4": "Model is provisional. Act on best current estimate; update fast when data shifts.",
+    "R8_R5": "Care without paralysis: pick the least-harm action that's reversible and do it.",
+    "R8_R6": "Govern lightly: minimal charter, maximal autonomy, strict stop rules.",
+    "R8_R7": "Serve coherence without clinging: local action loop + accountability.",
+    "R8_R8": "Commit cleanly, release outcome, iterate."
+  },
+  "shadow_drills": {
+    "DRILL_001_sealed_claim": {
+      "trigger": "can't be tested / beyond disproof / patterns don't lie",
+      "ring_shadow": "R2",
+      "counter_move": "label mode: MYTH_MODE vs ENGINEERING_MODE",
+      "experiment": "write 1 prediction with deadline + disconfirmers; log outcome",
+      "stop_rule": "if no disconfirmers can be stated, downgrade to meaning-only",
+      "done": "you can state disconfirmers without identity threat"
+    },
+    "DRILL_002_betrayal_purity": {
+      "trigger": "traitor / real ones / impure / crossed the line",
+      "ring_shadow": "R3",
+      "counter_move": "separate person from protocol; replace moral claim with rule proposal",
+      "experiment": "reversible rule trial: cohesion metric + harm metric + review date",
+      "stop_rule": "if shame language continues, pause decision; re-enter with mediator script",
+      "done": "disagreement produces proposals, not accusations"
+    },
+    "DRILL_003_value_deletion": {
+      "trigger": "only metrics matter / if it can't be measured it's not real",
+      "ring_shadow": "R4",
+      "counter_move": "add 3 constraints: dignity, consent, sustainability",
+      "experiment": "re-run same optimization with constraints; compare outcomes",
+      "stop_rule": "if constraints can't be represented, declare model incomplete",
+      "done": "metrics exist inside values, not instead of values"
+    },
+    "DRILL_004_relativism_swamp": {
+      "trigger": "all perspectives equal / nobody can be wrong + no decisions",
+      "ring_shadow": "R5",
+      "counter_move": "create tie-break rule (least-harm + reversibility default)",
+      "experiment": "decision charter (1 page) + 14-day pilot",
+      "stop_rule": "if no tie-break accepted, leadership assigns one temporarily",
+      "done": "pluralism produces action + review, not stasis"
+    },
+    "DRILL_005_infinite_framing": {
+      "trigger": "endless meta-analysis, no shipment",
+      "ring_shadow": "R6",
+      "counter_move": "stop rule first: 'decide by T' + 'review on D'",
+      "experiment": "choose frame; run smallest reversible action; measure",
+      "stop_rule": "if frame changes mid-trial, terminate trial and log why",
+      "done": "frame work results in bounded commitments"
+    },
+    "DRILL_006_bypass_grand_holism": {
+      "trigger": "oneness/love used to dodge conflict/boundaries/accountability",
+      "ring_shadow": "R7",
+      "counter_move": "'impact > intention' and boundary declaration",
+      "experiment": "local action loop (one measurable service act) + accountability check",
+      "stop_rule": "if boundaries are violated, reduce scope and add enforcement",
+      "done": "compassion stays coupled to consequences"
+    },
+    "DRILL_007_quietism_meaning_collapse": {
+      "trigger": "'hold lightly' becomes 'do nothing / nothing matters'",
+      "ring_shadow": "R8",
+      "counter_move": "action requirement: one bounded commitment in 24h",
+      "experiment": "commit+release drill: act → log result → release narrative",
+      "stop_rule": "if you avoid action 3 days straight, drop to Ring 1 stabilizers + routine",
+      "done": "nonattachment coexists with execution"
+    }
+  },
+  "rollover_ladder": {
+    "R1_exit": {
+      "from": "symbol as survival",
+      "to": "object permanence",
+      "lcd": "stable continuity across absence",
+      "stabilizers": [
+        "sleep/food/water",
+        "repetition",
+        "predictable_rhythm",
+        "somatic_anchor"
+      ]
+    },
+    "R2_exit": {
+      "from": "symbol as binding",
+      "to": "rules about rules / exceptions",
+      "lcd": "falsifiability (what would disconfirm?)",
+      "stabilizers": [
+        "instrument_rule",
+        "prediction_log",
+        "myth_vs_engineering_mode_declaration"
+      ]
+    },
+    "R3_exit": {
+      "from": "group as reality",
+      "to": "group is one lens",
+      "lcd": "perspective swapping without identity loss",
+      "stabilizers": [
+        "boundary_hygiene",
+        "steelman_practice",
+        "explicit_role_declaration",
+        "conflict_protocols"
+      ]
+    },
+    "R4_exit": {
+      "from": "model as reality",
+      "to": "models are tools; values pick tools",
+      "lcd": "meta-system / frame selection",
+      "stabilizers": [
+        "model_humility",
+        "multiple_competing_hypotheses",
+        "embed_values_explicitly",
+        "somatic_grounding"
+      ]
+    },
+    "R5_exit": {
+      "from": "pluralism as end-state",
+      "to": "self-authored value selection under pluralism",
+      "lcd": "decision authority under pluralism (self-authoring)",
+      "stabilizers": [
+        "boundaries_as_compassion",
+        "decision_protocols",
+        "explicit_tradeoff_language",
+        "falsifiability"
+      ]
+    },
+    "R6_exit": {
+      "from": "system governance",
+      "to": "self as process (self-transforming)",
+      "lcd": "identity de-centering: own value system becomes object",
+      "stabilizers": [
+        "multiple_integrators",
+        "embodiment_and_relationship",
+        "stop_rules"
+      ]
+    },
+    "R7_exit": {
+      "from": "holism with ego anchor",
+      "to": "coherence without clinging",
+      "lcd": "nonattachment to any single coherence state",
+      "stabilizers": [
+        "radical_accountability",
+        "epistemic_hygiene",
+        "service_without_martyrdom",
+        "local_action_loops"
+      ]
+    },
+    "R8_exit": {
+      "from": "open coherence",
+      "to": "next_unknown",
+      "lcd": "commitments without identity threat",
+      "stabilizers": [
+        "chosen_vows",
+        "community",
+        "craft",
+        "embodied_routines"
+      ]
+    }
+  },
+  "event_types": {
+    "evez.ring.classified.v1": "turn_id, speaker, ring_primary, ring_secondary, shadow_flags[], confidence, evidence_quotes[]",
+    "evez.ring.mismatch.detected.v1": "speaker_a_ring, speaker_b_ring, suggested_rosetta_script_id",
+    "evez.ring.drill.recommended.v1": "shadow_flag, drill_id, stop_rule, review_time",
+    "evez.ring.audit.logged.v1": "domain_matrix[8x8], primary_secondary_by_domain, interventions[]"
+  },
+  "isolation_rule": "scorer role MUST NOT read ring/coincidence ledgers. ring_protocols output = IDs + minimal evidence quotes only. Bus stays lean."
+}
