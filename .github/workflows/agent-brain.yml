@@ -1,0 +1,66 @@
+name: agent-brain
+
+on:
+  schedule:
+    - cron: '*/15 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+jobs:
+  orchestrate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt httpx
+      - name: Run orchestrator
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python agent-brain/orchestrator.py
+      - name: Scan org repositories
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python scripts/repo_scanner.py --org EvezArt
+      - name: Auto-commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -B auto/agent-brain-${{ github.run_id }}
+          git add .
+          if ! git diff --cached --quiet; then
+            git commit -m "chore(agent-brain): automated improvements"
+            git push -u origin HEAD
+          fi
+      - name: Create pull request
+        if: success()
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: auto/agent-brain-${{ github.run_id }}
+          title: "chore(agent-brain): autonomous improvement sweep"
+          body: |
+            Automated agent-brain run completed.
+            - Labels applied by risk heuristic
+            - Low-risk changes can be auto-merged
+          labels: auto-agent,needs-review
+      - name: Auto-merge low risk PRs
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          sudo apt-get update && sudo apt-get install -y gh jq
+          PR_NUMBER=$(gh pr list --head auto/agent-brain-${{ github.run_id }} --json number --jq '.[0].number')
+          if [ -n "$PR_NUMBER" ]; then
+            gh pr edit "$PR_NUMBER" --add-label auto-merge
+            gh pr merge "$PR_NUMBER" --auto --squash
+          fi
