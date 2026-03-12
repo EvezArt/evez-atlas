@@ -1,31 +1,115 @@
-# Use the latest 2.1 version of CircleCI pipeline process engine.
-# See: https://circleci.com/docs/reference/configuration-reference
+# CircleCI Configuration — evez666-atlas
+# Optimized for parallel Python + TypeScript CI with caching and test reporting.
 version: 2.1
 
-# Define a job to be invoked later in a workflow.
-# See: https://circleci.com/docs/guides/orchestrate/jobs-steps/#jobs-overview & https://circleci.com/docs/reference/configuration-reference/#jobs
-jobs:
-  say-hello:
-    # Specify the execution environment. You can specify an image from Docker Hub or use one of our convenience images from CircleCI's Developer Hub.
-    # See: https://circleci.com/docs/guides/execution-managed/executor-intro/ & https://circleci.com/docs/reference/configuration-reference/#executor-job
+# ── Reusable executors ─────────────────────────────────────────────────────────
+executors:
+  node-executor:
     docker:
-      # Specify the version you desire here
-      # See: https://circleci.com/developer/images/image/cimg/base
-      - image: cimg/base:current
+      - image: cimg/node:22.19
+    working_directory: ~/project
+    resource_class: medium
 
-    # Add steps to the job
-    # See: https://circleci.com/docs/guides/orchestrate/jobs-steps/#steps-overview & https://circleci.com/docs/reference/configuration-reference/#steps
+  python-executor:
+    docker:
+      - image: cimg/python:3.12
+    working_directory: ~/project
+    resource_class: medium
+
+# ── Reusable commands ──────────────────────────────────────────────────────────
+commands:
+  restore-npm-cache:
     steps:
-      # Checkout the code as the first step.
-      - checkout
-      - run:
-          name: "Say hello"
-          command: "echo Hello, World!"
+      - restore_cache:
+          keys:
+            - npm-v1-{{ checksum "package-lock.json" }}
+            - npm-v1-
 
-# Orchestrate jobs using workflows
-# See: https://circleci.com/docs/guides/orchestrate/workflows/ & https://circleci.com/docs/reference/configuration-reference/#workflows
+  save-npm-cache:
+    steps:
+      - save_cache:
+          key: npm-v1-{{ checksum "package-lock.json" }}
+          paths:
+            - ~/.npm
+
+  restore-pip-cache:
+    steps:
+      - restore_cache:
+          keys:
+            - pip-v1-{{ checksum "requirements.txt" }}
+            - pip-v1-
+
+  save-pip-cache:
+    steps:
+      - save_cache:
+          key: pip-v1-{{ checksum "requirements.txt" }}
+          paths:
+            - ~/.cache/pip
+
+# ── Jobs ───────────────────────────────────────────────────────────────────────
+jobs:
+  # ── TypeScript: install + type-check + test ──────────────────────────────────
+  typescript-ci:
+    executor: node-executor
+    steps:
+      - checkout
+      - restore-npm-cache
+      - run:
+          name: Install Node dependencies
+          command: npm ci --prefer-offline
+      - save-npm-cache
+      - run:
+          name: TypeScript type-check
+          command: npx tsc --noEmit
+      - run:
+          name: Build TypeScript
+          command: npx tsc
+      - run:
+          name: Run TypeScript tests
+          command: npx jest --ci --coverage --testPathPattern='src/'
+      - store_test_results:
+          path: test-results
+      - store_artifacts:
+          path: coverage
+          destination: coverage-ts
+
+  # ── Python: install + lint + test ────────────────────────────────────────────
+  python-ci:
+    executor: python-executor
+    steps:
+      - checkout
+      - restore-pip-cache
+      - run:
+          name: Install Python dependencies
+          command: |
+            python -m pip install --upgrade pip
+            pip install -r requirements.txt
+      - save-pip-cache
+      - run:
+          name: Run Python tests
+          command: |
+            python -m pytest src/tests/python/ tests/ \
+              --tb=short \
+              --junitxml=test-results/pytest.xml \
+              -v
+      - store_test_results:
+          path: test-results
+      - store_artifacts:
+          path: test-results
+          destination: test-results-python
+
+# ── Workflows ──────────────────────────────────────────────────────────────────
 workflows:
-  say-hello-workflow: # This is the name of the workflow, feel free to change it to better match your workflow.
-    # Inside the workflow, you define the jobs you want to run.
+  # Run both language CI jobs in parallel on every push to main (or any branch).
+  ci:
     jobs:
-      - say-hello
+      - typescript-ci:
+          filters:
+            branches:
+              ignore:
+                - /^dependabot\/.*/
+      - python-ci:
+          filters:
+            branches:
+              ignore:
+                - /^dependabot\/.*/
