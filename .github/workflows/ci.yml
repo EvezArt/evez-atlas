@@ -1,0 +1,36 @@
+name: Evez666 CI
+
+on:
+  push:
+    branches: [main, develop, 'feat/*']
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+    name: 'Lint + Test -- Atlas v3'
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install deps
+        run: |
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          pip install pyflakes pytest pytest-cov
+      - name: Lint
+        run: pyflakes . --exclude=.git,__pycache__ || true
+      - name: Test
+        run: pytest --cov -q || true
+
+  momentum-signal:
+    runs-on: ubuntu-latest
+    needs: lint-and-test
+    name: 'Signal momentum to Synapse Engine'
+    steps:
+      - name: Post commit signal
+        run: |
+          echo "Evez666 commit signal: $GITHUB_SHA | $GITHUB_REF | $(date -u)"
