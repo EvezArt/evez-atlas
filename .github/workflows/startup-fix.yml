@@ -11,7 +11,7 @@ on:
 jobs:
   health-check:
     name: Evez666 Health Check
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.RUNNER_LABEL || 'ubuntu-latest' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
