@@ -2,12 +2,12 @@ name: Atlas v3 Autonomous Heartbeat
 
 on:
   schedule:
-    - cron: '*/15 * * * *'
+    - cron: '0 7 * * *'
   workflow_dispatch:
 
 jobs:
   atlas-cycle:
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.RUNNER_LABEL || 'ubuntu-latest' }}
     permissions:
       contents: write
       issues: write

@@ -9,7 +9,7 @@ on:
 
 jobs:
   lint-and-test:
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.RUNNER_LABEL || 'ubuntu-latest' }}
     name: 'Lint + Test -- Atlas v3'
     steps:
       - uses: actions/checkout@v4
@@ -27,7 +27,7 @@ jobs:
         run: pytest --cov -q || true
 
   momentum-signal:
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.RUNNER_LABEL || 'ubuntu-latest' }}
     needs: lint-and-test
     name: 'Signal momentum to Synapse Engine'
     steps:

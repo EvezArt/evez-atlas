@@ -2,8 +2,8 @@ name: A012 Telemetry & Coincidence Engine
 
 on:
   schedule:
-    # Run every 30 minutes — aligns with hyperloop tick cadence
-    - cron: '*/30 * * * *'
+    # Run every 6 hours — aligns with hyperloop tick cadence
+    - cron: '0 */6 * * *'
   workflow_dispatch:
     inputs:
       mode:
@@ -17,7 +17,7 @@ on:
 
 jobs:
   a012-run:
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.RUNNER_LABEL || 'ubuntu-latest' }}
     name: A012 — Telemetry Prediction & Coincidence Scan
 
     steps:
