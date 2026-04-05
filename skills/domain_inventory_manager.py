@@ -162,6 +162,94 @@ class DomainInventoryManager:
         
         return entity_delegations
     
+    def route_task(self, task: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Route a task to the optimal entity based on domain affinity.
+        
+        Args:
+            task: Task containing type, domain, priority
+            
+        Returns:
+            Routing decision with entity_id and path
+        """
+        task_domain = task.get("domain", "default")
+        task_type = task.get("type", "general")
+        priority = task.get("priority", "medium")
+        
+        # Find entities with matching domain
+        candidates = []
+        for deleg in self.delegations.values():
+            if deleg["status"] == "active":
+                domain_match = deleg["domain_name"] == task_domain
+                candidates.append({
+                    "entity_id": deleg["entity_id"],
+                    "domain": deleg["domain_name"],
+                    "domain_match": domain_match,
+                    "property_count": deleg.get("property_count", 0)
+                })
+        
+        if not candidates:
+            return {"routed_to": "none", "reason": "no_delegated_entities"}
+        
+        # Score candidates: domain match + capacity
+        for c in candidates:
+            c["score"] = (1.0 if c["domain_match"] else 0.3) + min(c["property_count"] / 100, 0.5)
+        
+        candidates.sort(key=lambda x: x["score"], reverse=True)
+        winner = candidates[0]
+        
+        self._log_delegation("task_routed", {
+            "task": task,
+            "routed_to": winner["entity_id"],
+            "score": winner["score"]
+        })
+        
+        return {
+            "routed_to": winner["entity_id"],
+            "domain": winner["domain"],
+            "confidence": winner["score"],
+            "priority": priority
+        }
+    
+    def batch_delegate(self, domain_ids: List[str], entity_ids: List[str]) -> Dict[str, Any]:
+        """
+        Delegate multiple domains to multiple entities in batch.
+        
+        Args:
+            domain_ids: List of domain IDs
+            entity_ids: List of entity IDs (round-robin assignment)
+            
+        Returns:
+            Batch delegation result
+        """
+        results = []
+        for i, domain_id in enumerate(domain_ids):
+            entity_id = entity_ids[i % len(entity_ids)] if entity_ids else "unassigned"
+            try:
+                result = self.delegate_domain(domain_id, entity_id, "full")
+                results.append({"domain_id": domain_id, "entity_id": entity_id, "success": True})
+            except Exception as e:
+                results.append({"domain_id": domain_id, "entity_id": entity_id, "success": False, "error": str(e)})
+        
+        return {
+            "total": len(domain_ids),
+            "successful": sum(1 for r in results if r["success"]),
+            "results": results
+        }
+    
+    def get_routing_table(self) -> Dict[str, Any]:
+        """Get complete routing table for all domains and entities"""
+        routing = {}
+        for domain_id, domain in self.domains.items():
+            routing[domain_id] = {
+                "name": domain["domain_name"],
+                "delegated_to": domain["delegated_to"],
+                "status": domain["status"],
+                "property_count": domain["property_count"]
+            }
+        
+        return routing
+    
     def get_all_inventories(self) -> Dict[str, Any]:
         """Get complete inventory report"""
         report = {
