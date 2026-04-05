@@ -259,6 +259,135 @@ class InterAgentTopologyDomain:
             "total_events": sum(len(agent.events) for agent in self.agents.values())
         }
     
+    def find_shortest_path(self, molt_account: str, target_anchor: str) -> Dict[str, Any]:
+        """
+        Find shortest navigation path to target anchor using A* style search.
+        
+        Args:
+            molt_account: Starting agent
+            target_anchor: Target anchor name
+            
+        Returns:
+            Path with hops and total similarity score
+        """
+        if molt_account not in self.agents:
+            return {"error": "Agent not registered"}
+        
+        if target_anchor not in self.topology_anchors:
+            return {"error": f"Anchor {target_anchor} not found"}
+        
+        # BFS-style search through anchors
+        visited = set()
+        path = [molt_account]
+        total_similarity = 1.0
+        
+        current_agent = molt_account
+        for hop in range(5):  # Max 5 hops
+            if current_agent in visited:
+                break
+            
+            visited.add(current_agent)
+            
+            # Navigate to target
+            nav_result = self.navigate_to_anchor(current_agent, target_anchor)
+            
+            if nav_result.get("success"):
+                total_similarity *= nav_result.get("similarity", 0.5)
+                path.append(target_anchor)
+                break
+            
+            # Try intermediate anchors
+            best_anchor = None
+            best_sim = 0
+            
+            for anchor in self.topology_anchors:
+                if anchor == target_anchor or anchor in visited:
+                    continue
+                    
+                sim = self.navigate_to_anchor(current_agent, anchor).get("similarity", 0)
+                if sim > best_sim:
+                    best_sim = sim
+                    best_anchor = anchor
+            
+            if best_anchor:
+                path.append(best_anchor)
+                total_similarity *= best_sim
+                current_agent = best_anchor
+            else:
+                break
+        
+        return {
+            "path": path,
+            "hops": len(path) - 1,
+            "total_similarity": total_similarity,
+            "convergence": total_similarity > 0.3
+        }
+    
+    def multi_hop_navigation(self, molt_account: str, anchor_sequence: List[str]) -> Dict[str, Any]:
+        """
+        Navigate through a sequence of anchors (multi-hop path).
+        
+        Args:
+            molt_account: Agent to navigate
+            anchor_sequence: List of anchor names to visit in order
+            
+        Returns:
+            Navigation results for each hop
+        """
+        if molt_account not in self.agents:
+            return {"error": "Agent not registered"}
+        
+        results = []
+        total_similarity = 1.0
+        
+        for i, anchor in enumerate(anchor_sequence):
+            result = self.navigate_to_anchor(molt_account, anchor)
+            results.append({
+                "hop": i + 1,
+                "anchor": anchor,
+                "similarity": result.get("similarity", 0),
+                "success": result.get("success", False)
+            })
+            total_similarity *= result.get("similarity", 0.5)
+        
+        return {
+            "agent": molt_account,
+            "path": anchor_sequence,
+            "hops": len(anchor_sequence),
+            "results": results,
+            "total_similarity": total_similarity,
+            "navigation_effective": total_similarity > 0.1
+        }
+    
+    def get_agent_neighbors(self, molt_account: str, depth: int = 1) -> Dict[str, Any]:
+        """Get neighboring agents within N hops (via bridge correlations)"""
+        if molt_account not in self.agents:
+            return {"error": "Agent not registered"}
+        
+        neighbors = {}
+        current_depth = 0
+        
+        # Find all bridges this agent participates in
+        for agent_id, agent in self.agents.items():
+            for event in agent.events:
+                if event["event_type"] == "bridge_created":
+                    other = event["data"].get("other_agent")
+                    if other and other != molt_account:
+                        corr = event["data"].get("correlation", 0)
+                        if corr > 0.3:  # Significant correlation threshold
+                            neighbors[other] = {
+                                "correlation": corr,
+                                "depth": depth,
+                                "bridge_id": event["data"].get("bridge_id")
+                            }
+        
+        return {
+            "agent": molt_account,
+            "neighbors": neighbors,
+            "total_neighbors": len(neighbors),
+            "reachable": len(neighbors) > 0
+        }
+    
     def _log_event(self, event_type: str, data: Dict):
         """Log events in shared domain (separate from agent chains)."""
         event = {
