@@ -7,12 +7,11 @@ import os
 import time
 
 from dotenv import load_dotenv
-from fastapi import Depends, FastAPI, Header, HTTPException, Request
+from fastapi import Depends, FastAPI, HTTPException, Request
 from fastapi.responses import HTMLResponse, JSONResponse
 from pydantic import BaseModel
 from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
-from slowapi.util import get_remote_address
 
 # Import security controls
 from src.api.security_controls import (
@@ -27,32 +26,6 @@ load_dotenv()
 BASE_DIR = Path(__file__).resolve().parents[2]
 MANIFEST_PATH = BASE_DIR / ".roo" / "archonic-manifest.json"
 AUDIT_LOG_PATH = BASE_DIR / "src" / "memory" / "audit.jsonl"
-
-# SECURITY: require a distinct API_KEY_SALT in production. If not set, derive a distinct salt
-# from SECRET_KEY only as a development fallback. Do NOT reuse SECRET_KEY directly as the
-# API key salt.
-API_KEY_SALT = os.getenv("API_KEY_SALT")
-APP_ENV = os.getenv("APP_ENV", "development").lower()
-if not API_KEY_SALT:
-    # In production we must fail fast to avoid weak deterministic fingerprints
-    if APP_ENV in ("prod", "production"):
-        raise RuntimeError("API_KEY_SALT is required in production environment")
-    # In non-production/dev: derive a separate salt using PBKDF2-HMAC to keep separation
-    secret = os.getenv("SECRET_KEY")
-    if not secret:
-        raise RuntimeError("Either API_KEY_SALT or SECRET_KEY must be set for local dev")
-    # Derive a distinct salt (domain separation) from SECRET_KEY
-    API_KEY_SALT = hashlib.pbkdf2_hmac("sha256", secret.encode(), b"evez-api-key-salt", 100000).hex()
-
-
-# Helper: fingerprint an API key using API_KEY_SALT
-def fingerprint_api_key(api_key: str) -> str:
-    """
-    Create a deterministic HMAC-based fingerprint using the dedicated salt.
-    This provides a secure way to identify API keys without storing them directly.
-    """
-    return hmac.new(API_KEY_SALT.encode("utf-8"), api_key.encode("utf-8"), hashlib.sha256).hexdigest()
-
 
 class ResolveAwarenessRequest(BaseModel):
     output_id: str
@@ -74,38 +47,18 @@ ENTITY_REGISTRY = {
 }
 
 
-def load_tier_map() -> dict:
-    if not MANIFEST_PATH.exists():
-        return {}
-    with MANIFEST_PATH.open("r", encoding="utf-8") as handle:
-        manifest = json.load(handle)
-    api_keys = manifest.get("api_keys", {})
-    return {key: int(value.get("tier", 0)) for key, value in api_keys.items()}
-
-
-TIER_MAP = load_tier_map()
-
-
-def _rate_limit_key(request: Request) -> str:
-    return request.headers.get("X-API-Key") or get_remote_address(request)
+from src.api.auth import (
+    fingerprint_api_key,
+    rate_limit_for_key as _rate_limit_for_key,
+    rate_limit_key as _rate_limit_key,
+    verify_api_key,
+)
 
 
 limiter = Limiter(key_func=_rate_limit_key)
 app = FastAPI()
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
-
-
-def verify_api_key(
-    request: Request,
-    x_api_key: str = Header(..., alias="X-API-Key"),
-) -> int:
-    tier = TIER_MAP.get(x_api_key)
-    if tier is None:
-        raise HTTPException(status_code=401, detail="Invalid API key")
-    request.state.api_key = x_api_key
-    request.state.tier = tier
-    return tier
 
 
 def audit_log(
@@ -130,15 +83,6 @@ def hmac_sign(data: dict) -> str:
         raise HTTPException(status_code=500, detail="Missing SECRET_KEY")
     payload = json.dumps(data, sort_keys=True, separators=(",", ":")).encode("utf-8")
     return hmac.new(secret.encode("utf-8"), payload, hashlib.sha256).hexdigest()
-
-
-def _rate_limit_for_key(key: str) -> str:
-    tier = TIER_MAP.get(key, 0)
-    if tier <= 0:
-        return "10/minute"
-    if tier >= 3:
-        return "100/minute"
-    return "50/minute"
 
 
 def _redact_entity(entity: dict, tier: int) -> dict:
