@@ -52,8 +52,7 @@ class DarwinGodelMachine:
         }
 
         with open(DGM_LOG, "a") as f:
-            f.write(json.dumps(result) + "
-")
+            f.write(json.dumps(result) + "\n")
 
         return result
 
