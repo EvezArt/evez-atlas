@@ -146,36 +146,21 @@ if __name__ == "__main__":
         print(f"{'='*60}")
         wf = wf_fn()
         result = runner.execute(wf)
-        # Convert StepStatus to string for JSON
-        serializable = {
-            "workflow": name,
-            "status": result.status.value if hasattr(result.status, 'value') else str(result.status),
-            "completed": sum(1 for r in result.step_results.values() if r.status == StepStatus.COMPLETED),
-            "total": len(result.step_results),
-            "failed": sum(1 for r in result.step_results.values() if r.status == StepStatus.FAILED),
-            "steps": {}
-        }
-        for step_name, sr in result.step_results.items():
-            serializable["steps"][step_name] = {
-                "status": sr.status.value,
-                "duration_sec": sr.duration_sec,
-                "error": sr.error,
-                "output": sr.output
-            }
-        results[name] = serializable
+        results[name] = result
 
-        print(f"\n  Status: {serializable['status']} ({serializable['completed']}/{serializable['total']} completed, {serializable['failed']} failed)")
+        print(f"\n  Status: {result['status']} ({result['completed']}/{result['total']} completed, {result['failed']} failed)")
         print(f"\n  Step Results:")
-        for step_name, sr in result.step_results.items():
-            st = sr.status.value
-            dur = sr.duration_sec
-            err = sr.error or ""
+        for step_name, sr in result["results"].items():
+            st = sr["status"]
+            dur = sr["duration_sec"]
+            err = sr.get("error", "")
             icon = "✅" if st == "completed" else "⚠️" if st == "skipped" else "❌"
             line = f"    {icon} {step_name}: {st} ({dur}s)"
-            if err: line += f" — {err[:60]}"
+            if err: line += f" — {str(err)[:60]}"
             print(line)
-            if sr.output and isinstance(sr.output, dict):
-                for k, v in list(sr.output.items())[:3]:
+            output = sr.get("output")
+            if output and isinstance(output, dict):
+                for k, v in list(output.items())[:3]:
                     print(f"       {k}: {str(v)[:80]}")
 
     # Save results
