@@ -1,0 +1,68 @@
+{
+  "type": "compress",
+  "total_events": 12,
+  "correlations_found": 10,
+  "spine_valid": true,
+  "spine_message": "Spine verified: 12 events, chain intact",
+  "top_correlations": [
+    {
+      "domains": "Cybersecurity \u00d7 Financial Systems",
+      "poly_c": 0.0868,
+      "confidence": 0.0902,
+      "overlap": [
+        "adversarial",
+        "anomaly",
+        "detection",
+        "lattice",
+        "pattern",
+        "proof",
+        "quantum",
+        "resistant",
+        "topology",
+        "verification",
+        "zero_knowledge"
+      ]
+    },
+    {
+      "domains": "Cybersecurity \u00d7 Autonomous Systems",
+      "poly_c": 0.0381,
+      "confidence": 0.0256,
+      "overlap": [
+        "anomaly",
+        "falsification",
+        "spine",
+        "verification"
+      ]
+    },
+    {
+      "domains": "Autonomous Systems \u00d7 Financial Systems",
+      "poly_c": 0.0176,
+      "confidence": 0.0091,
+      "overlap": [
+        "anomaly",
+        "verification"
+      ]
+    },
+    {
+      "domains": "Quantum Computing \u00d7 Materials Science",
+      "poly_c": 0.0165,
+      "confidence": 0.0086,
+      "overlap": [
+        "annealing",
+        "topological"
+      ]
+    },
+    {
+      "domains": "Quantum Computing \u00d7 Autonomous Systems",
+      "poly_c": 0.0097,
+      "confidence": 0.0041,
+      "overlap": [
+        "topological"
+      ]
+    }
+  ],
+  "spine_index": 12,
+  "prev_hash": "b855b54c0ad39a0ff7f161ca06a3f81484fd93f4bd8d4dd1ae7568d62a4db24e",
+  "timestamp": "2026-05-12T20:41:41.822959+00:00",
+  "hash": "a9a45f4900e1a844040f983e1964429b62b99308935decc5c95c572ec633c13b"
+}
