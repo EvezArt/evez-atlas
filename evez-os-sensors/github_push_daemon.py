@@ -8,8 +8,9 @@ from pathlib import Path
 from http.server import HTTPServer, BaseHTTPRequestHandler
 
 WORKSPACE = Path("/home/openclaw/.openclaw/workspace")
+CLASSIC_PAT_FILE = "/tmp/github_classic_token.txt"
 REPOS = [
-    {"remote": "origin", "url": "https://github.com/EvezArt/evez-os.git"},
+    
     {"remote": "evez666", "url": "https://github.com/EvezArt/Evez666.git"},
 ]
 BUNDLE_DIR = Path("/tmp/evez_git_bundles")
