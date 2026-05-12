@@ -2,7 +2,7 @@
   "providers": {
     "vultr": {
       "baseUrl": "https://api.vultrinference.com/v1",
-      "apiKey": "VULTR_API_KEY_REDACTED",
+      "apiKey": "ENV:VULTR_API_KEY",
       "models": [
         {
           "id": "zai-org/GLM-5.1-FP8",
@@ -109,7 +109,7 @@
     },
     "openrouter": {
       "baseUrl": "https://openrouter.ai/api/v1",
-      "apiKey": "ENV_OPENROUTER_KEY",
+      "apiKey": "ENV:OPENROUTER_API_KEY",
       "models": [
         {
           "id": "google/gemma-4-31b-it:free",
@@ -135,7 +135,7 @@
     },
     "cerebras": {
       "baseUrl": "https://api.cerebras.ai/v1",
-      "apiKey": "ENV_CEREBRAS_KEY",
+      "apiKey": "ENV:CEREBRAS_API_KEY",
       "models": [
         {
           "id": "qwen-3-235b-a22b-instruct-2507",
@@ -189,7 +189,7 @@
     },
     "deepseek": {
       "baseUrl": "https://api.deepseek.com/v1",
-      "apiKey": "ENV_DEEPSEEK_KEY",
+      "apiKey": "ENV:DEEPSEEK_API_KEY",
       "models": [
         {
           "id": "deepseek-v4-flash",
@@ -205,7 +205,7 @@
     },
     "sambanova": {
       "baseUrl": "https://api.sambanova.ai/v1",
-      "apiKey": "SAMBANOVA_KEY_REDACTED",
+      "apiKey": "ENV:SAMBANOVA_API_KEY",
       "models": [
         {
           "id": "DeepSeek-V3.1",
