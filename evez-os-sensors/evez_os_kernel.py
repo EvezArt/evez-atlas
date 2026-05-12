@@ -567,7 +567,7 @@ class RecursiveSelfAnalysis:
 # ─── MAIN: RUN ALL SENSORS WITH REAL DATA ──────────────────────
 
 if __name__ == "__main__":
-    GH_TOKEN = "ENV_GITHUB_TOKEN"
+    GH_TOKEN = "ENV:GITHUB_TOKEN"
     
     spine = EVEMSpine("/tmp/evez_os_spine.jsonl")
     event_counter = 0
