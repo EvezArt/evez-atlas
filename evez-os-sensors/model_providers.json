@@ -6,30 +6,25 @@
       "models": [
         {
           "id": "zai-org/GLM-5.1-FP8",
-          "name": "GLM-5.1 FP8",
+          "name": "zai-org/GLM-5.1-FP8",
           "tier": "free"
         },
         {
           "id": "Qwen/Qwen3-Coder-Next-FP8",
-          "name": "Qwen3 Coder",
+          "name": "Qwen/Qwen3-Coder-Next-FP8",
           "tier": "free"
         },
         {
           "id": "nvidia/DeepSeek-V3.2-NVFP4",
-          "name": "DeepSeek V3.2",
+          "name": "nvidia/DeepSeek-V3.2-NVFP4",
           "tier": "free"
         },
         {
           "id": "MiniMaxAI/MiniMax-M2.7",
-          "name": "MiniMax M2.7",
+          "name": "MiniMaxAI/MiniMax-M2.7",
           "tier": "free"
         }
-      ],
-      "limits": {
-        "rpm": 60,
-        "cost": "free"
-      },
-      "status": "ACTIVE"
+      ]
     },
     "github-models": {
       "baseUrl": "https://models.inference.ai.azure.com",
@@ -118,30 +113,25 @@
       "models": [
         {
           "id": "google/gemma-4-31b-it:free",
-          "name": "Gemma 4 31B Free",
+          "name": "google/gemma-4-31b-it:free",
           "tier": "free"
         },
         {
           "id": "nvidia/nemotron-3-super-120b-a12b:free",
-          "name": "Nemotron 120B Free",
+          "name": "nvidia/nemotron-3-super-120b-a12b:free",
           "tier": "free"
         },
         {
           "id": "minimax/minimax-m2.5:free",
-          "name": "MiniMax M2.5 Free",
+          "name": "minimax/minimax-m2.5:free",
           "tier": "free"
         },
         {
           "id": "nvidia/nemotron-nano-12b-v2-vl:free",
-          "name": "Nemotron VL Free",
+          "name": "nvidia/nemotron-nano-12b-v2-vl:free",
           "tier": "free"
         }
-      ],
-      "limits": {
-        "rpm": 20,
-        "cost": "free-tier"
-      },
-      "status": "ACTIVE"
+      ]
     },
     "cerebras": {
       "baseUrl": "https://api.cerebras.ai/v1",
@@ -149,25 +139,20 @@
       "models": [
         {
           "id": "qwen-3-235b-a22b-instruct-2507",
-          "name": "Qwen 3 235B",
+          "name": "qwen-3-235b-a22b-instruct-2507",
           "tier": "free"
         },
         {
           "id": "gpt-oss-120b",
-          "name": "GPT-OSS 120B",
+          "name": "gpt-oss-120b",
           "tier": "free"
         },
         {
           "id": "llama3.1-8b",
-          "name": "Llama 3.1 8B",
+          "name": "llama3.1-8b",
           "tier": "free"
         }
-      ],
-      "limits": {
-        "rpm": 30,
-        "cost": "free"
-      },
-      "status": "ACTIVE"
+      ]
     },
     "google": {
       "baseUrl": "https://generativelanguage.googleapis.com/v1beta/openai",
@@ -208,20 +193,15 @@
       "models": [
         {
           "id": "deepseek-v4-flash",
-          "name": "DeepSeek V4 Flash",
+          "name": "deepseek-v4-flash",
           "tier": "free"
         },
         {
           "id": "deepseek-v4-pro",
-          "name": "DeepSeek V4 Pro",
+          "name": "deepseek-v4-pro",
           "tier": "free"
         }
-      ],
-      "limits": {
-        "rpm": 60,
-        "cost": "free-credits"
-      },
-      "status": "ACTIVE"
+      ]
     },
     "sambanova": {
       "baseUrl": "https://api.sambanova.ai/v1",
@@ -229,35 +209,30 @@
       "models": [
         {
           "id": "DeepSeek-V3.1",
-          "name": "DeepSeek V3.1",
+          "name": "DeepSeek-V3.1",
           "tier": "free"
         },
         {
           "id": "Llama-4-Maverick-17B-128E-Instruct",
-          "name": "Llama 4 Maverick",
+          "name": "Llama-4-Maverick-17B-128E-Instruct",
           "tier": "free"
         },
         {
           "id": "Meta-Llama-3.3-70B-Instruct",
-          "name": "Llama 3.3 70B",
+          "name": "Meta-Llama-3.3-70B-Instruct",
           "tier": "free"
         },
         {
           "id": "MiniMax-M2.5",
-          "name": "MiniMax M2.5",
+          "name": "MiniMax-M2.5",
           "tier": "free"
         },
         {
           "id": "gpt-oss-120b",
-          "name": "GPT-OSS 120B",
+          "name": "gpt-oss-120b",
           "tier": "free"
         }
-      ],
-      "limits": {
-        "rpm": 10,
-        "cost": "credits"
-      },
-      "status": "ACTIVE"
+      ]
     },
     "mistral": {
       "baseUrl": "https://api.mistral.ai/v1",
