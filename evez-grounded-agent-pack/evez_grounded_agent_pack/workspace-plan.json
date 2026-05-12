@@ -1,0 +1,147 @@
+{
+  "name": "EVEZOS Grounded Workspace Plan",
+  "version": "1.0.0",
+  "routes": [
+    {
+      "route": "/",
+      "screen": "Home",
+      "agents": [
+        "treasury.status",
+        "opportunities.live",
+        "workflow.telemetry",
+        "cycle.runner"
+      ],
+      "widgets": [
+        "world-core orb",
+        "KPI strip",
+        "telemetry strip",
+        "quick actions",
+        "last events"
+      ]
+    },
+    {
+      "route": "/cycle",
+      "screen": "Cycle",
+      "agents": [
+        "cycle.runner",
+        "workflow.telemetry"
+      ],
+      "widgets": [
+        "Run Agent Cycle",
+        "phase carousel",
+        "workflow fire list",
+        "live logs",
+        "simulated outcome overlay -> disabled until real output exists"
+      ]
+    },
+    {
+      "route": "/workflows",
+      "screen": "Workflows",
+      "agents": [
+        "workflow.telemetry",
+        "bus.mission"
+      ],
+      "widgets": [
+        "workflow cards",
+        "latency",
+        "backlog",
+        "rerun action"
+      ]
+    },
+    {
+      "route": "/deliverables",
+      "screen": "Deliverables",
+      "agents": [
+        "worker.deliverable",
+        "ledger.audit"
+      ],
+      "widgets": [
+        "deliverable cards",
+        "publish state",
+        "provenance",
+        "rollback"
+      ]
+    },
+    {
+      "route": "/ledger",
+      "screen": "Ledger",
+      "agents": [
+        "ledger.audit",
+        "ledger.service"
+      ],
+      "widgets": [
+        "tamper-evident timeline",
+        "hash chain",
+        "verify hash",
+        "download proof"
+      ]
+    },
+    {
+      "route": "/chat",
+      "screen": "Chat",
+      "agents": [
+        "chat.proxy"
+      ],
+      "widgets": [
+        "identity switcher",
+        "conversation pane",
+        "command palette"
+      ]
+    },
+    {
+      "route": "/settings",
+      "screen": "Settings",
+      "agents": [
+        "control.spawner",
+        "treasury.status",
+        "chat.proxy",
+        "cycle.runner"
+      ],
+      "widgets": [
+        "integration forms",
+        "security",
+        "secret notes",
+        "endpoint health"
+      ]
+    }
+  ],
+  "envContract": {
+    "requiredForLiveOnly": [
+      "TREASURY_WALLET_ADDRESS",
+      "TREASURY_CHAIN_ID",
+      "WALLET_PROVIDER",
+      "WALLET_BALANCE_API_URL",
+      "SETTLEMENTS_API_URL",
+      "LIVE_OPPORTUNITIES_URL",
+      "OPENAI_RESPONSES_PROXY_URL",
+      "N8N_AGENT_RUN_WEBHOOK_URL"
+    ],
+    "phaseAAdditional": [
+      "REDIS_HOST",
+      "REDIS_PORT",
+      "POSTGRES_USER",
+      "POSTGRES_PASSWORD",
+      "POSTGRES_DB",
+      "POSTGRES_PORT",
+      "OPENAI_API_KEY",
+      "OPENAI_MODEL",
+      "OPERATOR_PRIVATE_KEY"
+    ]
+  },
+  "cutoverOrder": [
+    "Deploy longscale app or mobile app",
+    "Import n8n workflow JSON",
+    "Add OpenAI credentials in n8n / provider proxy",
+    "Point HTTP nodes at deployed app endpoints",
+    "Replace mock telemetry with live webhook/queue metrics",
+    "Bind ledger and mission bus to persistent storage",
+    "Enable Treasury and Settlement upstreams",
+    "Only then re-enable any declared scanner/predictor/generator/shipper roles"
+  ],
+  "doNotShip": [
+    "fabricated revenue numbers",
+    "simulated wallet balances",
+    "worldsim outputs presented as live truth",
+    "declared-only agents masquerading as connected services"
+  ]
+}

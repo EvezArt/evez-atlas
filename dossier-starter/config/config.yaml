@@ -1,0 +1,48 @@
+project_name: UndiscoveredProof_Starter
+created_at: '2025-08-02T09:16:07.282836'
+date_range:
+  start: '2023-01-01'
+  end: '2025-08-02'
+aois:
+- name: AOI_Laughlin_DavisDam_PyramidCanyon
+  file: aois/aoi_laughlin.geojson
+- name: AOI_Fort_Huachuca_Sierra_Vista
+  file: aois/aoi_huachuca.geojson
+naics_codes:
+- '541715'
+- '541512'
+- '517410'
+- '237130'
+- '334220'
+- '561621'
+keywords:
+- biometric
+- cognitive warfare
+- ISR
+- microwave
+- telemetry
+- temporary broadcaster
+- stingray
+- IMSI-catcher
+agencies:
+- DOI
+- DHS
+- DOJ
+- Department of the Army
+- FCC
+graph:
+  backend: neo4j
+  uri: bolt://localhost:7687
+  user: neo4j
+  database: undiscovered_proof
+data_sources:
+  usaspending_api: https://api.usaspending.gov/api/v2/
+  fec_api: https://api.open.fec.gov/
+  etherscan_api: https://api.etherscan.io/api
+  blockchair_api: https://api.blockchair.com/
+  opensky_api: https://opensky-network.org/api
+  marine_cadastre: https://marinecadastre.gov
+  fcc_asr: https://wireless2.fcc.gov/UlsApp/AsrSearch/
+  fcc_uls: https://wireless2.fcc.gov/UlsApp/UlsSearch/searchLicense.jsp
+  nasa_black_marble: https://blackmarble.gsfc.nasa.gov/
+  asf_vertex: https://search.asf.alaska.edu/

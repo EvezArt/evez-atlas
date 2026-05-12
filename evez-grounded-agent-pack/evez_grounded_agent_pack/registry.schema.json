@@ -1,0 +1,136 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "EVEZ Agent Registry",
+  "type": "object",
+  "required": [
+    "bundle",
+    "agents"
+  ],
+  "properties": {
+    "bundle": {
+      "type": "object",
+      "required": [
+        "name",
+        "version",
+        "mode",
+        "generatedAt",
+        "principles"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "mode": {
+          "enum": [
+            "live-only",
+            "mixed",
+            "simulated"
+          ]
+        },
+        "generatedAt": {
+          "type": "string"
+        },
+        "sourceSurfaces": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "principles": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "agents": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "kind",
+          "runtime",
+          "responsibilities",
+          "status"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9_.-]+$"
+          },
+          "name": {
+            "type": "string"
+          },
+          "kind": {
+            "type": "string"
+          },
+          "runtime": {
+            "type": "string"
+          },
+          "route": {
+            "type": "string"
+          },
+          "routes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "upstreamEnv": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "screen": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "responsibilities": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "status": {
+            "type": "string"
+          },
+          "writesAuthoritativeState": {
+            "type": "boolean"
+          },
+          "storage": {
+            "type": "string"
+          },
+          "source": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string"
+              },
+              "path": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": true
+          },
+          "tools": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": false
+}

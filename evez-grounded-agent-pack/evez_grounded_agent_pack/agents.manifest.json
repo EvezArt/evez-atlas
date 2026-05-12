@@ -1,0 +1,273 @@
+{
+  "$schema": "./registry.schema.json",
+  "bundle": {
+    "name": "evez-grounded-agent-pack",
+    "version": "1.0.0",
+    "mode": "live-only",
+    "generatedAt": "2026-03-20T10:20:00Z",
+    "sourceSurfaces": [
+      "evezos_master_build_map.md",
+      "EVEZOS Mobile App Spec.md",
+      "EVEZOS Phone-First Website Copy & Wireframe.md",
+      "EVEZOS Phase A \u2014 Dev Artifacts (n8n, docker-compose, worker, ledger, README).md",
+      "SKILL.md",
+      "evezos-live-only-longscale.zip",
+      "evezos-live-only-mobile.zip"
+    ],
+    "principles": [
+      "No fabricated balances, revenue, cycle results, or settlement totals.",
+      "Every operator action must resolve through a real endpoint or return not_connected.",
+      "The board/mobile UI reads backend-owned state, not local simulation state.",
+      "The spawner/meta-builder can scaffold agents, but deployed runtime authority belongs to wired services."
+    ]
+  },
+  "agents": [
+    {
+      "id": "control.spawner",
+      "name": "EVEZ Spawner",
+      "kind": "control-plane",
+      "runtime": "mcp",
+      "source": {
+        "type": "skill",
+        "path": "SKILL.md"
+      },
+      "responsibilities": [
+        "Create child MCP servers from purpose specs",
+        "Start, stop, restart, delete, and clone child servers",
+        "Persist server registry and growth policy",
+        "Recommend new servers from workload context"
+      ],
+      "tools": [
+        "create_server",
+        "list_servers",
+        "control_server",
+        "analyze_workload",
+        "clone_server",
+        "schedule_growth",
+        "get_registry"
+      ],
+      "writesAuthoritativeState": true,
+      "status": "ready-to-build"
+    },
+    {
+      "id": "cycle.runner",
+      "name": "Cycle Runner",
+      "kind": "operator",
+      "runtime": "nextjs-api-proxy",
+      "route": "/api/agent-run",
+      "upstreamEnv": [
+        "N8N_AGENT_RUN_WEBHOOK_URL"
+      ],
+      "screen": [
+        "Home",
+        "Cycle"
+      ],
+      "responsibilities": [
+        "Trigger a real n8n cycle",
+        "Return webhook result or explicit not_connected state",
+        "Never synthesize fake cycle outcomes"
+      ],
+      "status": "blocked-on-webhook"
+    },
+    {
+      "id": "bus.mission",
+      "name": "Mission Bus",
+      "kind": "control-plane",
+      "runtime": "nextjs-module",
+      "route": "/api/bus",
+      "screen": [
+        "Home",
+        "Workflows"
+      ],
+      "responsibilities": [
+        "Create and update FIFO tasks",
+        "Provide current task queue to UI",
+        "Bridge future persistent queue backing"
+      ],
+      "storage": "in-memory-now / persistent-later",
+      "status": "dev-only-authoritative"
+    },
+    {
+      "id": "ledger.audit",
+      "name": "Ledger Auditor",
+      "kind": "audit",
+      "runtime": "nextjs-module+ledger-service",
+      "route": "/api/ledger",
+      "screen": [
+        "Ledger"
+      ],
+      "responsibilities": [
+        "Expose ledger entries to the UI",
+        "Verify append-only evidence chain via ledger service",
+        "Refuse invisible state transitions"
+      ],
+      "status": "dev-only-ui / prod-via-ledger-service"
+    },
+    {
+      "id": "opportunities.live",
+      "name": "Opportunities Feed",
+      "kind": "ingest",
+      "runtime": "nextjs-api-proxy",
+      "route": "/api/opportunities",
+      "upstreamEnv": [
+        "LIVE_OPPORTUNITIES_URL"
+      ],
+      "screen": [
+        "Home",
+        "Workflows"
+      ],
+      "responsibilities": [
+        "Fetch live opportunities from a configured upstream",
+        "Return explicit empty/not_connected when no source is wired"
+      ],
+      "status": "blocked-on-upstream"
+    },
+    {
+      "id": "treasury.status",
+      "name": "Treasury Status",
+      "kind": "finance-monitor",
+      "runtime": "nextjs-api-proxy",
+      "routes": [
+        "/api/wallet/treasury",
+        "/api/wallet/balances",
+        "/api/settlements"
+      ],
+      "upstreamEnv": [
+        "TREASURY_WALLET_ADDRESS",
+        "TREASURY_CHAIN_ID",
+        "WALLET_PROVIDER",
+        "WALLET_BALANCE_API_URL",
+        "SETTLEMENTS_API_URL"
+      ],
+      "screen": [
+        "Home",
+        "Ledger",
+        "Settings"
+      ],
+      "responsibilities": [
+        "Expose treasury wallet identity",
+        "Fetch live balances and settlements",
+        "Treat confirmed settlements as the only revenue truth"
+      ],
+      "status": "blocked-on-provider"
+    },
+    {
+      "id": "chat.proxy",
+      "name": "Chat Proxy",
+      "kind": "assistant",
+      "runtime": "nextjs-api-proxy",
+      "route": "/api/chat",
+      "upstreamEnv": [
+        "OPENAI_RESPONSES_PROXY_URL"
+      ],
+      "screen": [
+        "Chat"
+      ],
+      "responsibilities": [
+        "Relay terminal/chat prompts to a real provider proxy",
+        "Return provider errors or not_connected without fabrication"
+      ],
+      "status": "blocked-on-provider"
+    },
+    {
+      "id": "workflow.telemetry",
+      "name": "Workflow Telemetry Observer",
+      "kind": "observer",
+      "runtime": "n8n+worker+metrics",
+      "screen": [
+        "Workflows",
+        "Cycle",
+        "Home"
+      ],
+      "responsibilities": [
+        "Track workflow status, backlog, latency, and webhook health",
+        "Emit metrics to Influx/Grafana",
+        "Feed UI telemetry strips and workflow cards"
+      ],
+      "status": "phase-a-defined"
+    },
+    {
+      "id": "worker.deliverable",
+      "name": "Deliverable Worker",
+      "kind": "worker",
+      "runtime": "node-worker",
+      "source": {
+        "type": "phase-a",
+        "path": "worker/src/job.ts"
+      },
+      "responsibilities": [
+        "Consume cycle jobs from queue",
+        "Call model provider",
+        "Hash deliverables",
+        "Append ledger entries or callback n8n"
+      ],
+      "status": "phase-a-defined"
+    },
+    {
+      "id": "ledger.service",
+      "name": "Ledger Service",
+      "kind": "service",
+      "runtime": "node-express+postgres",
+      "source": {
+        "type": "phase-a",
+        "path": "ledger/src/index.ts"
+      },
+      "responsibilities": [
+        "Append signed ledger events",
+        "Maintain prev_hash chain",
+        "Expose verification endpoint"
+      ],
+      "status": "phase-a-defined"
+    },
+    {
+      "id": "scanner.declared",
+      "name": "Scanner",
+      "kind": "future-runtime",
+      "runtime": "declared-only",
+      "responsibilities": [
+        "External scanning once live source is wired"
+      ],
+      "status": "disabled-in-live-only-build"
+    },
+    {
+      "id": "predictor.declared",
+      "name": "Predictor",
+      "kind": "future-runtime",
+      "runtime": "declared-only",
+      "responsibilities": [
+        "Prediction once a real model/n8n route is wired"
+      ],
+      "status": "disabled-in-live-only-build"
+    },
+    {
+      "id": "generator.declared",
+      "name": "Generator",
+      "kind": "future-runtime",
+      "runtime": "declared-only",
+      "responsibilities": [
+        "Generation once a real model/n8n route is wired"
+      ],
+      "status": "disabled-in-live-only-build"
+    },
+    {
+      "id": "shipper.declared",
+      "name": "Shipper",
+      "kind": "future-runtime",
+      "runtime": "declared-only",
+      "responsibilities": [
+        "Publishing or payout infra when real sink is wired"
+      ],
+      "status": "disabled-in-live-only-build"
+    },
+    {
+      "id": "worldsim.declared",
+      "name": "WorldSim",
+      "kind": "future-runtime",
+      "runtime": "declared-only",
+      "responsibilities": [
+        "Simulation only after explicit reintroduction"
+      ],
+      "status": "disabled-in-live-only-build"
+    }
+  ]
+}

@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EMF-101 3D Spatial Mapper</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', sans-serif; background: #0a0a0a; color: #eee; overflow: hidden; }
+        #canvas { display: block; width: 100vw; height: 100vh; }
+        #controls { position: absolute; top: 20px; right: 20px; background: rgba(0, 0, 0, 0.8); padding: 20px; border-radius: 10px; width: 300px; color: #eee; }
+        .control-group { margin-bottom: 15px; }
+        .control-group label { display: block; margin-bottom: 5px; font-weight: bold; }
+        .control-group input[type="range"] { width: 100%; }
+        .control-group input[type="checkbox"] { margin-right: 8px; }
+        .control-group button { background: #667eea; color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; margin-right: 5px; font-size: 12px; }
+        .control-group button:hover { background: #764ba2; }
+        #stats { position: absolute; bottom: 20px; right: 20px; background: rgba(0, 0, 0, 0.8); padding: 15px; border-radius: 5px; font-family: monospace; font-size: 12px; }
+        #hud { position: absolute; top: 20px; left: 20px; background: rgba(0, 0, 0, 0.8); padding: 15px; border-radius: 10px; font-family: monospace; font-size: 12px; }
+        .metric { margin: 8px 0; }
+        .metric-label { color: #aaa; }
+        .metric-value { color: #44ff44; font-weight: bold; }
+        #timeline { position: absolute; bottom: 20px; left: 20px; background: rgba(0, 0, 0, 0.8); padding: 15px; border-radius: 10px; width: 400px; }
+        #playback { width: 100%; }
+        .legend { position: absolute; top: 20px; left: 350px; background: rgba(0, 0, 0, 0.8); padding: 15px; border-radius: 10px; font-size: 12px; }
+        .legend-item { display: flex; align-items: center; margin: 5px 0; }
+        .legend-color { width: 20px; height: 20px; border-radius: 50%; margin-right: 8px; }
+    </style>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+    
+    <div id="hud">
+        <div class="metric">
+            <span class="metric-label">Position:</span>
+            <span class="metric-value" id="position">35.8402°, -114.5609°</span>
+        </div>
+        <div class="metric">
+            <span class="metric-label">Altitude:</span>
+            <span class="metric-value" id="altitude">650 m</span>
+        </div>
+        <div class="metric">
+            <span class="metric-label">Heading:</span>
+            <span class="metric-value" id="heading">45.2°</span>
+        </div>
+        <div class="metric">
+            <span class="metric-label">Speed:</span>
+            <span class="metric-value" id="speed">12.5 m/s</span>
+        </div>
+        <div class="metric">
+            <span class="metric-label">Anomalies:</span>
+            <span class="metric-value" id="anomalyCount">0</span>
+        </div>
+    </div>
+
+    <div class="legend">
+        <div class="legend-item">
+            <div class="legend-color" style="background: #ff4444;"></div>
+            <span>Crash Risk</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background: #ffaa44;"></div>
+            <span>Vibration</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background: #ffff44;"></div>
+            <span>Wind Gust</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background: #44ff44;"></div>
+            <span>Normal</span>
+        </div>
+    </div>
+
+    <div id="controls">
+        <h3>3D Spatial Mapper</h3>
+        
+        <div class="control-group">
+            <label>
+                <input type="checkbox" id="showAnomalies" checked> Show Anomalies
+            </label>
+            <label>
+                <input type="checkbox" id="showHeatmap" checked> Show Heatmap
+            </label>
+            <label>
+                <input type="checkbox" id="showFrustum" checked> Show Frustum
+            </label>
+            <label>
+                <input type="checkbox" id="showTrail" checked> Show Trail
+            </label>
+        </div>
+
+        <div class="control-group">
+            <label>Playback Speed:</label>
+            <input type="range" id="speedControl" min="0.1" max="4" step="0.1" value="1">
+            <span id="speedValue">1.0x</span>
+        </div>
+
+        <div class="control-group">
+            <label>Anomaly Threshold:</label>
+            <input type="range" id="threshold" min="0" max="100" step="5" value="30">
+            <span id="thresholdValue">30%</span>
+        </div>
+
+        <div class="control-group">
+            <button onclick="resetView()">Reset Camera</button>
+            <button onclick="togglePlayback()">Play/Pause</button>
+        </div>
+
+        <div class="control-group">
+            <button onclick="exportGeoJSON()">📥 GeoJSON</button>
+            <button onclick="exportKML()">📥 KML</button>
+        </div>
+    </div>
+
+    <div id="timeline">
+        <label>Flight Timeline:</label>
+        <input type="range" id="playback" min="0" max="100" step="0.1" value="0" style="width: 100%;">
+        <div style="display: flex; justify-content: space-between; margin-top: 5px; font-size: 11px;">
+            <span>00:00</span>
+            <span id="currentTime">00:00</span>
+            <span>10:00</span>
+        </div>
+    </div>
+
+    <div id="stats"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // ===== THREE.js Scene Setup =====
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x1a1a2e);
+        scene.fog = new THREE.Fog(0x1a1a2e, 5000, 10000);
+
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 100000);
+        camera.position.set(500, 300, 500);
+        camera.lookAt(0, 0, 0);
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true, canvas: document.getElementById('canvas') });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.shadowMap.enabled = true;
+
+        // ===== Lighting =====
+        const light = new THREE.DirectionalLight(0xffffff, 0.8);
+        light.position.set(500, 1000, 500);
+        light.castShadow = true;
+        light.shadow.mapSize.width = 2048;
+        light.shadow.mapSize.height = 2048;
+        scene.add(light);
+
+        scene.add(new THREE.AmbientLight(0x404040));
+
+        // ===== Ground Plane =====
+        const groundGeometry = new THREE.PlaneGeometry(4000, 4000);
+        const groundMaterial = new THREE.MeshPhongMaterial({ color: 0x2a3a4a, wireframe: false });
+        const ground = new THREE.Mesh(groundGeometry, groundMaterial);
+        ground.rotation.x = -Math.PI / 2;
+        ground.receiveShadow = true;
+        scene.add(ground);
+
+        // ===== Drone Model =====
+        const droneGeometry = new THREE.ConeGeometry(20, 40, 8);
+        const droneMaterial = new THREE.MeshPhongMaterial({ color: 0x667eea });
+        const drone = new THREE.Mesh(droneGeometry, droneMaterial);
+        drone.castShadow = true;
+        scene.add(drone);
+
+        // ===== State =====
+        const state = {
+            gpsTrajectory: [],
+            anomalyMarkers: [],
+            currentTime: 0,
+            maxTime: 600,  // 10 minutes
+            isPlaying: false,
+            playbackSpeed: 1.0,
+            anomalyThreshold: 30,
+            heatmapCanvas: null,
+            heatmapTexture: null
+        };
+
+        // ===== GPS to World Coordinates =====
+        function gpsToWorld(lat, lon, alt) {
+            const R = 6371000; // Earth radius in meters
+            const lat0 = 35.8402, lon0 = -114.5609;
+            
+            const x = (lon - lon0) * Math.cos(lat * Math.PI / 180) * R * 0.00001;
+            const y = alt;
+            const z = (lat - lat0) * R * 0.00001;
+            return { x, y, z };
+        }
+
+        // ===== Generate Mock GPS Trajectory =====
+        function generateMockTrajectory() {
+            const center = { lat: 35.8402, lon: -114.5609 };
+            const radius = 0.002;  // ~200 meters
+            
+            for (let i = 0; i < 600; i++) {
+                const angle = (i / 600) * Math.PI * 2;
+                const lat = center.lat + radius * Math.sin(angle);
+                const lon = center.lon + radius * Math.cos(angle);
+                const alt = 650 + Math.sin(i * 0.01) * 50;
+                
+                const pos = gpsToWorld(lat, lon, alt);
+                state.gpsTrajectory.push({
+                    lat, lon, alt,
+                    position: pos,
+                    heading: (angle * 180 / Math.PI) % 360,
+                    speed: 12.5 + Math.sin(i * 0.02) * 2,
+                    timestamp: i * 100,
+                    anomalyScore: Math.random() * 100,
+                    anomalyType: ['NORMAL', 'WIND_GUST', 'VIBRATION', 'CRASH_RISK'][Math.floor(Math.random() * 4)]
+                });
+            }
+        }
+
+        generateMockTrajectory();
+
+        // ===== Place Anomaly Markers =====
+        function placeAnomalyMarkers() {
+            state.anomalyMarkers.forEach(marker => scene.remove(marker.mesh));
+            state.anomalyMarkers = [];
+
+            state.gpsTrajectory.forEach(wp => {
+                if (wp.anomalyScore >= state.anomalyThreshold) {
+                    const color = wp.anomalyType === 'CRASH_RISK' ? 0xff4444 :
+                                wp.anomalyType === 'VIBRATION' ? 0xffaa44 :
+                                wp.anomalyType === 'WIND_GUST' ? 0xffff44 : 0x44ff44;
+                    
+                    const sphereGeo = new THREE.SphereGeometry(10, 8, 8);
+                    const sphereMat = new THREE.MeshPhongMaterial({ color });
+                    const sphere = new THREE.Mesh(sphereGeo, sphereMat);
+                    sphere.position.set(wp.position.x, wp.position.y + 20, wp.position.z);
+                    sphere.castShadow = true;
+                    scene.add(sphere);
+                    
+                    state.anomalyMarkers.push({ mesh: sphere, wp });
+                }
+            });
+        }
+
+        placeAnomalyMarkers();
+
+        // ===== Heatmap Generation =====
+        function generateHeatmap() {
+            const canvas = document.createElement('canvas');
+            canvas.width = 512;
+            canvas.height = 512;
+            const ctx = canvas.getContext('2d');
+
+            ctx.fillStyle = '#000000';
+            ctx.fillRect(0, 0, 512, 512);
+
+            state.gpsTrajectory.forEach(wp => {
+                const nx = ((wp.position.x + 2000) / 4000) * 512;
+                const nz = ((wp.position.z + 2000) / 4000) * 512;
+                
+                const grad = ctx.createRadialGradient(nx, nz, 0, nx, nz, 30);
+                const alpha = wp.anomalyScore / 100;
+                grad.addColorStop(0, `rgba(255, 68, 68, ${alpha * 0.5})`);
+                grad.addColorStop(1, 'rgba(255, 68, 68, 0)');
+                ctx.fillStyle = grad;
+                ctx.fillRect(nx - 30, nz - 30, 60, 60);
+            });
+
+            state.heatmapCanvas = canvas;
+            state.heatmapTexture = new THREE.CanvasTexture(canvas);
+            state.heatmapTexture.needsUpdate = true;
+        }
+
+        generateHeatmap();
+
+        // ===== Heatmap Material =====
+        const heatmapMaterial = new THREE.MeshPhongMaterial({
+            map: state.heatmapTexture,
+            transparent: true,
+            opacity: 0.6
+        });
+
+        const heatmapMesh = new THREE.Mesh(groundGeometry, heatmapMaterial);
+        heatmapMesh.rotation.x = -Math.PI / 2;
+        heatmapMesh.position.y = 1;
+        scene.add(heatmapMesh);
+
+        // ===== DVS Frustum =====
+        const frustumGeometry = new THREE.ConeGeometry(150, 300, 8);
+        const frustumMaterial = new THREE.MeshPhongMaterial({ color: 0x667eea, wireframe: true, transparent: true, opacity: 0.3 });
+        const frustum = new THREE.Mesh(frustumGeometry, frustumMaterial);
+        frustum.position.copy(drone.position);
+        scene.add(frustum);
+
+        // ===== Orbit Camera Controls =====
+        let isDragging = false;
+        let previousMousePosition = { x: 0, y: 0 };
+
+        document.addEventListener('mousedown', e => { isDragging = true; });
+        document.addEventListener('mouseup', e => { isDragging = false; });
+        document.addEventListener('mousemove', e => {
+            if (isDragging) {
+                const deltaX = e.clientX - previousMousePosition.x;
+                const deltaY = e.clientY - previousMousePosition.y;
+
+                const qx = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), deltaX * 0.005);
+                const qy = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), deltaY * 0.005);
+                
+                const radius = camera.position.length();
+                const newPos = camera.position.clone().normalize().applyQuaternion(qx).applyQuaternion(qy).multiplyScalar(radius);
+                camera.position.copy(newPos);
+                camera.lookAt(0, 100, 0);
+            }
+            previousMousePosition = { x: e.clientX, y: e.clientY };
+        });
+
+        // ===== UI Controls =====
+        document.getElementById('showAnomalies').addEventListener('change', e => {
+            state.anomalyMarkers.forEach(m => m.mesh.visible = e.target.checked);
+        });
+
+        document.getElementById('showHeatmap').addEventListener('change', e => {
+            heatmapMesh.visible = e.target.checked;
+        });
+
+        document.getElementById('showFrustum').addEventListener('change', e => {
+            frustum.visible = e.target.checked;
+        });
+
+        document.getElementById('speedControl').addEventListener('input', e => {
+            state.playbackSpeed = parseFloat(e.target.value);
+            document.getElementById('speedValue').textContent = state.playbackSpeed.toFixed(1) + 'x';
+        });
+
+        document.getElementById('threshold').addEventListener('input', e => {
+            state.anomalyThreshold = parseInt(e.target.value);
+            document.getElementById('thresholdValue').textContent = e.target.value + '%';
+            placeAnomalyMarkers();
+        });
+
+        document.getElementById('playback').addEventListener('input', e => {
+            state.currentTime = parseInt(e.target.value);
+            updateDronePosition();
+        });
+
+        function resetView() {
+            camera.position.set(500, 300, 500);
+            camera.lookAt(0, 100, 0);
+        }
+
+        function togglePlayback() {
+            state.isPlaying = !state.isPlaying;
+        }
+
+        function exportGeoJSON() {
+            const features = state.gpsTrajectory.map(wp => ({
+                type: 'Feature',
+                geometry: { type: 'Point', coordinates: [wp.lon, wp.lat, wp.alt] },
+                properties: { anomalyScore: wp.anomalyScore, type: wp.anomalyType, timestamp: wp.timestamp }
+            }));
+            
+            const geojson = { type: 'FeatureCollection', features };
+            const blob = new Blob([JSON.stringify(geojson, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'flight_' + new Date().toISOString().slice(0, 19) + '.geojson';
+            a.click();
+        }
+
+        function exportKML() {
+            let kml = '<?xml version="1.0" encoding="UTF-8"?>\n<kml xmlns="http://www.opengis.net/kml/2.2">\n<Document>\n';
+            kml += '<name>Drone Flight Log</name>\n';
+            
+            state.gpsTrajectory.forEach((wp, i) => {
+                kml += `<Placemark><name>Anomaly ${i}</name><Point><coordinates>${wp.lon},${wp.lat},${wp.alt}</coordinates></Point></Placemark>\n`;
+            });
+            
+            kml += '</Document>\n</kml>';
+            const blob = new Blob([kml], { type: 'application/vnd.google-earth.kml+xml' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'flight_' + new Date().toISOString().slice(0, 19) + '.kml';
+            a.click();
+        }
+
+        // ===== Update Drone Position =====
+        function updateDronePosition() {
+            const wp = state.gpsTrajectory[Math.floor(state.currentTime)];
+            if (wp) {
+                drone.position.set(wp.position.x, wp.position.y + 40, wp.position.z);
+                drone.rotation.y = wp.heading * Math.PI / 180;
+                frustum.position.copy(drone.position);
+                frustum.rotation.copy(drone.rotation);
+
+                document.getElementById('position').textContent = wp.lat.toFixed(4) + '°, ' + wp.lon.toFixed(4) + '°';
+                document.getElementById('altitude').textContent = Math.round(wp.alt) + ' m';
+                document.getElementById('heading').textContent = wp.heading.toFixed(1) + '°';
+                document.getElementById('speed').textContent = wp.speed.toFixed(1) + ' m/s';
+                document.getElementById('anomalyCount').textContent = state.anomalyMarkers.length;
+                
+                const minutes = Math.floor(state.currentTime / 60);
+                const seconds = state.currentTime % 60;
+                document.getElementById('currentTime').textContent = String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(2, '0');
+            }
+        }
+
+        // ===== Animation Loop =====
+        function animate() {
+            requestAnimationFrame(animate);
+
+            if (state.isPlaying) {
+                state.currentTime += state.playbackSpeed / 60;
+                if (state.currentTime >= state.maxTime) state.currentTime = 0;
+                document.getElementById('playback').value = state.currentTime;
+            }
+
+            updateDronePosition();
+            renderer.render(scene, camera);
+        }
+
+        animate();
+
+        // ===== Resize Handler =====
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+{
+  "workflow": "evezos_grounded_runtime",
+  "bindings": [
+    {
+      "trigger": "POST /webhook/run-cycle",
+      "target": "/api/agent-run",
+      "agent": "cycle.runner",
+      "result": "cycle response"
+    },
+    {
+      "trigger": "worker callback",
+      "target": "/ledger/append",
+      "agent": "worker.deliverable",
+      "result": "ledger append"
+    },
+    {
+      "trigger": "telemetry emit",
+      "target": "Influx/Grafana",
+      "agent": "workflow.telemetry",
+      "result": "dashboard metrics"
+    },
+    {
+      "trigger": "provider proxy",
+      "target": "/api/chat",
+      "agent": "chat.proxy",
+      "result": "chat response"
+    },
+    {
+      "trigger": "live opportunities feed",
+      "target": "/api/opportunities",
+      "agent": "opportunities.live",
+      "result": "opportunity list"
+    },
+    {
+      "trigger": "wallet + settlement upstreams",
+      "target": [
+        "/api/wallet/treasury",
+        "/api/wallet/balances",
+        "/api/settlements"
+      ],
+      "agent": "treasury.status",
+      "result": "financial truth surfaces"
+    }
+  ]
+}
