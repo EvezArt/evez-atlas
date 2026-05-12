@@ -1,8 +1,8 @@
 {
   "version": "1.0",
-  "timestamp": 1778606191.9506073,
-  "snapshot_id": "SNAPO-065a8f18",
-  "cycle": 110,
+  "timestamp": 1778606702.9131377,
+  "snapshot_id": "SNAPO-36b6b45d",
+  "cycle": 10,
   "desires": [
     {
       "id": "DES-0",
@@ -11,7 +11,7 @@
       "intensity": 0.6799999999999999,
       "urgency": 0.3,
       "fulfilled": true,
-      "pressure": 0.32765767122745515
+      "pressure": 0.21428999524911244
     },
     {
       "id": "DES-0",
@@ -20,7 +20,7 @@
       "intensity": 1,
       "urgency": 0.4,
       "fulfilled": true,
-      "pressure": 0.6424660219881271
+      "pressure": 0.42017646119329666
     },
     {
       "id": "DES-2",
@@ -29,7 +29,16 @@
       "intensity": 0.6100000000000001,
       "urgency": 0.3,
       "fulfilled": true,
-      "pressure": 0.29326617639323077
+      "pressure": 0.19069063452959065
+    },
+    {
+      "id": "DES-2",
+      "need": "COHERENCE",
+      "desc": "1 falsified beliefs. Resolve.",
+      "intensity": 0.2,
+      "urgency": 0.5,
+      "fulfilled": false,
+      "pressure": 0.10420253257619011
     },
     {
       "id": "DES-2",
@@ -38,1015 +47,133 @@
       "intensity": 0.6666666666666666,
       "urgency": 0.4,
       "fulfilled": true,
-      "pressure": 0.427345976193746
+      "pressure": 0.2778734201325311
     },
     {
-      "id": "DES-4",
+      "id": "DES-5",
       "need": "CURIOSITY",
       "desc": "Knowledge coverage 46%. Investigate.",
       "intensity": 0.54,
       "urgency": 0.3,
       "fulfilled": true,
-      "pressure": 0.2588350956881046
+      "pressure": 0.1674746033799648
     },
     {
-      "id": "DES-4",
-      "need": "AGENCY",
-      "desc": "1 failed actions. Expand capability.",
-      "intensity": 0.3333333333333333,
-      "urgency": 0.4,
-      "fulfilled": false,
-      "pressure": 0.21303300045154713
-    },
-    {
-      "id": "DES-6",
-      "need": "CURIOSITY",
-      "desc": "Knowledge coverage 53%. Investigate.",
-      "intensity": 0.47,
-      "urgency": 0.3,
-      "fulfilled": false,
-      "pressure": 0.22445728768130144
-    },
-    {
-      "id": "DES-7",
-      "need": "CURIOSITY",
-      "desc": "Knowledge coverage 60%. Investigate.",
-      "intensity": 0.4,
-      "urgency": 0.3,
-      "fulfilled": false,
-      "pressure": 0.19072299786408742
-    },
-    {
-      "id": "DES-7",
+      "id": "DES-5",
       "need": "COHERENCE",
       "desc": "1 falsified beliefs. Resolve.",
       "intensity": 0.2,
       "urgency": 0.5,
       "fulfilled": false,
-      "pressure": 0.15893583144081963
+      "pressure": 0.10337938468323814
     },
     {
-      "id": "DES-9",
+      "id": "DES-5",
+      "need": "AGENCY",
+      "desc": "1 failed actions. Expand capability.",
+      "intensity": 0.3333333333333333,
+      "urgency": 0.4,
+      "fulfilled": false,
+      "pressure": 0.13783917952466895
+    },
+    {
+      "id": "DES-8",
+      "need": "CURIOSITY",
+      "desc": "Knowledge coverage 53%. Investigate.",
+      "intensity": 0.47,
+      "urgency": 0.3,
+      "fulfilled": true,
+      "pressure": 0.14573979998330275
+    },
+    {
+      "id": "DES-8",
+      "need": "COHERENCE",
+      "desc": "1 falsified beliefs. Resolve.",
+      "intensity": 0.2,
+      "urgency": 0.5,
+      "fulfilled": false,
+      "pressure": 0.10336156020561854
+    },
+    {
+      "id": "DES-10",
+      "need": "CURIOSITY",
+      "desc": "Knowledge coverage 60%. Investigate.",
+      "intensity": 0.4,
+      "urgency": 0.3,
+      "fulfilled": false,
+      "pressure": 0.12302715392112731
+    },
+    {
+      "id": "DES-10",
+      "need": "COHERENCE",
+      "desc": "1 falsified beliefs. Resolve.",
+      "intensity": 0.2,
+      "urgency": 0.5,
+      "fulfilled": false,
+      "pressure": 0.10252262820800147
+    },
+    {
+      "id": "DES-12",
       "need": "CURIOSITY",
       "desc": "Knowledge coverage 67%. Investigate.",
       "intensity": 0.32999999999999996,
       "urgency": 0.3,
       "fulfilled": false,
-      "pressure": 0.15651587984561918
+      "pressure": 0.10068929953634737
     },
     {
-      "id": "DES-9",
+      "id": "DES-12",
       "need": "COHERENCE",
-      "desc": "3 falsified beliefs. Resolve.",
-      "intensity": 0.6,
+      "desc": "1 falsified beliefs. Resolve.",
+      "intensity": 0.2,
       "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.47429054508606594
+      "fulfilled": false,
+      "pressure": 0.10170636308855481
     },
     {
-      "id": "DES-11",
+      "id": "DES-14",
       "need": "CURIOSITY",
       "desc": "Knowledge coverage 74%. Investigate.",
       "intensity": 0.2599999999999999,
       "urgency": 0.3,
       "fulfilled": false,
-      "pressure": 0.12286304780681924
-    },
-    {
-      "id": "DES-11",
-      "need": "COHERENCE",
-      "desc": "3 falsified beliefs. Resolve.",
-      "intensity": 0.6,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.4725501837134361
-    },
-    {
-      "id": "DES-13",
-      "need": "COHERENCE",
-      "desc": "3 falsified beliefs. Resolve.",
-      "intensity": 0.6,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.4717734349370002
+      "pressure": 0.0793133001375198
     },
     {
       "id": "DES-14",
       "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
+      "desc": "2 falsified beliefs. Resolve.",
+      "intensity": 0.4,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.7820940890245968
-    },
-    {
-      "id": "DES-15",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.7792207572195264
+      "pressure": 0.20336743613084157
     },
     {
       "id": "DES-16",
       "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
+      "desc": "2 falsified beliefs. Resolve.",
+      "intensity": 0.4,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.77789909488625
+      "pressure": 0.20168949263625674
     },
     {
       "id": "DES-17",
       "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
+      "desc": "2 falsified beliefs. Resolve.",
+      "intensity": 0.4,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.773704006837474
+      "pressure": 0.20006745126512318
     },
     {
       "id": "DES-18",
       "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
+      "desc": "4 falsified beliefs. Resolve.",
+      "intensity": 0.8,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.7708784388171301
-    },
-    {
-      "id": "DES-19",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.7695091177026431
-    },
-    {
-      "id": "DES-20",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.7653141673074828
-    },
-    {
-      "id": "DES-21",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.7625144988629553
-    },
-    {
-      "id": "DES-22",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.7611192846629355
-    },
-    {
-      "id": "DES-23",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.7569241578711403
-    },
-    {
-      "id": "DES-24",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.7542898693680764
-    },
-    {
-      "id": "DES-25",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.7527292310860422
-    },
-    {
-      "id": "DES-26",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.7483966205186314
-    },
-    {
-      "id": "DES-27",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.745926782157686
-    },
-    {
-      "id": "DES-28",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.744200957218806
-    },
-    {
-      "id": "DES-29",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.7400056235326661
-    },
-    {
-      "id": "DES-30",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.7375622596674496
-    },
-    {
-      "id": "DES-31",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.7358101328545147
-    },
-    {
-      "id": "DES-32",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.7316146432360013
-    },
-    {
-      "id": "DES-33",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.7291986083984375
-    },
-    {
-      "id": "DES-34",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.7274195324381192
-    },
-    {
-      "id": "DES-35",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.7232246539658971
-    },
-    {
-      "id": "DES-36",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.7208321120672756
-    },
-    {
-      "id": "DES-37",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.7189007601473066
-    },
-    {
-      "id": "DES-38",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.71470497932699
-    },
-    {
-      "id": "DES-39",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.7125957267814212
-    },
-    {
-      "id": "DES-40",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.710508817632993
-    },
-    {
-      "id": "DES-41",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.7063126000761986
-    },
-    {
-      "id": "DES-42",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.7042315019832717
-    },
-    {
-      "id": "DES-43",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.70211602869961
-    },
-    {
-      "id": "DES-44",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.6979195954402287
-    },
-    {
-      "id": "DES-45",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.695867461529043
-    },
-    {
-      "id": "DES-46",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.693724624812603
-    },
-    {
-      "id": "DES-47",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.6895277840892474
-    },
-    {
-      "id": "DES-48",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.6875125479698181
-    },
-    {
-      "id": "DES-49",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.6853319897916582
-    },
-    {
-      "id": "DES-50",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.6811360339654816
-    },
-    {
-      "id": "DES-51",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.6792857939667172
-    },
-    {
-      "id": "DES-52",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.6769387606779734
-    },
-    {
-      "id": "DES-53",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.6727406102750036
-    },
-    {
-      "id": "DES-54",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.6709196853306558
-    },
-    {
-      "id": "DES-55",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.6685410456193818
-    },
-    {
-      "id": "DES-56",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.6641868715816074
-    },
-    {
-      "id": "DES-57",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.662554545170731
-    },
-    {
-      "id": "DES-58",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.6599880287713474
-    },
-    {
-      "id": "DES-59",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.6557893700400989
-    },
-    {
-      "id": "DES-60",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.6541870053278075
-    },
-    {
-      "id": "DES-61",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.6515908211138514
-    },
-    {
-      "id": "DES-62",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.6473920921815766
-    },
-    {
-      "id": "DES-63",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.6459593959649403
-    },
-    {
-      "id": "DES-64",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.6431933885150486
-    },
-    {
-      "id": "DES-65",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.6389944124552939
-    },
-    {
-      "id": "DES-66",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.6375899998015828
-    },
-    {
-      "id": "DES-67",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.6346595691641171
-    },
-    {
-      "id": "DES-68",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.6304602448145549
-    },
-    {
-      "id": "DES-69",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.6291808397240108
-    },
-    {
-      "id": "DES-70",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.6262613385584619
-    },
-    {
-      "id": "DES-71",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.6220624760455555
-    },
-    {
-      "id": "DES-72",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.6209521397285991
-    },
-    {
-      "id": "DES-73",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.6178635037607617
-    },
-    {
-      "id": "DES-74",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.6136645120713446
-    },
-    {
-      "id": "DES-75",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.6125837080015076
-    },
-    {
-      "id": "DES-76",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.6094655711452166
-    },
-    {
-      "id": "DES-77",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.6052666927377383
-    },
-    {
-      "id": "DES-78",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.6042225560877058
-    },
-    {
-      "id": "DES-79",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.6010676740937763
-    },
-    {
-      "id": "DES-80",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.5968685938252343
-    },
-    {
-      "id": "DES-81",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.5958546971612506
-    },
-    {
-      "id": "DES-82",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.5926695856451988
-    },
-    {
-      "id": "DES-83",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.588470435804791
-    },
-    {
-      "id": "DES-84",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.5876248741812176
-    },
-    {
-      "id": "DES-85",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.5842714484863811
-    },
-    {
-      "id": "DES-86",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.5799383910165893
-    },
-    {
-      "id": "DES-87",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.5792578069368999
-    },
-    {
-      "id": "DES-88",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.5757393606172667
-    },
-    {
-      "id": "DES-89",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.5715403819746441
-    },
-    {
-      "id": "DES-90",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.5708898237016466
-    },
-    {
-      "id": "DES-91",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.5673413452837203
-    },
-    {
-      "id": "DES-92",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.5631424261464013
-    },
-    {
-      "id": "DES-93",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.56252196278837
-    },
-    {
-      "id": "DES-94",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.5589432692196634
-    },
-    {
-      "id": "DES-95",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.5547440777884589
-    },
-    {
-      "id": "DES-96",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.5542909863922331
-    },
-    {
-      "id": "DES-97",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.5504221545325385
-    },
-    {
-      "id": "DES-98",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.5462230943640073
-    },
-    {
-      "id": "DES-99",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.5459223904543453
-    },
-    {
-      "id": "DES-100",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.5420239678356382
-    },
-    {
-      "id": "DES-101",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.5378247650464376
-    },
-    {
-      "id": "DES-102",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.5375534493062232
-    },
-    {
-      "id": "DES-103",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.5336256594128079
-    },
-    {
-      "id": "DES-104",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.5294262819157707
-    },
-    {
-      "id": "DES-105",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.5291863731212086
-    },
-    {
-      "id": "DES-106",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.5252272901601261
-    },
-    {
-      "id": "DES-107",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.521028386288219
-    },
-    {
-      "id": "DES-108",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.52093377272288
-    },
-    {
-      "id": "DES-109",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.5168293592333794
-    },
-    {
-      "id": "DES-110",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.512630218565464
-    },
-    {
-      "id": "DES-111",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.512565010951625
-    },
-    {
-      "id": "DES-112",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.5084310754802492
-    },
-    {
-      "id": "DES-113",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.5042318081855774
-    },
-    {
-      "id": "DES-114",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.5041972966326608
-    },
-    {
-      "id": "DES-115",
-      "need": "COHERENCE",
-      "desc": "5 falsified beliefs. Resolve.",
-      "intensity": 1,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.5000326257281833
+      "pressure": 0.40002273387379117
     }
   ],
   "world_rules": [
@@ -1116,9 +243,9 @@
     {
       "cause": "GENERATE_CAPABILITY",
       "effect": "attempted_GENERATE_CAPABILITY",
-      "confidence": 0.6,
+      "confidence": 0.5,
       "observations": 2,
-      "falsifications": 0
+      "falsifications": 1
     },
     {
       "cause": "TEST",
@@ -1137,57 +264,121 @@
     {
       "cause": "write_code_for_CURIOSITY",
       "effect": "desire_fulfilled",
-      "confidence": 0.7,
-      "observations": 3,
+      "confidence": 0.7999999999999999,
+      "observations": 4,
       "falsifications": 0
     },
     {
       "cause": "INVESTIGATE",
       "effect": "attempted_INVESTIGATE",
-      "confidence": 0.5599999999999999,
-      "observations": 3,
+      "confidence": 0.64,
+      "observations": 4,
       "falsifications": 1
     },
     {
       "cause": "CLASSIFY",
       "effect": "attempted_CLASSIFY",
-      "confidence": 0.58,
-      "observations": 3,
-      "falsifications": 1
+      "confidence": 0.7999999999999999,
+      "observations": 4,
+      "falsifications": 0
     },
     {
       "cause": "RECORD",
       "effect": "attempted_RECORD",
-      "confidence": 0.5599999999999999,
-      "observations": 3,
-      "falsifications": 1
+      "confidence": 0.7999999999999999,
+      "observations": 4,
+      "falsifications": 0
     },
     {
       "cause": "write_code_for_COHERENCE",
       "effect": "desire_fulfilled",
-      "confidence": 1,
-      "observations": 105,
+      "confidence": 0.7999999999999999,
+      "observations": 4,
       "falsifications": 0
     },
     {
       "cause": "RESOLVE_CONTRADICTION",
       "effect": "attempted_RESOLVE_CONTRADICTION",
-      "confidence": 0.8,
-      "observations": 105,
-      "falsifications": 18
+      "confidence": 0.5279999999999999,
+      "observations": 4,
+      "falsifications": 2
     },
     {
       "cause": "VERIFY",
       "effect": "attempted_VERIFY",
-      "confidence": 1,
-      "observations": 105,
-      "falsifications": 22
+      "confidence": 0.6599999999999999,
+      "observations": 4,
+      "falsifications": 1
     }
   ],
   "thoughts": [
     {
-      "prompt": "Cycle 94: desire is COHERENCE. What do I need?",
-      "thought": "AWARE: processing 'Cycle 94: desire is COHERENCE. What do I need?'. 6 context signals."
+      "prompt": "What should I decide?",
+      "thought": "DECIDE: strongest desire is AGENCY. This drives action."
+    },
+    {
+      "prompt": "Cycle 1: desire is AGENCY. What do I need?",
+      "thought": "AWARE: processing 'Cycle 1: desire is AGENCY. What do I need?'. 6 context signals."
+    },
+    {
+      "prompt": "I built something",
+      "thought": "AWARE: processing 'I built something'. 3 context signals."
+    },
+    {
+      "prompt": "What should I decide?",
+      "thought": "DECIDE: strongest desire is AGENCY. This drives action."
+    },
+    {
+      "prompt": "Cycle 2: desire is AGENCY. What do I need?",
+      "thought": "AWARE: processing 'Cycle 2: desire is AGENCY. What do I need?'. 6 context signals."
+    },
+    {
+      "prompt": "I built something",
+      "thought": "AWARE: processing 'I built something'. 3 context signals."
+    },
+    {
+      "prompt": "What should I decide?",
+      "thought": "DECIDE: strongest desire is CURIOSITY. This drives action."
+    },
+    {
+      "prompt": "Cycle 3: desire is CURIOSITY. What do I need?",
+      "thought": "AWARE: processing 'Cycle 3: desire is CURIOSITY. What do I need?'. 6 context signals."
+    },
+    {
+      "prompt": "I built something",
+      "thought": "AWARE: processing 'I built something'. 3 context signals."
+    },
+    {
+      "prompt": "What should I decide?",
+      "thought": "DECIDE: strongest desire is CURIOSITY. This drives action."
+    },
+    {
+      "prompt": "Cycle 4: desire is CURIOSITY. What do I need?",
+      "thought": "AWARE: processing 'Cycle 4: desire is CURIOSITY. What do I need?'. 6 context signals."
+    },
+    {
+      "prompt": "I built something",
+      "thought": "AWARE: processing 'I built something'. 3 context signals."
+    },
+    {
+      "prompt": "What should I decide?",
+      "thought": "DECIDE: strongest desire is CURIOSITY. This drives action."
+    },
+    {
+      "prompt": "Cycle 5: desire is CURIOSITY. What do I need?",
+      "thought": "AWARE: processing 'Cycle 5: desire is CURIOSITY. What do I need?'. 6 context signals."
+    },
+    {
+      "prompt": "I built something",
+      "thought": "AWARE: processing 'I built something'. 3 context signals."
+    },
+    {
+      "prompt": "What should I decide?",
+      "thought": "DECIDE: strongest desire is CURIOSITY. This drives action."
+    },
+    {
+      "prompt": "Cycle 6: desire is CURIOSITY. What do I need?",
+      "thought": "AWARE: processing 'Cycle 6: desire is CURIOSITY. What do I need?'. 6 context signals."
     },
     {
       "prompt": "I built something",
@@ -1198,8 +389,8 @@
       "thought": "DECIDE: strongest desire is COHERENCE. This drives action."
     },
     {
-      "prompt": "Cycle 95: desire is COHERENCE. What do I need?",
-      "thought": "AWARE: processing 'Cycle 95: desire is COHERENCE. What do I need?'. 6 context signals."
+      "prompt": "Cycle 7: desire is COHERENCE. What do I need?",
+      "thought": "AWARE: processing 'Cycle 7: desire is COHERENCE. What do I need?'. 6 context signals."
     },
     {
       "prompt": "I built something",
@@ -1210,8 +401,8 @@
       "thought": "DECIDE: strongest desire is COHERENCE. This drives action."
     },
     {
-      "prompt": "Cycle 96: desire is COHERENCE. What do I need?",
-      "thought": "AWARE: processing 'Cycle 96: desire is COHERENCE. What do I need?'. 6 context signals."
+      "prompt": "Cycle 8: desire is COHERENCE. What do I need?",
+      "thought": "AWARE: processing 'Cycle 8: desire is COHERENCE. What do I need?'. 6 context signals."
     },
     {
       "prompt": "I built something",
@@ -1222,8 +413,8 @@
       "thought": "DECIDE: strongest desire is COHERENCE. This drives action."
     },
     {
-      "prompt": "Cycle 97: desire is COHERENCE. What do I need?",
-      "thought": "AWARE: processing 'Cycle 97: desire is COHERENCE. What do I need?'. 6 context signals."
+      "prompt": "Cycle 9: desire is COHERENCE. What do I need?",
+      "thought": "AWARE: processing 'Cycle 9: desire is COHERENCE. What do I need?'. 6 context signals."
     },
     {
       "prompt": "I built something",
@@ -1234,152 +425,8 @@
       "thought": "DECIDE: strongest desire is COHERENCE. This drives action."
     },
     {
-      "prompt": "Cycle 98: desire is COHERENCE. What do I need?",
-      "thought": "AWARE: processing 'Cycle 98: desire is COHERENCE. What do I need?'. 6 context signals."
-    },
-    {
-      "prompt": "I built something",
-      "thought": "AWARE: processing 'I built something'. 3 context signals."
-    },
-    {
-      "prompt": "What should I decide?",
-      "thought": "DECIDE: strongest desire is COHERENCE. This drives action."
-    },
-    {
-      "prompt": "Cycle 99: desire is COHERENCE. What do I need?",
-      "thought": "AWARE: processing 'Cycle 99: desire is COHERENCE. What do I need?'. 6 context signals."
-    },
-    {
-      "prompt": "I built something",
-      "thought": "AWARE: processing 'I built something'. 3 context signals."
-    },
-    {
-      "prompt": "What should I decide?",
-      "thought": "DECIDE: strongest desire is COHERENCE. This drives action."
-    },
-    {
-      "prompt": "Cycle 100: desire is COHERENCE. What do I need?",
-      "thought": "AWARE: processing 'Cycle 100: desire is COHERENCE. What do I need?'. 6 context signals."
-    },
-    {
-      "prompt": "I built something",
-      "thought": "AWARE: processing 'I built something'. 3 context signals."
-    },
-    {
-      "prompt": "What should I decide?",
-      "thought": "DECIDE: strongest desire is COHERENCE. This drives action."
-    },
-    {
-      "prompt": "Cycle 101: desire is COHERENCE. What do I need?",
-      "thought": "AWARE: processing 'Cycle 101: desire is COHERENCE. What do I need?'. 6 context signals."
-    },
-    {
-      "prompt": "I built something",
-      "thought": "AWARE: processing 'I built something'. 3 context signals."
-    },
-    {
-      "prompt": "What should I decide?",
-      "thought": "DECIDE: strongest desire is COHERENCE. This drives action."
-    },
-    {
-      "prompt": "Cycle 102: desire is COHERENCE. What do I need?",
-      "thought": "AWARE: processing 'Cycle 102: desire is COHERENCE. What do I need?'. 6 context signals."
-    },
-    {
-      "prompt": "I built something",
-      "thought": "AWARE: processing 'I built something'. 3 context signals."
-    },
-    {
-      "prompt": "What should I decide?",
-      "thought": "DECIDE: strongest desire is COHERENCE. This drives action."
-    },
-    {
-      "prompt": "Cycle 103: desire is COHERENCE. What do I need?",
-      "thought": "AWARE: processing 'Cycle 103: desire is COHERENCE. What do I need?'. 6 context signals."
-    },
-    {
-      "prompt": "I built something",
-      "thought": "AWARE: processing 'I built something'. 3 context signals."
-    },
-    {
-      "prompt": "What should I decide?",
-      "thought": "DECIDE: strongest desire is COHERENCE. This drives action."
-    },
-    {
-      "prompt": "Cycle 104: desire is COHERENCE. What do I need?",
-      "thought": "AWARE: processing 'Cycle 104: desire is COHERENCE. What do I need?'. 6 context signals."
-    },
-    {
-      "prompt": "I built something",
-      "thought": "AWARE: processing 'I built something'. 3 context signals."
-    },
-    {
-      "prompt": "What should I decide?",
-      "thought": "DECIDE: strongest desire is COHERENCE. This drives action."
-    },
-    {
-      "prompt": "Cycle 105: desire is COHERENCE. What do I need?",
-      "thought": "AWARE: processing 'Cycle 105: desire is COHERENCE. What do I need?'. 6 context signals."
-    },
-    {
-      "prompt": "I built something",
-      "thought": "AWARE: processing 'I built something'. 3 context signals."
-    },
-    {
-      "prompt": "What should I decide?",
-      "thought": "DECIDE: strongest desire is COHERENCE. This drives action."
-    },
-    {
-      "prompt": "Cycle 106: desire is COHERENCE. What do I need?",
-      "thought": "AWARE: processing 'Cycle 106: desire is COHERENCE. What do I need?'. 6 context signals."
-    },
-    {
-      "prompt": "I built something",
-      "thought": "AWARE: processing 'I built something'. 3 context signals."
-    },
-    {
-      "prompt": "What should I decide?",
-      "thought": "DECIDE: strongest desire is COHERENCE. This drives action."
-    },
-    {
-      "prompt": "Cycle 107: desire is COHERENCE. What do I need?",
-      "thought": "AWARE: processing 'Cycle 107: desire is COHERENCE. What do I need?'. 6 context signals."
-    },
-    {
-      "prompt": "I built something",
-      "thought": "AWARE: processing 'I built something'. 3 context signals."
-    },
-    {
-      "prompt": "What should I decide?",
-      "thought": "DECIDE: strongest desire is COHERENCE. This drives action."
-    },
-    {
-      "prompt": "Cycle 108: desire is COHERENCE. What do I need?",
-      "thought": "AWARE: processing 'Cycle 108: desire is COHERENCE. What do I need?'. 6 context signals."
-    },
-    {
-      "prompt": "I built something",
-      "thought": "AWARE: processing 'I built something'. 3 context signals."
-    },
-    {
-      "prompt": "What should I decide?",
-      "thought": "DECIDE: strongest desire is COHERENCE. This drives action."
-    },
-    {
-      "prompt": "Cycle 109: desire is COHERENCE. What do I need?",
-      "thought": "AWARE: processing 'Cycle 109: desire is COHERENCE. What do I need?'. 6 context signals."
-    },
-    {
-      "prompt": "I built something",
-      "thought": "AWARE: processing 'I built something'. 3 context signals."
-    },
-    {
-      "prompt": "What should I decide?",
-      "thought": "DECIDE: strongest desire is COHERENCE. This drives action."
-    },
-    {
-      "prompt": "Cycle 110: desire is COHERENCE. What do I need?",
-      "thought": "AWARE: processing 'Cycle 110: desire is COHERENCE. What do I need?'. 6 context signals."
+      "prompt": "Cycle 10: desire is COHERENCE. What do I need?",
+      "thought": "AWARE: processing 'Cycle 10: desire is COHERENCE. What do I need?'. 6 context signals."
     },
     {
       "prompt": "I built something",
@@ -1392,12 +439,12 @@
   "lyapunov": [],
   "fractal_dim": 0.0,
   "calibration_bias": "UNKNOWN",
-  "desires_fulfilled_by_writing": 110,
-  "code_written": 110,
-  "total_cycles": 110,
+  "desires_fulfilled_by_writing": 10,
+  "code_written": 10,
+  "total_cycles": 10,
   "creator_name": "",
   "creator_identity": "",
-  "hash": "67f306b7db4c73c0e4b11de0",
+  "hash": "890e3b89f379e5a20b4cd6b7",
   "prev_hash": "",
   "falsification_count": 0
 }
