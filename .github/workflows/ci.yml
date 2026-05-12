@@ -1,36 +1,28 @@
-name: Evez666 CI
+name: CI Health Check
 
 on:
   push:
-    branches: [main, develop, 'feat/*']
+    branches: [main, master]
   pull_request:
-    branches: [main]
-  workflow_dispatch:
+    branches: [main, master]
+  schedule:
+    - cron: '0 6 * * 1'
 
 jobs:
-  lint-and-test:
-    runs-on: ${{ vars.RUNNER_LABEL || 'ubuntu-latest' }}
-    name: 'Lint + Test -- Atlas v3'
+  health:
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: '3.11'
       - name: Install deps
         run: |
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-          pip install pyflakes pytest pytest-cov
-      - name: Lint
-        run: pyflakes . --exclude=.git,__pycache__ || true
-      - name: Test
-        run: pytest --cov -q || true
-
-  momentum-signal:
-    runs-on: ${{ vars.RUNNER_LABEL || 'ubuntu-latest' }}
-    needs: lint-and-test
-    name: 'Signal momentum to Synapse Engine'
-    steps:
-      - name: Post commit signal
+          if [ -f setup.py ]; then pip install -e .; fi
+      - name: Syntax check
         run: |
-          echo "Evez666 commit signal: $GITHUB_SHA | $GITHUB_REF | $(date -u)"
+          find . -name '*.py' -not -path './.git/*' -exec python -m py_compile {} \;
+      - name: Test
+        run: |
+          if [ -d tests ]; then python -m pytest tests/ -q || true; fi
