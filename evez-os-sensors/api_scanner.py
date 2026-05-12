@@ -8,7 +8,7 @@ Tests each discovered provider and adds working ones to Ariel.
 
 The circuit GROWS by finding new providers on its own.
 """
-import json, os, sys, time, re, hashlib
+import json, os, signal, sys, time, re, hashlib
 from pathlib import Path
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from urllib.request import Request, urlopen

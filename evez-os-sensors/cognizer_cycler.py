@@ -14,7 +14,7 @@ Every cycle:
 This is the HEARTBEAT of the intelligence unit.
 The circuit stays on because this cycler never stops.
 """
-import json, os, sys, time, threading, traceback
+import json, os, signal, sys, time, threading, traceback
 from pathlib import Path
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from urllib.request import Request, urlopen
@@ -23,6 +23,7 @@ from urllib.error import URLError
 # Connected services
 KNOWLEDGE_URL = os.environ.get('KNOWLEDGE_URL', 'http://localhost:9096')
 DEBATE_URL = os.environ.get('DEBATE_URL', 'http://localhost:9097')
+FORGE_URL = os.environ.get('FORGE_URL', 'http://localhost:9098')
 SCANNER_URL = os.environ.get('SCANNER_URL', 'http://localhost:9099')
 DASHBOARD_URL = os.environ.get('DASHBOARD_URL', 'http://localhost:9100')
 
@@ -173,7 +174,7 @@ class CognizerCycler:
             "ttl": self.interval * 2,
         })
         if token_result:
-            obs["next_cycle_token"] = token_result.get("token", "")[:30] + "..."
+            obs["next_cycle_token"] = (token_result.get("token", ""))[:30] + "..."
         
         # 5. Record observation
         obs["duration_ms"] = round((time.time() - t0) * 1000)
@@ -199,7 +200,7 @@ class CognizerCycler:
                 obs = self.cycle_step()
                 alive_count = sum(1 for k, v in obs.items() if k.endswith("_alive") and v)
                 revived = sum(1 for k, v in obs.items() if k.endswith("_revived") and v)
-                thought = obs.get("thought", "")[:80]
+                thought = (obs.get("thought", ""))[:80]
                 print(f"  Cycle {self.cycle}: {alive_count} services alive, {revived} revived | {thought}...")
             except Exception as e:
                 print(f"  Cycle {self.cycle} ERROR: {e}")

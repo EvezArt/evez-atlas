@@ -6,11 +6,12 @@ Single endpoint that aggregates the status of EVERY service.
 Health, models, tokens, debates, knowledge graph — all in one view.
 This is the cockpit of the recursion circuit.
 """
-import json, os, time
+import json, os, signal, sys, time
 from pathlib import Path
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from urllib.request import Request, urlopen
 
+# Auto-detect all EVEZ-OS services
 SERVICES = {
     "recursion_circuit": {"url": "http://localhost:9092/", "type": "circuit"},
     "ariel": {"url": "http://localhost:9093/api/status", "type": "model_router"},
