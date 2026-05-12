@@ -1,0 +1,61 @@
+{
+  "rules": [
+    {
+      "cause": "service_crash",
+      "effect": "restart_via_systemd",
+      "confidence": 0.95,
+      "source": "proven",
+      "created": "2026-05-12T19:34:44.696914"
+    },
+    {
+      "cause": "config_change",
+      "effect": "gateway_reload",
+      "confidence": 0.85,
+      "source": "observed",
+      "created": "2026-05-12T19:34:44.696977"
+    },
+    {
+      "cause": "knowledge_growth",
+      "effect": "debate_trigger",
+      "confidence": 0.7,
+      "source": "heuristic",
+      "created": "2026-05-12T19:34:44.697027"
+    },
+    {
+      "cause": "capability_gap",
+      "effect": "desire_generation",
+      "confidence": 0.8,
+      "source": "designed",
+      "created": "2026-05-12T19:34:44.697088"
+    },
+    {
+      "cause": "service_crash",
+      "effect": "restart_via_systemd",
+      "confidence": 0.95,
+      "source": "proven",
+      "created": "2026-05-12T19:34:52.396153"
+    },
+    {
+      "cause": "config_change",
+      "effect": "gateway_reload",
+      "confidence": 0.85,
+      "source": "observed",
+      "created": "2026-05-12T19:34:52.396258"
+    },
+    {
+      "cause": "knowledge_growth",
+      "effect": "debate_trigger",
+      "confidence": 0.7,
+      "source": "heuristic",
+      "created": "2026-05-12T19:34:52.396348"
+    },
+    {
+      "cause": "capability_gap",
+      "effect": "desire_generation",
+      "confidence": 0.8,
+      "source": "designed",
+      "created": "2026-05-12T19:34:52.396423"
+    }
+  ],
+  "observations": []
+}
