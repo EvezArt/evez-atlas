@@ -19,7 +19,7 @@ Relations: is_a, part_of, contradicts, supports, generalizes,
 This IS the long-term memory of the circuit.
 The knowledge graph grows with every cycle.
 """
-import json, os, time, threading, hashlib
+import json, os, signal, sys, time, threading, hashlib
 from pathlib import Path
 from collections import defaultdict
 from http.server import HTTPServer, BaseHTTPRequestHandler
@@ -295,6 +295,16 @@ class KnowledgeHandler(BaseHTTPRequestHandler):
         elif path == "/api/edge":
             result = kg.add_edge(body.get("source", ""), body.get("target", ""), body.get("relation", "related_to"), body.get("confidence", 0.5)) if kg else {}
             self._json(result)
+        elif path == "/api/batch-learn":
+            # Learn multiple statements at once
+            results = []
+            for stmt in body.get("statements", []):
+                r = kg.learn(stmt.get("statement", ""), stmt.get("source", "batch"), stmt.get("confidence", 0.7)) if kg else {}
+                results.append(r)
+            self._json({"learned": len(results), "results": results})
+        elif path == "/api/export":
+            # Export full graph as JSON
+            self._json({"nodes": kg.nodes, "edges": kg.edges[-1000:], "stats": kg.graph_stats()} if kg else {})
         else:
             self._json({"error": "Not found"}, 404)
     

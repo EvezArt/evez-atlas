@@ -150,7 +150,7 @@ class GitHubStateStore:
             "status": "PUSHED" if "content" in result else "FAILED",
             "path": path,
             "cycle": snapshot.cycle,
-            "error": result.get("message", "")[:200] if "error" in result else None,
+            "error": (result.get("message", ""))[:200] if "error" in result else None,
         }
     
     def push_latest(self, snapshot: StateSnapshot) -> dict:
@@ -174,7 +174,7 @@ class GitHubStateStore:
         return {
             "status": "PUSHED" if "content" in result else "FAILED",
             "path": path,
-            "error": result.get("message", "")[:200] if "error" in result else None,
+            "error": (result.get("message", ""))[:200] if "error" in result else None,
         }
     
     def pull_latest(self) -> Optional[StateSnapshot]:
