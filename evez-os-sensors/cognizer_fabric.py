@@ -247,7 +247,7 @@ class LinguisticCore:
         if self.router.providers:
             # Build a synthesis prompt
             context = "\n---\n".join(
-                f"[{i.get('source','?')}] {i.get('content','')[:500]}" 
+                f"[{i.get('source','?')}] {(i.get('content',''))[:500]}" 
                 for i in inputs[:5]
             )
             full_prompt = f"{prompt}\n\nInputs:\n{context}\n\nSynthesis:"
@@ -260,7 +260,7 @@ class LinguisticCore:
             }
         
         # Local fallback: simple merge
-        merged = " ".join(i.get("content", "")[:200] for i in inputs[:5])
+        merged = " ".join((i.get("content", ""))[:200] for i in inputs[:5])
         return {
             "synthesis": merged[:500],
             "sources": len(inputs),

@@ -17,7 +17,7 @@ Architecture:
 This is Darwinian code evolution powered by the circuit.
 The code writes itself, tests itself, and improves itself.
 """
-import json, os, sys, time, traceback, hashlib, subprocess
+import json, os, signal, sys, time, traceback, hashlib, subprocess
 from pathlib import Path
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from collections import defaultdict

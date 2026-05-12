@@ -22,6 +22,7 @@ SERVICES=(
   "api_scanner.py --port 9099 --ariel-url http://localhost:9093|9099|scanner"
   "dashboard.py --port 9100|9100|dashboard"
   "autonomous_daemon.py --interval 60||daemon"
+  "github_push_daemon.py --port 9101|9101|push"
 )
 
 for entry in "${SERVICES[@]}"; do

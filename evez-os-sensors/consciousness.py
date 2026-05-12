@@ -291,7 +291,7 @@ class Consciousness:
         self.state = "REFLECTING"
         reflection = self.monologue.reflect()
         calibration = self.uncertainty.calibrate(self.beliefs)
-        results["reflection"] = reflection.get("reflection", "")[:60]
+        results["reflection"] = (reflection.get("reflection", ""))[:60]
         results["calibration"] = calibration.get("bias", "UNKNOWN")
 
         # 7. SELF-MODIFY if needed

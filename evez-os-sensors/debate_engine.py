@@ -13,7 +13,7 @@ is produced using the strongest arguments from each side.
 This is MORE than falsification — it's structured disagreement.
 The circuit becomes wiser because models challenge each other.
 """
-import json, os, sys, time, threading
+import json, os, signal, sys, time, threading
 from pathlib import Path
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from urllib.request import Request, urlopen
