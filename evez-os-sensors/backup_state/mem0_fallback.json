@@ -166,5 +166,45 @@
       "type": "thought"
     },
     "timestamp": "2026-05-12T20:03:56.038840"
+  },
+  {
+    "content": "Cycle 1 complete. 3 desires, 1 plans",
+    "metadata": {
+      "source": "consciousness",
+      "type": "thought"
+    },
+    "timestamp": "2026-05-12T20:15:01.813196"
+  },
+  {
+    "content": "Cycle 1: Sensing environment...",
+    "metadata": {
+      "source": "consciousness",
+      "type": "thought"
+    },
+    "timestamp": "2026-05-12T20:15:01.813510"
+  },
+  {
+    "content": "Top desire: Maintain operational status (priority: 1.0)",
+    "metadata": {
+      "source": "consciousness",
+      "type": "thought"
+    },
+    "timestamp": "2026-05-12T20:15:01.813765"
+  },
+  {
+    "content": "Continuing plan: Maintain operational status (step 0)",
+    "metadata": {
+      "source": "consciousness",
+      "type": "thought"
+    },
+    "timestamp": "2026-05-12T20:15:01.813998"
+  },
+  {
+    "content": "Cycle 1 complete. 3 desires, 1 plans",
+    "metadata": {
+      "source": "consciousness",
+      "type": "thought"
+    },
+    "timestamp": "2026-05-12T20:15:01.814199"
   }
 ]
