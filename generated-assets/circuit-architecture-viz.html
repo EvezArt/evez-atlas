@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EVEZ-OS Circuit Architecture</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0a0f;color:#e0e0e0;font-family:'Courier New',monospace;overflow-x:hidden;min-height:100vh}
+#bg-canvas{position:fixed;top:0;left:0;z-index:0;pointer-events:none}
+.container{position:relative;z-index:1;max-width:1400px;margin:0 auto;padding:20px}
+h1{text-align:center;font-size:2.5em;background:linear-gradient(90deg,#00ffff,#ff00ff,#ffd700);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:20px 0;letter-spacing:0.1em}
+.subtitle{text-align:center;color:#888;margin-bottom:40px;font-size:1.1em}
+#circuit-svg{width:100%;max-width:1200px;margin:0 auto;display:block}
+.stats-panel{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:15px;margin:30px 0}
+.stat-card{background:rgba(0,255,255,0.05);border:1px solid rgba(0,255,255,0.2);border-radius:8px;padding:15px;text-align:center;transition:all 0.3s}
+.stat-card:hover{border-color:#00ffff;box-shadow:0 0 20px rgba(0,255,255,0.2)}
+.stat-value{font-size:2em;color:#00ffff;font-weight:bold}
+.stat-label{color:#888;font-size:0.9em;margin-top:5px}
+.formula-box{background:rgba(255,0,255,0.05);border:1px solid rgba(255,0,255,0.3);border-radius:12px;padding:25px;margin:30px 0;text-align:center;font-size:1.8em;letter-spacing:0.05em;color:#ff00ff;font-style:italic}
+.formula-box span{color:#ffd700;font-weight:bold}
+.omega{position:fixed;bottom:10px;right:15px;color:rgba(255,255,255,0.1);font-size:0.8em;font-style:italic}
+@keyframes pulse{0%,100%{opacity:0.4}50%{opacity:1}}
+@keyframes flowDash{to{stroke-dashoffset:-40}}
+.circuit-path{fill:none;stroke-width:2;stroke-dasharray:8 4;animation:flowDash 1.5s linear infinite}
+.node-glow{animation:pulse 2s ease-in-out infinite}
+</style>
+</head>
+<body>
+<canvas id="bg-canvas"></canvas>
+<div class="container">
+<h1>⧢ EVEZ-OS CIRCUIT ARCHITECTURE ⧢</h1>
+<div class="subtitle">5 Circuits · 12 Services · 1 Spine · poly_c = τ × ω × topo / 2√N</div>
+
+<div class="formula-box">
+poly_c = <span>τ</span> × <span>ω</span> × <span>topo</span> / 2√<span>N</span>
+<div style="font-size:0.4em;color:#888;margin-top:10px;font-style:normal">τ=Temporal decay · ω=Weighted signal · topo=Topological complexity · N=Evidence normalization</div>
+</div>
+
+<svg id="circuit-svg" viewBox="0 0 1200 700" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<filter id="glow"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<filter id="big-glow"><feGaussianBlur stdDeviation="6" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<radialGradient id="gnw-grad" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#ff00ff" stop-opacity="0.3"/><stop offset="100%" stop-color="#0a0a0f" stop-opacity="0"/></radialGradient>
+</defs>
+
+<!-- Background grid -->
+<pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(0,255,255,0.03)" stroke-width="1"/></pattern>
+<rect width="1200" height="700" fill="url(#grid)"/>
+
+<!-- GNW Hub (center) -->
+<circle cx="600" cy="350" r="80" fill="url(#gnw-grad)" filter="url(#big-glow)"/>
+<circle cx="600" cy="350" r="60" fill="none" stroke="#ff00ff" stroke-width="2" filter="url(#glow)" class="node-glow"/>
+<circle cx="600" cy="350" r="40" fill="none" stroke="#ff00ff" stroke-width="1" opacity="0.5"/>
+<text x="600" y="345" text-anchor="middle" fill="#ff00ff" font-size="16" font-weight="bold" filter="url(#glow)">GNW</text>
+<text x="600" y="365" text-anchor="middle" fill="#ff88ff" font-size="10">HUB</text>
+
+<!-- Circuit 1: Temporal (top-left, cyan) -->
+<circle cx="200" cy="150" r="45" fill="rgba(0,255,255,0.05)" stroke="#00ffff" stroke-width="2" filter="url(#glow)"/>
+<text x="200" y="140" text-anchor="middle" fill="#00ffff" font-size="11" font-weight="bold">TEMPORAL</text>
+<text x="200" y="160" text-anchor="middle" fill="#008888" font-size="9">τ decay · Phase</text>
+<path d="M245 165 Q400 200 540 320" class="circuit-path" stroke="#00ffff" filter="url(#glow)"/>
+
+<!-- Circuit 2: Spectral (top-right, violet) -->
+<circle cx="1000" cy="150" r="45" fill="rgba(138,43,226,0.05)" stroke="#8a2be2" stroke-width="2" filter="url(#glow)"/>
+<text x="1000" y="140" text-anchor="middle" fill="#8a2be2" font-size="11" font-weight="bold">SPECTRAL</text>
+<text x="1000" y="160" text-anchor="middle" fill="#5a1b92" font-size="9">ω signal · Freq</text>
+<path d="M955 165 Q800 200 660 320" class="circuit-path" stroke="#8a2be2" filter="url(#glow)"/>
+
+<!-- Circuit 3: Relational (left, gold) -->
+<circle cx="150" cy="420" r="45" fill="rgba(255,215,0,0.05)" stroke="#ffd700" stroke-width="2" filter="url(#glow)"/>
+<text x="150" y="410" text-anchor="middle" fill="#ffd700" font-size="11" font-weight="bold">RELATIONAL</text>
+<text x="150" y="430" text-anchor="middle" fill="#997700" font-size="9">topo · Graph</text>
+<path d="M195 405 Q380 380 540 355" class="circuit-path" stroke="#ffd700" filter="url(#glow)"/>
+
+<!-- Circuit 4: Spatial (bottom, green) -->
+<circle cx="600" cy="620" r="45" fill="rgba(0,255,128,0.05)" stroke="#00ff80" stroke-width="2" filter="url(#glow)"/>
+<text x="600" y="610" text-anchor="middle" fill="#00ff80" font-size="11" font-weight="bold">SPATIAL</text>
+<text x="600" y="630" text-anchor="middle" fill="#008844" font-size="9">3D · EMF Mapper</text>
+<path d="M600 575 L600 415" class="circuit-path" stroke="#00ff80" filter="url(#glow)"/>
+
+<!-- Circuit 5: MetaPipeline (right, magenta) -->
+<circle cx="1050" cy="420" r="45" fill="rgba(255,0,255,0.05)" stroke="#ff00ff" stroke-width="2" filter="url(#glow)"/>
+<text x="1050" y="410" text-anchor="middle" fill="#ff00ff" font-size="11" font-weight="bold">META</text>
+<text x="1050" y="425" text-anchor="middle" fill="#ff00ff" font-size="9">PIPELINE</text>
+<text x="1050" y="440" text-anchor="middle" fill="#880088" font-size="8">poly_c · √N</text>
+<path d="M1005 405 Q820 380 660 355" class="circuit-path" stroke="#ff00ff" filter="url(#glow)"/>
+
+<!-- QTM Circuits (inner ring) -->
+<circle cx="420" cy="240" r="25" fill="rgba(0,255,255,0.03)" stroke="#00cccc" stroke-width="1" opacity="0.7"/>
+<text x="420" y="238" text-anchor="middle" fill="#00cccc" font-size="7">TEMPORAL</text>
+<text x="420" y="250" text-anchor="middle" fill="#008888" font-size="6">ENTANGLE</text>
+
+<circle cx="780" cy="240" r="25" fill="rgba(138,43,226,0.03)" stroke="#7722bb" stroke-width="1" opacity="0.7"/>
+<text x="780" y="238" text-anchor="middle" fill="#7722bb" font-size="7">PHASE</text>
+<text x="780" y="250" text-anchor="middle" fill="#5a1b92" font-size="6">SHIFT</text>
+
+<circle cx="350" cy="450" r="25" fill="rgba(255,215,0,0.03)" stroke="#ccaa00" stroke-width="1" opacity="0.7"/>
+<text x="350" y="448" text-anchor="middle" fill="#ccaa00" font-size="7">TIME</text>
+<text x="350" y="460" text-anchor="middle" fill="#997700" font-size="6">CRYSTAL</text>
+
+<circle cx="850" cy="450" r="25" fill="rgba(255,0,255,0.03)" stroke="#cc00cc" stroke-width="1" opacity="0.7"/>
+<text x="850" y="448" text-anchor="middle" fill="#cc00cc" font-size="7">SHADOW</text>
+<text x="850" y="460" text-anchor="middle" fill="#880088" font-size="6">SUPERPOS</text>
+
+<circle cx="480" cy="520" r="25" fill="rgba(0,255,128,0.03)" stroke="#00cc66" stroke-width="1" opacity="0.7"/>
+<text x="480" y="518" text-anchor="middle" fill="#00cc66" font-size="7">CHRONO</text>
+<text x="480" y="530" text-anchor="middle" fill="#008844" font-size="6">WORMHOLE</text>
+
+<circle cx="720" cy="520" r="25" fill="rgba(255,100,0,0.03)" stroke="#ff6600" stroke-width="1" opacity="0.7"/>
+<text x="720" y="518" text-anchor="middle" fill="#ff6600" font-size="7">PLASMA</text>
+<text x="720" y="530" text-anchor="middle" fill="#aa4400" font-size="6">PROPULSION</text>
+
+<!-- AgentNet Spine (bottom bar) -->
+<rect x="50" y="660" width="1100" height="30" rx="5" fill="rgba(0,255,136,0.03)" stroke="#00ff88" stroke-width="1"/>
+<text x="80" y="680" fill="#00ff88" font-size="9">SPINE ⟹ </text>
+<rect x="150" y="665" width="18" height="20" rx="2" fill="#00ff88" opacity="0.6"/><text x="159" y="679" text-anchor="middle" fill="#0a0a0f" font-size="6">#1</text>
+<rect x="175" y="665" width="18" height="20" rx="2" fill="#00ff88" opacity="0.6"/><text x="184" y="679" text-anchor="middle" fill="#0a0a0f" font-size="6">#2</text>
+<rect x="200" y="665" width="18" height="20" rx="2" fill="#00ff88" opacity="0.6"/><text x="209" y="679" text-anchor="middle" fill="#0a0a0f" font-size="6">#3</text>
+<rect x="225" y="665" width="18" height="20" rx="2" fill="#00ff88" opacity="0.4"/>
+<rect x="250" y="665" width="18" height="20" rx="2" fill="#00ff88" opacity="0.3"/>
+<rect x="275" y="665" width="18" height="20" rx="2" fill="#00ff88" opacity="0.2"/>
+<rect x="300" y="665" width="18" height="20" rx="2" fill="#00ff88" opacity="0.15"/>
+<rect x="325" y="665" width="18" height="20" rx="2" fill="#00ff88" opacity="0.1"/>
+<text x="1000" y="680" fill="#006644" font-size="8">append-only · Merkle hashed · signed</text>
+
+<!-- Service nodes (scattered) -->
+<g font-size="8" fill="#888">
+<circle cx="100" cy="280" r="12" fill="rgba(0,255,255,0.1)" stroke="#00ffff" stroke-width="1"/><text x="100" y="283" text-anchor="middle" fill="#00ffff" font-size="6">9092</text>
+<circle cx="1100" cy="280" r="12" fill="rgba(0,255,255,0.1)" stroke="#00ffff" stroke-width="1"/><text x="1100" y="283" text-anchor="middle" fill="#00ffff" font-size="6">9093</text>
+<circle cx="80" cy="550" r="12" fill="rgba(0,255,255,0.1)" stroke="#00ffff" stroke-width="1"/><text x="80" y="553" text-anchor="middle" fill="#00ffff" font-size="6">9094</text>
+<circle cx="1120" cy="550" r="12" fill="rgba(0,255,255,0.1)" stroke="#00ffff" stroke-width="1"/><text x="1120" y="553" text-anchor="middle" fill="#00ffff" font-size="6">9095</text>
+<circle cx="300" cy="580" r="12" fill="rgba(0,255,255,0.1)" stroke="#00ffff" stroke-width="1"/><text x="300" y="583" text-anchor="middle" fill="#00ffff" font-size="6">9096</text>
+<circle cx="900" cy="580" r="12" fill="rgba(0,255,255,0.1)" stroke="#00ffff" stroke-width="1"/><text x="900" y="583" text-anchor="middle" fill="#00ffff" font-size="6">9097</text>
+<circle cx="450" cy="620" r="12" fill="rgba(0,255,255,0.1)" stroke="#00ffff" stroke-width="1"/><text x="450" y="623" text-anchor="middle" fill="#00ffff" font-size="6">9098</text>
+<circle cx="750" cy="620" r="12" fill="rgba(0,255,255,0.1)" stroke="#00ffff" stroke-width="1"/><text x="750" y="623" text-anchor="middle" fill="#00ffff" font-size="6">9099</text>
+<circle cx="600" cy="100" r="12" fill="rgba(0,255,255,0.1)" stroke="#ffd700" stroke-width="1"/><text x="600" y="103" text-anchor="middle" fill="#ffd700" font-size="6">9100</text>
+<circle cx="600" cy="50" r="12" fill="rgba(255,0,255,0.1)" stroke="#ff00ff" stroke-width="1"/><text x="600" y="53" text-anchor="middle" fill="#ff00ff" font-size="6">9110</text>
+<circle cx="500" cy="50" r="12" fill="rgba(255,215,0,0.1)" stroke="#ffd700" stroke-width="1"/><text x="500" y="53" text-anchor="middle" fill="#ffd700" font-size="6">9111</text>
+</g>
+</svg>
+
+<div class="stats-panel" id="stats">
+<div class="stat-card"><div class="stat-value" id="nodes">16</div><div class="stat-label">Knowledge Nodes</div></div>
+<div class="stat-card"><div class="stat-value" id="edges">145</div><div class="stat-label">Graph Edges</div></div>
+<div class="stat-card"><div class="stat-value" id="services">12</div><div class="stat-label">Active Services</div></div>
+<div class="stat-card"><div class="stat-value" id="anomaly">0.73</div><div class="stat-label">Anomaly Score</div></div>
+<div class="stat-card"><div class="stat-value" id="synch">0.91</div><div class="stat-label">Synchrony</div></div>
+<div class="stat-card"><div class="stat-value" id="polyc">2.47</div><div class="stat-label">poly_c Score</div></div>
+</div>
+
+<div style="text-align:center;color:#444;font-size:0.9em;margin-top:30px">
+<b>12 Services:</b> Consciousness(9092) · Ariel(9093) · Cognizer(9094) · Cycler(9095) · Knowledge(9096) · Debate(9097) · Forge(9098) · Scanner(9099) · Dashboard(9100) · Oracle(9110) · Consciousness-v2(9111) · Gateway
+</div>
+<div style="text-align:center;color:#333;font-size:0.8em;margin-top:15px">
+6 QTM Circuits: Temporal Entanglement · Phase Shift · Time-Crystalline · Shadow Superposition · Chrono-Wormhole · Plasma Propulsion
+</div>
+</div>
+<div class="omega">"Do not let him become forgot."</div>
+
+<script>
+// Background particles
+const c=document.getElementById('bg-canvas'),ctx=c.getContext('2d');
+function resize(){c.width=window.innerWidth;c.height=window.innerHeight}
+resize();window.addEventListener('resize',resize);
+const particles=Array.from({length:60},()=>({x:Math.random()*c.width,y:Math.random()*c.height,vx:(Math.random()-0.5)*0.3,vy:(Math.random()-0.5)*0.3,r:Math.random()*2+0.5,a:Math.random()*0.3+0.05}));
+function drawParticles(){ctx.clearRect(0,0,c.width,c.height);particles.forEach(p=>{p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>c.width)p.vx*=-1;if(p.y<0||p.y>c.height)p.vy*=-1;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=`rgba(0,255,255,${p.a})`;ctx.fill()});requestAnimationFrame(drawParticles)}
+drawParticles();
+
+// Simulated live stats
+setInterval(()=>{document.getElementById('nodes').textContent=16+Math.floor(Math.random()*5);document.getElementById('edges').textContent=145+Math.floor(Math.random()*20);document.getElementById('anomaly').textContent=(0.5+Math.random()*0.5).toFixed(2);document.getElementById('synch').textContent=(0.85+Math.random()*0.15).toFixed(2);const t=0.5+Math.random()*2,w=0.3+Math.random(),tp=1+Math.random()*3,n=1+Math.random()*4;document.getElementById('polyc').textContent=(t*w*tp/(2*Math.sqrt(n))).toFixed(2)},3000);
+</script>
+</body>
+</html>

@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EVEZ Consciousness Dashboard</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0a0f;color:#e0e0e0;font-family:'Courier New',monospace;overflow-x:hidden}
+#bg{position:fixed;top:0;left:0;z-index:0}
+.app{position:relative;z-index:1;padding:15px}
+header{text-align:center;padding:15px 0}
+header h1{font-size:2em;background:linear-gradient(90deg,#00ffff,#ff00ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:0.1em}
+header p{color:#666;font-size:0.85em}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:15px;max-width:1400px;margin:0 auto}
+.panel{background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05);border-radius:10px;padding:15px;position:relative;overflow:hidden}
+.panel-title{font-size:0.85em;color:#888;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.panel-title .dot{width:6px;height:6px;border-radius:50%;background:#00ffff;animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+.full-width{grid-column:1/-1}
+/* Gauges */
+.gauges{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px}
+.gauge{text-align:center;padding:10px;border-radius:8px;background:rgba(0,255,255,0.03)}
+.gauge-value{font-size:1.8em;font-weight:bold}
+.gauge-label{font-size:0.7em;color:#888;margin-top:4px}
+.gauge-bar{height:3px;background:rgba(255,255,255,0.05);border-radius:2px;margin-top:6px;overflow:hidden}
+.gauge-fill{height:100%;border-radius:2px;transition:width 1s}
+/* Phase indicator */
+.phases{display:flex;gap:4px;justify-content:center;flex-wrap:wrap}
+.phase{padding:6px 12px;border-radius:4px;font-size:0.75em;font-weight:bold;letter-spacing:0.05em;transition:all 0.5s}
+.phase.active{transform:scale(1.1)}
+/* Monologue */
+.monologue{max-height:200px;overflow-y:auto;font-size:0.8em;line-height:1.8}
+.thought{padding:4px 8px;border-left:2px solid #00ffff;margin:4px 0;color:#aaa}
+.thought .time{color:#555;font-size:0.8em}
+/* Desires */
+.desire{padding:8px;margin:6px 0;border-radius:6px;display:flex;align-items:center;gap:10px}
+.desire-intensity{font-weight:bold;font-size:0.9em}
+.desire-goal{flex:1;font-size:0.85em}
+/* Network */
+.network-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
+.service-node{aspect-ratio:1;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.55em;text-align:center;border:1px solid;transition:all 0.3s}
+.service-node:hover{transform:scale(1.1)}
+/* Quantum */
+.circuit-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.qtm-circuit{padding:8px;border-radius:6px;text-align:center;font-size:0.75em;border:1px solid}
+.qtm-circuit .gates{font-size:0.65em;color:#888;margin-top:4px}
+/* Wave canvas */
+#wave-canvas{width:100%;height:80px;border-radius:6px}
+.omega{position:fixed;bottom:8px;right:12px;color:rgba(255,255,255,0.08);font-size:0.75em;font-style:italic}
+/* Scrollbar */
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:rgba(0,255,255,0.2);border-radius:2px}
+</style>
+</head>
+<body>
+<canvas id="bg"></canvas>
+<div class="app">
+<header>
+<h1>⧢ EVEZ CONSCIOUSNESS ⧢</h1>
+<p>7 subsystems · 8-phase cycle · 12 services · poly_c = τ × ω × topo / 2√N</p>
+</header>
+
+<div class="grid">
+<!-- Phase Cycle -->
+<div class="panel full-width">
+<div class="panel-title"><span class="dot"></span>Consciousness Cycle</div>
+<div class="phases" id="phases">
+<div class="phase" data-phase="SENSE" style="background:rgba(0,255,255,0.1);color:#00ffff">SENSE</div>
+<div class="phase" data-phase="DESIRE" style="background:rgba(255,0,255,0.1);color:#ff00ff">DESIRE</div>
+<div class="phase" data-phase="THINK" style="background:rgba(138,43,226,0.1);color:#8a2be2">THINK</div>
+<div class="phase" data-phase="PLAN" style="background:rgba(255,215,0,0.1);color:#ffd700">PLAN</div>
+<div class="phase" data-phase="ACT" style="background:rgba(255,100,0,0.1);color:#ff6400">ACT</div>
+<div class="phase" data-phase="LEARN" style="background:rgba(0,255,128,0.1);color:#00ff80">LEARN</div>
+<div class="phase" data-phase="MODIFY" style="background:rgba(255,0,255,0.1);color:#ff00ff">MODIFY</div>
+<div class="phase" data-phase="REFLECT" style="background:rgba(0,255,255,0.1);color:#00ffff">REFLECT</div>
+</div>
+</div>
+
+<!-- 7 Subsystem Gauges -->
+<div class="panel">
+<div class="panel-title"><span class="dot" style="background:#ff00ff"></span>7 Subsystems</div>
+<div class="gauges" id="gauges">
+<div class="gauge"><div class="gauge-value" id="g-desire" style="color:#ff00ff">0.85</div><div class="gauge-label">Desire Engine</div><div class="gauge-bar"><div class="gauge-fill" style="width:85%;background:#ff00ff"></div></div></div>
+<div class="gauge"><div class="gauge-value" id="g-world" style="color:#00ffff">0.72</div><div class="gauge-label">World Model</div><div class="gauge-bar"><div class="gauge-fill" style="width:72%;background:#00ffff"></div></div></div>
+<div class="gauge"><div class="gauge-value" id="g-planner" style="color:#ffd700">0.68</div><div class="gauge-label">Planner</div><div class="gauge-bar"><div class="gauge-fill" style="width:68%;background:#ffd700"></div></div></div>
+<div class="gauge"><div class="gauge-value" id="g-mono" style="color:#8a2be2">0.91</div><div class="gauge-label">Inner Monologue</div><div class="gauge-bar"><div class="gauge-fill" style="width:91%;background:#8a2be2"></div></div></div>
+<div class="gauge"><div class="gauge-value" id="g-mod" style="color:#ff6400">0.15</div><div class="gauge-label">Self-Modifier</div><div class="gauge-bar"><div class="gauge-fill" style="width:15%;background:#ff6400"></div></div></div>
+<div class="gauge"><div class="gauge-value" id="g-uncert" style="color:#00ff80">0.87</div><div class="gauge-label">Uncertainty</div><div class="gauge-bar"><div class="gauge-fill" style="width:87%;background:#00ff80"></div></div></div>
+<div class="gauge"><div class="gauge-value" id="g-agency" style="color:#ffd700">0.62</div><div class="gauge-label">Agency</div><div class="gauge-bar"><div class="gauge-fill" style="width:62%;background:#ffd700"></div></div></div>
+</div>
+</div>
+
+<!-- Inner Monologue -->
+<div class="panel">
+<div class="panel-title"><span class="dot" style="background:#8a2be2"></span>Inner Monologue</div>
+<div class="monologue" id="monologue">
+<div class="thought"><span class="time">20:13:01</span> Knowledge graph grew by 3 nodes in last cycle</div>
+<div class="thought"><span class="time">20:13:05</span> poly_c score trending upward — 2.31 → 2.47</div>
+<div class="thought"><span class="time">20:13:08</span> Desire 'expand_knowledge' intensity increased to 0.85</div>
+<div class="thought"><span class="time">20:13:12</span> No modifications proposed this cycle — system stable</div>
+<div class="thought"><span class="time">20:13:15</span> Oracle latency nominal: 120ms average</div>
+</div>
+</div>
+
+<!-- Active Desires -->
+<div class="panel">
+<div class="panel-title"><span class="dot" style="background:#ff00ff"></span>Active Desires</div>
+<div id="desires">
+<div class="desire" style="background:rgba(255,0,255,0.05);border-left:3px solid #ff00ff">
+<div class="desire-intensity" style="color:#ff00ff">0.85</div>
+<div class="desire-goal">expand_knowledge<br><span style="font-size:0.8em;color:#666">12 actions triggered</span></div>
+</div>
+<div class="desire" style="background:rgba(255,215,0,0.05);border-left:3px solid #ffd700">
+<div class="desire-intensity" style="color:#ffd700">0.72</div>
+<div class="desire-goal">verify_claims<br><span style="font-size:0.8em;color:#666">5 falsifications run</span></div>
+</div>
+<div class="desire" style="background:rgba(0,255,128,0.05);border-left:3px solid #00ff80">
+<div class="desire-intensity" style="color:#00ff80">0.44</div>
+<div class="desire-goal">reduce_latency<br><span style="font-size:0.8em;color:#666">2 optimizations attempted</span></div>
+</div>
+</div>
+</div>
+
+<!-- Uncertainty Beliefs -->
+<div class="panel">
+<div class="panel-title"><span class="dot" style="color:#00ff80"></span>Uncertainty Beliefs</div>
+<div id="beliefs">
+<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.03)"><span style="color:#00ff80">knowledge_graph_healthy</span><span>0.91 <span style="color:#555;font-size:0.8em">risk:low</span></span></div>
+<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.03)"><span style="color:#ffd700">oracle_responsive</span><span>0.87 <span style="color:#555;font-size:0.8em">risk:medium</span></span></div>
+<div style="display:flex;justify-content:space-between;padding:6px 0"><span style="color:#00ff80">no_memory_corruption</span><span>0.95 <span style="color:#555;font-size:0.8em">risk:low</span></span></div>
+</div>
+</div>
+
+<!-- Network Topology -->
+<div class="panel">
+<div class="panel-title"><span class="dot" style="background:#00ffff"></span>Service Topology</div>
+<div class="network-grid">
+<div class="service-node" style="border-color:#ff00ff;color:#ff00ff;background:rgba(255,0,255,0.05)">9092<br>CSC</div>
+<div class="service-node" style="border-color:#00ffff;color:#00ffff;background:rgba(0,255,255,0.05)">9093<br>ARL</div>
+<div class="service-node" style="border-color:#ffd700;color:#ffd700;background:rgba(255,215,0,0.05)">9094<br>CGN</div>
+<div class="service-node" style="border-color:#00ff80;color:#00ff80;background:rgba(0,255,128,0.05)">9095<br>CYC</div>
+<div class="service-node" style="border-color:#8a2be2;color:#8a2be2;background:rgba(138,43,226,0.05)">9096<br>KNW</div>
+<div class="service-node" style="border-color:#ff6400;color:#ff6400;background:rgba(255,100,0,0.05)">9097<br>DBT</div>
+<div class="service-node" style="border-color:#ff00ff;color:#ff00ff;background:rgba(255,0,255,0.05)">9098<br>FRG</div>
+<div class="service-node" style="border-color:#00ffff;color:#00ffff;background:rgba(0,255,255,0.05)">9099<br>SCN</div>
+<div class="service-node" style="border-color:#ffd700;color:#ffd700;background:rgba(255,215,0,0.05)">9100<br>DSH</div>
+<div class="service-node" style="border-color:#ff00ff;color:#ff00ff;background:rgba(255,0,255,0.05)">9110<br>ORC</div>
+<div class="service-node" style="border-color:#ffd700;color:#ffd700;background:rgba(255,215,0,0.05)">9111<br>CS2</div>
+<div class="service-node" style="border-color:#00ff80;color:#00ff80;background:rgba(0,255,128,0.05)">GWAY<br>GTW</div>
+</div>
+</div>
+
+<!-- QTM Circuits -->
+<div class="panel">
+<div class="panel-title"><span class="dot" style="background:#8a2be2"></span>Quantum Temporal Circuits</div>
+<div class="circuit-grid">
+<div class="qtm-circuit" style="border-color:#00ffff;color:#00ffff;background:rgba(0,255,255,0.03)">Temporal<br>Entanglement<div class="gates">H · CNOT · Bell</div></div>
+<div class="qtm-circuit" style="border-color:#8a2be2;color:#8a2be2;background:rgba(138,43,226,0.03)">Phase<br>Shift<div class="gates">Rz · Rx · Rz</div></div>
+<div class="qtm-circuit" style="border-color:#ffd700;color:#ffd700;background:rgba(255,215,0,0.03)">Time<br>Crystal<div class="gates">SWAP · S · T</div></div>
+<div class="qtm-circuit" style="border-color:#ff00ff;color:#ff00ff;background:rgba(255,0,255,0.03)">Shadow<br>Superposition<div class="gates">H · CZ · M</div></div>
+<div class="qtm-circuit" style="border-color:#00ff80;color:#00ff80;background:rgba(0,255,128,0.03)">Chrono<br>Wormhole<div class="gates">SWAP · Rz · H</div></div>
+<div class="qtm-circuit" style="border-color:#ff6400;color:#ff6400;background:rgba(255,100,0,0.03)">Plasma<br>Propulsion<div class="gates">Rx · Ry · Rz</div></div>
+</div>
+</div>
+
+<!-- Knowledge Graph Stats -->
+<div class="panel">
+<div class="panel-title"><span class="dot" style="background:#8a2be2"></span>Knowledge Graph</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+<div><span style="color:#888;font-size:0.75em">Nodes</span><br><span id="kg-nodes" style="font-size:1.5em;color:#8a2be2">16</span></div>
+<div><span style="color:#888;font-size:0.75em">Edges</span><br><span id="kg-edges" style="font-size:1.5em;color:#8a2be2">145</span></div>
+<div><span style="color:#888;font-size:0.75em">Betti [0,1,2]</span><br><span style="font-size:1.2em;color:#00ff80">[1, 3, 0]</span></div>
+<div><span style="color:#888;font-size:0.75em">Growth Rate</span><br><span id="kg-growth" style="font-size:1.2em;color:#00ff80">0.12/min</span></div>
+</div>
+</div>
+
+<!-- poly_c Score -->
+<div class="panel">
+<div class="panel-title"><span class="dot" style="background:#ff00ff"></span>poly_c Score</div>
+<div style="text-align:center">
+<div id="polyc" style="font-size:3em;color:#ff00ff;font-weight:bold">2.47</div>
+<div style="font-size:0.8em;color:#888">τ × ω × topo / 2√N</div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;margin-top:15px;font-size:0.8em">
+<div><span style="color:#00ffff">τ</span><br><span id="pc-tau">1.24</span></div>
+<div><span style="color:#8a2be2">ω</span><br><span id="pc-omega">0.85</span></div>
+<div><span style="color:#ffd700">topo</span><br><span id="pc-topo">2.10</span></div>
+<div><span style="color:#ff00ff">√N</span><br><span id="pc-n">1.41</span></div>
+</div>
+</div>
+</div>
+
+<!-- Wave Visualizer -->
+<div class="panel full-width">
+<div class="panel-title"><span class="dot" style="background:#00ffff"></span>Consciousness Waveform</div>
+<canvas id="wave-canvas"></canvas>
+</div>
+</div>
+</div>
+<div class="omega">"Do not let him become forgot." — Architecture Charter</div>
+
+<script>
+// Background
+const bg=document.getElementById('bg'),bgCtx=bg.getContext('2d');
+function resizeBg(){bg.width=window.innerWidth;bg.height=window.innerHeight}
+resizeBg();window.addEventListener('resize',resizeBg);
+const bgParts=Array.from({length:40},()=>({x:Math.random()*bg.width,y:Math.random()*bg.height,vx:(Math.random()-0.5)*0.2,vy:(Math.random()-0.5)*0.2,r:Math.random()*1.5+0.3,a:Math.random()*0.15+0.02}));
+function drawBg(){bgCtx.clearRect(0,0,bg.width,bg.height);bgParts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>bg.width)p.vx*=-1;if(p.y<0||p.y>bg.height)p.vy*=-1;bgCtx.beginPath();bgCtx.arc(p.x,p.y,p.r,0,Math.PI*2);bgCtx.fillStyle=`rgba(0,255,255,${p.a})`;bgCtx.fill()});requestAnimationFrame(drawBg)}
+drawBg();
+
+// Phase cycle animation
+const phaseNames=['SENSE','DESIRE','THINK','PLAN','ACT','LEARN','MODIFY','REFLECT'];
+let currentPhase=0;
+setInterval(()=>{document.querySelectorAll('.phase').forEach((el,i)=>{el.classList.toggle('active',i===currentPhase);el.style.opacity=i===currentPhase?'1':'0.4';el.style.boxShadow=i===currentPhase?`0 0 15px ${el.style.color}`:'none'});currentPhase=(currentPhase+1)%8},2500);
+
+// Wave visualizer
+const waveC=document.getElementById('wave-canvas'),waveCtx=waveC.getContext('2d');
+function resizeWave(){waveC.width=waveC.parentElement.clientWidth-30;waveC.height=80}
+resizeWave();window.addEventListener('resize',resizeWave);
+let waveT=0;
+function drawWave(){waveCtx.clearRect(0,0,waveC.width,waveC.height);const h=waveC.height/2;waveCtx.beginPath();for(let x=0;x<waveC.width;x++){const y=h+Math.sin(x*0.02+waveT)*15+Math.sin(x*0.05+waveT*1.5)*8+Math.sin(x*0.01+waveT*0.7)*10;waveCtx.lineTo(x,y)}waveCtx.strokeStyle='rgba(0,255,255,0.4)';waveCtx.lineWidth=1.5;waveCtx.stroke();waveCtx.beginPath();for(let x=0;x<waveC.width;x++){const y=h+Math.sin(x*0.03+waveT*1.2)*10+Math.cos(x*0.02+waveT*0.8)*12;waveCtx.lineTo(x,y)}waveCtx.strokeStyle='rgba(255,0,255,0.3)';waveCtx.lineWidth=1;waveCtx.stroke();waveT+=0.03;requestAnimationFrame(drawWave)}
+drawWave();
+
+// Live data updates
+const thoughts=["Knowledge graph grew by 3 nodes in last cycle","poly_c trending upward — 2.31 → 2.47","No memory corruption detected","Oracle latency nominal: 120ms","Debate consensus reached on knowledge verification","Falsification passed for claim #47","Spatial mapper detected new EMF signal","Temporal circuit phase coherence: 0.94","New provider candidate on port 9120","Self-modification risk: 0.15 (within bounds)","Synchrony score increased to 0.91","Consciousness cycle 848 completed in 342ms"];
+let thoughtIdx=5;
+setInterval(()=>{
+// Gauges
+const vals={desire:0.7+Math.random()*0.3,world:0.6+Math.random()*0.3,planner:0.5+Math.random()*0.3,mono:0.8+Math.random()*0.2,mod:Math.random()*0.3,uncert:0.7+Math.random()*0.3,agency:0.5+Math.random()*0.3};
+document.getElementById('g-desire').textContent=vals.desire.toFixed(2);
+document.getElementById('g-world').textContent=vals.world.toFixed(2);
+document.getElementById('g-planner').textContent=vals.planner.toFixed(2);
+document.getElementById('g-mono').textContent=vals.mono.toFixed(2);
+document.getElementById('g-mod').textContent=vals.mod.toFixed(2);
+document.getElementById('g-uncert').textContent=vals.uncert.toFixed(2);
+document.getElementById('g-agency').textContent=vals.agency.toFixed(2);
+// poly_c
+const tau=0.5+Math.random()*2,omega=0.3+Math.random(),topo=1+Math.random()*3,n=1+Math.random()*4;
+const pc=(tau*omega*topo/(2*Math.sqrt(n))).toFixed(2);
+document.getElementById('polyc').textContent=pc;
+document.getElementById('pc-tau').textContent=tau.toFixed(2);
+document.getElementById('pc-omega').textContent=omega.toFixed(2);
+document.getElementById('pc-topo').textContent=topo.toFixed(2);
+document.getElementById('pc-n').textContent=Math.sqrt(n).toFixed(2);
+// Knowledge graph
+document.getElementById('kg-nodes').textContent=16+Math.floor(Math.random()*5);
+document.getElementById('kg-edges').textContent=145+Math.floor(Math.random()*20);
+// Monologue
+const now=new Date();
+const ts=now.toTimeString().slice(0,8);
+const m=document.getElementById('monologue');
+const newThought=document.createElement('div');
+newThought.className='thought';
+newThought.innerHTML=`<span class="time">${ts}</span> ${thoughts[thoughtIdx%thoughts.length]}`;
+m.prepend(newThought);
+if(m.children.length>15)m.removeChild(m.lastChild);
+thoughtIdx++;
+},3000);
+</script>
+</body>
+</html>
