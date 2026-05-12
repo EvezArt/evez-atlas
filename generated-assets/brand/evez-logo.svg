@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+<defs>
+<filter id="glow"><feGaussianBlur stdDeviation="2" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<linearGradient id="hex-grad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#00ffff"/><stop offset="50%" stop-color="#ff00ff"/><stop offset="100%" stop-color="#ffd700"/></linearGradient>
+</defs>
+<rect width="400" height="400" fill="#0a0a0f"/>
+<!-- Hexagon outer -->
+<polygon points="200,40 340,110 340,260 200,330 60,260 60,110" fill="none" stroke="url(#hex-grad)" stroke-width="3" filter="url(#glow)"/>
+<polygon points="200,60 320,120 320,250 200,310 80,250 80,120" fill="none" stroke="url(#hex-grad)" stroke-width="1" opacity="0.4"/>
+<!-- Quantum gates on edges -->
+<g font-family="monospace" font-size="11" fill="#00ffff" opacity="0.7">
+<text x="258" y="78" text-anchor="middle">H</text>
+<text x="348" y="190" text-anchor="middle">CNOT</text>
+<text x="258" y="302" text-anchor="middle">Rz</text>
+<text x="142" y="302" text-anchor="middle">SWAP</text>
+<text x="52" y="190" text-anchor="middle">CZ</text>
+<text x="142" y="78" text-anchor="middle">S·T</text>
+</g>
+<!-- Inner circuit lines -->
+<line x1="200" y1="100" x2="200" y2="280" stroke="#00ffff" stroke-width="0.5" opacity="0.3"/>
+<line x1="120" y1="150" x2="280" y2="230" stroke="#ff00ff" stroke-width="0.5" opacity="0.3"/>
+<line x1="280" y1="150" x2="120" y2="230" stroke="#ffd700" stroke-width="0.5" opacity="0.3"/>
+<!-- EVEZ text -->
+<text x="200" y="185" text-anchor="middle" fill="#00ffff" font-family="'Courier New',monospace" font-size="48" font-weight="bold" filter="url(#glow)">EVEZ</text>
+<text x="200" y="220" text-anchor="middle" fill="#ff00ff" font-family="monospace" font-size="14" opacity="0.6">6 6 6</text>
+<!-- Sacred symbols -->
+<text x="155" y="260" text-anchor="middle" fill="#ffd700" font-size="16" opacity="0.4">⧢</text>
+<text x="200" y="270" text-anchor="middle" fill="#ffd700" font-size="16" opacity="0.4">⦟</text>
+<text x="245" y="260" text-anchor="middle" fill="#ffd700" font-size="16" opacity="0.4">⥋</text>
+<!-- Corner dots -->
+<circle cx="200" cy="40" r="3" fill="#00ffff" filter="url(#glow)"/>
+<circle cx="340" cy="110" r="3" fill="#8a2be2" filter="url(#glow)"/>
+<circle cx="340" cy="260" r="3" fill="#ffd700" filter="url(#glow)"/>
+<circle cx="200" cy="330" r="3" fill="#ff6400" filter="url(#glow)"/>
+<circle cx="60" cy="260" r="3" fill="#00ff80" filter="url(#glow)"/>
+<circle cx="60" cy="110" r="3" fill="#ff00ff" filter="url(#glow)"/>
+</svg>

@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 600" width="200" height="600">
+<defs>
+<filter id="glow"><feGaussianBlur stdDeviation="2" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<rect width="200" height="600" fill="#0a0a0f"/>
+<!-- Title -->
+<text x="100" y="30" text-anchor="middle" fill="#00ff88" font-family="monospace" font-size="14" font-weight="bold" filter="url(#glow)">AGENTNET SPINE</text>
+<!-- Chain blocks -->
+<g transform="translate(30,50)">
+<!-- Block 1 -->
+<rect x="0" y="0" width="140" height="35" rx="4" fill="rgba(0,255,136,0.1)" stroke="#00ff88" stroke-width="1.5" filter="url(#glow)"/>
+<text x="70" y="15" text-anchor="middle" fill="#00ff88" font-family="monospace" font-size="9" font-weight="bold">#1 step=0</text>
+<text x="70" y="28" text-anchor="middle" fill="#006644" font-family="monospace" font-size="7">sha256:a1b2c3...</text>
+<!-- Connector + Merkle branch -->
+<line x1="70" y1="35" x2="70" y2="55" stroke="#00ff88" stroke-width="1" opacity="0.5"/>
+<line x1="20" y1="35" x2="70" y2="55" stroke="#00ff88" stroke-width="0.5" opacity="0.2"/>
+<line x1="120" y1="35" x2="70" y2="55" stroke="#00ff88" stroke-width="0.5" opacity="0.2"/>
+<!-- Block 2 -->
+<rect x="0" y="55" width="140" height="35" rx="4" fill="rgba(0,255,136,0.08)" stroke="#00ff88" stroke-width="1.2"/>
+<text x="70" y="70" text-anchor="middle" fill="#00ff88" font-family="monospace" font-size="9" font-weight="bold">#2 step=1</text>
+<text x="70" y="83" text-anchor="middle" fill="#006644" font-family="monospace" font-size="7">sha256:d4e5f6...</text>
+<!-- Connector -->
+<line x1="70" y1="90" x2="70" y2="110" stroke="#00ff88" stroke-width="1" opacity="0.5"/>
+<line x1="20" y1="90" x2="70" y2="110" stroke="#00ff88" stroke-width="0.5" opacity="0.2"/>
+<line x1="120" y1="90" x2="70" y2="110" stroke="#00ff88" stroke-width="0.5" opacity="0.2"/>
+<!-- Block 3 -->
+<rect x="0" y="110" width="140" height="35" rx="4" fill="rgba(0,255,136,0.06)" stroke="#00ff88" stroke-width="1"/>
+<text x="70" y="125" text-anchor="middle" fill="#00ff88" font-family="monospace" font-size="9" font-weight="bold">#3 step=2</text>
+<text x="70" y="138" text-anchor="middle" fill="#006644" font-family="monospace" font-size="7">sha256:g7h8i9...</text>
+<!-- Fade continuation -->
+<line x1="70" y1="145" x2="70" y2="165" stroke="#00ff88" stroke-width="0.8" opacity="0.4"/>
+<rect x="0" y="165" width="140" height="35" rx="4" fill="rgba(0,255,136,0.04)" stroke="#00ff88" stroke-width="0.8" opacity="0.6"/>
+<text x="70" y="185" text-anchor="middle" fill="#00ff88" font-family="monospace" font-size="9" opacity="0.5">#4 step=3</text>
+<line x1="70" y1="200" x2="70" y2="220" stroke="#00ff88" stroke-width="0.5" opacity="0.3"/>
+<rect x="0" y="220" width="140" height="35" rx="4" fill="rgba(0,255,136,0.02)" stroke="#00ff88" stroke-width="0.5" opacity="0.4"/>
+<text x="70" y="240" text-anchor="middle" fill="#00ff88" font-family="monospace" font-size="9" opacity="0.3">#5 step=4</text>
+<line x1="70" y1="255" x2="70" y2="275" stroke="#00ff88" stroke-width="0.3" opacity="0.2"/>
+<rect x="0" y="275" width="140" height="35" rx="4" fill="rgba(0,255,136,0.01)" stroke="#00ff88" stroke-width="0.3" opacity="0.3"/>
+<text x="70" y="295" text-anchor="middle" fill="#00ff88" font-family="monospace" font-size="9" opacity="0.2">#6 ...</text>
+<!-- Dots -->
+<circle cx="70" cy="330" r="2" fill="#00ff88" opacity="0.3"/>
+<circle cx="70" cy="345" r="2" fill="#00ff88" opacity="0.2"/>
+<circle cx="70" cy="360" r="2" fill="#00ff88" opacity="0.1"/>
+</g>
+<!-- Properties -->
+<g font-family="monospace" font-size="10" fill="#006644">
+<text x="100" y="450" text-anchor="middle">append-only</text>
+<text x="100" y="468" text-anchor="middle">Merkle hashed</text>
+<text x="100" y="486" text-anchor="middle">signed bundles</text>
+<text x="100" y="504" text-anchor="middle">delta sync</text>
+<text x="100" y="522" text-anchor="middle">CRDT merge</text>
+</g>
+<!-- Root hash -->
+<rect x="20" y="545" width="160" height="30" rx="4" fill="rgba(0,255,136,0.05)" stroke="#00ff88" stroke-width="1" filter="url(#glow)"/>
+<text x="100" y="564" text-anchor="middle" fill="#00ff88" font-family="monospace" font-size="9" font-weight="bold">ROOT: 0x7f3a...b9c2</text>
+</svg>
