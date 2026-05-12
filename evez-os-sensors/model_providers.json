@@ -122,11 +122,6 @@
           "tier": "free"
         },
         {
-          "id": "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",
-          "name": "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",
-          "tier": "free"
-        },
-        {
           "id": "minimax/minimax-m2.5:free",
           "name": "minimax/minimax-m2.5:free",
           "tier": "free"
@@ -155,11 +150,6 @@
         {
           "id": "llama3.1-8b",
           "name": "llama3.1-8b",
-          "tier": "free"
-        },
-        {
-          "id": "zai-glm-4.7",
-          "name": "zai-glm-4.7",
           "tier": "free"
         }
       ]
@@ -223,11 +213,6 @@
           "tier": "free"
         },
         {
-          "id": "DeepSeek-V3.2",
-          "name": "DeepSeek-V3.2",
-          "tier": "free"
-        },
-        {
           "id": "Llama-4-Maverick-17B-128E-Instruct",
           "name": "Llama-4-Maverick-17B-128E-Instruct",
           "tier": "free"
@@ -240,11 +225,6 @@
         {
           "id": "MiniMax-M2.5",
           "name": "MiniMax-M2.5",
-          "tier": "free"
-        },
-        {
-          "id": "MiniMax-M2.7",
-          "name": "MiniMax-M2.7",
           "tier": "free"
         },
         {
