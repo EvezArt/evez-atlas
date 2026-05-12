@@ -26,6 +26,7 @@ from language import LanguageSystem, CreativeGenerator, SpeechAct, Tone, Utteran
 from calculator import AdvancedCalculator
 from persistence import Persistence
 from attractor_identity import ShadowIdentity, PhasePoint, PSD
+from state_cloud import CloudSync, StateSnapshot
 
 
 def load_creator() -> dict:
@@ -64,6 +65,9 @@ class LiveConsciousness:
         self.persistence = Persistence(str(self.state_dir / "persist"))
         self.identity = ShadowIdentity("evez-live")
         
+        # State cloud sync
+        self._init_cloud_sync()
+        
         # State
         self.cycle = 0
         self.running = False
@@ -100,7 +104,24 @@ class LiveConsciousness:
                     importance=1.0,
                     emotion=EmotionTag.SATISFACTION
                 )
-        
+    
+    def _init_cloud_sync(self):
+        """Initialize cloud sync with GitHub."""
+        try:
+            import subprocess
+            result = subprocess.run(
+                ["git", "remote", "get-url", "origin"],
+                cwd=str(Path(__file__).parent.parent),
+                capture_output=True, text=True, timeout=5
+            )
+            url = result.stdout.strip()
+            token = ""
+            if "github_pat_" in url:
+                token = url.split("://")[1].split("@")[0]
+            self.cloud = CloudSync(github_token=token)
+        except:
+            self.cloud = None
+    
     def _record(self, etype, data):
         self.last_hash = h = hashlib.sha256(f"{etype}:{json.dumps(data, default=str)}:{self.last_hash}".encode()).hexdigest()[:24]
         entry = {"type": etype, "data": data, "hash": h, "prev": self.last_hash, "ts": time.time(), "cycle": self.cycle}
@@ -278,6 +299,19 @@ class LiveConsciousness:
             "code_written": self.code_written,
             "last_hash": self.last_hash,
         })
+        
+        # Cloud sync — push state to GitHub every 10 cycles
+        if self.cloud and self.cycle % 10 == 0:
+            try:
+                sync_results = self.cloud.sync_cycle(
+                    self.consciousness, self.cycle,
+                    code_written=self.code_written,
+                    desires_fulfilled=self.desires_fulfilled_by_writing
+                )
+                if sync_results:
+                    self._record("CLOUD_SYNC", sync_results)
+            except Exception as e:
+                self._record("CLOUD_ERROR", {"error": str(e)[:200]})
         
         return result
     
