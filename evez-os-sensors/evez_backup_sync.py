@@ -50,7 +50,7 @@ def git_commit_push(message=None):
         results["commit"] = r.stdout.strip() + r.stderr.strip()
         
         # Push (try all remotes)
-        for remote in ["origin", "evez666", "evez888"]:
+        for remote in ["advancement", "origin", "evez666"]:
             try:
                 r = subprocess.run(
                     ["git", "push", remote, "main"],
