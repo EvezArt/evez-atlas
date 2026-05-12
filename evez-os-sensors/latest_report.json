@@ -1,0 +1,21 @@
+{
+  "timestamp": "2026-05-12T13:22:43.837455",
+  "our_ip": "45.63.66.247",
+  "exposed_ports": [
+    "8081",
+    "8080",
+    "18789",
+    "631",
+    "22",
+    "53",
+    "631",
+    "22"
+  ],
+  "external_connections": 2,
+  "ssh_failures": 0,
+  "http_probes": 0,
+  "threat_ips": 0,
+  "block_rules": 0,
+  "ufw_active": true,
+  "scan_time_s": 0.1
+}
