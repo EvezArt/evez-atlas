@@ -1,0 +1,38 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "AOI_Fort_Huachuca_Sierra_Vista"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -110.43,
+              31.61
+            ],
+            [
+              -110.43,
+              31.45
+            ],
+            [
+              -110.24,
+              31.45
+            ],
+            [
+              -110.24,
+              31.61
+            ],
+            [
+              -110.43,
+              31.61
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+FOIA Request — Department of the Interior (Bureau of Reclamation) — 2025-08-02
+
+This is a request under the Freedom of Information Act. Please produce:
+1) All contracts, modifications, Statements of Work, change orders, and performance reports;
+2) Technical/security annexes and meeting minutes;
+3) AI/model inventories, impact/risk assessments, and change-control logs (as referenced in OMB M-24-10),
+
+for projects conducted at or near Davis Dam / Pyramid Canyon (Clark County, NV / Mohave County, AZ) between 2023-01-01 and 2025-08-02, including but not limited to NAICS 237130, 334220, 517410, 541512, 541715, 561621. Please include records involving primes/subs whose place of performance falls within 25 km of coordinates centered at 35.204°N, -114.576°W.
+
+If responsive records are partially exempt, release all reasonably segregable portions. Provide records in native electronic format with metadata (creation/modification timestamps, author, software). I request a public-interest fee waiver.

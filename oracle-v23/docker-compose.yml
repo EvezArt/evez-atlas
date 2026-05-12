@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  oracle-dashboard:
+    build: .
+    container_name: oracle_v23_dashboard
+    ports:
+      - "8080:80"
+    volumes:
+      - ./index.html:/usr/share/nginx/html/index.html:ro
+      - audit-logs:/var/log/oracle
+    environment:
+      - ORACLE_VERSION=2.3.0
+      - TIER0_ENABLED=true
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Optional: Backend API for audit log aggregation
+  # Uncomment to enable cloud persistence
+  # oracle-api:
+  #   image: python:3.9-slim
+  #   command: python -m http.server 8000
+  #   ports:
+  #     - "8000:8000"
+  #   volumes:
+  #     - audit-logs:/data
+  #   environment:
+  #     - POSTGRES_HOST=db
+  #     - POSTGRES_DB=oracle_audit
+  #   depends_on:
+  #     - db
+
+  # Optional: Database for persistent storage
+  # db:
+  #   image: postgres:16-alpine
+  #   environment:
+  #     POSTGRES_DB: oracle_audit
+  #     POSTGRES_USER: oracle
+  #     POSTGRES_PASSWORD: changeme
+  #   volumes:
+  #     - db-data:/var/lib/postgresql/data
+
+volumes:
+  audit-logs:
+  # db-data:
+
+networks:
+  default:
+    name: oracle_network
