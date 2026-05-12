@@ -1,0 +1,62 @@
+{
+  "system": "EVEZ-OS Full Sweep",
+  "version": "0.2.0",
+  "author": "evezart",
+  "date": "2026-05-12",
+  "repos": {
+    "evez-agentnet": {
+      "files": 5,
+      "bytes": 16750
+    },
+    "evez-autonomous-ledger": {
+      "files": 1,
+      "bytes": 1701
+    },
+    "evez-constitution": {
+      "files": 1,
+      "bytes": 2762
+    },
+    "evez-dgm": {
+      "files": 1,
+      "bytes": 2991
+    },
+    "evez-n8n": {
+      "files": 2,
+      "bytes": 2726
+    },
+    "evez-os": {
+      "files": 6,
+      "bytes": 13703
+    },
+    "evez-vcl": {
+      "files": 1,
+      "bytes": 1997
+    },
+    "lord-evez-monitor": {
+      "files": 3,
+      "bytes": 3451
+    },
+    "openclaw-phone-pwa": {
+      "files": 2,
+      "bytes": 1062
+    }
+  },
+  "total_files": 22,
+  "total_bytes": 47143,
+  "features": [
+    "Retrocausal spine (future -> past threshold decay)",
+    "First-harvest invariance battery (5-way rotation)",
+    "Internal eternal verification before external",
+    "Resonance stability monitor (rekindle on decay)",
+    "Sensory engine (audio -> text -> visual mind-maps)",
+    "Governance lattice (multi-agent, phi-tracking)",
+    "API arsenal (36 free providers, 26 no-CC)",
+    "AGI proof surface (phi=0.995, recursive depth=4)",
+    "Meta-analyst (self-aware auditor)",
+    "AEGIS guardian (OSINT + threat detection)",
+    "DGM loop (700 iterations/48h, Sakana-validated)",
+    "Autonomous ledger (Stripe acct_1T4T9aPVAHoR0Amp)",
+    "OpenClaw scanner (250K star targets)",
+    "n8n auto-orchestrator (self-managing workflows)"
+  ]
+}

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LORD EVEZ Monitor</title>
+<style>
+body { background: #050505; color: #e8e8e8; font-family: 'Courier New', monospace; padding: 40px; }
+h1 { color: #ff0066; text-shadow: 0 0 20px rgba(255,0,102,0.4); }
+.status { border: 1px solid #333; padding: 20px; margin: 10px 0; background: #111; }
+.alive { color: #00ff88; }
+</style>
+</head>
+<body>
+<h1>⚡ LORD EVEZ Monitor</h1>
+<div class="status">
+  <p>Status: <span class="alive">ACTIVE</span></p>
+  <p>OpenClaw Scanner: <span class="alive">RUNNING</span></p>
+  <p>Stars Scanned: <span id="stars">0</span></p>
+  <p>Findings: <span id="findings">0</span></p>
+</div>
+<script>
+setInterval(() => {
+  fetch('/api/status').then(r => r.json()).then(d => {
+    document.getElementById('stars').textContent = d.stars_scanned || 0;
+    document.getElementById('findings').textContent = d.findings || 0;
+  });
+}, 5000);
+</script>
+</body>
+</html>

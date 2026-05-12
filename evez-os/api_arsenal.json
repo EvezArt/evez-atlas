@@ -1,0 +1,367 @@
+{
+  "meta": {
+    "compiled_by": "evezart",
+    "compiled_for": "EVEZ-OS",
+    "date": "2026-05-12",
+    "total_apis": 36,
+    "no_cc_required": 26,
+    "version": "2.0-verified",
+    "sources": [
+      "coingecko.com",
+      "cloudzero.com",
+      "ai.google.dev",
+      "coinmarketcap.com"
+    ]
+  },
+  "categories": {
+    "ai_llm": [
+      {
+        "name": "Google AI Studio",
+        "url": "https://aistudio.google.com/app/apikey",
+        "free": "Unlimited rate-limited. Pro 5 RPM/100 RPD, Flash 15 RPM/1500 RPD. No CC. NOTE: After June 19 2026, unrestricted keys deprecated\u2014add API restrictions in AI Studio.",
+        "cc_required": false,
+        "models": [
+          "Gemini 2.5 Pro",
+          "Gemini 2.5 Flash",
+          "Gemini 2.0 Flash"
+        ],
+        "priority": 1
+      },
+      {
+        "name": "Groq",
+        "url": "https://console.groq.com/keys",
+        "free": "30 RPM, 6,000 TPM, 14,400 RPD. No CC. Every model included.",
+        "cc_required": false,
+        "models": [
+          "Llama 3.3 70B",
+          "Llama 4 Scout",
+          "Qwen3",
+          "Mixtral"
+        ],
+        "priority": 1
+      },
+      {
+        "name": "Cerebras",
+        "url": "https://cloud.cerebras.ai/",
+        "free": "30 RPM, 1M tokens/day. No CC.",
+        "cc_required": false,
+        "models": [
+          "Llama 3.3 70B",
+          "Qwen3 32B",
+          "Qwen3 235B",
+          "GPT-OSS 120B"
+        ],
+        "priority": 1
+      },
+      {
+        "name": "Mistral AI",
+        "url": "https://console.mistral.ai/",
+        "free": "2 RPM, 500K TPM, 1B tokens/month. No CC.",
+        "cc_required": false,
+        "models": [
+          "Mistral Large",
+          "Codestral",
+          "Pixtral"
+        ],
+        "priority": 2
+      },
+      {
+        "name": "DeepSeek",
+        "url": "https://platform.deepseek.com/",
+        "free": "5M free tokens (30 days), then ultra-cheap. No hard rate limit. No CC.",
+        "cc_required": false,
+        "models": [
+          "DeepSeek V3",
+          "DeepSeek R1"
+        ],
+        "priority": 1
+      },
+      {
+        "name": "OpenRouter",
+        "url": "https://openrouter.ai/keys",
+        "free": "200 RPD free models. $10+ credit unlocks 1K RPD. No CC for free tier.",
+        "cc_required": false,
+        "models": [
+          "DeepSeek R1",
+          "Llama 4",
+          "Qwen3"
+        ],
+        "priority": 1
+      },
+      {
+        "name": "xAI Grok",
+        "url": "https://console.x.ai/",
+        "free": "$25 signup credits. +$150/mo if data sharing opted in. No CC to start.",
+        "cc_required": false,
+        "models": [
+          "Grok 4",
+          "Grok 4.1 Fast"
+        ],
+        "priority": 2
+      },
+      {
+        "name": "SambaNova",
+        "url": "https://cloud.sambanova.ai/",
+        "free": "Persistent free tier + $5 credits. 10-30 RPM. No CC.",
+        "cc_required": false,
+        "models": [
+          "Llama 3.3 70B",
+          "Llama 3.1 405B",
+          "Qwen 2.5 72B"
+        ],
+        "priority": 2
+      },
+      {
+        "name": "NVIDIA NIM",
+        "url": "https://build.nvidia.com/",
+        "free": "1,000 credits signup (request up to 5,000). 40 RPM. No CC.",
+        "cc_required": false,
+        "models": [
+          "DeepSeek R1",
+          "Llama",
+          "Kimi K2.5",
+          "AI21 Jamba"
+        ],
+        "priority": 2
+      },
+      {
+        "name": "Cohere",
+        "url": "https://dashboard.cohere.com/",
+        "free": "20 RPM, 1K requests/month. No CC.",
+        "cc_required": false,
+        "models": [
+          "Command R+",
+          "Embed 4",
+          "Rerank 3.5"
+        ],
+        "priority": 3
+      },
+      {
+        "name": "AI21 Labs",
+        "url": "https://studio.ai21.com/",
+        "free": "$10 trial credits. 200 RPM. No CC.",
+        "cc_required": false,
+        "models": [
+          "Jamba Large",
+          "Jamba Mini"
+        ],
+        "priority": 3
+      },
+      {
+        "name": "HuggingFace",
+        "url": "https://huggingface.co/settings/tokens",
+        "free": "Rate-limited. Cold starts on niche models. No CC.",
+        "cc_required": false,
+        "models": [
+          "300+ community models"
+        ],
+        "priority": 3
+      },
+      {
+        "name": "GitHub Models",
+        "url": "https://github.com/settings/tokens",
+        "free": "10-15 RPM, 50-150 req/day. Requires GitHub account.",
+        "cc_required": false,
+        "models": [
+          "GPT-4o",
+          "GPT-4.1",
+          "o3",
+          "Grok-3"
+        ],
+        "priority": 2
+      },
+      {
+        "name": "Cloudflare Workers AI",
+        "url": "https://dash.cloudflare.com/",
+        "free": "10K neurons/day. No CC.",
+        "cc_required": false,
+        "models": [
+          "Llama 3.2",
+          "Mistral 7B",
+          "FLUX.2"
+        ],
+        "priority": 3
+      },
+      {
+        "name": "OVHcloud AI",
+        "url": "https://endpoints.ai.cloud.ovh.net/",
+        "free": "Anonymous: 2 RPM per IP per model. No signup. Signed up: 400 RPM + $200 trial.",
+        "cc_required": false,
+        "models": [
+          "Llama",
+          "Mistral",
+          "Qwen"
+        ],
+        "priority": 3
+      },
+      {
+        "name": "OpenAI",
+        "url": "https://platform.openai.com/api-keys",
+        "free": "$5 trial credits (expires ~3 months). CC required.",
+        "cc_required": true,
+        "models": [
+          "GPT-4o",
+          "o3",
+          "DALL-E"
+        ],
+        "priority": 2
+      },
+      {
+        "name": "Anthropic",
+        "url": "https://console.anthropic.com/",
+        "free": "$5 trial credits. CC required.",
+        "cc_required": true,
+        "models": [
+          "Claude 4",
+          "Claude 3.7 Sonnet"
+        ],
+        "priority": 2
+      }
+    ],
+    "crypto": [
+      {
+        "name": "CoinGecko",
+        "url": "https://www.coingecko.com/en/api",
+        "free": "10K calls/month, 30 calls/min, 50+ endpoints, 1 year historical. No CC. Public endpoints require no key.",
+        "cc_required": false,
+        "priority": 1
+      },
+      {
+        "name": "DexScreener",
+        "url": "https://dexscreener.com/",
+        "free": "Public API. No key. No signup. No CC. 60-300 RPM depending on endpoint. 1-second updates.",
+        "cc_required": false,
+        "priority": 1
+      },
+      {
+        "name": "CoinPaprika",
+        "url": "https://api.coinpaprika.com/",
+        "free": "20K calls/month (CoinPaprika) + 10K daily (DexPaprika, no key). No CC.",
+        "cc_required": false,
+        "priority": 2
+      },
+      {
+        "name": "CoinAPI",
+        "url": "https://www.coinapi.io/",
+        "free": "$25 signup credit. CC required.",
+        "cc_required": true,
+        "priority": 3
+      }
+    ],
+    "news": [
+      {
+        "name": "Actually Relevant",
+        "url": "https://actuallyrelevant.news/free-api",
+        "free": "No key. No signup. Rate-limited.",
+        "cc_required": false,
+        "priority": 1
+      },
+      {
+        "name": "NewsData.io",
+        "url": "https://newsdata.io/",
+        "free": "200 credits/day. Signup required.",
+        "cc_required": false,
+        "priority": 2
+      },
+      {
+        "name": "Exa",
+        "url": "https://exa.ai/",
+        "free": "1,000 requests/month. Semantic search.",
+        "cc_required": false,
+        "priority": 2
+      },
+      {
+        "name": "NewsAPI.org",
+        "url": "https://newsapi.org/",
+        "free": "Limited free requests. Key required.",
+        "cc_required": false,
+        "priority": 3
+      }
+    ],
+    "geolocation": [
+      {
+        "name": "ipwhois.io",
+        "url": "https://ipwhois.io/",
+        "free": "1 req/sec. No signup. No key. No CC.",
+        "cc_required": false,
+        "priority": 1
+      },
+      {
+        "name": "ipapi.co",
+        "url": "https://ipapi.co/",
+        "free": "1K lookups/day (~30K/month). No signup for basic.",
+        "cc_required": false,
+        "priority": 1
+      },
+      {
+        "name": "BigDataCloud",
+        "url": "https://www.bigdatacloud.com/free-api",
+        "free": "Client-side APIs: no key, no signup, no rate limits. No CC.",
+        "cc_required": false,
+        "priority": 1
+      },
+      {
+        "name": "IPinfo.io",
+        "url": "https://ipinfo.io/",
+        "free": "50K requests/month. Signup required.",
+        "cc_required": false,
+        "priority": 2
+      }
+    ],
+    "translation": [
+      {
+        "name": "Microsoft Azure Translator",
+        "url": "https://azure.microsoft.com/en-us/services/cognitive-services/translator/",
+        "free": "2M characters/month. No expiry. No CC.",
+        "cc_required": false,
+        "priority": 1
+      },
+      {
+        "name": "DeepL API Free",
+        "url": "https://www.deepl.com/pro-api",
+        "free": "500K characters/month. No CC.",
+        "cc_required": false,
+        "priority": 1
+      },
+      {
+        "name": "Lara Translate",
+        "url": "https://laratranslate.com/",
+        "free": "Free tier. No CC. 200+ language pairs.",
+        "cc_required": false,
+        "priority": 2
+      },
+      {
+        "name": "Google Cloud Translation",
+        "url": "https://cloud.google.com/translate",
+        "free": "500K characters/month. CC required.",
+        "cc_required": true,
+        "priority": 2
+      }
+    ],
+    "images": [
+      {
+        "name": "Unsplash",
+        "url": "https://unsplash.com/developers",
+        "free": "50 requests/hour. Key required.",
+        "cc_required": false,
+        "priority": 2
+      }
+    ],
+    "weather": [
+      {
+        "name": "Open-Meteo",
+        "url": "https://open-meteo.com/",
+        "free": "No API key. No signup. Open data. No CC.",
+        "cc_required": false,
+        "priority": 1
+      },
+      {
+        "name": "weatherstack",
+        "url": "https://weatherstack.com/",
+        "free": "Limited free tier. No CC.",
+        "cc_required": false,
+        "priority": 2
+      }
+    ]
+  }
+}
