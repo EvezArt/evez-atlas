@@ -11,7 +11,6 @@ cd "$WORKSPACE"
 
 # Check circuit health
 HEALTH=$(curl -s http://localhost:9100/ 2>/dev/null | python3 -c "import json,sys; d=json.load(sys.stdin); print(f'{d[\"summary\"][\"services_alive\"]}/{d[\"summary\"][\"services_total\"]}')" 2>/dev/null || echo "down")
-
 log "Circuit health: $HEALTH"
 
 # Services to monitor: name, port, script
@@ -24,15 +23,15 @@ SERVICES=(
     "debate_engine:9097:debate_engine.py"
     "evolutionary_forge:9098:evolutionary_forge.py"
     "api_scanner:9099:api_scanner.py"
-    "health:9101:openclaw_health.py"
+    "health:9101:openclaw_health.py:/health"
 )
 
 revive() {
-    local name=$1 port=$2 script=$3
+    local name=$1 port=$2 script=$3 endpoint=${4:-/}
     log "⚠️  $name down — reviving on port $port"
     nohup python3 "$WORKSPACE/evez-os-sensors/$script" --port $port >> /tmp/$name.log 2>&1 &
     sleep 3
-    if curl -s "http://localhost:$port/" > /dev/null 2>&1; then
+    if curl -s "http://localhost:$port$endpoint" > /dev/null 2>&1; then
         log "✅ $name revived"
     else
         log "❌ $name revival failed"
@@ -43,10 +42,18 @@ for svc in "${SERVICES[@]}"; do
     name="${svc%%:*}"
     rest="${svc#*:}"
     port="${rest%%:*}"
-    script="${rest#*:}"
+    script_endpoint="${rest#*:}"
+    # Last field might be /health or just the script
+    if [[ "$script_endpoint" == *:/health ]]; then
+        script="${script_endpoint%%:/health}"
+        endpoint="/health"
+    else
+        script="$script_endpoint"
+        endpoint="/"
+    fi
     
-    if ! curl -s "http://localhost:$port/" > /dev/null 2>&1; then
-        revive "$name" "$port" "$script"
+    if ! curl -s "http://localhost:$port$endpoint" > /dev/null 2>&1; then
+        revive "$name" "$port" "$script" "$endpoint"
     fi
 done
 
@@ -64,9 +71,9 @@ fi
 
 # Git auto-commit if changes exist
 cd "$WORKSPACE"
+git config --global user.email "evez-os@autonomous.ai" 2>/dev/null
+git config --global user.name "EVEZ-OS Autonomous" 2>/dev/null
 if [ -n "$(git status --porcelain 2>/dev/null)" ]; then
-    git config --global user.email "evez-os@autonomous.ai" 2>/dev/null
-    git config --global user.name "EVEZ-OS Autonomous" 2>/dev/null
     git add -A && git commit -m "Watchdog auto-commit $(date '+%Y-%m-%d %H:%M')" --allow-empty 2>/dev/null
     git push 2>/dev/null
     log "📦 State auto-committed"
