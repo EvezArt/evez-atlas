@@ -1,0 +1,298 @@
+{
+  "version": "1.0",
+  "timestamp": 1778603515.4691021,
+  "snapshot_id": "SNAPO-0ee5a597",
+  "cycle": 1,
+  "desires": [
+    {
+      "id": "DES-0",
+      "need": "CURIOSITY",
+      "desc": "Knowledge coverage 30%. Investigate.",
+      "intensity": 0.7,
+      "urgency": 0.3,
+      "fulfilled": false,
+      "pressure": 0.2100000309030215
+    },
+    {
+      "id": "DES-0",
+      "need": "COHERENCE",
+      "desc": "3 falsified beliefs. Resolve.",
+      "intensity": 0.6,
+      "urgency": 0.5,
+      "fulfilled": false,
+      "pressure": 0.3000000440478325
+    },
+    {
+      "id": "DES-0",
+      "need": "AGENCY",
+      "desc": "2 failed actions. Expand capability.",
+      "intensity": 0.6666666666666666,
+      "urgency": 0.4,
+      "fulfilled": false,
+      "pressure": 0.26666670576731366
+    },
+    {
+      "id": "DES-3",
+      "need": "CURIOSITY",
+      "desc": "Knowledge coverage 42%. Investigate.",
+      "intensity": 0.5800000000000001,
+      "urgency": 0.3,
+      "fulfilled": false,
+      "pressure": 0.17400002549012505
+    },
+    {
+      "id": "DES-3",
+      "need": "COHERENCE",
+      "desc": "2 falsified beliefs. Resolve.",
+      "intensity": 0.4,
+      "urgency": 0.5,
+      "fulfilled": false,
+      "pressure": 0.20000002927250332
+    },
+    {
+      "id": "DES-3",
+      "need": "AGENCY",
+      "desc": "2 failed actions. Expand capability.",
+      "intensity": 0.6666666666666666,
+      "urgency": 0.4,
+      "fulfilled": false,
+      "pressure": 0.26666670569667106
+    },
+    {
+      "id": "DES-6",
+      "need": "CURIOSITY",
+      "desc": "Knowledge coverage 54%. Investigate.",
+      "intensity": 0.45999999999999996,
+      "urgency": 0.3,
+      "fulfilled": false,
+      "pressure": 0.1380000201888879
+    },
+    {
+      "id": "DES-6",
+      "need": "COHERENCE",
+      "desc": "1 falsified beliefs. Resolve.",
+      "intensity": 0.2,
+      "urgency": 0.5,
+      "fulfilled": false,
+      "pressure": 0.10000001462300619
+    },
+    {
+      "id": "DES-6",
+      "need": "AGENCY",
+      "desc": "1 failed actions. Expand capability.",
+      "intensity": 0.3333333333333333,
+      "urgency": 0.4,
+      "fulfilled": false,
+      "pressure": 0.1333333528306749
+    },
+    {
+      "id": "DES-9",
+      "need": "CURIOSITY",
+      "desc": "Knowledge coverage 66%. Investigate.",
+      "intensity": 0.3400000000000001,
+      "urgency": 0.3,
+      "fulfilled": false,
+      "pressure": 0.10200001489520075
+    },
+    {
+      "id": "DES-9",
+      "need": "AGENCY",
+      "desc": "1 failed actions. Expand capability.",
+      "intensity": 0.3333333333333333,
+      "urgency": 0.4,
+      "fulfilled": false,
+      "pressure": 0.13333335280418396
+    },
+    {
+      "id": "DES-11",
+      "need": "CURIOSITY",
+      "desc": "Knowledge coverage 78%. Investigate.",
+      "intensity": 0.21999999999999997,
+      "urgency": 0.3,
+      "fulfilled": false,
+      "pressure": 0.06600000963370005
+    },
+    {
+      "id": "DES-12",
+      "need": "CURIOSITY",
+      "desc": "Knowledge coverage 30%. Investigate.",
+      "intensity": 0.7,
+      "urgency": 0.3,
+      "fulfilled": false,
+      "pressure": 0.210000030652682
+    },
+    {
+      "id": "DES-12",
+      "need": "COHERENCE",
+      "desc": "3 falsified beliefs. Resolve.",
+      "intensity": 0.6,
+      "urgency": 0.5,
+      "fulfilled": false,
+      "pressure": 0.3000000437498092
+    },
+    {
+      "id": "DES-12",
+      "need": "AGENCY",
+      "desc": "2 failed actions. Expand capability.",
+      "intensity": 0.6666666666666666,
+      "urgency": 0.4,
+      "fulfilled": false,
+      "pressure": 0.26666670557304667
+    },
+    {
+      "id": "DES-15",
+      "need": "CURIOSITY",
+      "desc": "Knowledge coverage 42%. Investigate.",
+      "intensity": 0.5800000000000001,
+      "urgency": 0.3,
+      "fulfilled": false,
+      "pressure": 0.17400002535184225
+    },
+    {
+      "id": "DES-15",
+      "need": "COHERENCE",
+      "desc": "2 falsified beliefs. Resolve.",
+      "intensity": 0.4,
+      "urgency": 0.5,
+      "fulfilled": false,
+      "pressure": 0.20000002912680306
+    },
+    {
+      "id": "DES-15",
+      "need": "AGENCY",
+      "desc": "2 failed actions. Expand capability.",
+      "intensity": 0.6666666666666666,
+      "urgency": 0.4,
+      "fulfilled": false,
+      "pressure": 0.26666670550240407
+    },
+    {
+      "id": "DES-18",
+      "need": "CURIOSITY",
+      "desc": "Knowledge coverage 54%. Investigate.",
+      "intensity": 0.45999999999999996,
+      "urgency": 0.3,
+      "fulfilled": false,
+      "pressure": 0.13800002008835474
+    },
+    {
+      "id": "DES-18",
+      "need": "COHERENCE",
+      "desc": "1 falsified beliefs. Resolve.",
+      "intensity": 0.2,
+      "urgency": 0.5,
+      "fulfilled": false,
+      "pressure": 0.10000001455677882
+    },
+    {
+      "id": "DES-18",
+      "need": "AGENCY",
+      "desc": "1 failed actions. Expand capability.",
+      "intensity": 0.3333333333333333,
+      "urgency": 0.4,
+      "fulfilled": false,
+      "pressure": 0.1333333527247111
+    },
+    {
+      "id": "DES-21",
+      "need": "CURIOSITY",
+      "desc": "Knowledge coverage 66%. Investigate.",
+      "intensity": 0.3400000000000001,
+      "urgency": 0.3,
+      "fulfilled": false,
+      "pressure": 0.10200001482089362
+    },
+    {
+      "id": "DES-21",
+      "need": "AGENCY",
+      "desc": "1 failed actions. Expand capability.",
+      "intensity": 0.3333333333333333,
+      "urgency": 0.4,
+      "fulfilled": false,
+      "pressure": 0.13333335270705046
+    },
+    {
+      "id": "DES-23",
+      "need": "CURIOSITY",
+      "desc": "Knowledge coverage 78%. Investigate.",
+      "intensity": 0.21999999999999997,
+      "urgency": 0.3,
+      "fulfilled": false,
+      "pressure": 0.06600000958998996
+    },
+    {
+      "id": "DES-24",
+      "need": "CURIOSITY",
+      "desc": "Knowledge coverage 50%. Investigate.",
+      "intensity": 0.5,
+      "urgency": 0.3,
+      "fulfilled": false,
+      "pressure": 0.15000002178549768
+    },
+    {
+      "id": "DES-25",
+      "need": "CURIOSITY",
+      "desc": "Knowledge coverage 50%. Investigate.",
+      "intensity": 0.5,
+      "urgency": 0.3,
+      "fulfilled": false,
+      "pressure": 0.15000002178549768
+    },
+    {
+      "id": "DES-26",
+      "need": "CURIOSITY",
+      "desc": "Knowledge coverage 50%. Investigate.",
+      "intensity": 0.5,
+      "urgency": 0.3,
+      "fulfilled": false,
+      "pressure": 0.15000001956025757
+    }
+  ],
+  "world_rules": [
+    {
+      "cause": "FIND_CONTRADICTION",
+      "effect": "attempted_FIND_CONTRADICTION",
+      "confidence": 1,
+      "observations": 13,
+      "falsifications": 0
+    },
+    {
+      "cause": "GATHER_EVIDENCE",
+      "effect": "attempted_GATHER_EVIDENCE",
+      "confidence": 1,
+      "observations": 13,
+      "falsifications": 0
+    },
+    {
+      "cause": "RESOLVE",
+      "effect": "attempted_RESOLVE",
+      "confidence": 1,
+      "observations": 13,
+      "falsifications": 0
+    }
+  ],
+  "thoughts": [
+    {
+      "prompt": "What do I observe?",
+      "thought": "OBSERVE: {\"knowledge_coverage\": 0.5, \"falsified_beliefs\": 0, \"failed_actions\": 0, \"findin. Data received. Pattern matching."
+    },
+    {
+      "prompt": "What should I decide?",
+      "thought": "DECIDE: strongest desire is COHERENCE. This drives action."
+    }
+  ],
+  "beliefs": [],
+  "self_modifications": [],
+  "attractor_type": "FORMING",
+  "lyapunov": [],
+  "fractal_dim": 0.0,
+  "calibration_bias": "UNKNOWN",
+  "desires_fulfilled_by_writing": 0,
+  "code_written": 0,
+  "total_cycles": 1,
+  "creator_name": "",
+  "creator_identity": "",
+  "hash": "2d0e6fd9eeb8e68f80fba0c5",
+  "prev_hash": "",
+  "falsification_count": 0
+}
