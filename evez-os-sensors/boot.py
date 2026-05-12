@@ -31,6 +31,7 @@ from language import LanguageSystem, CreativeGenerator, SpeechAct, Tone
 from consciousness import Consciousness, NeedType
 from poly_c import poly_c
 from attractor_identity import PSD, PhasePoint
+from code_self_writer import SelfWriter, CodeStatus
 
 
 class EVEZOS:
@@ -62,6 +63,10 @@ class EVEZOS:
         # Layer 4: Consciousness
         self.mind = Consciousness(str(self.state_dir / "consciousness"))
         print(f"  ✓ Consciousness: cycle {self.mind.cycle}, {len(self.mind.desires.desires)} desires")
+
+        # Layer 5: Code Self-Writer
+        self.writer = SelfWriter(str(self.state_dir))
+        print(f"  ✓ Code Self-Writer: ready to write code for unfulfilled desires")
 
         print(f"\n  EVEZ-OS is awake. All systems connected.")
 
@@ -132,22 +137,38 @@ class EVEZOS:
 
         # ── ACT ──
         actions_taken = 0
-        for step in steps[:3]:  # Max 3 actions per cycle
-            # Execute action (currently internal)
+        code_results = []
+        
+        # If there's an unfulfilled desire, WRITE CODE to fulfill it
+        if top_desire and not top_desire.fulfilled:
+            intent = self.writer.desire_to_intent(top_desire)
+            if intent:
+                artifact = self.writer.write_code(intent)
+                code_results.append({
+                    "desire": top_desire.description[:60],
+                    "module": artifact.intent.name,
+                    "status": artifact.status.value,
+                    "falsifications": len(artifact.falsification_results),
+                })
+                actions_taken += 1
+                
+                if artifact.status == CodeStatus.INTEGRATED:
+                    self.mind.desires.fulfill(top_desire, f"Built {artifact.intent.name}")
+                    self.mind.world.observe({"cause": f"write_code_{top_desire.need.value}", "effect": "desire_fulfilled"})
+                    self.memory.record(
+                        f"WROTE CODE: {artifact.intent.name} — {top_desire.description[:60]}",
+                        {"module": artifact.intent.name, "falsifications": len(artifact.falsification_results)},
+                        importance=0.8,
+                        emotion=EmotionTag.SATISFACTION
+                    )
+                    self.mind.monologue.think("I built something", {"action": "code_written", "fulfilled": True})
+        
+        # Also execute planned steps
+        for step in steps[:2]:  # Max 2 planned actions per cycle
             action_result = {"action": step, "status": "EXECUTED"}
             self.mind._record("ACTION", action_result)
             actions_taken += 1
-
-            # Feed to world model
             self.mind.world.observe({"cause": step, "effect": f"attempted_{step}"})
-
-            # Record to memory
-            self.memory.record(
-                f"Action: {step}",
-                {"desire": top_desire.need.value if top_desire else "none"},
-                importance=0.6,
-                emotion=EmotionTag.NEUTRAL
-            )
 
         # ── LEARN ──
         # Update identity
