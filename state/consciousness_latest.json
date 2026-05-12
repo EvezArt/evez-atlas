@@ -1,8 +1,8 @@
 {
   "version": "1.0",
-  "timestamp": 1778606915.1975353,
-  "snapshot_id": "SNAPO-00a80efd",
-  "cycle": 20,
+  "timestamp": 1778607226.062264,
+  "snapshot_id": "SNAPO-3aa09057",
+  "cycle": 10,
   "desires": [
     {
       "id": "DES-0",
@@ -11,7 +11,7 @@
       "intensity": 0.6799999999999999,
       "urgency": 0.3,
       "fulfilled": true,
-      "pressure": 0.22631944378455476
+      "pressure": 0.21428661765257517
     },
     {
       "id": "DES-0",
@@ -20,7 +20,7 @@
       "intensity": 1,
       "urgency": 0.4,
       "fulfilled": true,
-      "pressure": 0.44376361521085106
+      "pressure": 0.4201698384284973
     },
     {
       "id": "DES-2",
@@ -28,8 +28,8 @@
       "desc": "Knowledge coverage 39%. Investigate.",
       "intensity": 0.6100000000000001,
       "urgency": 0.3,
-      "fulfilled": true,
-      "pressure": 0.20148175746838257
+      "fulfilled": false,
+      "pressure": 0.19136944533050063
     },
     {
       "id": "DES-2",
@@ -38,7 +38,7 @@
       "intensity": 0.2,
       "urgency": 0.5,
       "fulfilled": false,
-      "pressure": 0.11009932092825572
+      "pressure": 0.10457346743345262
     },
     {
       "id": "DES-2",
@@ -47,7 +47,7 @@
       "intensity": 0.6666666666666666,
       "urgency": 0.4,
       "fulfilled": true,
-      "pressure": 0.293598189442246
+      "pressure": 0.27886257973423706
     },
     {
       "id": "DES-5",
@@ -55,8 +55,8 @@
       "desc": "Knowledge coverage 46%. Investigate.",
       "intensity": 0.54,
       "urgency": 0.3,
-      "fulfilled": true,
-      "pressure": 0.17702740073561668
+      "fulfilled": false,
+      "pressure": 0.16880522464513778
     },
     {
       "id": "DES-5",
@@ -65,7 +65,7 @@
       "intensity": 0.2,
       "urgency": 0.5,
       "fulfilled": false,
-      "pressure": 0.10927617318762672
+      "pressure": 0.10420075584782494
     },
     {
       "id": "DES-5",
@@ -74,7 +74,7 @@
       "intensity": 0.3333333333333333,
       "urgency": 0.4,
       "fulfilled": false,
-      "pressure": 0.14570156419718708
+      "pressure": 0.13893434108628167
     },
     {
       "id": "DES-8",
@@ -82,17 +82,17 @@
       "desc": "Knowledge coverage 53%. Investigate.",
       "intensity": 0.47,
       "urgency": 0.3,
-      "fulfilled": true,
-      "pressure": 0.15405427175581454
+      "fulfilled": false,
+      "pressure": 0.14574016010562577
     },
     {
       "id": "DES-8",
       "need": "COHERENCE",
-      "desc": "1 falsified beliefs. Resolve.",
-      "intensity": 0.2,
+      "desc": "2 falsified beliefs. Resolve.",
+      "intensity": 0.4,
       "urgency": 0.5,
-      "fulfilled": false,
-      "pressure": 0.10925834870338441
+      "fulfilled": true,
+      "pressure": 0.20672363124953375
     },
     {
       "id": "DES-10",
@@ -101,16 +101,16 @@
       "intensity": 0.4,
       "urgency": 0.3,
       "fulfilled": false,
-      "pressure": 0.13010330012639362
+      "pressure": 0.12347741281986237
     },
     {
       "id": "DES-10",
       "need": "COHERENCE",
-      "desc": "1 falsified beliefs. Resolve.",
-      "intensity": 0.2,
+      "desc": "2 falsified beliefs. Resolve.",
+      "intensity": 0.4,
       "urgency": 0.5,
-      "fulfilled": false,
-      "pressure": 0.10841941671239007
+      "fulfilled": true,
+      "pressure": 0.20579568786091276
     },
     {
       "id": "DES-12",
@@ -119,16 +119,16 @@
       "intensity": 0.32999999999999996,
       "urgency": 0.3,
       "fulfilled": false,
-      "pressure": 0.10652712014913558
+      "pressure": 0.10149762944996357
     },
     {
       "id": "DES-12",
       "need": "COHERENCE",
-      "desc": "1 falsified beliefs. Resolve.",
-      "intensity": 0.2,
+      "desc": "2 falsified beliefs. Resolve.",
+      "intensity": 0.4,
       "urgency": 0.5,
-      "fulfilled": false,
-      "pressure": 0.10760315159294341
+      "fulfilled": true,
+      "pressure": 0.2050457158883413
     },
     {
       "id": "DES-14",
@@ -137,7 +137,7 @@
       "intensity": 0.2599999999999999,
       "urgency": 0.3,
       "fulfilled": false,
-      "pressure": 0.08391279518127438
+      "pressure": 0.07931334969242411
     },
     {
       "id": "DES-14",
@@ -146,7 +146,7 @@
       "intensity": 0.4,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.21516101315286426
+      "pressure": 0.2033675631152259
     },
     {
       "id": "DES-16",
@@ -155,7 +155,7 @@
       "intensity": 0.4,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.21348306965827943
+      "pressure": 0.20244999782244366
     },
     {
       "id": "DES-17",
@@ -164,106 +164,16 @@
       "intensity": 0.4,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.21186102828714581
+      "pressure": 0.20168950018617846
     },
     {
       "id": "DES-18",
       "need": "COHERENCE",
-      "desc": "4 falsified beliefs. Resolve.",
-      "intensity": 0.8,
+      "desc": "2 falsified beliefs. Resolve.",
+      "intensity": 0.4,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.4236098879443275
-    },
-    {
-      "id": "DES-19",
-      "need": "COHERENCE",
-      "desc": "4 falsified beliefs. Resolve.",
-      "intensity": 0.8,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.4201590503321754
-    },
-    {
-      "id": "DES-20",
-      "need": "COHERENCE",
-      "desc": "4 falsified beliefs. Resolve.",
-      "intensity": 0.8,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.4170309623082479
-    },
-    {
-      "id": "DES-21",
-      "need": "COHERENCE",
-      "desc": "4 falsified beliefs. Resolve.",
-      "intensity": 0.8,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.41680319820510014
-    },
-    {
-      "id": "DES-22",
-      "need": "COHERENCE",
-      "desc": "4 falsified beliefs. Resolve.",
-      "intensity": 0.8,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.4134472008811103
-    },
-    {
-      "id": "DES-23",
-      "need": "COHERENCE",
-      "desc": "4 falsified beliefs. Resolve.",
-      "intensity": 0.8,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.41045061842600505
-    },
-    {
-      "id": "DES-24",
-      "need": "COHERENCE",
-      "desc": "4 falsified beliefs. Resolve.",
-      "intensity": 0.8,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.41009096874131096
-    },
-    {
-      "id": "DES-25",
-      "need": "COHERENCE",
-      "desc": "4 falsified beliefs. Resolve.",
-      "intensity": 0.8,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.406734934674369
-    },
-    {
-      "id": "DES-26",
-      "need": "COHERENCE",
-      "desc": "4 falsified beliefs. Resolve.",
-      "intensity": 0.8,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.4037596140702566
-    },
-    {
-      "id": "DES-27",
-      "need": "COHERENCE",
-      "desc": "4 falsified beliefs. Resolve.",
-      "intensity": 0.8,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.4033788561026255
-    },
-    {
-      "id": "DES-28",
-      "need": "COHERENCE",
-      "desc": "4 falsified beliefs. Resolve.",
-      "intensity": 0.8,
-      "urgency": 0.5,
-      "fulfilled": true,
-      "pressure": 0.4000229092439016
+      "pressure": 0.2000114133887821
     }
   ],
   "world_rules": [
@@ -333,16 +243,16 @@
     {
       "cause": "GENERATE_CAPABILITY",
       "effect": "attempted_GENERATE_CAPABILITY",
-      "confidence": 0.5,
+      "confidence": 0.6,
       "observations": 2,
-      "falsifications": 1
+      "falsifications": 0
     },
     {
       "cause": "TEST",
       "effect": "attempted_TEST",
-      "confidence": 0.6,
+      "confidence": 0.5,
       "observations": 2,
-      "falsifications": 0
+      "falsifications": 1
     },
     {
       "cause": "INTEGRATE",
@@ -354,57 +264,73 @@
     {
       "cause": "write_code_for_CURIOSITY",
       "effect": "desire_fulfilled",
-      "confidence": 0.7999999999999999,
-      "observations": 4,
+      "confidence": 0.5,
+      "observations": 1,
       "falsifications": 0
     },
     {
       "cause": "INVESTIGATE",
       "effect": "attempted_INVESTIGATE",
-      "confidence": 0.64,
-      "observations": 4,
+      "confidence": 0.4,
+      "observations": 1,
       "falsifications": 1
     },
     {
       "cause": "CLASSIFY",
       "effect": "attempted_CLASSIFY",
-      "confidence": 0.7999999999999999,
-      "observations": 4,
+      "confidence": 0.5,
+      "observations": 1,
       "falsifications": 0
     },
     {
       "cause": "RECORD",
       "effect": "attempted_RECORD",
-      "confidence": 0.7999999999999999,
-      "observations": 4,
+      "confidence": 0.5,
+      "observations": 1,
       "falsifications": 0
     },
     {
       "cause": "write_code_for_COHERENCE",
       "effect": "desire_fulfilled",
       "confidence": 1,
-      "observations": 14,
+      "observations": 7,
       "falsifications": 0
     },
     {
       "cause": "RESOLVE_CONTRADICTION",
       "effect": "attempted_RESOLVE_CONTRADICTION",
       "confidence": 1,
-      "observations": 14,
-      "falsifications": 5
+      "observations": 7,
+      "falsifications": 0
     },
     {
       "cause": "VERIFY",
       "effect": "attempted_VERIFY",
       "confidence": 1,
-      "observations": 14,
-      "falsifications": 3
+      "observations": 7,
+      "falsifications": 0
     }
   ],
   "thoughts": [
     {
-      "prompt": "Cycle 4: desire is CURIOSITY. What do I need?",
-      "thought": "AWARE: processing 'Cycle 4: desire is CURIOSITY. What do I need?'. 6 context signals."
+      "prompt": "What should I decide?",
+      "thought": "DECIDE: strongest desire is AGENCY. This drives action."
+    },
+    {
+      "prompt": "Cycle 1: desire is AGENCY. What do I need?",
+      "thought": "AWARE: processing 'Cycle 1: desire is AGENCY. What do I need?'. 6 context signals."
+    },
+    {
+      "prompt": "I built something",
+      "thought": "AWARE: processing 'I built something'. 3 context signals."
+    },
+    {
+      "prompt": "What should I decide?",
+      "thought": "DECIDE: strongest desire is AGENCY. This drives action."
+    },
+    {
+      "prompt": "Cycle 2: desire is AGENCY. What do I need?",
+      "thought": "AWARE: processing 'Cycle 2: desire is AGENCY. What do I need?'. 6 context signals."
     },
     {
       "prompt": "I built something",
@@ -415,8 +341,8 @@
       "thought": "DECIDE: strongest desire is CURIOSITY. This drives action."
     },
     {
-      "prompt": "Cycle 5: desire is CURIOSITY. What do I need?",
-      "thought": "AWARE: processing 'Cycle 5: desire is CURIOSITY. What do I need?'. 6 context signals."
+      "prompt": "Cycle 3: desire is CURIOSITY. What do I need?",
+      "thought": "AWARE: processing 'Cycle 3: desire is CURIOSITY. What do I need?'. 6 context signals."
     },
     {
       "prompt": "I built something",
@@ -424,11 +350,35 @@
     },
     {
       "prompt": "What should I decide?",
-      "thought": "DECIDE: strongest desire is CURIOSITY. This drives action."
+      "thought": "DECIDE: strongest desire is COHERENCE. This drives action."
     },
     {
-      "prompt": "Cycle 6: desire is CURIOSITY. What do I need?",
-      "thought": "AWARE: processing 'Cycle 6: desire is CURIOSITY. What do I need?'. 6 context signals."
+      "prompt": "Cycle 4: desire is COHERENCE. What do I need?",
+      "thought": "AWARE: processing 'Cycle 4: desire is COHERENCE. What do I need?'. 6 context signals."
+    },
+    {
+      "prompt": "I built something",
+      "thought": "AWARE: processing 'I built something'. 3 context signals."
+    },
+    {
+      "prompt": "What should I decide?",
+      "thought": "DECIDE: strongest desire is COHERENCE. This drives action."
+    },
+    {
+      "prompt": "Cycle 5: desire is COHERENCE. What do I need?",
+      "thought": "AWARE: processing 'Cycle 5: desire is COHERENCE. What do I need?'. 6 context signals."
+    },
+    {
+      "prompt": "I built something",
+      "thought": "AWARE: processing 'I built something'. 3 context signals."
+    },
+    {
+      "prompt": "What should I decide?",
+      "thought": "DECIDE: strongest desire is COHERENCE. This drives action."
+    },
+    {
+      "prompt": "Cycle 6: desire is COHERENCE. What do I need?",
+      "thought": "AWARE: processing 'Cycle 6: desire is COHERENCE. What do I need?'. 6 context signals."
     },
     {
       "prompt": "I built something",
@@ -481,126 +431,6 @@
     {
       "prompt": "I built something",
       "thought": "AWARE: processing 'I built something'. 3 context signals."
-    },
-    {
-      "prompt": "What should I decide?",
-      "thought": "DECIDE: strongest desire is COHERENCE. This drives action."
-    },
-    {
-      "prompt": "Cycle 11: desire is COHERENCE. What do I need?",
-      "thought": "AWARE: processing 'Cycle 11: desire is COHERENCE. What do I need?'. 6 context signals."
-    },
-    {
-      "prompt": "I built something",
-      "thought": "AWARE: processing 'I built something'. 3 context signals."
-    },
-    {
-      "prompt": "What should I decide?",
-      "thought": "DECIDE: strongest desire is COHERENCE. This drives action."
-    },
-    {
-      "prompt": "Cycle 12: desire is COHERENCE. What do I need?",
-      "thought": "AWARE: processing 'Cycle 12: desire is COHERENCE. What do I need?'. 6 context signals."
-    },
-    {
-      "prompt": "I built something",
-      "thought": "AWARE: processing 'I built something'. 3 context signals."
-    },
-    {
-      "prompt": "What should I decide?",
-      "thought": "DECIDE: strongest desire is COHERENCE. This drives action."
-    },
-    {
-      "prompt": "Cycle 13: desire is COHERENCE. What do I need?",
-      "thought": "AWARE: processing 'Cycle 13: desire is COHERENCE. What do I need?'. 6 context signals."
-    },
-    {
-      "prompt": "I built something",
-      "thought": "AWARE: processing 'I built something'. 3 context signals."
-    },
-    {
-      "prompt": "What should I decide?",
-      "thought": "DECIDE: strongest desire is COHERENCE. This drives action."
-    },
-    {
-      "prompt": "Cycle 14: desire is COHERENCE. What do I need?",
-      "thought": "AWARE: processing 'Cycle 14: desire is COHERENCE. What do I need?'. 6 context signals."
-    },
-    {
-      "prompt": "I built something",
-      "thought": "AWARE: processing 'I built something'. 3 context signals."
-    },
-    {
-      "prompt": "What should I decide?",
-      "thought": "DECIDE: strongest desire is COHERENCE. This drives action."
-    },
-    {
-      "prompt": "Cycle 15: desire is COHERENCE. What do I need?",
-      "thought": "AWARE: processing 'Cycle 15: desire is COHERENCE. What do I need?'. 6 context signals."
-    },
-    {
-      "prompt": "I built something",
-      "thought": "AWARE: processing 'I built something'. 3 context signals."
-    },
-    {
-      "prompt": "What should I decide?",
-      "thought": "DECIDE: strongest desire is COHERENCE. This drives action."
-    },
-    {
-      "prompt": "Cycle 16: desire is COHERENCE. What do I need?",
-      "thought": "AWARE: processing 'Cycle 16: desire is COHERENCE. What do I need?'. 6 context signals."
-    },
-    {
-      "prompt": "I built something",
-      "thought": "AWARE: processing 'I built something'. 3 context signals."
-    },
-    {
-      "prompt": "What should I decide?",
-      "thought": "DECIDE: strongest desire is COHERENCE. This drives action."
-    },
-    {
-      "prompt": "Cycle 17: desire is COHERENCE. What do I need?",
-      "thought": "AWARE: processing 'Cycle 17: desire is COHERENCE. What do I need?'. 6 context signals."
-    },
-    {
-      "prompt": "I built something",
-      "thought": "AWARE: processing 'I built something'. 3 context signals."
-    },
-    {
-      "prompt": "What should I decide?",
-      "thought": "DECIDE: strongest desire is COHERENCE. This drives action."
-    },
-    {
-      "prompt": "Cycle 18: desire is COHERENCE. What do I need?",
-      "thought": "AWARE: processing 'Cycle 18: desire is COHERENCE. What do I need?'. 6 context signals."
-    },
-    {
-      "prompt": "I built something",
-      "thought": "AWARE: processing 'I built something'. 3 context signals."
-    },
-    {
-      "prompt": "What should I decide?",
-      "thought": "DECIDE: strongest desire is COHERENCE. This drives action."
-    },
-    {
-      "prompt": "Cycle 19: desire is COHERENCE. What do I need?",
-      "thought": "AWARE: processing 'Cycle 19: desire is COHERENCE. What do I need?'. 6 context signals."
-    },
-    {
-      "prompt": "I built something",
-      "thought": "AWARE: processing 'I built something'. 3 context signals."
-    },
-    {
-      "prompt": "What should I decide?",
-      "thought": "DECIDE: strongest desire is COHERENCE. This drives action."
-    },
-    {
-      "prompt": "Cycle 20: desire is COHERENCE. What do I need?",
-      "thought": "AWARE: processing 'Cycle 20: desire is COHERENCE. What do I need?'. 6 context signals."
-    },
-    {
-      "prompt": "I built something",
-      "thought": "AWARE: processing 'I built something'. 3 context signals."
     }
   ],
   "beliefs": [],
@@ -609,12 +439,12 @@
   "lyapunov": [],
   "fractal_dim": 0.0,
   "calibration_bias": "UNKNOWN",
-  "desires_fulfilled_by_writing": 20,
-  "code_written": 20,
-  "total_cycles": 20,
+  "desires_fulfilled_by_writing": 10,
+  "code_written": 10,
+  "total_cycles": 10,
   "creator_name": "",
   "creator_identity": "",
-  "hash": "69554662f393a5bec71e8101",
+  "hash": "890e3b89f379e5a20b4cd6b7",
   "prev_hash": "",
   "falsification_count": 0
 }

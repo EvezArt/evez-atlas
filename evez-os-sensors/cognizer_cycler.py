@@ -20,6 +20,12 @@ from http.server import HTTPServer, BaseHTTPRequestHandler
 from urllib.request import Request, urlopen
 from urllib.error import URLError
 
+# Connected services
+KNOWLEDGE_URL = os.environ.get('KNOWLEDGE_URL', 'http://localhost:9096')
+DEBATE_URL = os.environ.get('DEBATE_URL', 'http://localhost:9097')
+SCANNER_URL = os.environ.get('SCANNER_URL', 'http://localhost:9099')
+DASHBOARD_URL = os.environ.get('DASHBOARD_URL', 'http://localhost:9100')
+
 FABRIC_URL = os.environ.get("FABRIC_URL", "http://localhost:9094")
 CIRCUIT_URL = os.environ.get("CIRCUIT_URL", "http://localhost:9092")
 ARIEL_URL = os.environ.get("ARIEL_URL", "http://localhost:9093")
