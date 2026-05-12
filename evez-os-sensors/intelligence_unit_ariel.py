@@ -68,11 +68,14 @@ class ModelRouter:
         self._load_config()
     
     def _load_config(self):
-        """Load provider configuration."""
+        """Load provider configuration from persisted config."""
         if Path(self.config_path).exists():
             try:
                 d = json.loads(Path(self.config_path).read_text())
                 for name, cfg in d.get("providers", {}).items():
+                    # Skip providers that aren't active
+                    if cfg.get("status") == "disabled":
+                        continue
                     key = os.environ.get(f"{name.upper().replace('-','_')}_API_KEY", 
                                          cfg.get("apiKey", ""))
                     if key and "PLACEHOLDER" not in key:
