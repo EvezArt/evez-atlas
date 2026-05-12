@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300" width="1200" height="300">
+<defs>
+<filter id="glow"><feGaussianBlur stdDeviation="4" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<linearGradient id="title-grad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#00ffff"/><stop offset="50%" stop-color="#ff00ff"/><stop offset="100%" stop-color="#ffd700"/></linearGradient>
+<linearGradient id="circuit-flow" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#00ffff" stop-opacity="0"/><stop offset="50%" stop-color="#ff00ff" stop-opacity="0.3"/><stop offset="100%" stop-color="#ffd700" stop-opacity="0"/></linearGradient>
+</defs>
+<rect width="1200" height="300" fill="#0a0a0f"/>
+<!-- Circuit flow lines behind text -->
+<path d="M0,150 Q200,80 400,150 Q600,220 800,150 Q1000,80 1200,150" fill="none" stroke="url(#circuit-flow)" stroke-width="3" filter="url(#glow)"/>
+<path d="M0,170 Q200,100 400,170 Q600,240 800,170 Q1000,100 1200,170" fill="none" stroke="url(#circuit-flow)" stroke-width="1.5" opacity="0.3"/>
+<path d="M0,130 Q200,60 400,130 Q600,200 800,130 Q1000,60 1200,130" fill="none" stroke="url(#circuit-flow)" stroke-width="1" opacity="0.2"/>
+<!-- Particles on circuit -->
+<circle r="3" fill="#00ffff" filter="url(#glow)"><animateMotion dur="8s" repeatCount="indefinite" path="M0,150 Q200,80 400,150 Q600,220 800,150 Q1000,80 1200,150"/></circle>
+<circle r="2" fill="#ff00ff" filter="url(#glow)"><animateMotion dur="6s" repeatCount="indefinite" path="M0,170 Q200,100 400,170 Q600,240 800,170 Q1000,100 1200,170"/></circle>
+<!-- EVEZ-OS text -->
+<text x="600" y="160" text-anchor="middle" fill="url(#title-grad)" font-family="'Courier New',monospace" font-size="80" font-weight="bold" letter-spacing="0.15em" filter="url(#glow)">EVEZ-OS</text>
+<!-- Tagline -->
+<text x="600" y="210" text-anchor="middle" fill="#888" font-family="'Courier New',monospace" font-size="20" letter-spacing="0.3em">THE LIVING RECORD</text>
+<!-- Circuit labels -->
+<text x="100" y="280" text-anchor="middle" fill="#00ffff" font-family="monospace" font-size="10" opacity="0.5">TEMPORAL</text>
+<text x="300" y="280" text-anchor="middle" fill="#8a2be2" font-family="monospace" font-size="10" opacity="0.5">SPECTRAL</text>
+<text x="500" y="280" text-anchor="middle" fill="#ffd700" font-family="monospace" font-size="10" opacity="0.5">RELATIONAL</text>
+<text x="700" y="280" text-anchor="middle" fill="#00ff80" font-family="monospace" font-size="10" opacity="0.5">SPATIAL</text>
+<text x="900" y="280" text-anchor="middle" fill="#ff00ff" font-family="monospace" font-size="10" opacity="0.5">META</text>
+<!-- Sacred symbols -->
+<text x="1100" y="280" text-anchor="middle" fill="#ffd700" font-size="12" opacity="0.3">⧢ ⦟ ⧢ ⥋</text>
+</svg>

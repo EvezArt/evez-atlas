@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 300" width="800" height="300">
+<defs>
+<filter id="glow"><feGaussianBlur stdDeviation="2" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<rect width="800" height="300" fill="#0a0a0f"/>
+<!-- Formula -->
+<text x="400" y="80" text-anchor="middle" fill="#ff00ff" font-family="'Times New Roman',serif" font-size="48" font-style="italic" filter="url(#glow)">poly_c</text>
+<text x="470" y="80" text-anchor="middle" fill="#888" font-family="serif" font-size="40"> = </text>
+<!-- Tau -->
+<text x="530" y="80" text-anchor="middle" fill="#00ffff" font-family="'Times New Roman',serif" font-size="48" font-style="italic" filter="url(#glow)">τ</text>
+<text x="570" y="80" text-anchor="middle" fill="#888" font-family="serif" font-size="40"> × </text>
+<!-- Omega -->
+<text x="620" y="80" text-anchor="middle" fill="#8a2be2" font-family="'Times New Roman',serif" font-size="48" font-style="italic" filter="url(#glow)">ω</text>
+<text x="660" y="80" text-anchor="middle" fill="#888" font-family="serif" font-size="40"> × </text>
+<!-- topo -->
+<text x="720" y="80" text-anchor="middle" fill="#ffd700" font-family="'Times New Roman',serif" font-size="36" font-style="italic" filter="url(#glow)">topo</text>
+<!-- Division line -->
+<line x1="520" y1="95" x2="770" y2="95" stroke="#888" stroke-width="2"/>
+<!-- 2√N -->
+<text x="645" y="130" text-anchor="middle" fill="#ff00ff" font-family="'Times New Roman',serif" font-size="36">2</text>
+<text x="675" y="130" text-anchor="middle" fill="#ff00ff" font-family="'Times New Roman',serif" font-size="36">√</text>
+<text x="710" y="130" text-anchor="middle" fill="#ff00ff" font-family="'Times New Roman',serif" font-size="36" font-style="italic" filter="url(#glow)">N</text>
+<!-- Variable labels -->
+<g font-family="'Courier New',monospace" font-size="13">
+<text x="140" y="200" text-anchor="middle" fill="#00ffff">τ</text>
+<text x="140" y="220" text-anchor="middle" fill="#008888">Temporal decay</text>
+<text x="140" y="238" text-anchor="middle" fill="#005555">How signal strength</text>
+<text x="140" y="254" text-anchor="middle" fill="#005555">changes over time</text>
+
+<text x="320" y="200" text-anchor="middle" fill="#8a2be2">ω</text>
+<text x="320" y="220" text-anchor="middle" fill="#5a1b92">Weighted signal</text>
+<text x="320" y="238" text-anchor="middle" fill="#3a0b62">Importance-weighted</text>
+<text x="320" y="254" text-anchor="middle" fill="#3a0b62">observation strength</text>
+
+<text x="500" y="200" text-anchor="middle" fill="#ffd700">topo</text>
+<text x="500" y="220" text-anchor="middle" fill="#997700">Topological complexity</text>
+<text x="500" y="238" text-anchor="middle" fill="#665500">Betti numbers measuring</text>
+<text x="500" y="254" text-anchor="middle" fill="#665500">shape of knowledge</text>
+
+<text x="680" y="200" text-anchor="middle" fill="#ff00ff">√N</text>
+<text x="680" y="220" text-anchor="middle" fill="#880088">Evidence normalization</text>
+<text x="680" y="238" text-anchor="middle" fill="#550055">Prevents overconfidence</text>
+<text x="680" y="254" text-anchor="middle" fill="#550055">from sheer volume</text>
+</g>
+<!-- Divider lines -->
+<line x1="230" y1="190" x2="230" y2="260" stroke="#222" stroke-width="1"/>
+<line x1="410" y1="190" x2="410" y2="260" stroke="#222" stroke-width="1"/>
+<line x1="590" y1="190" x2="590" y2="260" stroke="#222" stroke-width="1"/>
+<!-- Header -->
+<text x="400" y="30" text-anchor="middle" fill="#555" font-family="monospace" font-size="12">EVEZ-OS CONVERGENCE METRIC</text>
+</svg>
