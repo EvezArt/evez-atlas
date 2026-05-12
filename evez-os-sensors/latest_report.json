@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-05-12T18:00:01.782035",
+  "timestamp": "2026-05-12T18:30:01.904951",
   "our_ip": "45.63.66.247",
   "exposed_ports": [
     "8080",
@@ -20,7 +20,7 @@
     "631",
     "22"
   ],
-  "external_connections": 3,
+  "external_connections": 4,
   "ssh_failures": 0,
   "http_probes": 0,
   "threat_ips": 0,
