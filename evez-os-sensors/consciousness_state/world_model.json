@@ -440,6 +440,34 @@
       "confidence": 0.8,
       "source": "designed",
       "created": "2026-05-12T20:14:56.822957"
+    },
+    {
+      "cause": "service_crash",
+      "effect": "restart_via_systemd",
+      "confidence": 0.95,
+      "source": "proven",
+      "created": "2026-05-12T20:15:55.693562"
+    },
+    {
+      "cause": "config_change",
+      "effect": "gateway_reload",
+      "confidence": 0.85,
+      "source": "observed",
+      "created": "2026-05-12T20:15:55.693884"
+    },
+    {
+      "cause": "knowledge_growth",
+      "effect": "debate_trigger",
+      "confidence": 0.7,
+      "source": "heuristic",
+      "created": "2026-05-12T20:15:55.694106"
+    },
+    {
+      "cause": "capability_gap",
+      "effect": "desire_generation",
+      "confidence": 0.8,
+      "source": "designed",
+      "created": "2026-05-12T20:15:55.694306"
     }
   ],
   "observations": []
