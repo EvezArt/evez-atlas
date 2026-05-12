@@ -23,7 +23,7 @@ SERVICES=(
     "debate_engine:9097:debate_engine.py"
     "evolutionary_forge:9098:evolutionary_forge.py"
     "api_scanner:9099:api_scanner.py"
-    "health:9101:openclaw_health.py:/health"
+    "health:9091:openclaw_health.py:/health"
 )
 
 revive() {
