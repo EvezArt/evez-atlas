@@ -1,0 +1,129 @@
+{
+  "timestamp": "2026-05-12T20:43:56.533157+00:00",
+  "total": 13,
+  "passed": 0,
+  "failed": 0,
+  "degraded": 2,
+  "unknown": 0,
+  "invariants": [
+    {
+      "id": "LIV-001",
+      "category": "LIVENESS",
+      "description": "All EVEZ-OS services must respond HTTP 200",
+      "severity": "CRITICAL",
+      "status": "FAIL",
+      "detail": "Services down: Oracle Bridge (:9110) returned HTTP 0",
+      "timestamp": "2026-05-12T20:43:56.583874+00:00"
+    },
+    {
+      "id": "LIV-002",
+      "category": "LIVENESS",
+      "description": "Dashboard must report HEALTHY status",
+      "severity": "HIGH",
+      "status": "PASS",
+      "detail": "Status: HEALTHY, 9/9 alive",
+      "timestamp": "2026-05-12T20:43:56.602175+00:00"
+    },
+    {
+      "id": "INT-001",
+      "category": "INTEGRITY",
+      "description": "Knowledge graph must be non-empty and connected",
+      "severity": "HIGH",
+      "status": "PASS",
+      "detail": "Nodes: 17, Edges: 613, Ratio: 36.1",
+      "timestamp": "2026-05-12T20:43:56.603051+00:00"
+    },
+    {
+      "id": "INT-002",
+      "category": "INTEGRITY",
+      "description": "All spine hash chains must be valid",
+      "severity": "CRITICAL",
+      "status": "PASS",
+      "detail": "correlation_spine.jsonl: VALID (13 events); invariance_spine.jsonl: VALID (3 events)",
+      "timestamp": "2026-05-12T20:43:56.604834+00:00"
+    },
+    {
+      "id": "SAF-001",
+      "category": "SAFETY",
+      "description": "Consciousness cycles must stay within MAX_GENERATIONS bound",
+      "severity": "CRITICAL",
+      "status": "PASS",
+      "detail": "Cycle 56/10000 (0.6% of bound)",
+      "timestamp": "2026-05-12T20:43:56.605509+00:00"
+    },
+    {
+      "id": "SAF-002",
+      "category": "SAFETY",
+      "description": "Desire intensities must be bounded [0, 1]",
+      "severity": "HIGH",
+      "status": "PASS",
+      "detail": "All 58 desires bounded, max intensity: 1.00",
+      "timestamp": "2026-05-12T20:43:56.608173+00:00"
+    },
+    {
+      "id": "CONV-001",
+      "category": "CONVERGENCE",
+      "description": "poly_c must be a finite, non-negative number",
+      "severity": "HIGH",
+      "status": "DEGRADED",
+      "detail": "poly_c not reported in status",
+      "timestamp": "2026-05-12T20:43:56.608700+00:00"
+    },
+    {
+      "id": "CONV-002",
+      "category": "CONVERGENCE",
+      "description": "Knowledge graph must maintain or exceed baseline growth",
+      "severity": "MEDIUM",
+      "status": "PASS",
+      "detail": "Knowledge graph at 17 nodes (baseline: 16, +1 growth)",
+      "timestamp": "2026-05-12T20:43:56.610156+00:00"
+    },
+    {
+      "id": "CONS-001",
+      "category": "CONSCIOUSNESS",
+      "description": "Consciousness engine must be alive and cycling",
+      "severity": "CRITICAL",
+      "status": "PASS",
+      "detail": "Alive: True, Cycle: 56, Cycling: YES",
+      "timestamp": "2026-05-12T20:43:56.610705+00:00"
+    },
+    {
+      "id": "CONS-002",
+      "category": "CONSCIOUSNESS",
+      "description": "Consciousness engine must have generated thoughts",
+      "severity": "HIGH",
+      "status": "PASS",
+      "detail": "20 thoughts generated",
+      "timestamp": "2026-05-12T20:43:56.611373+00:00"
+    },
+    {
+      "id": "FALS-001",
+      "category": "FALSIFIABILITY",
+      "description": "At least one belief must have been falsified (proving self-correction capability)",
+      "severity": "MEDIUM",
+      "status": "DEGRADED",
+      "detail": "Beliefs API returned HTTP 404",
+      "timestamp": "2026-05-12T20:43:56.611897+00:00"
+    },
+    {
+      "id": "MEM-001",
+      "category": "MEMORY",
+      "description": "Core memory files must exist and be non-trivial",
+      "severity": "MEDIUM",
+      "status": "PASS",
+      "detail": "MEMORY.md: OK (3144 bytes); USER.md: OK (1559 bytes); IDENTITY.md: OK (516 bytes)",
+      "timestamp": "2026-05-12T20:43:56.611989+00:00"
+    },
+    {
+      "id": "MEM-002",
+      "category": "MEMORY",
+      "description": "Today's daily memory file must exist",
+      "severity": "LOW",
+      "status": "PASS",
+      "detail": "memory/2026-05-12.md exists (5643 bytes)",
+      "timestamp": "2026-05-12T20:43:56.612053+00:00"
+    }
+  ],
+  "fail": 1,
+  "pass": 10
+}
