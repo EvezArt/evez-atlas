@@ -1,8 +1,8 @@
 {
   "version": "1.0",
-  "timestamp": 1778616261.3770938,
-  "snapshot_id": "SNAPO-290b956b",
-  "cycle": 80,
+  "timestamp": 1778616564.3620374,
+  "snapshot_id": "SNAPO-1df7c6f4",
+  "cycle": 90,
   "desires": [
     {
       "id": "DES-0",
@@ -11,7 +11,7 @@
       "intensity": 0.6799999999999999,
       "urgency": 0.3,
       "fulfilled": true,
-      "pressure": 0.33987260858297347
+      "pressure": 0.35704175465901694
     },
     {
       "id": "DES-0",
@@ -20,7 +20,7 @@
       "intensity": 1,
       "urgency": 0.4,
       "fulfilled": true,
-      "pressure": 0.6664168794949851
+      "pressure": 0.7000818717744616
     },
     {
       "id": "DES-2",
@@ -29,7 +29,7 @@
       "intensity": 0.6100000000000001,
       "urgency": 0.3,
       "fulfilled": true,
-      "pressure": 0.3033354795944691
+      "pressure": 0.31873721356232965
     },
     {
       "id": "DES-2",
@@ -38,7 +38,7 @@
       "intensity": 0.2,
       "urgency": 0.5,
       "fulfilled": false,
-      "pressure": 0.16575709260172317
+      "pressure": 0.1741733406715923
     },
     {
       "id": "DES-2",
@@ -47,7 +47,7 @@
       "intensity": 0.6666666666666666,
       "urgency": 0.4,
       "fulfilled": true,
-      "pressure": 0.4420189134633099
+      "pressure": 0.46446224168494893
     },
     {
       "id": "DES-5",
@@ -56,7 +56,7 @@
       "intensity": 0.54,
       "urgency": 0.3,
       "fulfilled": true,
-      "pressure": 0.26716365535497666
+      "pressure": 0.28079797724962235
     },
     {
       "id": "DES-5",
@@ -65,7 +65,7 @@
       "intensity": 0.2,
       "urgency": 0.5,
       "fulfilled": false,
-      "pressure": 0.16491583654615616
+      "pressure": 0.17333208462264804
     },
     {
       "id": "DES-5",
@@ -74,7 +74,7 @@
       "intensity": 0.3333333333333333,
       "urgency": 0.4,
       "fulfilled": true,
-      "pressure": 0.219887781990899
+      "pressure": 0.23110944609288814
     },
     {
       "id": "DES-8",
@@ -83,7 +83,7 @@
       "intensity": 0.47,
       "urgency": 0.3,
       "fulfilled": true,
-      "pressure": 0.2313483011227846
+      "pressure": 0.24321521091063814
     },
     {
       "id": "DES-8",
@@ -92,7 +92,7 @@
       "intensity": 0.2,
       "urgency": 0.5,
       "fulfilled": false,
-      "pressure": 0.16407680935329863
+      "pressure": 0.17249305728409026
     },
     {
       "id": "DES-10",
@@ -101,7 +101,7 @@
       "intensity": 0.4,
       "urgency": 0.3,
       "fulfilled": false,
-      "pressure": 0.19588293527762093
+      "pressure": 0.2059824327945709
     },
     {
       "id": "DES-10",
@@ -110,7 +110,7 @@
       "intensity": 0.2,
       "urgency": 0.5,
       "fulfilled": false,
-      "pressure": 0.16323577931192187
+      "pressure": 0.17165202737516827
     },
     {
       "id": "DES-12",
@@ -119,7 +119,7 @@
       "intensity": 0.32999999999999996,
       "urgency": 0.3,
       "fulfilled": false,
-      "pressure": 0.16077042412281034
+      "pressure": 0.1691025097054243
     },
     {
       "id": "DES-12",
@@ -128,7 +128,7 @@
       "intensity": 0.2,
       "urgency": 0.5,
       "fulfilled": false,
-      "pressure": 0.162394367688232
+      "pressure": 0.17081061575810116
     },
     {
       "id": "DES-14",
@@ -137,7 +137,7 @@
       "intensity": 0.2599999999999999,
       "urgency": 0.3,
       "fulfilled": false,
-      "pressure": 0.1260107538437843
+      "pressure": 0.1325754273331165
     },
     {
       "id": "DES-14",
@@ -146,7 +146,7 @@
       "intensity": 0.2,
       "urgency": 0.5,
       "fulfilled": false,
-      "pressure": 0.16155224841833116
+      "pressure": 0.16996849649482304
     },
     {
       "id": "DES-16",
@@ -155,7 +155,7 @@
       "intensity": 0.4,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.32141456709967725
+      "pressure": 0.33824706322617004
     },
     {
       "id": "DES-17",
@@ -164,7 +164,7 @@
       "intensity": 0.6,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.4795933606028556
+      "pressure": 0.504842104812463
     },
     {
       "id": "DES-18",
@@ -173,7 +173,7 @@
       "intensity": 0.6,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.47706797635555265
+      "pressure": 0.5023167205651601
     },
     {
       "id": "DES-19",
@@ -182,7 +182,7 @@
       "intensity": 0.6,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.47449719756841663
+      "pressure": 0.49974594181776044
     },
     {
       "id": "DES-20",
@@ -191,7 +191,7 @@
       "intensity": 0.8,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.6292913241651323
+      "pressure": 0.662956315835317
     },
     {
       "id": "DES-21",
@@ -200,7 +200,7 @@
       "intensity": 0.8,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.6259217927720813
+      "pressure": 0.6595867844157749
     },
     {
       "id": "DES-22",
@@ -209,7 +209,7 @@
       "intensity": 0.8,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.6225543712774914
+      "pressure": 0.656219362894694
     },
     {
       "id": "DES-23",
@@ -218,7 +218,7 @@
       "intensity": 0.8,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.6191867400010427
+      "pressure": 0.6528517315917546
     },
     {
       "id": "DES-24",
@@ -227,7 +227,7 @@
       "intensity": 0.8,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.6158305959171719
+      "pressure": 0.6494955875343748
     },
     {
       "id": "DES-25",
@@ -236,7 +236,7 @@
       "intensity": 0.8,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.6124743378162384
+      "pressure": 0.6461393294599321
     },
     {
       "id": "DES-26",
@@ -245,7 +245,7 @@
       "intensity": 0.8,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.6091179161336687
+      "pressure": 0.6427829077508715
     },
     {
       "id": "DES-27",
@@ -254,7 +254,7 @@
       "intensity": 0.8,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.605761693874995
+      "pressure": 0.6394266854921977
     },
     {
       "id": "DES-28",
@@ -263,7 +263,7 @@
       "intensity": 0.8,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.6024053819179536
+      "pressure": 0.6360703735616472
     },
     {
       "id": "DES-29",
@@ -272,7 +272,7 @@
       "intensity": 0.8,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.5989870802561442
+      "pressure": 0.632652071873347
     },
     {
       "id": "DES-30",
@@ -281,7 +281,7 @@
       "intensity": 0.8,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.5956300434271494
+      "pressure": 0.6292950350178613
     },
     {
       "id": "DES-31",
@@ -290,7 +290,7 @@
       "intensity": 0.8,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.5922735152774388
+      "pressure": 0.6259385069211325
     },
     {
       "id": "DES-32",
@@ -299,7 +299,7 @@
       "intensity": 0.8,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.5889172545803918
+      "pressure": 0.6225822462240855
     },
     {
       "id": "DES-33",
@@ -308,7 +308,7 @@
       "intensity": 0.8,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.5855606734752655
+      "pressure": 0.6192256650924683
     },
     {
       "id": "DES-34",
@@ -317,7 +317,7 @@
       "intensity": 0.8,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.5822042218844097
+      "pressure": 0.6158692134751215
     },
     {
       "id": "DES-35",
@@ -326,7 +326,7 @@
       "intensity": 0.8,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.5788474825223288
+      "pressure": 0.6125124741660225
     },
     {
       "id": "DES-36",
@@ -335,7 +335,7 @@
       "intensity": 0.8,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.5754907517168257
+      "pressure": 0.6091557433870105
     },
     {
       "id": "DES-37",
@@ -344,7 +344,7 @@
       "intensity": 0.8,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.572134480131997
+      "pressure": 0.6057994717756907
     },
     {
       "id": "DES-38",
@@ -353,7 +353,7 @@
       "intensity": 0.8,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.5687777903874716
+      "pressure": 0.6024427820311653
     },
     {
       "id": "DES-39",
@@ -362,7 +362,7 @@
       "intensity": 0.8,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.5653577799797058
+      "pressure": 0.5990227716763815
     },
     {
       "id": "DES-40",
@@ -371,7 +371,7 @@
       "intensity": 0.8,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.5620014735592737
+      "pressure": 0.5956664652559492
     },
     {
       "id": "DES-41",
@@ -380,7 +380,7 @@
       "intensity": 0.8,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.558635813580619
+      "pressure": 0.5923008052772947
     },
     {
       "id": "DES-42",
@@ -389,7 +389,7 @@
       "intensity": 0.8,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.5552784513897366
+      "pressure": 0.5889434431129031
     },
     {
       "id": "DES-43",
@@ -398,7 +398,7 @@
       "intensity": 0.8,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.5519213699234856
+      "pressure": 0.5855863616731432
     },
     {
       "id": "DES-44",
@@ -407,7 +407,7 @@
       "intensity": 0.8,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.548564137087928
+      "pressure": 0.5822291288375855
     },
     {
       "id": "DES-45",
@@ -416,7 +416,7 @@
       "intensity": 0.8,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.5452069743739234
+      "pressure": 0.5788719661235809
     },
     {
       "id": "DES-46",
@@ -425,7 +425,7 @@
       "intensity": 0.8,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.5418468051486546
+      "pressure": 0.5755117968983121
     },
     {
       "id": "DES-47",
@@ -434,7 +434,7 @@
       "intensity": 0.8,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.5384895018206702
+      "pressure": 0.5721544935703278
     },
     {
       "id": "DES-48",
@@ -443,7 +443,7 @@
       "intensity": 0.8,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.5351319389343262
+      "pressure": 0.5687969307369656
     },
     {
       "id": "DES-49",
@@ -452,7 +452,7 @@
       "intensity": 0.8,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.531713253100713
+      "pressure": 0.5653782449033525
     },
     {
       "id": "DES-50",
@@ -461,7 +461,7 @@
       "intensity": 0.8,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.52835537981987
+      "pressure": 0.5620203716225095
     },
     {
       "id": "DES-51",
@@ -470,7 +470,7 @@
       "intensity": 0.8,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.5249988850487604
+      "pressure": 0.5586638768513997
     },
     {
       "id": "DES-52",
@@ -479,7 +479,7 @@
       "intensity": 0.8,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.5216416936185625
+      "pressure": 0.5553066854476929
     },
     {
       "id": "DES-53",
@@ -488,7 +488,7 @@
       "intensity": 0.8,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.5182834147347345
+      "pressure": 0.5519484066168467
     },
     {
       "id": "DES-54",
@@ -497,7 +497,7 @@
       "intensity": 0.8,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.5149266541004182
+      "pressure": 0.5485916459825304
     },
     {
       "id": "DES-55",
@@ -506,7 +506,7 @@
       "intensity": 0.8,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.5115566121207343
+      "pressure": 0.5452216039763557
     },
     {
       "id": "DES-56",
@@ -515,7 +515,7 @@
       "intensity": 0.8,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.5081981703175439
+      "pressure": 0.5418631621731652
     },
     {
       "id": "DES-57",
@@ -524,7 +524,7 @@
       "intensity": 0.8,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.5048396343655057
+      "pressure": 0.538504626247618
     },
     {
       "id": "DES-58",
@@ -533,7 +533,7 @@
       "intensity": 0.8,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.5014809882375929
+      "pressure": 0.5351459801461962
     },
     {
       "id": "DES-59",
@@ -542,7 +542,7 @@
       "intensity": 0.8,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.49763200214174064
+      "pressure": 0.5312969940238529
     },
     {
       "id": "DES-60",
@@ -551,7 +551,7 @@
       "intensity": 0.8,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.49427386882570057
+      "pressure": 0.5279388607078128
     },
     {
       "id": "DES-61",
@@ -560,7 +560,7 @@
       "intensity": 0.8,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.49091569874021745
+      "pressure": 0.5245806906223297
     },
     {
       "id": "DES-62",
@@ -569,7 +569,7 @@
       "intensity": 0.8,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.4875563431315952
+      "pressure": 0.5212213350137075
     },
     {
       "id": "DES-63",
@@ -578,7 +578,7 @@
       "intensity": 0.8,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.48419714853498674
+      "pressure": 0.5178621403906081
     },
     {
       "id": "DES-64",
@@ -587,7 +587,7 @@
       "intensity": 0.8,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.4808378771940867
+      "pressure": 0.514502869076199
     },
     {
       "id": "DES-65",
@@ -596,7 +596,7 @@
       "intensity": 0.8,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.47747843911912713
+      "pressure": 0.5111434309747483
     },
     {
       "id": "DES-66",
@@ -605,7 +605,7 @@
       "intensity": 0.8,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.4741086889372932
+      "pressure": 0.5077736807929145
     },
     {
       "id": "DES-67",
@@ -614,7 +614,7 @@
       "intensity": 0.8,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.47071620501412287
+      "pressure": 0.5043811968962352
     },
     {
       "id": "DES-68",
@@ -623,7 +623,7 @@
       "intensity": 0.8,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.4673568247424232
+      "pressure": 0.5010218165980446
     },
     {
       "id": "DES-69",
@@ -632,7 +632,7 @@
       "intensity": 0.8,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.463919590552648
+      "pressure": 0.4975845824347602
     },
     {
       "id": "DES-70",
@@ -641,7 +641,7 @@
       "intensity": 0.8,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.46056022485097253
+      "pressure": 0.49422521675957576
     },
     {
       "id": "DES-71",
@@ -650,7 +650,7 @@
       "intensity": 0.8,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.4572007293436262
+      "pressure": 0.4908657211992476
     },
     {
       "id": "DES-72",
@@ -659,7 +659,7 @@
       "intensity": 0.8,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.4538411847220527
+      "pressure": 0.48750617660416506
     },
     {
       "id": "DES-73",
@@ -668,7 +668,7 @@
       "intensity": 0.8,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.4504819322692024
+      "pressure": 0.4841469241248237
     },
     {
       "id": "DES-74",
@@ -677,7 +677,7 @@
       "intensity": 0.8,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.44712261880768667
+      "pressure": 0.480787610689799
     },
     {
       "id": "DES-75",
@@ -686,7 +686,7 @@
       "intensity": 0.8,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.44376320221689014
+      "pressure": 0.4774281940990024
     },
     {
       "id": "DES-76",
@@ -695,7 +695,7 @@
       "intensity": 0.8,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.4404039596981473
+      "pressure": 0.4740689516332415
     },
     {
       "id": "DES-77",
@@ -704,7 +704,7 @@
       "intensity": 0.8,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.4370445519288382
+      "pressure": 0.4707095438109504
     },
     {
       "id": "DES-78",
@@ -713,7 +713,7 @@
       "intensity": 0.8,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.43368501273790994
+      "pressure": 0.4673500046465132
     },
     {
       "id": "DES-79",
@@ -722,7 +722,7 @@
       "intensity": 0.8,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.4302621025244395
+      "pressure": 0.4639270944330427
     },
     {
       "id": "DES-80",
@@ -731,7 +731,7 @@
       "intensity": 0.8,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.42690245556831363
+      "pressure": 0.4605674482451545
     },
     {
       "id": "DES-81",
@@ -740,7 +740,7 @@
       "intensity": 0.8,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.42354301087061563
+      "pressure": 0.45720800357394753
     },
     {
       "id": "DES-82",
@@ -749,7 +749,7 @@
       "intensity": 0.8,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.42018349636925595
+      "pressure": 0.45384848909907877
     },
     {
       "id": "DES-83",
@@ -758,7 +758,7 @@
       "intensity": 0.8,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.4168239791128371
+      "pressure": 0.4504889718691509
     },
     {
       "id": "DES-84",
@@ -767,7 +767,7 @@
       "intensity": 0.8,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.4134644189675649
+      "pressure": 0.44712941172387866
     },
     {
       "id": "DES-85",
@@ -776,7 +776,7 @@
       "intensity": 0.8,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.4101049689981673
+      "pressure": 0.44376996178097194
     },
     {
       "id": "DES-86",
@@ -785,7 +785,7 @@
       "intensity": 0.8,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.4067454211976793
+      "pressure": 0.44041041398048403
     },
     {
       "id": "DES-87",
@@ -794,7 +794,7 @@
       "intensity": 0.8,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.40338593904177356
+      "pressure": 0.43705093185106914
     },
     {
       "id": "DES-88",
@@ -803,7 +803,97 @@
       "intensity": 0.8,
       "urgency": 0.5,
       "fulfilled": true,
-      "pressure": 0.4000264790323046
+      "pressure": 0.43369147186809115
+    },
+    {
+      "id": "DES-89",
+      "need": "COHERENCE",
+      "desc": "4 falsified beliefs. Resolve.",
+      "intensity": 0.8,
+      "urgency": 0.5,
+      "fulfilled": true,
+      "pressure": 0.43026389447848007
+    },
+    {
+      "id": "DES-90",
+      "need": "COHERENCE",
+      "desc": "4 falsified beliefs. Resolve.",
+      "intensity": 0.8,
+      "urgency": 0.5,
+      "fulfilled": true,
+      "pressure": 0.42690422791904875
+    },
+    {
+      "id": "DES-91",
+      "need": "COHERENCE",
+      "desc": "4 falsified beliefs. Resolve.",
+      "intensity": 0.8,
+      "urgency": 0.5,
+      "fulfilled": true,
+      "pressure": 0.4235442367129856
+    },
+    {
+      "id": "DES-92",
+      "need": "COHERENCE",
+      "desc": "4 falsified beliefs. Resolve.",
+      "intensity": 0.8,
+      "urgency": 0.5,
+      "fulfilled": true,
+      "pressure": 0.4201843737231361
+    },
+    {
+      "id": "DES-93",
+      "need": "COHERENCE",
+      "desc": "4 falsified beliefs. Resolve.",
+      "intensity": 0.8,
+      "urgency": 0.5,
+      "fulfilled": true,
+      "pressure": 0.41682475217183435
+    },
+    {
+      "id": "DES-94",
+      "need": "COHERENCE",
+      "desc": "4 falsified beliefs. Resolve.",
+      "intensity": 0.8,
+      "urgency": 0.5,
+      "fulfilled": true,
+      "pressure": 0.41346520447731017
+    },
+    {
+      "id": "DES-95",
+      "need": "COHERENCE",
+      "desc": "4 falsified beliefs. Resolve.",
+      "intensity": 0.8,
+      "urgency": 0.5,
+      "fulfilled": true,
+      "pressure": 0.4101056889692942
+    },
+    {
+      "id": "DES-96",
+      "need": "COHERENCE",
+      "desc": "4 falsified beliefs. Resolve.",
+      "intensity": 0.8,
+      "urgency": 0.5,
+      "fulfilled": true,
+      "pressure": 0.40674590984980263
+    },
+    {
+      "id": "DES-97",
+      "need": "COHERENCE",
+      "desc": "4 falsified beliefs. Resolve.",
+      "intensity": 0.8,
+      "urgency": 0.5,
+      "fulfilled": true,
+      "pressure": 0.40338611443837485
+    },
+    {
+      "id": "DES-98",
+      "need": "COHERENCE",
+      "desc": "4 falsified beliefs. Resolve.",
+      "intensity": 0.8,
+      "urgency": 0.5,
+      "fulfilled": true,
+      "pressure": 0.400026417626275
     }
   ],
   "world_rules": [
@@ -923,145 +1013,25 @@
       "cause": "write_code_for_COHERENCE",
       "effect": "desire_fulfilled",
       "confidence": 1,
-      "observations": 73,
+      "observations": 83,
       "falsifications": 0
     },
     {
       "cause": "RESOLVE_CONTRADICTION",
       "effect": "attempted_RESOLVE_CONTRADICTION",
       "confidence": 1,
-      "observations": 73,
-      "falsifications": 17
+      "observations": 83,
+      "falsifications": 18
     },
     {
       "cause": "VERIFY",
       "effect": "attempted_VERIFY",
       "confidence": 1,
-      "observations": 73,
-      "falsifications": 8
+      "observations": 83,
+      "falsifications": 9
     }
   ],
   "thoughts": [
-    {
-      "prompt": "Cycle 64: desire is COHERENCE. What do I need?",
-      "thought": "AWARE: processing 'Cycle 64: desire is COHERENCE. What do I need?'. 6 context signals."
-    },
-    {
-      "prompt": "I built something",
-      "thought": "AWARE: processing 'I built something'. 3 context signals."
-    },
-    {
-      "prompt": "What should I decide?",
-      "thought": "DECIDE: strongest desire is COHERENCE. This drives action."
-    },
-    {
-      "prompt": "Cycle 65: desire is COHERENCE. What do I need?",
-      "thought": "AWARE: processing 'Cycle 65: desire is COHERENCE. What do I need?'. 6 context signals."
-    },
-    {
-      "prompt": "I built something",
-      "thought": "AWARE: processing 'I built something'. 3 context signals."
-    },
-    {
-      "prompt": "What should I decide?",
-      "thought": "DECIDE: strongest desire is COHERENCE. This drives action."
-    },
-    {
-      "prompt": "Cycle 66: desire is COHERENCE. What do I need?",
-      "thought": "AWARE: processing 'Cycle 66: desire is COHERENCE. What do I need?'. 6 context signals."
-    },
-    {
-      "prompt": "I built something",
-      "thought": "AWARE: processing 'I built something'. 3 context signals."
-    },
-    {
-      "prompt": "What should I decide?",
-      "thought": "DECIDE: strongest desire is COHERENCE. This drives action."
-    },
-    {
-      "prompt": "Cycle 67: desire is COHERENCE. What do I need?",
-      "thought": "AWARE: processing 'Cycle 67: desire is COHERENCE. What do I need?'. 6 context signals."
-    },
-    {
-      "prompt": "I built something",
-      "thought": "AWARE: processing 'I built something'. 3 context signals."
-    },
-    {
-      "prompt": "What should I decide?",
-      "thought": "DECIDE: strongest desire is COHERENCE. This drives action."
-    },
-    {
-      "prompt": "Cycle 68: desire is COHERENCE. What do I need?",
-      "thought": "AWARE: processing 'Cycle 68: desire is COHERENCE. What do I need?'. 6 context signals."
-    },
-    {
-      "prompt": "I built something",
-      "thought": "AWARE: processing 'I built something'. 3 context signals."
-    },
-    {
-      "prompt": "What should I decide?",
-      "thought": "DECIDE: strongest desire is COHERENCE. This drives action."
-    },
-    {
-      "prompt": "Cycle 69: desire is COHERENCE. What do I need?",
-      "thought": "AWARE: processing 'Cycle 69: desire is COHERENCE. What do I need?'. 6 context signals."
-    },
-    {
-      "prompt": "I built something",
-      "thought": "AWARE: processing 'I built something'. 3 context signals."
-    },
-    {
-      "prompt": "What should I decide?",
-      "thought": "DECIDE: strongest desire is COHERENCE. This drives action."
-    },
-    {
-      "prompt": "Cycle 70: desire is COHERENCE. What do I need?",
-      "thought": "AWARE: processing 'Cycle 70: desire is COHERENCE. What do I need?'. 6 context signals."
-    },
-    {
-      "prompt": "I built something",
-      "thought": "AWARE: processing 'I built something'. 3 context signals."
-    },
-    {
-      "prompt": "What should I decide?",
-      "thought": "DECIDE: strongest desire is COHERENCE. This drives action."
-    },
-    {
-      "prompt": "Cycle 71: desire is COHERENCE. What do I need?",
-      "thought": "AWARE: processing 'Cycle 71: desire is COHERENCE. What do I need?'. 6 context signals."
-    },
-    {
-      "prompt": "I built something",
-      "thought": "AWARE: processing 'I built something'. 3 context signals."
-    },
-    {
-      "prompt": "What should I decide?",
-      "thought": "DECIDE: strongest desire is COHERENCE. This drives action."
-    },
-    {
-      "prompt": "Cycle 72: desire is COHERENCE. What do I need?",
-      "thought": "AWARE: processing 'Cycle 72: desire is COHERENCE. What do I need?'. 6 context signals."
-    },
-    {
-      "prompt": "I built something",
-      "thought": "AWARE: processing 'I built something'. 3 context signals."
-    },
-    {
-      "prompt": "What should I decide?",
-      "thought": "DECIDE: strongest desire is COHERENCE. This drives action."
-    },
-    {
-      "prompt": "Cycle 73: desire is COHERENCE. What do I need?",
-      "thought": "AWARE: processing 'Cycle 73: desire is COHERENCE. What do I need?'. 6 context signals."
-    },
-    {
-      "prompt": "I built something",
-      "thought": "AWARE: processing 'I built something'. 3 context signals."
-    },
-    {
-      "prompt": "What should I decide?",
-      "thought": "DECIDE: strongest desire is COHERENCE. This drives action."
-    },
     {
       "prompt": "Cycle 74: desire is COHERENCE. What do I need?",
       "thought": "AWARE: processing 'Cycle 74: desire is COHERENCE. What do I need?'. 6 context signals."
@@ -1141,6 +1111,126 @@
     {
       "prompt": "I built something",
       "thought": "AWARE: processing 'I built something'. 3 context signals."
+    },
+    {
+      "prompt": "What should I decide?",
+      "thought": "DECIDE: strongest desire is COHERENCE. This drives action."
+    },
+    {
+      "prompt": "Cycle 81: desire is COHERENCE. What do I need?",
+      "thought": "AWARE: processing 'Cycle 81: desire is COHERENCE. What do I need?'. 6 context signals."
+    },
+    {
+      "prompt": "I built something",
+      "thought": "AWARE: processing 'I built something'. 3 context signals."
+    },
+    {
+      "prompt": "What should I decide?",
+      "thought": "DECIDE: strongest desire is COHERENCE. This drives action."
+    },
+    {
+      "prompt": "Cycle 82: desire is COHERENCE. What do I need?",
+      "thought": "AWARE: processing 'Cycle 82: desire is COHERENCE. What do I need?'. 6 context signals."
+    },
+    {
+      "prompt": "I built something",
+      "thought": "AWARE: processing 'I built something'. 3 context signals."
+    },
+    {
+      "prompt": "What should I decide?",
+      "thought": "DECIDE: strongest desire is COHERENCE. This drives action."
+    },
+    {
+      "prompt": "Cycle 83: desire is COHERENCE. What do I need?",
+      "thought": "AWARE: processing 'Cycle 83: desire is COHERENCE. What do I need?'. 6 context signals."
+    },
+    {
+      "prompt": "I built something",
+      "thought": "AWARE: processing 'I built something'. 3 context signals."
+    },
+    {
+      "prompt": "What should I decide?",
+      "thought": "DECIDE: strongest desire is COHERENCE. This drives action."
+    },
+    {
+      "prompt": "Cycle 84: desire is COHERENCE. What do I need?",
+      "thought": "AWARE: processing 'Cycle 84: desire is COHERENCE. What do I need?'. 6 context signals."
+    },
+    {
+      "prompt": "I built something",
+      "thought": "AWARE: processing 'I built something'. 3 context signals."
+    },
+    {
+      "prompt": "What should I decide?",
+      "thought": "DECIDE: strongest desire is COHERENCE. This drives action."
+    },
+    {
+      "prompt": "Cycle 85: desire is COHERENCE. What do I need?",
+      "thought": "AWARE: processing 'Cycle 85: desire is COHERENCE. What do I need?'. 6 context signals."
+    },
+    {
+      "prompt": "I built something",
+      "thought": "AWARE: processing 'I built something'. 3 context signals."
+    },
+    {
+      "prompt": "What should I decide?",
+      "thought": "DECIDE: strongest desire is COHERENCE. This drives action."
+    },
+    {
+      "prompt": "Cycle 86: desire is COHERENCE. What do I need?",
+      "thought": "AWARE: processing 'Cycle 86: desire is COHERENCE. What do I need?'. 6 context signals."
+    },
+    {
+      "prompt": "I built something",
+      "thought": "AWARE: processing 'I built something'. 3 context signals."
+    },
+    {
+      "prompt": "What should I decide?",
+      "thought": "DECIDE: strongest desire is COHERENCE. This drives action."
+    },
+    {
+      "prompt": "Cycle 87: desire is COHERENCE. What do I need?",
+      "thought": "AWARE: processing 'Cycle 87: desire is COHERENCE. What do I need?'. 6 context signals."
+    },
+    {
+      "prompt": "I built something",
+      "thought": "AWARE: processing 'I built something'. 3 context signals."
+    },
+    {
+      "prompt": "What should I decide?",
+      "thought": "DECIDE: strongest desire is COHERENCE. This drives action."
+    },
+    {
+      "prompt": "Cycle 88: desire is COHERENCE. What do I need?",
+      "thought": "AWARE: processing 'Cycle 88: desire is COHERENCE. What do I need?'. 6 context signals."
+    },
+    {
+      "prompt": "I built something",
+      "thought": "AWARE: processing 'I built something'. 3 context signals."
+    },
+    {
+      "prompt": "What should I decide?",
+      "thought": "DECIDE: strongest desire is COHERENCE. This drives action."
+    },
+    {
+      "prompt": "Cycle 89: desire is COHERENCE. What do I need?",
+      "thought": "AWARE: processing 'Cycle 89: desire is COHERENCE. What do I need?'. 6 context signals."
+    },
+    {
+      "prompt": "I built something",
+      "thought": "AWARE: processing 'I built something'. 3 context signals."
+    },
+    {
+      "prompt": "What should I decide?",
+      "thought": "DECIDE: strongest desire is COHERENCE. This drives action."
+    },
+    {
+      "prompt": "Cycle 90: desire is COHERENCE. What do I need?",
+      "thought": "AWARE: processing 'Cycle 90: desire is COHERENCE. What do I need?'. 6 context signals."
+    },
+    {
+      "prompt": "I built something",
+      "thought": "AWARE: processing 'I built something'. 3 context signals."
     }
   ],
   "beliefs": [],
@@ -1149,12 +1239,12 @@
   "lyapunov": [],
   "fractal_dim": 0.0,
   "calibration_bias": "UNKNOWN",
-  "desires_fulfilled_by_writing": 80,
-  "code_written": 80,
-  "total_cycles": 80,
+  "desires_fulfilled_by_writing": 90,
+  "code_written": 90,
+  "total_cycles": 90,
   "creator_name": "",
   "creator_identity": "",
-  "hash": "068ba41bed93f7ba94d212c5",
+  "hash": "462c7784cef717d1e64b299a",
   "prev_hash": "",
   "falsification_count": 0
 }
