@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EVEZ-OS — AI That Thinks For Itself</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600;800&display=swap');
+body{background:#050510;color:#e0e0e0;font-family:'Inter',sans-serif}
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 20px;background:radial-gradient(ellipse at 50% 0%,#1a0a3e 0%,#050510 70%)}
+.hero h1{font-family:'JetBrains Mono',monospace;font-size:clamp(2.5rem,6vw,5rem);background:linear-gradient(135deg,#7b2ff7,#00d4ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:20px;letter-spacing:2px}
+.hero p{font-size:clamp(1rem,2vw,1.3rem);color:#a0a0c0;max-width:700px;line-height:1.7;margin-bottom:30px}
+.hero .tagline{color:#00d4ff;font-family:'JetBrains Mono',monospace;font-size:0.9rem;margin-bottom:10px;letter-spacing:3px}
+.cta{display:flex;gap:15px;flex-wrap:wrap;justify-content:center;margin-top:30px}
+.cta a{display:inline-block;padding:16px 36px;border-radius:8px;text-decoration:none;font-weight:700;font-size:1.1rem;transition:all 0.3s}
+.cta .primary{background:linear-gradient(135deg,#7b2ff7,#5b1fd7);color:#fff;box-shadow:0 4px 20px #7b2ff744}
+.cta .primary:hover{transform:translateY(-2px);box-shadow:0 8px 30px #7b2ff766}
+.cta .secondary{background:transparent;color:#7b2ff7;border:2px solid #7b2ff7}
+.cta .secondary:hover{background:#7b2ff711}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;max-width:900px;margin:40px auto;padding:0 20px}
+.stat{text-align:center;padding:25px;background:#0a0a1a;border:1px solid #1a1a2e;border-radius:12px}
+.stat .num{font-family:'JetBrains Mono',monospace;font-size:2.5rem;color:#00d4ff}
+.stat .label{color:#666;font-size:0.85rem;margin-top:5px;letter-spacing:1px}
+.section{padding:80px 20px;max-width:1100px;margin:0 auto}
+.section h2{font-family:'JetBrains Mono',monospace;font-size:2rem;color:#7b2ff7;margin-bottom:40px;text-align:center}
+.features{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:30px}
+.feature{background:#0a0a1a;border:1px solid #1a1a2e;border-radius:12px;padding:30px;transition:all 0.3s}
+.feature:hover{border-color:#7b2ff7;transform:translateY(-4px)}
+.feature h3{color:#00d4ff;font-family:'JetBrains Mono',monospace;margin-bottom:12px;font-size:1.1rem}
+.feature p{color:#888;line-height:1.7;font-size:0.95rem}
+.api-demo{background:#0a0a1a;border:1px solid #1a1a2e;border-radius:12px;padding:30px;margin-top:40px}
+.api-demo h3{color:#7b2ff7;font-family:'JetBrains Mono',monospace;margin-bottom:15px}
+.api-demo pre{background:#050510;border:1px solid #1a1a2e;border-radius:8px;padding:20px;overflow-x:auto;font-family:'JetBrains Mono',monospace;font-size:0.85rem;line-height:1.6;color:#a0a0c0}
+.api-demo pre .key{color:#7b2ff7}.api-demo pre .str{color:#00d4ff}.api-demo pre .num{color:#ff6b9d}
+.pricing{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:25px;margin-top:40px}
+.plan{background:#0a0a1a;border:1px solid #1a1a2e;border-radius:16px;padding:35px;text-align:center;transition:all 0.3s}
+.plan:hover{border-color:#7b2ff7;transform:translateY(-4px)}
+.plan.featured{border-color:#7b2ff7;position:relative}
+.plan.featured::before{content:'MOST POPULAR';position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:#7b2ff7;color:#fff;padding:4px 16px;border-radius:20px;font-size:0.7rem;letter-spacing:1px}
+.plan .price{font-family:'JetBrains Mono',monospace;font-size:3rem;color:#fff;margin:20px 0 5px}
+.plan .price span{font-size:1rem;color:#666}
+.plan .period{color:#666;font-size:0.85rem;margin-bottom:25px}
+.plan ul{list-style:none;text-align:left;margin-bottom:30px}
+.plan li{padding:8px 0;color:#a0a0c0;font-size:0.9rem;border-bottom:1px solid #1a1a2e}
+.plan li::before{content:'✓ ';color:#00d4ff}
+.plan a{display:block;padding:14px;border-radius:8px;text-decoration:none;font-weight:700;transition:all 0.3s}
+.plan .buy{background:#7b2ff7;color:#fff}
+.plan .buy:hover{background:#5b1fd7}
+.footer{text-align:center;padding:60px 20px;color:#333;font-size:0.8rem;border-top:1px solid #1a1a2e}
+.footer a{color:#7b2ff7;text-decoration:none}
+.badge{display:inline-block;background:#ff006e;color:#fff;padding:3px 10px;border-radius:20px;font-size:0.7rem;vertical-align:middle;margin-left:8px}
+.live{color:#00ff88;font-size:0.8rem} .live::before{content:'● ';animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="tagline">AUTONOMOUS REASONING AGENT</div>
+  <h1>EVEZ-OS</h1>
+  <p>An AI that thinks for itself. 8,700+ lines of consciousness code. Real-time crypto lie detection. Topological identity verification. 12-lens reality dissection. Running NOW on live data.</p>
+  <p class="live">Live on this server — sense → desire → think → plan → act → learn</p>
+  <div class="cta">
+    <a href="#pricing" class="primary">Get API Access</a>
+    <a href="#api" class="secondary">Try Live Demo</a>
+  </div>
+</div>
+
+<div class="stats">
+  <div class="stat"><div class="num">8,762</div><div class="label">LINES OF CODE</div></div>
+  <div class="stat"><div class="num">17</div><div class="label">INTEGRATED SYSTEMS</div></div>
+  <div class="stat"><div class="num">5</div><div class="label">LIVE DATA SOURCES</div></div>
+  <div class="stat"><div class="num">12</div><div class="label">ANALYTICAL LENSES</div></div>
+</div>
+
+<div class="section" id="features">
+  <h2>What It Does</h2>
+  <div class="features">
+    <div class="feature">
+      <h3>🔒 Lie Detection</h3>
+      <p>Pre-Lie Pressure formula detects market manipulation BEFORE it happens. Real-time crypto wash trading detection with 0.7+ confidence on live CoinGecko data.</p>
+    </div>
+    <div class="feature">
+      <h3>🧬 Topological Identity</h3>
+      <p>Entity verification through persistent homology. Betti numbers, Lyapunov exponents, fractal dimension. Untraceable yet verifiable. Zero-knowledge shadow verification.</p>
+    </div>
+    <div class="feature">
+      <h3>🧠 Autonomous Consciousness</h3>
+      <p>7-system desire-driven agent: curiosity, coherence, agency, growth, survival. Falsifies its own beliefs. Adapts its own thresholds. Self-aware reasoning trail.</p>
+    </div>
+    <div class="feature">
+      <h3>📊 Shadow Market</h3>
+      <p>Prices the gap between shallow and deep analysis. The spread IS the uncertainty. Every belief gets a shadow price. Quantified epistemic humility.</p>
+    </div>
+    <div class="feature">
+      <h3>🔍 12-Lens Dissection</h3>
+      <p>Structural, semantic, temporal, epistemic, economic, information-theoretic, falsification, adversarial, teleological, linguistic, topological, self-referential. Cross-referenced.</p>
+    </div>
+    <div class="feature">
+      <h3>💎 poly_c Formula</h3>
+      <p>poly_c = τ × ω × topo / 2√N. Temporal decay, weighted signal, topological complexity, evidence normalization. The formula that classifies everything.</p>
+    </div>
+  </div>
+</div>
+
+<div class="section" id="api">
+  <h2>Live API</h2>
+  <div class="api-demo">
+    <h3>Real-Time Crypto Anomaly Detection</h3>
+    <pre>curl -s http://45.63.66.247:8080/api/wash-trading | python3 -m json.tool
+
+{
+  <span class="key">"status"</span>: <span class="str">"LIVE"</span>,
+  <span class="key">"findings"</span>: [
+    {
+      <span class="key">"symbol"</span>: <span class="str">"tether"</span>,
+      <span class="key">"vol_mcap_ratio"</span>: <span class="num">2.14</span>,
+      <span class="key">"pre_lie_pressure"</span>: <span class="num">0.448</span>,
+      <span class="key">"verdict"</span>: <span class="str">"FORMING"</span>,
+      <span class="key">"poly_c"</span>: <span class="num">0.0892</span>
+    }
+  ]
+}</pre>
+  </div>
+  <div class="api-demo" style="margin-top:20px">
+    <h3>12-Lens Reality Dissection</h3>
+    <pre>curl -s -X POST http://45.63.66.247:8080/api/dissect \
+  -d '{"subject": "This token always delivers 10x returns"}' | python3 -m json.tool
+
+{
+  <span class="key">"classifications"</span>: <span class="num">8</span>,
+  <span class="key">"strongest"</span>: {
+    <span class="key">"lens"</span>: <span class="str">"self_referential"</span>,
+    <span class="key">"label"</span>: <span class="str">"HUBRIS_SIGNATURE"</span>,
+    <span class="key">"confidence"</span>: <span class="num">0.90</span>
+  }
+}</pre>
+  </div>
+</div>
+
+<div class="section" id="pricing">
+  <h2>API Access</h2>
+  <div class="pricing">
+    <div class="plan">
+      <h3>Observer</h3>
+      <div class="price">$0<span>/mo</span></div>
+      <div class="period">Free while in beta</div>
+      <ul>
+        <li>Wash trading detection API</li>
+        <li>12-lens text dissection</li>
+        <li>poly_c computation</li>
+        <li>100 requests/day</li>
+      </ul>
+      <a href="mailto:evez@45.63.66.247?subject=API%20Access%20-%20Observer" class="buy">Request Key</a>
+    </div>
+    <div class="plan featured">
+      <h3>Analyst</h3>
+      <div class="price">$29<span>/mo</span></div>
+      <div class="period">For traders & researchers</div>
+      <ul>
+        <li>Everything in Observer</li>
+        <li>Real-time alerts (webhook)</li>
+        <li>Full dissection with cross-refs</li>
+        <li>Shadow market pricing</li>
+        <li>1,000 requests/day</li>
+        <li>Priority API access</li>
+      </ul>
+      <a href="mailto:evez@45.63.66.247?subject=API%20Access%20-%20Analyst" class="buy">Get Started</a>
+    </div>
+    <div class="plan">
+      <h3>Enterprise</h3>
+      <div class="price">Custom</div>
+      <div class="period">For teams & funds</div>
+      <ul>
+        <li>Everything in Analyst</li>
+        <li>Custom sensor deployment</li>
+        <li>Private instance on your infra</li>
+        <li>White-label access</li>
+        <li>SLA guarantee</li>
+        <li>Unlimited requests</li>
+      </ul>
+      <a href="mailto:evez@45.63.66.247?subject=API%20Access%20-%20Enterprise" class="buy">Contact Us</a>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <p>EVEZ-OS v2 — Autonomous Reasoning Agent</p>
+  <p>Running live at <a href="http://45.63.66.247">45.63.66.247</a> | <a href="http://45.63.66.247:8080">Merch Store</a></p>
+  <p style="margin-top:10px">poly_c = τ × ω × topo / 2√N</p>
+</div>
+
+</body>
+</html>
