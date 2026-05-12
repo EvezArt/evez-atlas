@@ -1,0 +1,18 @@
+{
+  "name": "EVEZ-Auto-Monitor",
+  "nodes": [
+    {"id": "trigger", "type": "n8n-nodes-base.webhook", "position": [250, 300]},
+    {"id": "assess", "type": "n8n-nodes-base.code", "position": [450, 300]},
+    {"id": "decide", "type": "n8n-nodes-base.switch", "position": [650, 300]},
+    {"id": "act", "type": "n8n-nodes-base.httpRequest", "position": [850, 200]},
+    {"id": "evolve", "type": "n8n-nodes-base.code", "position": [850, 400]},
+    {"id": "report", "type": "n8n-nodes-base.slack", "position": [1050, 300]}
+  ],
+  "connections": {
+    "trigger": {"main": [[{"node": "assess", "type": "main", "index": 0}]]},
+    "assess": {"main": [[{"node": "decide", "type": "main", "index": 0}]]},
+    "decide": {"main": [[{"node": "act", "type": "main", "index": 0}], [{"node": "evolve", "type": "main", "index": 0}]]},
+    "act": {"main": [[{"node": "report", "type": "main", "index": 0}]]},
+    "evolve": {"main": [[{"node": "report", "type": "main", "index": 0}]]}
+  }
+}
