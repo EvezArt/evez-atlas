@@ -1,0 +1,12 @@
+# Oracle v2.3 Deployment
+*.log
+*.pyc
+__pycache__/
+.env
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+audit_logs/*.json
+node_modules/
+.docker/

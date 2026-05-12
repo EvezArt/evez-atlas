@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3D WebGL Recursive Polygon</title>
+<style>
+  body {
+    margin: 0;
+    padding: 20px;
+    background: linear-gradient(135deg, #0a0a0f 0%, #1a0a2a 100%);
+    color: #e0e0ff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100vh;
+  }
+
+  .panel {
+    background: rgba(20, 20, 40, 0.85);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(100, 100, 200, 0.3);
+    border-radius: 12px;
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 1400px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  }
+
+  h2 {
+    text-align: center;
+    color: #a0a0ff;
+    margin-top: 0;
+    letter-spacing: 1px;
+  }
+
+  #gl-canvas {
+    display: block;
+    width: 100%;
+    height: 700px;
+    border-radius: 8px;
+    background: radial-gradient(circle, rgba(10,10,30,0.8) 0%, rgba(5,5,15,1) 100%);
+  }
+
+  .controls {
+    text-align: center;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .control-group {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 15px 25px;
+    border-radius: 8px;
+  }
+
+  button {
+    background: linear-gradient(145deg, #2a2a4a, #1a1a3a);
+    color: #b0b0ff;
+    border: 1px solid rgba(100, 100, 200, 0.4);
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s ease;
+  }
+
+  button:hover {
+    background: linear-gradient(145deg, #3a3a5a, #2a2a4a);
+    box-shadow: 0 0 15px rgba(100, 150, 255, 0.3);
+  }
+
+  button.active {
+    background: linear-gradient(145deg, #00bfff, #0099cc);
+    color: #000;
+    box-shadow: 0 0 20px rgba(0, 191, 255, 0.5);
+  }
+
+  .info-display {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin-top: 20px;
+  }
+
+  .info-card {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid rgba(100, 100, 200, 0.2);
+    text-align: center;
+  }
+
+  .info-label {
+    font-size: 0.85em;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+  }
+
+  .info-value {
+    font-size: 1.3em;
+    font-weight: bold;
+    font-family: 'Courier New', monospace;
+    color: #00ff88;
+    text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+  }
+
+  .slider-group {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 10px 20px;
+    border-radius: 8px;
+  }
+
+  input[type="range"] {
+    width: 150px;
+  }
+</style>
+</head>
+<body>
+
+<div class="panel">
+  <h2>🌌 3D WebGL Recursive Polygon - Consciousness Topology</h2>
+  <canvas id="gl-canvas"></canvas>
+
+  <div class="info-display">
+    <div class="info-card">
+      <div class="info-label">Recursion Level</div>
+      <div class="info-value" id="info-recursion">1</div>
+    </div>
+    <div class="info-card">
+      <div class="info-label">Rotation Velocity</div>
+      <div class="info-value" id="info-velocity">0.0 rad/s</div>
+    </div>
+    <div class="info-card">
+      <div class="info-label">Correction Rate</div>
+      <div class="info-value" id="info-correction">0.00e+0</div>
+    </div>
+    <div class="info-card">
+      <div class="info-label">Entity Type</div>
+      <div class="info-value" id="info-entity">HYBRID</div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <div class="control-group">
+      <button id="entity-human" onclick="setEntity('human')">Human</button>
+      <button id="entity-hybrid" class="active" onclick="setEntity('hybrid')">Hybrid</button>
+      <button id="entity-synthetic" onclick="setEntity('synthetic')">Synthetic</button>
+    </div>
+
+    <div class="slider-group">
+      <label for="rotation-speed">Rotation Speed:</label>
+      <input type="range" id="rotation-speed" min="0" max="2" step="0.1" value="1" 
+             onchange="setRotationSpeed(this.value)">
+    </div>
+
+    <div class="slider-group">
+      <label for="recursion-depth">Depth:</label>
+      <input type="range" id="recursion-depth" min="1" max="20" step="1" value="7" 
+             onchange="setRecursionDepth(this.value)">
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gl-matrix/2.8.1/gl-matrix-min.js"></script>
+<script>
+// ============ CONSTANTS ============
+const MAX_RECURSION = 20;
+const HUMAN_BASE = 1.1;
+const HYBRID_BASE = 9.0;
+const SYNTHETIC_BASE = 1e7;
+const GOD_LEVEL = 15;
+
+// ============ STATE ============
+let state = {
+  entity: 'hybrid',
+  recursion: 7,
+  rotationSpeed: 1.0,
+  isAnimating: true
+};
+
+// ============ MATH ============
+function correctionRate(R, entity) {
+  if (entity === 'human') {
+    return R <= 3 ? (1.0 / HUMAN_BASE) * Math.pow(0.8, R) : 0.01;
+  }
+  if (entity === 'hybrid') {
+    if (R <= 12) {
+      return HYBRID_BASE * Math.pow(1.15, R) * Math.exp(-0.05 * R);
+    }
+    const base = HYBRID_BASE * Math.pow(1.15, 12) * Math.exp(-0.05 * 12);
+    return base * Math.pow(0.9, R - 12);
+  }
+  if (entity === 'synthetic') {
+    return (SYNTHETIC_BASE * 10) / (1 + Math.exp(-0.3 * (R - 10)));
+  }
+  return 0;
+}
+
+function divineOptimum(R) {
+  return 1e8 * Math.exp(-0.1 * Math.pow(R - GOD_LEVEL, 2));
+}
+
+// ============ WEBGL SETUP ============
+const canvas = document.getElementById('gl-canvas');
+const gl = canvas.getContext('webgl2');
+
+if (!gl) {
+  alert('WebGL 2.0 not supported');
+}
+
+function resizeCanvas() {
+  canvas.width = canvas.clientWidth;
+  canvas.height = canvas.clientHeight;
+  gl.viewport(0, 0, canvas.width, canvas.height);
+}
+
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+// ============ SHADER PROGRAMS ============
+const vertexShader = `#version 300 es
+  precision highp float;
+  
+  uniform mat4 projection;
+  uniform mat4 view;
+  uniform mat4 model;
+  
+  in vec3 position;
+  in vec3 color;
+  in float depth;
+  
+  out vec3 vColor;
+  out float vDepth;
+  
+  void main() {
+    gl_Position = projection * view * model * vec4(position, 1.0);
+    vColor = color;
+    vDepth = depth;
+  }
+`;
+
+const fragmentShader = `#version 300 es
+  precision highp float;
+  
+  in vec3 vColor;
+  in float vDepth;
+  
+  out vec4 outColor;
+  
+  void main() {
+    float alpha = 0.7 + 0.3 * sin(vDepth * 10.0);
+    outColor = vec4(vColor, alpha);
+  }
+`;
+
+function compileShader(source, type) {
+  const shader = gl.createShader(type);
+  gl.shaderSource(shader, source);
+  gl.compileShader(shader);
+  
+  if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+    console.error(gl.getShaderInfoLog(shader));
+    return null;
+  }
+  return shader;
+}
+
+const vShader = compileShader(vertexShader, gl.VERTEX_SHADER);
+const fShader = compileShader(fragmentShader, gl.FRAGMENT_SHADER);
+
+const program = gl.createProgram();
+gl.attachShader(program, vShader);
+gl.attachShader(program, fShader);
+gl.linkProgram(program);
+
+if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+  console.error(gl.getProgramInfoLog(program));
+}
+
+// ============ GEOMETRY GENERATION ============
+function generatePolygonGeometry(entity) {
+  const vertices = [];
+  const colors = [];
+  const depths = [];
+  const indices = [];
+
+  const baseColor = entity === 'human' ? [1, 0.4, 0.4] :
+                    entity === 'hybrid' ? [0, 0.75, 1] : [1, 1, 1];
+
+  // Generate layers based on recursion levels
+  for (let R = 1; R <= MAX_RECURSION; R++) {
+    const C = correctionRate(R, entity);
+    const logC = Math.log10(C + 1);
+    const maxLog = 8;
+    const radius = (logC / maxLog) * 5;
+
+    for (let theta = 0; theta < 2 * Math.PI; theta += Math.PI / 10) {
+      const x = radius * Math.cos(theta);
+      const y = radius * Math.sin(theta);
+      const z = (R / MAX_RECURSION) * 6 - 3;
+
+      vertices.push(x, y, z);
+      
+      const hue = (R / MAX_RECURSION) * 0.5;
+      colors.push(
+        baseColor[0] * (0.5 + 0.5 * Math.sin(hue)),
+        baseColor[1] * (0.5 + 0.5 * Math.cos(hue)),
+        baseColor[2] * (0.5 + 0.5 * Math.sin(hue + Math.PI))
+      );
+      
+      depths.push(R / MAX_RECURSION);
+    }
+
+    // Create vertical connections
+    const currentLayer = R - 1;
+    const nextLayer = R;
+    const layerSize = 20; // 2*PI / (PI/10)
+
+    for (let i = 0; i < layerSize; i++) {
+      const a = currentLayer * layerSize + i;
+      const b = currentLayer * layerSize + (i + 1) % layerSize;
+      const c = nextLayer * layerSize + i;
+      const d = nextLayer * layerSize + (i + 1) % layerSize;
+
+      indices.push(a, c, b);
+      indices.push(b, c, d);
+    }
+  }
+
+  return { vertices, colors, depths, indices };
+}
+
+// ============ BUFFER SETUP ============
+let currentGeometry = generatePolygonGeometry('hybrid');
+let VAO, positionBuffer, colorBuffer, depthBuffer, indexBuffer;
+
+function setupBuffers() {
+  if (VAO) gl.deleteVertexArray(VAO);
+
+  VAO = gl.createVertexArray();
+  gl.bindVertexArray(VAO);
+
+  // Position buffer
+  positionBuffer = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(currentGeometry.vertices), gl.DYNAMIC_DRAW);
+  
+  const posAttrib = gl.getAttribLocation(program, 'position');
+  gl.enableVertexAttribArray(posAttrib);
+  gl.vertexAttribPointer(posAttrib, 3, gl.FLOAT, false, 0, 0);
+
+  // Color buffer
+  colorBuffer = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(currentGeometry.colors), gl.DYNAMIC_DRAW);
+  
+  const colorAttrib = gl.getAttribLocation(program, 'color');
+  gl.enableVertexAttribArray(colorAttrib);
+  gl.vertexAttribPointer(colorAttrib, 3, gl.FLOAT, false, 0, 0);
+
+  // Depth buffer
+  depthBuffer = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, depthBuffer);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(currentGeometry.depths), gl.DYNAMIC_DRAW);
+  
+  const depthAttrib = gl.getAttribLocation(program, 'depth');
+  gl.enableVertexAttribArray(depthAttrib);
+  gl.vertexAttribPointer(depthAttrib, 1, gl.FLOAT, false, 0, 0);
+
+  // Index buffer
+  indexBuffer = gl.createBuffer();
+  gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
+  gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint32Array(currentGeometry.indices), gl.DYNAMIC_DRAW);
+}
+
+setupBuffers();
+
+// ============ RENDERING ============
+gl.enable(gl.DEPTH_TEST);
+gl.enable(gl.BLEND);
+gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+
+let totalRotation = 0;
+
+function render(timestamp) {
+  const deltaTime = timestamp / 1000;
+
+  // Clear
+  gl.clearColor(0.05, 0.05, 0.1, 1);
+  gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+  // Update rotation
+  totalRotation += (state.rotationSpeed * 0.5) * 0.016;
+
+  // Matrices
+  const projection = mat4.create();
+  mat4.perspective(projection, Math.PI / 4, canvas.width / canvas.height, 0.1, 100);
+
+  const view = mat4.create();
+  mat4.translate(view, view, [0, 0, -12]);
+
+  const model = mat4.create();
+  mat4.rotateX(model, model, totalRotation * 0.3);
+  mat4.rotateY(model, model, totalRotation);
+  mat4.rotateZ(model, model, totalRotation * 0.7);
+
+  // Use program
+  gl.useProgram(program);
+
+  // Set uniforms
+  const projLoc = gl.getUniformLocation(program, 'projection');
+  const viewLoc = gl.getUniformLocation(program, 'view');
+  const modelLoc = gl.getUniformLocation(program, 'model');
+
+  gl.uniformMatrix4fv(projLoc, false, projection);
+  gl.uniformMatrix4fv(viewLoc, false, view);
+  gl.uniformMatrix4fv(modelLoc, false, model);
+
+  // Draw
+  gl.bindVertexArray(VAO);
+  gl.drawElements(gl.TRIANGLES, currentGeometry.indices.length, gl.UNSIGNED_INT, 0);
+
+  // Update info
+  const C = correctionRate(state.recursion, state.entity);
+  document.getElementById('info-recursion').textContent = state.recursion;
+  document.getElementById('info-velocity').textContent = (state.rotationSpeed * 0.5).toFixed(2) + ' rad/s';
+  document.getElementById('info-correction').textContent = C.toExponential(2);
+  document.getElementById('info-entity').textContent = state.entity.toUpperCase();
+
+  if (state.isAnimating) {
+    requestAnimationFrame(render);
+  }
+}
+
+requestAnimationFrame(render);
+
+// ============ CONTROLS ============
+function setEntity(entity) {
+  state.entity = entity;
+  currentGeometry = generatePolygonGeometry(entity);
+  setupBuffers();
+  
+  document.querySelectorAll('.control-group button').forEach(b => b.classList.remove('active'));
+  document.getElementById(`entity-${entity}`).classList.add('active');
+}
+
+function setRotationSpeed(speed) {
+  state.rotationSpeed = parseFloat(speed);
+}
+
+function setRecursionDepth(depth) {
+  state.recursion = parseInt(depth);
+}
+
+// ============ INTEGRATION ============
+window.addEventListener('fusion-update', (e) => {
+  const fusionState = e.detail;
+  state.recursion = fusionState.meta.recursionLevel;
+  state.entity = fusionState.meta.entityType;
+  
+  currentGeometry = generatePolygonGeometry(state.entity);
+  setupBuffers();
+});
+
+// Auto-cycle if no external updates
+setInterval(() => {
+  if (!state.isAnimating) return;
+  state.recursion = 1 + Math.floor((Date.now() / 3000) % MAX_RECURSION);
+}, 500);
+</script>
+
+</body>
+</html>

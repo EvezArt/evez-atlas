@@ -1,0 +1,38 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "AOI_Laughlin_DavisDam_PyramidCanyon"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -114.61,
+              35.25
+            ],
+            [
+              -114.61,
+              35.17
+            ],
+            [
+              -114.52,
+              35.17
+            ],
+            [
+              -114.52,
+              35.25
+            ],
+            [
+              -114.61,
+              35.25
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}

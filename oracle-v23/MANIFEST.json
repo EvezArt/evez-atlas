@@ -1,0 +1,91 @@
+{
+  "name": "Oracle v2.3 Deployment Package",
+  "version": "2.3.0",
+  "build_date": "2025-12-12T14:12:28.142258",
+  "description": "Governance-first multi-agent system with immutable audit logging",
+  "components": [
+    {
+      "file": "index.html",
+      "type": "HTML/JS Application",
+      "description": "Main dashboard - single file web application",
+      "size_kb": 13.40234375
+    },
+    {
+      "file": "server.py",
+      "type": "Python Script",
+      "description": "Development HTTP server",
+      "executable": true
+    },
+    {
+      "file": "verify.py",
+      "type": "Python Script",
+      "description": "Audit log verification tool",
+      "executable": true
+    },
+    {
+      "file": "docker-compose.yml",
+      "type": "Docker Compose",
+      "description": "Container orchestration configuration"
+    },
+    {
+      "file": "Dockerfile",
+      "type": "Docker",
+      "description": "Container image specification"
+    },
+    {
+      "file": "quickstart.sh",
+      "type": "Bash Script",
+      "description": "Quick start launcher (Linux/Mac)",
+      "executable": true
+    },
+    {
+      "file": "quickstart.bat",
+      "type": "Batch Script",
+      "description": "Quick start launcher (Windows)"
+    },
+    {
+      "file": "README.md",
+      "type": "Documentation",
+      "description": "Quick start guide and system overview"
+    },
+    {
+      "file": "DEPLOYMENT.md",
+      "type": "Documentation",
+      "description": "Extended deployment guide for production"
+    }
+  ],
+  "features": [
+    "Tier 0 Constitutional Constraints",
+    "Meta-Prompt Architecture",
+    "SHA-256 Hash-Chained Audit Logs",
+    "Real-time 3D Sensor Visualization",
+    "Local Storage Persistence",
+    "JSON Export/Import",
+    "Recursive Self-Improvement (RSI) Engine",
+    "Global System Halt Capability",
+    "Zero-dependency Deployment"
+  ],
+  "requirements": {
+    "browser": [
+      "Chrome 90+",
+      "Firefox 88+",
+      "Safari 14+",
+      "Edge 90+"
+    ],
+    "python": "3.7+",
+    "docker": "20.10+ (optional)",
+    "storage": "10 MB localStorage minimum"
+  },
+  "support": {
+    "documentation": [
+      "README.md",
+      "DEPLOYMENT.md"
+    ],
+    "verification": "verify.py",
+    "deployment": [
+      "quickstart.sh",
+      "quickstart.bat",
+      "docker-compose.yml"
+    ]
+  }
+}

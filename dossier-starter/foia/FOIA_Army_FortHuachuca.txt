@@ -1,0 +1,10 @@
+FOIA Request — Department of the Army (Fort Huachuca) — 2025-08-02
+
+This is a request under the Freedom of Information Act. Please produce:
+1) Contracts, SOWs, modifications, performance reports, and meeting minutes;
+2) Facility or training range siting documents, spectrum coordination records, and microwave/telemetry link authorizations;
+3) AI/ML model inventories, impact/risk assessments, test/evaluation reports, and version/change logs (per OMB M-24-10),
+
+for programs executed on or adjacent to Fort Huachuca (Cochise County, AZ) between 2023-01-01 and 2025-08-02, including projects referencing ISR, signals intelligence test ranges, IMSI-catcher/cell-site simulator evaluations, Remote ID/UAS integration, or related NAICS 334220, 517410, 541715, 541512, 237130, 561621. Please include communications with primes/subcontractors and any temporary facility build-outs within the AOI bounded by 31.45–31.61°N, -110.43 to -110.24°W.
+
+Please provide records in native electronic format with metadata. If exemptions apply, release all reasonably segregable portions. I request a public-interest fee waiver.
