@@ -60,7 +60,7 @@ DOMAINS = {
             {"id": "cs2", "text": "Lattice-based cryptography standardized as quantum-resistant", "recency": 0.95, "weight": 0.9},
             {"id": "cs3", "text": "Append-only audit logs enable zero-trust verification", "recency": 0.7, "weight": 0.75},
             {"id": "cs4", "text": "Adversarial ML attacks exploit topology of decision boundaries", "recency": 0.8, "weight": 0.8},
-            {"id": "cs5", "text": "Zero-knowledge proofs enable privacy-preserving threat sharing", "recency": 0.75, weight: 0.7},
+            {"id": "cs5", "text": "Zero-knowledge proofs enable privacy-preserving threat sharing", "recency": 0.75, "weight": 0.7},
         ]
     },
     "autonomous_systems": {
@@ -72,7 +72,7 @@ DOMAINS = {
             {"id": "as2", "text": "OODA loop architecture enables real-time autonomous threat response", "recency": 0.8, "weight": 0.8},
             {"id": "as3", "text": "Topological persistence detects behavioral drift in autonomous agents", "recency": 0.75, "weight": 0.75},
             {"id": "as4", "text": "poly_c convergence metric predicts agent reliability", "recency": 0.7, "weight": 0.85},
-            {"id": "as5", "text": "Append-only spine enables verifiable autonomous decision logging", "recency": 0.85, weight: 0.8},
+            {"id": "as5", "text": "Append-only spine enables verifiable autonomous decision logging", "recency": 0.85, "weight": 0.8},
         ]
     },
     "financial_systems": {
@@ -84,7 +84,7 @@ DOMAINS = {
             {"id": "fs2", "text": "Temporal decay models improve high-frequency trading signal processing", "recency": 0.8, "weight": 0.7},
             {"id": "fs3", "text": "Topological analysis of market microstructure predicts flash crashes", "recency": 0.85, "weight": 0.8},
             {"id": "fs4", "text": "Zero-knowledge proofs enable private DeFi verification", "recency": 0.75, "weight": 0.7},
-            {"id": "fs5", "text": "Quantum-resistant blockchain signatures deployed on mainnet", "recency": 0.9, weight: 0.85},
+            {"id": "fs5", "text": "Quantum-resistant blockchain signatures deployed on mainnet", "recency": 0.9, "weight": 0.85},
         ]
     },
 }
