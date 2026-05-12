@@ -164,7 +164,7 @@ class ModelRouter:
                 method="POST"
             )
             
-            with urllib.request.urlopen(req, timeout=60) as resp:
+            with urllib.request.urlopen(req, timeout=15) as resp:
                 data = json.loads(resp.read().decode())
                 call.response = data["choices"][0]["message"]["content"]
                 call.tokens_in = data.get("usage", {}).get("prompt_tokens", 0)
@@ -231,7 +231,7 @@ class ModelRouter:
             },
             "models_queried": len(results),
             "details": [{"provider": r.provider, "model": r.model, 
-                        "success": r.success, "response": r.response[:100]} for r in results],
+                        "success": r.success, "response": (r.response or "")[:100]} for r in results],
         }
     
     def status(self) -> dict:
