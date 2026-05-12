@@ -1,8 +1,8 @@
 {
-  "last_commit": "2026-05-12T20:05:01.923880",
-  "message": "auto: EVEZ backup 2026-05-12 20:05 UTC",
+  "last_commit": "2026-05-12T20:10:02.426407",
+  "message": "auto: EVEZ backup 2026-05-12 20:10 UTC",
   "results": {
-    "commit": "[autonomous-backup 67a3752] auto: EVEZ backup 2026-05-12 20:05 UTC\n 11 files changed, 422 insertions(+), 132 deletions(-)\n create mode 100644 evez-os-sensors/continuous_falsifier_backup_1778616261.py\n create mode 100644 evez-os-sensors/continuous_falsifier_backup_1778616292.py\n create mode 100644 memory/.dreams/short-term-recall.json",
+    "commit": "[autonomous-backup 53888b6] auto: EVEZ backup 2026-05-12 20:10 UTC\n 21 files changed, 2230 insertions(+), 141 deletions(-)\n create mode 100644 evez-os-sensors/continuous_falsifier_backup_1778616322.py\n create mode 100644 evez-os-sensors/continuous_falsifier_backup_1778616352.py\n create mode 100644 evez-os-sensors/continuous_falsifier_backup_1778616382.py\n create mode 100644 evez-os-sensors/continuous_falsifier_backup_1778616413.py\n create mode 100644 evez-os-sensors/continuous_falsifier_backup_1778616443.py\n create mode 100644 evez-os-sensors/continuous_falsifier_backup_1778616473.py\n create mode 100644 evez-os-sensors/continuous_falsifier_backup_1778616503.py\n create mode 100644 evez-os-sensors/continuous_falsifier_backup_1778616534.py\n create mode 100644 evez-os-sensors/continuous_falsifier_backup_1778616564.py\n create mode 100644 evez-os-sensors/continuous_falsifier_backup_1778616595.py\n create mode 100644 generated-assets/EVEZ-API-DOCS.html\n create mode 100644 generated-assets/EVEZ-OS-WHITEPAPER.md\n create mode 100644 generated-assets/circuit-architecture-viz.html\n create mode 100644 generated-assets/consciousness-dashboard.html\n create mode 100644 generated-assets/evez-pitch-deck.html",
     "push": "pushed to advancement"
   }
 }
