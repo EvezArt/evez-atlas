@@ -1,1 +1,8 @@
 __pycache__/
+
+# Secrets
+home/openclaw-backup/openclaw.json
+**/openclaw.json
+**/*secret*
+**/*token*
+**/*api_key*
