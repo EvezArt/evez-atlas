@@ -1,7 +1,7 @@
 """OpenClaw + EVEZ-OS Health Check Server.
-Run: python3 openclaw_health.py
-Serves health status on port 9091."""
-import json, os, subprocess, time
+Run: python3 openclaw_health.py [--port N]
+Serves health status on the configured port."""
+import json, os, subprocess, time, argparse
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from pathlib import Path
 
@@ -58,6 +58,10 @@ class Handler(BaseHTTPRequestHandler):
     def log_message(self, *a): pass
 
 if __name__ == "__main__":
-    server = HTTPServer(("0.0.0.0", 9091), Handler)
-    print("Health check on :9091/health")
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--port", type=int, default=9101)
+    args = parser.parse_args()
+    port = args.port
+    server = HTTPServer(("0.0.0.0", port), Handler)
+    print(f"Health check on :{port}/health")
     server.serve_forever()
