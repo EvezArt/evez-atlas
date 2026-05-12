@@ -1,7 +1,7 @@
 {
   "providers": {
     "vultr": {
-      "baseUrl": "meta-llama/Meta-Llama-3.1-8B-Instruct",
+      "baseUrl": "https://api.vultrinference.com/v1",
       "apiKey": "VULTR_API_KEY_REDACTED",
       "models": [
         {
@@ -10,18 +10,18 @@
           "tier": "free"
         },
         {
-          "id": "meta-llama/Meta-Llama-3.1-8B-Instruct",
-          "name": "meta-llama/Meta-Llama-3.1-8B-Instruct",
+          "id": "Qwen/Qwen3-Coder-Next-FP8",
+          "name": "Qwen/Qwen3-Coder-Next-FP8",
           "tier": "free"
         },
         {
-          "id": "mistralai/Mistral-7B-Instruct-v0.3",
-          "name": "mistralai/Mistral-7B-Instruct-v0.3",
+          "id": "nvidia/DeepSeek-V3.2-NVFP4",
+          "name": "nvidia/DeepSeek-V3.2-NVFP4",
           "tier": "free"
         },
         {
-          "id": "Qwen/Qwen2.5-7B-Instruct",
-          "name": "Qwen/Qwen2.5-7B-Instruct",
+          "id": "MiniMaxAI/MiniMax-M2.7",
+          "name": "MiniMaxAI/MiniMax-M2.7",
           "tier": "free"
         }
       ]
@@ -109,74 +109,60 @@
     },
     "openrouter": {
       "baseUrl": "https://openrouter.ai/api/v1",
-      "apiKey": "OPENROUTER_API_KEY_PLACEHOLDER",
+      "apiKey": "ENV_OPENROUTER_KEY",
       "models": [
         {
-          "id": "meta-llama/llama-3.3-70b-instruct:free",
-          "name": "Llama 3.3 70B Free",
+          "id": "google/gemma-4-31b-it:free",
+          "name": "google/gemma-4-31b-it:free",
           "tier": "free"
         },
         {
-          "id": "deepseek/deepseek-chat:free",
-          "name": "DeepSeek V3 Free",
+          "id": "nvidia/nemotron-3-super-120b-a12b:free",
+          "name": "nvidia/nemotron-3-super-120b-a12b:free",
           "tier": "free"
         },
         {
-          "id": "google/gemma-2-9b-it:free",
-          "name": "Gemma 2 9B Free",
+          "id": "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",
+          "name": "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",
           "tier": "free"
         },
         {
-          "id": "mistralai/mistral-7b-instruct:free",
-          "name": "Mistral 7B Free",
+          "id": "minimax/minimax-m2.5:free",
+          "name": "minimax/minimax-m2.5:free",
           "tier": "free"
         },
         {
-          "id": "qwen/qwen-2.5-7b-instruct:free",
-          "name": "Qwen 2.5 7B Free",
-          "tier": "free"
-        },
-        {
-          "id": "huggingfaceh4/zephyr-7b-beta:free",
-          "name": "Zephyr 7B Free",
+          "id": "nvidia/nemotron-nano-12b-v2-vl:free",
+          "name": "nvidia/nemotron-nano-12b-v2-vl:free",
           "tier": "free"
         }
-      ],
-      "limits": {
-        "rpm": 20,
-        "tpm": 100000,
-        "cost": "free-tier-available"
-      },
-      "signup": "https://openrouter.ai/keys",
-      "notes": "50+ models. Free tier has rate limits. GitHub OAuth signup."
+      ]
     },
     "cerebras": {
       "baseUrl": "https://api.cerebras.ai/v1",
-      "apiKey": "CEREBRAS_API_KEY_PLACEHOLDER",
+      "apiKey": "ENV_CEREBRAS_KEY",
       "models": [
         {
-          "id": "llama-3.3-70b",
-          "name": "Llama 3.3 70B",
+          "id": "qwen-3-235b-a22b-instruct-2507",
+          "name": "qwen-3-235b-a22b-instruct-2507",
+          "tier": "free"
+        },
+        {
+          "id": "gpt-oss-120b",
+          "name": "gpt-oss-120b",
           "tier": "free"
         },
         {
           "id": "llama3.1-8b",
-          "name": "Llama 3.1 8B",
+          "name": "llama3.1-8b",
           "tier": "free"
         },
         {
-          "id": "qwen-2.5-32b",
-          "name": "Qwen 2.5 32B",
+          "id": "zai-glm-4.7",
+          "name": "zai-glm-4.7",
           "tier": "free"
         }
-      ],
-      "limits": {
-        "rpm": 30,
-        "tpm": 80000,
-        "cost": "free"
-      },
-      "signup": "https://cloud.cerebras.ai/",
-      "notes": "Ultra-fast inference. Free tier, no CC."
+      ]
     },
     "google": {
       "baseUrl": "https://generativelanguage.googleapis.com/v1beta/openai",
@@ -213,49 +199,60 @@
     },
     "deepseek": {
       "baseUrl": "https://api.deepseek.com/v1",
-      "apiKey": "DEEPSEEK_API_KEY_PLACEHOLDER",
+      "apiKey": "ENV_DEEPSEEK_KEY",
       "models": [
         {
-          "id": "deepseek-chat",
-          "name": "DeepSeek V3",
-          "tier": "free-credits"
+          "id": "deepseek-v4-flash",
+          "name": "deepseek-v4-flash",
+          "tier": "free"
         },
         {
-          "id": "deepseek-reasoner",
-          "name": "DeepSeek R1",
-          "tier": "free-credits"
+          "id": "deepseek-v4-pro",
+          "name": "deepseek-v4-pro",
+          "tier": "free"
         }
-      ],
-      "limits": {
-        "rpm": 60,
-        "tpm": 100000,
-        "cost": "5M tokens free"
-      },
-      "signup": "https://platform.deepseek.com/api_keys",
-      "notes": "5M free tokens on signup. DeepSeek R1 for reasoning."
+      ]
     },
     "sambanova": {
       "baseUrl": "https://api.sambanova.ai/v1",
-      "apiKey": "SAMBANOVA_API_KEY_PLACEHOLDER",
+      "apiKey": "SAMBANOVA_KEY_REDACTED",
       "models": [
         {
-          "id": "Meta-Llama-3.3-70B-Instruct",
-          "name": "Llama 3.3 70B",
+          "id": "DeepSeek-V3.1",
+          "name": "DeepSeek-V3.1",
           "tier": "free"
         },
         {
-          "id": "Meta-Llama-3.1-8B-Instruct",
-          "name": "Llama 3.1 8B",
+          "id": "DeepSeek-V3.2",
+          "name": "DeepSeek-V3.2",
+          "tier": "free"
+        },
+        {
+          "id": "Llama-4-Maverick-17B-128E-Instruct",
+          "name": "Llama-4-Maverick-17B-128E-Instruct",
+          "tier": "free"
+        },
+        {
+          "id": "Meta-Llama-3.3-70B-Instruct",
+          "name": "Meta-Llama-3.3-70B-Instruct",
+          "tier": "free"
+        },
+        {
+          "id": "MiniMax-M2.5",
+          "name": "MiniMax-M2.5",
+          "tier": "free"
+        },
+        {
+          "id": "MiniMax-M2.7",
+          "name": "MiniMax-M2.7",
+          "tier": "free"
+        },
+        {
+          "id": "gpt-oss-120b",
+          "name": "gpt-oss-120b",
           "tier": "free"
         }
-      ],
-      "limits": {
-        "rpm": 10,
-        "tpm": 20000,
-        "cost": "$5 free credits"
-      },
-      "signup": "https://cloud.sambanova.ai/",
-      "notes": "$5 signup credits. Fast inference."
+      ]
     },
     "mistral": {
       "baseUrl": "https://api.mistral.ai/v1",
