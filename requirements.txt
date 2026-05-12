@@ -30,5 +30,5 @@ numpy==1.26.4
 # matplotlib
 
 # Bionetwork optimizer dependencies
-torch_geometric>=2.5
+torch_geometric>=2.7.0
 networkx>=3.2
