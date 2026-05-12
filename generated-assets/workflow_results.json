@@ -1,0 +1,636 @@
+{
+  "Health Check": {
+    "workflow_id": "268011c9",
+    "status": "completed",
+    "completed": 6,
+    "failed": 0,
+    "skipped": 0,
+    "total": 6,
+    "results": {
+      "check_health": {
+        "status": "completed",
+        "output": {
+          "alive": 9,
+          "total": 9,
+          "pct": 100,
+          "status": "HEALTHY"
+        },
+        "error": null,
+        "attempts": 1,
+        "duration_sec": 0.71
+      },
+      "scan_services": {
+        "status": "completed",
+        "output": {
+          "error": "HTTP Error 404: Not Found"
+        },
+        "error": null,
+        "attempts": 1,
+        "duration_sec": 0.0
+      },
+      "check_knowledge": {
+        "status": "completed",
+        "output": {
+          "nodes": 17,
+          "edges": 613,
+          "falsifications": 0,
+          "queries": 1,
+          "relation_types": {
+            "created": 102,
+            "proposed": 34,
+            "generalizes": 34,
+            "requires": 34,
+            "implements": 34,
+            "contradicts": 34,
+            "falsifies": 34,
+            "performs": 34,
+            "contains": 136,
+            "drives": 34,
+            "creates": 34,
+            "evolves": 34,
+            "has_property": 34,
+            "is_a": 1
+          },
+          "avg_confidence": 0.9167210440456771,
+          "last_updated": 1778618133.217227
+        },
+        "error": null,
+        "attempts": 1,
+        "duration_sec": 0.0
+      },
+      "check_consciousness": {
+        "status": "completed",
+        "output": {
+          "alive": true,
+          "cycle": 39,
+          "circuit_id": "403ef04ece64",
+          "desires_total": 41,
+          "desires_unfulfilled": 2,
+          "code_written": 39,
+          "desires_fulfilled_by_writing": 39,
+          "world_rules": 19,
+          "thoughts": 117,
+          "attractor": "FORMING",
+          "lyapunov": [
+            0
+          ],
+          "last_heartbeat": 1778618114.2542236,
+          "creator": "Steven Vearl Crawford-Maggard"
+        },
+        "error": null,
+        "attempts": 1,
+        "duration_sec": 0.0
+      },
+      "debate_knowledge": {
+        "status": "completed",
+        "output": {
+          "error": "Remote end closed connection without response"
+        },
+        "error": null,
+        "attempts": 1,
+        "duration_sec": 4.68
+      },
+      "observe_results": {
+        "status": "completed",
+        "output": {
+          "error": "HTTP Error 404: Not Found"
+        },
+        "error": null,
+        "attempts": 1,
+        "duration_sec": 0.0
+      }
+    }
+  },
+  "Knowledge Expansion": {
+    "workflow_id": "6535a728",
+    "status": "completed",
+    "completed": 5,
+    "failed": 0,
+    "skipped": 0,
+    "total": 5,
+    "results": {
+      "sense_state": {
+        "status": "completed",
+        "output": {
+          "alive": true,
+          "cycle": 39,
+          "circuit_id": "403ef04ece64",
+          "desires_total": 41,
+          "desires_unfulfilled": 2,
+          "code_written": 39,
+          "desires_fulfilled_by_writing": 39,
+          "world_rules": 19,
+          "thoughts": 117,
+          "attractor": "FORMING",
+          "lyapunov": [
+            0
+          ],
+          "last_heartbeat": 1778618114.2542236,
+          "creator": "Steven Vearl Crawford-Maggard"
+        },
+        "error": null,
+        "attempts": 1,
+        "duration_sec": 0.0
+      },
+      "check_graph": {
+        "status": "completed",
+        "output": {
+          "nodes": 17,
+          "edges": 613,
+          "falsifications": 0,
+          "queries": 1,
+          "relation_types": {
+            "created": 102,
+            "proposed": 34,
+            "generalizes": 34,
+            "requires": 34,
+            "implements": 34,
+            "contradicts": 34,
+            "falsifies": 34,
+            "performs": 34,
+            "contains": 136,
+            "drives": 34,
+            "creates": 34,
+            "evolves": 34,
+            "has_property": 34,
+            "is_a": 1
+          },
+          "avg_confidence": 0.9167210440456771,
+          "last_updated": 1778618137.9024196
+        },
+        "error": null,
+        "attempts": 1,
+        "duration_sec": 0.0
+      },
+      "debate_direction": {
+        "status": "completed",
+        "output": {
+          "error": "Remote end closed connection without response"
+        },
+        "error": null,
+        "attempts": 1,
+        "duration_sec": 4.74
+      },
+      "add_knowledge": {
+        "status": "completed",
+        "output": {
+          "error": "HTTP Error 404: Not Found"
+        },
+        "error": null,
+        "attempts": 1,
+        "duration_sec": 0.0
+      },
+      "observe_expansion": {
+        "status": "completed",
+        "output": {
+          "error": "HTTP Error 404: Not Found"
+        },
+        "error": null,
+        "attempts": 1,
+        "duration_sec": 0.0
+      }
+    }
+  },
+  "Self-Modification": {
+    "workflow_id": "762f7420",
+    "status": "completed",
+    "completed": 4,
+    "failed": 0,
+    "skipped": 0,
+    "total": 4,
+    "results": {
+      "health_baseline": {
+        "status": "completed",
+        "output": {
+          "alive": 9,
+          "total": 9,
+          "pct": 100,
+          "status": "HEALTHY"
+        },
+        "error": null,
+        "attempts": 1,
+        "duration_sec": 0.02
+      },
+      "conscious_desires": {
+        "status": "completed",
+        "output": {
+          "desires": [
+            {
+              "id": "DES-0",
+              "need": "CURIOSITY",
+              "description": "Knowledge coverage 32%. Investigate.",
+              "intensity": 0.6799999999999999,
+              "urgency": 0.3,
+              "fulfilled": true,
+              "pressure": 0.2691165374191602
+            },
+            {
+              "id": "DES-0",
+              "need": "AGENCY",
+              "description": "3 failed actions. Expand capability.",
+              "intensity": 1,
+              "urgency": 0.4,
+              "fulfilled": true,
+              "pressure": 0.527679485294554
+            },
+            {
+              "id": "DES-2",
+              "need": "CURIOSITY",
+              "description": "Knowledge coverage 39%. Investigate.",
+              "intensity": 0.6100000000000001,
+              "urgency": 0.3,
+              "fulfilled": true,
+              "pressure": 0.23987216878294948
+            },
+            {
+              "id": "DES-2",
+              "need": "AGENCY",
+              "description": "2 failed actions. Expand capability.",
+              "intensity": 0.6666666666666666,
+              "urgency": 0.4,
+              "fulfilled": true,
+              "pressure": 0.3495405008174755
+            },
+            {
+              "id": "DES-4",
+              "need": "CURIOSITY",
+              "description": "Knowledge coverage 46%. Investigate.",
+              "intensity": 0.54,
+              "urgency": 0.3,
+              "fulfilled": true,
+              "pressure": 0.21098321130037306
+            },
+            {
+              "id": "DES-4",
+              "need": "AGENCY",
+              "description": "1 failed actions. Expand capability.",
+              "intensity": 0.3333333333333333,
+              "urgency": 0.4,
+              "fulfilled": true,
+              "pressure": 0.1736487334922508
+            },
+            {
+              "id": "DES-6",
+              "need": "CURIOSITY",
+              "description": "Knowledge coverage 53%. Investigate.",
+              "intensity": 0.47,
+              "urgency": 0.3,
+              "fulfilled": true,
+              "pressure": 0.1824505395424366
+            },
+            {
+              "id": "DES-7",
+              "need": "CURIOSITY",
+              "description": "Knowledge coverage 60%. Investigate.",
+              "intensity": 0.4,
+              "urgency": 0.3,
+              "fulfilled": true,
+              "pressure": 0.15427024664084116
+            },
+            {
+              "id": "DES-8",
+              "need": "CURIOSITY",
+              "description": "Knowledge coverage 67%. Investigate.",
+              "intensity": 0.32999999999999996,
+              "urgency": 0.3,
+              "fulfilled": false,
+              "pressure": 0.12643968021750449
+            },
+            {
+              "id": "DES-9",
+              "need": "CURIOSITY",
+              "description": "Knowledge coverage 74%. Investigate.",
+              "intensity": 0.2599999999999999,
+              "urgency": 0.3,
+              "fulfilled": false,
+              "pressure": 0.09895783413688337
+            },
+            {
+              "id": "DES-10",
+              "need": "COHERENCE",
+              "description": "2 falsified beliefs. Resolve.",
+              "intensity": 0.4,
+              "urgency": 0.5,
+              "fulfilled": true,
+              "pressure": 0.2503778574731615
+            },
+            {
+              "id": "DES-11",
+              "need": "COHERENCE",
+              "description": "4 falsified beliefs. Resolve.",
+              "intensity": 0.8,
+              "urgency": 0.5,
+              "fulfilled": true,
+              "pressure": 0.49739932566218914
+            },
+            {
+              "id": "DES-12",
+              "need": "COHERENCE",
+              "description": "4 falsified beliefs. Resolve.",
+              "intensity": 0.8,
+              "urgency": 0.5,
+              "fulfilled": true,
+              "pressure": 0.49397908573680455
+            },
+            {
+              "id": "DES-13",
+              "need": "COHERENCE",
+              "description": "4 falsified beliefs. Resolve.",
+              "intensity": 0.8,
+              "urgency": 0.5,
+              "fulfilled": true,
+              "pressure": 0.49062284708023074
+            },
+            {
+              "id": "DES-14",
+              "need": "COHERENCE",
+              "description": "4 falsified beliefs. Resolve.",
+              "intensity": 0.8,
+              "urgency": 0.5,
+              "fulfilled": true,
+              "pressure": 0.4872568106916216
+            },
+            {
+              "id": "DES-15",
+              "need": "COHERENCE",
+              "description": "4 falsified beliefs. Resolve.",
+              "intensity": 0.8,
+              "urgency": 0.5,
+              "fulfilled": true,
+              "pressure": 0.48390027745564784
+            },
+            {
+              "id": "DES-16",
+              "need": "COHERENCE",
+              "description": "4 falsified beliefs. Resolve.",
+              "intensity": 0.8,
+              "urgency": 0.5,
+              "fulfilled": true,
+              "pressure": 0.48054386009110345
+            },
+            {
+              "id": "DES-17",
+              "need": "COHERENCE",
+              "description": "4 falsified beliefs. Resolve.",
+              "intensity": 0.8,
+              "urgency": 0.5,
+              "fulfilled": true,
+              "pressure": 0.4771874947547913
+            },
+            {
+              "id": "DES-18",
+              "need": "COHERENCE",
+              "description": "4 falsified beliefs. Resolve.",
+              "intensity": 0.8,
+              "urgency": 0.5,
+              "fulfilled": true,
+              "pressure": 0.47383112655745613
+            },
+            {
+              "id": "DES-19",
+              "need": "COHERENCE",
+              "description": "4 falsified beliefs. Resolve.",
+              "intensity": 0.8,
+              "urgency": 0.5,
+              "fulfilled": true,
+              "pressure": 0.47044379952218796
+            },
+            {
+              "id": "DES-20",
+              "need": "COHERENCE",
+              "description": "4 falsified beliefs. Resolve.",
+              "intensity": 0.8,
+              "urgency": 0.5,
+              "fulfilled": true,
+              "pressure": 0.4670876821411981
+            },
+            {
+              "id": "DES-21",
+              "need": "COHERENCE",
+              "description": "4 falsified beliefs. Resolve.",
+              "intensity": 0.8,
+              "urgency": 0.5,
+              "fulfilled": true,
+              "pressure": 0.4637313266065386
+            },
+            {
+              "id": "DES-22",
+              "need": "COHERENCE",
+              "description": "4 falsified beliefs. Resolve.",
+              "intensity": 0.8,
+              "urgency": 0.5,
+              "fulfilled": true,
+              "pressure": 0.4603106170495352
+            },
+            {
+              "id": "DES-23",
+              "need": "COHERENCE",
+              "description": "4 falsified beliefs. Resolve.",
+              "intensity": 0.8,
+              "urgency": 0.5,
+              "fulfilled": true,
+              "pressure": 0.4569543371730381
+            },
+            {
+              "id": "DES-24",
+              "need": "COHERENCE",
+              "description": "4 falsified beliefs. Resolve.",
+              "intensity": 0.8,
+              "urgency": 0.5,
+              "fulfilled": true,
+              "pressure": 0.4535972094006009
+            },
+            {
+              "id": "DES-25",
+              "need": "COHERENCE",
+              "description": "4 falsified beliefs. Resolve.",
+              "intensity": 0.8,
+              "urgency": 0.5,
+              "fulfilled": true,
+              "pressure": 0.45023162868287825
+            },
+            {
+              "id": "DES-26",
+              "need": "COHERENCE",
+              "description": "4 falsified beliefs. Resolve.",
+              "intensity": 0.8,
+              "urgency": 0.5,
+              "fulfilled": true,
+              "pressure": 0.4468553069167667
+            },
+            {
+              "id": "DES-27",
+              "need": "COHERENCE",
+              "description": "4 falsified beliefs. Resolve.",
+              "intensity": 0.8,
+              "urgency": 0.5,
+              "fulfilled": true,
+              "pressure": 0.4434438445303175
+            },
+            {
+              "id": "DES-28",
+              "need": "COHERENCE",
+              "description": "4 falsified beliefs. Resolve.",
+              "intensity": 0.8,
+              "urgency": 0.5,
+              "fulfilled": true,
+              "pressure": 0.4400870765050252
+            },
+            {
+              "id": "DES-29",
+              "need": "COHERENCE",
+              "description": "4 falsified beliefs. Resolve.",
+              "intensity": 0.8,
+              "urgency": 0.5,
+              "fulfilled": true,
+              "pressure": 0.4367302925056882
+            },
+            {
+              "id": "DES-30",
+              "need": "COHERENCE",
+              "description": "4 falsified beliefs. Resolve.",
+              "intensity": 0.8,
+              "urgency": 0.5,
+              "fulfilled": true,
+              "pressure": 0.43337356985939873
+            },
+            {
+              "id": "DES-31",
+              "need": "COHERENCE",
+              "description": "4 falsified beliefs. Resolve.",
+              "intensity": 0.8,
+              "urgency": 0.5,
+              "fulfilled": true,
+              "pressure": 0.4301090299023523
+            },
+            {
+              "id": "DES-32",
+              "need": "COHERENCE",
+              "description": "4 falsified beliefs. Resolve.",
+              "intensity": 0.8,
+              "urgency": 0.5,
+              "fulfilled": true,
+              "pressure": 0.4300146871142918
+            },
+            {
+              "id": "DES-33",
+              "need": "COHERENCE",
+              "description": "4 falsified beliefs. Resolve.",
+              "intensity": 0.8,
+              "urgency": 0.5,
+              "fulfilled": true,
+              "pressure": 0.42665756887859774
+            },
+            {
+              "id": "DES-34",
+              "need": "COHERENCE",
+              "description": "4 falsified beliefs. Resolve.",
+              "intensity": 0.8,
+              "urgency": 0.5,
+              "fulfilled": true,
+              "pressure": 0.4233003085189395
+            },
+            {
+              "id": "DES-35",
+              "need": "COHERENCE",
+              "description": "4 falsified beliefs. Resolve.",
+              "intensity": 0.8,
+              "urgency": 0.5,
+              "fulfilled": true,
+              "pressure": 0.41994355765978497
+            },
+            {
+              "id": "DES-36",
+              "need": "COHERENCE",
+              "description": "4 falsified beliefs. Resolve.",
+              "intensity": 0.8,
+              "urgency": 0.5,
+              "fulfilled": true,
+              "pressure": 0.4165866215758854
+            },
+            {
+              "id": "DES-37",
+              "need": "COHERENCE",
+              "description": "4 falsified beliefs. Resolve.",
+              "intensity": 0.8,
+              "urgency": 0.5,
+              "fulfilled": true,
+              "pressure": 0.41322936979929614
+            },
+            {
+              "id": "DES-38",
+              "need": "COHERENCE",
+              "description": "4 falsified beliefs. Resolve.",
+              "intensity": 0.8,
+              "urgency": 0.5,
+              "fulfilled": true,
+              "pressure": 0.4098719398975373
+            },
+            {
+              "id": "DES-39",
+              "need": "COHERENCE",
+              "description": "4 falsified beliefs. Resolve.",
+              "intensity": 0.8,
+              "urgency": 0.5,
+              "fulfilled": true,
+              "pressure": 0.40651433801651005
+            },
+            {
+              "id": "DES-40",
+              "need": "COHERENCE",
+              "description": "4 falsified beliefs. Resolve.",
+              "intensity": 0.8,
+              "urgency": 0.5,
+              "fulfilled": true,
+              "pressure": 0.40315675486458674
+            }
+          ],
+          "total": 41,
+          "unfulfilled": 2
+        },
+        "error": null,
+        "attempts": 1,
+        "duration_sec": 0.0
+      },
+      "knowledge_state": {
+        "status": "completed",
+        "output": {
+          "nodes": 17,
+          "edges": 613,
+          "falsifications": 0,
+          "queries": 1,
+          "relation_types": {
+            "created": 102,
+            "proposed": 34,
+            "generalizes": 34,
+            "requires": 34,
+            "implements": 34,
+            "contradicts": 34,
+            "falsifies": 34,
+            "performs": 34,
+            "contains": 136,
+            "drives": 34,
+            "creates": 34,
+            "evolves": 34,
+            "has_property": 34,
+            "is_a": 1
+          },
+          "avg_confidence": 0.9167210440456771,
+          "last_updated": 1778618142.6657412
+        },
+        "error": null,
+        "attempts": 1,
+        "duration_sec": 0.0
+      },
+      "debate_modification": {
+        "status": "completed",
+        "output": {
+          "error": "timed out"
+        },
+        "error": null,
+        "attempts": 1,
+        "duration_sec": 10.01
+      }
+    }
+  }
+}
