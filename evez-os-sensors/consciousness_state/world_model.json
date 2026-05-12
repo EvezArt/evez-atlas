@@ -272,6 +272,90 @@
       "confidence": 0.8,
       "source": "designed",
       "created": "2026-05-12T20:13:31.194797"
+    },
+    {
+      "cause": "service_crash",
+      "effect": "restart_via_systemd",
+      "confidence": 0.95,
+      "source": "proven",
+      "created": "2026-05-12T20:13:41.492600"
+    },
+    {
+      "cause": "config_change",
+      "effect": "gateway_reload",
+      "confidence": 0.85,
+      "source": "observed",
+      "created": "2026-05-12T20:13:41.492876"
+    },
+    {
+      "cause": "knowledge_growth",
+      "effect": "debate_trigger",
+      "confidence": 0.7,
+      "source": "heuristic",
+      "created": "2026-05-12T20:13:41.493131"
+    },
+    {
+      "cause": "capability_gap",
+      "effect": "desire_generation",
+      "confidence": 0.8,
+      "source": "designed",
+      "created": "2026-05-12T20:13:41.493429"
+    },
+    {
+      "cause": "service_crash",
+      "effect": "restart_via_systemd",
+      "confidence": 0.95,
+      "source": "proven",
+      "created": "2026-05-12T20:13:51.736657"
+    },
+    {
+      "cause": "config_change",
+      "effect": "gateway_reload",
+      "confidence": 0.85,
+      "source": "observed",
+      "created": "2026-05-12T20:13:51.736896"
+    },
+    {
+      "cause": "knowledge_growth",
+      "effect": "debate_trigger",
+      "confidence": 0.7,
+      "source": "heuristic",
+      "created": "2026-05-12T20:13:51.737140"
+    },
+    {
+      "cause": "capability_gap",
+      "effect": "desire_generation",
+      "confidence": 0.8,
+      "source": "designed",
+      "created": "2026-05-12T20:13:51.738850"
+    },
+    {
+      "cause": "service_crash",
+      "effect": "restart_via_systemd",
+      "confidence": 0.95,
+      "source": "proven",
+      "created": "2026-05-12T20:14:02.002794"
+    },
+    {
+      "cause": "config_change",
+      "effect": "gateway_reload",
+      "confidence": 0.85,
+      "source": "observed",
+      "created": "2026-05-12T20:14:02.003071"
+    },
+    {
+      "cause": "knowledge_growth",
+      "effect": "debate_trigger",
+      "confidence": 0.7,
+      "source": "heuristic",
+      "created": "2026-05-12T20:14:02.003326"
+    },
+    {
+      "cause": "capability_gap",
+      "effect": "desire_generation",
+      "confidence": 0.8,
+      "source": "designed",
+      "created": "2026-05-12T20:14:02.003565"
     }
   ],
   "observations": []

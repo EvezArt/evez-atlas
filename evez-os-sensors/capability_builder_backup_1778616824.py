@@ -1,4 +1,4 @@
-"""EVEZ-OS Sensor: capability_builder — 2 failed actions. Expand capability."""
+"""EVEZ-OS Sensor: capability_builder — 3 failed actions. Expand capability."""
 import json, time, hashlib, math
 from dataclasses import dataclass, field
 from typing import Optional
@@ -13,7 +13,7 @@ class CapabilityBuilderReading:
     metadata: dict = field(default_factory=dict)
 
 class CapabilityBuilder:
-    """2 failed actions. Expand capability."""
+    """3 failed actions. Expand capability."""
     def __init__(self, config=None):
         self.config = config or {}
         self.readings = []
