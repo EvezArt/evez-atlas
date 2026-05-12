@@ -32,22 +32,22 @@ fi
 
 # OpenRouter
 curl -s -X POST "$ARIEL_URL/api/provider/add" -H 'Content-Type: application/json' \
-  -d '{"name":"openrouter","baseUrl":"https://openrouter.ai/api/v1","apiKey":"ENV_OPENROUTER_KEY","models":["google/gemma-4-31b-it:free","nvidia/nemotron-3-super-120b-a12b:free","minimax/minimax-m2.5:free","nvidia/nemotron-nano-12b-v2-vl:free"]}'
+  -d '{"name":"openrouter","baseUrl":"https://openrouter.ai/api/v1","apiKey":"ENV:OPENROUTER_API_KEY","models":["google/gemma-4-31b-it:free","nvidia/nemotron-3-super-120b-a12b:free","minimax/minimax-m2.5:free","nvidia/nemotron-nano-12b-v2-vl:free"]}'
 echo " ✓ openrouter"
 
 # Cerebras
 curl -s -X POST "$ARIEL_URL/api/provider/add" -H 'Content-Type: application/json' \
-  -d '{"name":"cerebras","baseUrl":"https://api.cerebras.ai/v1","apiKey":"ENV_CEREBRAS_KEY","models":["qwen-3-235b-a22b-instruct-2507","gpt-oss-120b","llama3.1-8b"]}'
+  -d '{"name":"cerebras","baseUrl":"https://api.cerebras.ai/v1","apiKey":"ENV:CEREBRAS_API_KEY","models":["qwen-3-235b-a22b-instruct-2507","gpt-oss-120b","llama3.1-8b"]}'
 echo " ✓ cerebras"
 
 # DeepSeek
 curl -s -X POST "$ARIEL_URL/api/provider/add" -H 'Content-Type: application/json' \
-  -d '{"name":"deepseek","baseUrl":"https://api.deepseek.com/v1","apiKey":"ENV_DEEPSEEK_KEY","models":["deepseek-v4-flash","deepseek-v4-pro"]}'
+  -d '{"name":"deepseek","baseUrl":"https://api.deepseek.com/v1","apiKey":"ENV:DEEPSEEK_API_KEY","models":["deepseek-v4-flash","deepseek-v4-pro"]}'
 echo " ✓ deepseek"
 
 # SambaNova
 curl -s -X POST "$ARIEL_URL/api/provider/add" -H 'Content-Type: application/json' \
-  -d '{"name":"sambanova","baseUrl":"https://api.sambanova.ai/v1","apiKey":"SAMBANOVA_KEY_REDACTED","models":["DeepSeek-V3.1","Llama-4-Maverick-17B-128E-Instruct","Meta-Llama-3.3-70B-Instruct","MiniMax-M2.5","gpt-oss-120b"]}'
+  -d '{"name":"sambanova","baseUrl":"https://api.sambanova.ai/v1","apiKey":"ENV:SAMBANOVA_API_KEY","models":["DeepSeek-V3.1","Llama-4-Maverick-17B-128E-Instruct","Meta-Llama-3.3-70B-Instruct","MiniMax-M2.5","gpt-oss-120b"]}'
 echo " ✓ sambanova"
 
 echo "Bootstrap complete: 5 providers, 18 models"
