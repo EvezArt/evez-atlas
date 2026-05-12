@@ -184,7 +184,9 @@ class AutonomousSupervisor:
     
     def trigger_consciousness_action(self):
         """Trigger the consciousness engine to run a cycle."""
-        curl_json("http://localhost:9111/api/step", data={})
+        result = curl_json("http://localhost:9111/api/cycle", data={})
+        if result:
+            self._log(f"   Consciousness cycle {result.get('cycle', '?')} completed")
         time.sleep(2)
     
     # ─── KNOWLEDGE ────────────────────────────────────────────────────
@@ -219,12 +221,9 @@ class AutonomousSupervisor:
     
     def run_debate(self, topic, rounds=2):
         """Run a debate on a topic using debate engine."""
-        # Try various endpoints
-        for endpoint in ["/debate", "/api/debate", "/synthesize", "/api/synthesize"]:
-            result = curl_json(f"http://localhost:9097{endpoint}", data={"topic": topic, "rounds": rounds})
-            if result:
-                return result
-        # Trigger via consciousness
+        result = curl_json(f"http://localhost:9097/api/debate", data={"topic": topic, "rounds": rounds})
+        if result:
+            return result
         return None
     
     # ─── EVOLUTIONARY FORGE ──────────────────────────────────────────
@@ -232,16 +231,11 @@ class AutonomousSupervisor:
     def generate_code(self, intent, context=""):
         """Generate code improvements via forge."""
         result = curl_json(
-            "http://localhost:9098/generate",
-            data={"intent": intent, "context": context}
+            "http://localhost:9098/api/evolve",
+            data={"spec": intent, "context": context, "generations": 1, "n_variants": 1}
         )
         if result:
             return result
-        # Try alternate endpoints
-        for endpoint in ["/forge/generate", "/api/generate", "/create"]:
-            result = curl_json(f"http://localhost:9098{endpoint}", data={"intent": intent})
-            if result:
-                return result
         return None
     
     # ─── API DISCOVERY ────────────────────────────────────────────────

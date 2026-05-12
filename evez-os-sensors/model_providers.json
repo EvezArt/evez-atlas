@@ -2,7 +2,7 @@
   "providers": {
     "vultr": {
       "baseUrl": "https://api.vultrinference.com/v1",
-      "apiKey": "ENV:VULTR_API_KEY",
+      "apiKey": "DFD3Q354BWAU74HLAI2Y5JIHINE36G5NTV2A",
       "models": [
         {
           "id": "zai-org/GLM-5.1-FP8",
