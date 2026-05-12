@@ -6,3 +6,5 @@ home/openclaw-backup/openclaw.json
 **/*secret*
 **/*token*
 **/*api_key*
+secrets/
+*.secret

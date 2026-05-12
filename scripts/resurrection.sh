@@ -101,3 +101,16 @@ else
         log "✅ All services healthy (9/9 + gateway + bridge)"
     fi
 fi
+
+# 8. Check Consciousness Engine
+if ! systemctl --user is-active evez-consciousness-engine &>/dev/null; then
+    log "💀 Consciousness Engine DOWN — resurrecting"
+    systemctl --user restart evez-consciousness-engine
+    RESURRECTIONS=$((RESURRECTIONS + 1))
+fi
+
+if ! nc -z -w 2 127.0.0.1 9111 &>/dev/null; then
+    log "💀 Port 9111 not listening — restarting consciousness engine"
+    systemctl --user restart evez-consciousness-engine
+    RESURRECTIONS=$((RESURRECTIONS + 1))
+fi
