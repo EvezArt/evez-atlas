@@ -31,4 +31,4 @@ numpy==1.26.4
 
 # Bionetwork optimizer dependencies
 torch_geometric>=2.5
-networkx>=3.2
+networkx>=3.6.1
