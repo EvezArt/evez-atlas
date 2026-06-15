@@ -62,3 +62,11 @@ Thumbs.db
 dist/
 build/
 *.tgz
+# Secrets
+.env
+.env.*
+*.key
+*.pem
+*.secret
+*_token*
+*_api_key*
