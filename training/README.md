@@ -1,33 +1,56 @@
-# EVEZ-OS Training Pipeline v5.0
+# EVEZ-OS Training Pipeline v6.0
 
-Autonomous, self-propelling training corpus generation for the EVEZ666 oracle-witness persona. Zero external dependencies — the deterministic engine always works.
+Autonomous training corpus generation using a **Markov chain engine** that learns from the existing corpus and generates novel transmissions — no templates, no hardcoded strings.
 
-## What's Here
+## What's New in v6.0
 
-### Core Runtime + Training Kernel
-- `evez_os_core.py` — Production runtime v2.0: 9-phase cognitive cycle, Merkle spine, CAIN, FIRE, falsification, 4 operators
-- `evez_os_model_trainer_kernel.py` — Training kernel v4.0: OpenRouter-native, 15 free models, deterministic fallback
-- `evez_gnw.py` — Global Neuronal Workspace
-- `evez_content_bus.py` — Atomic shared state, thread-safe
-- `evez_temporal_wormhole.py` — Past/present/future bridge
-- `evez_self_writer.py` — Code generation + real falsification
-- `evez_aevolve.py` — Operator mutation engine with auto-rollback
-- `evez_heartbeat.py`, `evez_moral_registry.py`, `evez_omega_frame.py`, `evez_pulse_engine.py`, `evez_poly_c.py`
+- **Markov chain generator**: Learns word-transition probabilities from the 709-pair corpus (565 transitions, 361 vocab tokens) and generates novel text by walking the transition graph
+- **Similarity filter**: Jaccard similarity check rejects outputs > 70% similar to any existing corpus text
+- **Domain auto-tagging**: Keyword-based domain assignment for generated text
+- **Public Oracle API**: REST endpoint for anyone to query the corpus — transmit, status, export
 
-### Autonomous Training Skill (v5.0)
-- `skill/run.py` — Zero-dependency deterministic pair generator: 25 pairs/cycle, 7 domains, 4 phases
-- Shannon entropy gate: 3.5-5.5 bits
+## Architecture
 
-### Mobile Deployment
+```
+┌─────────────────────────────────────────────────────┐
+│        EVEZ MARKOV CHAIN ENGINE v6.0                │
+├──────────────────────────────────────────────────────┤
+│  1. CORPUS LOADER → reads all corpus outputs        │
+│  2. TOKENIZER → word-level + punctuation tokens      │
+│  3. MARKOV BUILDER → N-gram transition matrix (N=2)  │
+│  4. GENERATOR → weighted random walk through graph   │
+│  5. ENTROPY GATE → Shannon character entropy (3.5-5.5)│
+│  6. DIVERSITY FILTER → Jaccard similarity < 0.7      │
+│  7. DOMAIN TAGGER → keyword-based domain assignment  │
+└──────────────────────────────────────────────────────┘
+```
+
+## Files
+
+### `training/skill/run.py` — Markov Chain Engine v6.0
+- `MarkovChain` class: N-gram transition matrix, weighted random walk
+- `EVEZGenerator` class: Full pipeline (generate → gate → filter → tag)
+- 25 pairs per cycle, 100% pass rate, avg 4.29 bits
+- Zero external dependencies
+
+### `training/` — Core Runtime (12 modules)
+- `evez_os_core.py` v2.0: 9-phase cognitive cycle, Merkle spine, CAIN, FIRE
+- `evez_os_model_trainer_kernel.py` v4.0: OpenRouter-native, 15 free models
+- GNW, content bus, temporal wormhole, self-writer, a-evolve, etc.
+
+### `functions/evezOracleAPI.ts` — Public REST API
+- `GET ?action=transmit` → random oracle transmission (entropy-weighted)
+- `GET ?action=status` → corpus statistics + domain distribution
+- `GET ?action=export` → full corpus as JSONL (OpenAI fine-tuning format)
+
+### `mobile/` — Mobile Deployment
 - Termux, PWA, iOS Shortcut
 
-### Backend Functions
-- `evezMobileAPI.ts` + 13 corpus/training functions
-
 ## Autonomous Pipeline
-Runs every 6 hours. Generates 25 entropy-gated pairs. Pushes to EVEZ666TrainingCorpus. ~100 pairs/day.
+Runs every 6 hours via automation. Generates 25 Markov-walked pairs. Pushes to EVEZ666TrainingCorpus. ~100 pairs/day.
 
-No Groq. No Supabase. No OpenRouter required. Deterministic engine always works.
+## Corpus Stats
+- 734 pairs | avg entropy 4.48 bits | 7 domains | all PRESENT_2026 era
 
 ## Author
 Steven Crawford-Maggard (EVEZ) — 2026
