@@ -70,6 +70,7 @@ import textwrap
 from collections import defaultdict, Counter
 from dataclasses import dataclass, field
 from typing import List, Dict, Tuple, Optional, Any
+from evez_codegen_extra import ExtraGenerators
 
 # ═══════════════════════════════════════════════════════════════════════
 # LAYER 1: CODE CORPUS LOADER
@@ -441,7 +442,7 @@ class CodeMarkovChain:
 # LAYER 4: PARAMETERIZED GENERATORS
 # ═══════════════════════════════════════════════════════════════════════
 
-class CodeGenerator:
+class CodeGenerator(ExtraGenerators):
     """Generates syntactically valid code from parameters — zero tokens."""
 
     def __init__(self, extractor: PatternExtractor):
@@ -1167,6 +1168,93 @@ def cli_main(argv: List[str]):
         )
         lang = "typescript"
 
+    elif pattern == "react":
+        code = generator.gen_react_component(
+            name=params.get("name", "Component"),
+            props=params.get("props", ""),
+            hooks=params.get("hooks", ""),
+            styled=params.get("styled", "true").lower() not in ("false", "0", "no"),
+            ts=params.get("ts", "true").lower() not in ("false", "0", "no"),
+        )
+        lang = "typescript"
+
+    elif pattern == "middleware":
+        code = generator.gen_middleware(
+            name=params.get("name", "authMiddleware"),
+            framework=params.get("framework", "express"),
+            ts=params.get("ts", "true").lower() not in ("false", "0", "no"),
+        )
+        lang = "typescript"
+
+    elif pattern == "sql":
+        code = generator.gen_sql_schema(
+            table=params.get("table", params.get("name", "entity")),
+            fields=params.get("fields", ""),
+            db=params.get("db", "postgres"),
+        )
+        lang = "other"
+
+    elif pattern == "dockerfile":
+        code = generator.gen_dockerfile(
+            app_name=params.get("name", "app"),
+            base=params.get("base", "python:3.12-slim"),
+            port=int(params.get("port", "8000")),
+            entrypoint=params.get("entrypoint", ""),
+        )
+        lang = "other"
+
+    elif pattern == "compose":
+        code = generator.gen_docker_compose(
+            services=params.get("services", "web,db,redis"),
+            app_name=params.get("name", "app"),
+        )
+        lang = "other"
+
+    elif pattern == "fastapi":
+        code = generator.gen_fastapi_route(
+            entity=params.get("entity", params.get("name", "Entity")),
+            fields=params.get("fields", ""),
+            methods=params.get("methods", "all"),
+        )
+        lang = "python"
+
+    elif pattern == "fixture":
+        code = generator.gen_pytest_fixture(
+            name=params.get("name", "sample_data"),
+            fixture_type=params.get("type", "data"),
+            scope=params.get("scope", "function"),
+        )
+        lang = "python"
+
+    elif pattern == "script":
+        code = generator.gen_shell_script(
+            name=params.get("name", "deploy"),
+            commands=params.get("commands", ""),
+            include_trap=params.get("trap", "true").lower() not in ("false", "0", "no"),
+        )
+        lang = "other"
+
+    elif pattern == "config":
+        code = generator.gen_config(
+            app_name=params.get("name", "app"),
+            fmt=params.get("format", "yaml"),
+            keys=params.get("keys", ""),
+        )
+        lang = "other"
+
+    elif pattern == "gitignore":
+        code = generator.gen_gitignore(
+            project_type=params.get("type", "python"),
+        )
+        lang = "other"
+
+    elif pattern == "requirements":
+        code = generator.gen_requirements(
+            libs=params.get("libs", ""),
+            include_dev=params.get("dev", "false").lower() in ("true", "1", "yes"),
+        )
+        lang = "other"
+
     else:
         print(f"Unknown pattern: {pattern}")
         print_help()
@@ -1175,8 +1263,10 @@ def cli_main(argv: List[str]):
     # Validate
     if lang == "python":
         valid, error = validator.validate_python(code)
-    else:
+    elif lang == "typescript":
         valid, error = validator.validate_typescript(code)
+    else:
+        valid, error = True, None  # SQL, YAML, Docker, etc.
 
     # Output
     if params.get("file"):
