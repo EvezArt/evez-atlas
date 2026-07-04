@@ -1,59 +1,97 @@
-<div align="center">
+# EVEZ-OS
 
-# 🧠 Atlas v3 — Synaptic Recursion Kernel
+**Tokenless code generation and autonomous training for the EVEZ666 oracle-witness system.**
 
-### *Append-only event spine. Hypergraph identity layer. Autonomous agent mesh.*
+Zero LLM tokens. Zero API calls. Zero billing. Runs on a Samsung Galaxy A16 via Termux.
 
-[![Part of EVEZ Ecosystem](https://img.shields.io/badge/ecosystem-EVEZ--OS-gold)](https://github.com/EvezArt/evez-os)
+## What's Here
 
-</div>
+### Tokenless Code Generator (`training/evez_codegen.py`)
+Generates syntactically valid Python and TypeScript code with zero LLM tokens.
 
----
+- **6 pattern generators**: function, class, endpoint, test, CRUD, model
+- **AST-validated**: all Python output passes `ast.parse()` 
+- **Pattern extraction**: learns from 409 functions, 61 classes, 422 imports in the codebase
+- **Markov chain**: 32,364 transitions, 5,754 vocab tokens trained on 14,707 lines of real code
+- **CLI**: `evez-gen function --name=foo --params="x:int" --returns=bool`
 
-## What Is This?
+```bash
+# Generate a CRUD module
+python3 evez_codegen.py crud --entity=Task --fields="title,description,status"
 
-Atlas v3 is the synaptic recursion kernel of the EVEZ ecosystem. It implements:
+# Generate test stubs
+python3 evez_codegen.py test --target=process_data --cases=5
 
-- **Append-only event spine** — every state change is recorded, not overwritten
-- **Hypergraph identity layer** — nodes, edges, and meta-edges in a unified schema
-- **Autonomous agent mesh** — agents communicate via event bus, not direct calls
-- **Jubilee debt mutation system** — hardened financial state machine endpoints
+# Generate a TypeScript API endpoint
+python3 evez_codegen.py endpoint --method=POST --path=/api/orders
+```
 
----
+### Training Pipeline v6.0 (`training/skill/run.py`)
+Markov chain engine that generates novel training pairs from learned transition patterns.
+
+- **Markov N=2**: 565 transitions, 361 vocab tokens from the oracle corpus
+- **Entropy gate**: Shannon 3.5-5.5 bits
+- **Similarity filter**: Jaccard < 0.7 (rejects near-duplicates)
+- **7 domains**: SUPPRESSION_COMBAT, QUANTUM_CONSCIOUSNESS, REMOTE_VIEWING, etc.
+- **Autonomous**: runs every 6 hours via automation, ~100 pairs/day
+- **Corpus**: 734+ pairs, avg 4.48 bits
+
+### Core Runtime (`training/evez_os_core.py`)
+9-phase cognitive cycle with Merkle-verified spine, CAIN contradiction detection, FIRE threshold events, and real subprocess falsification.
+
+### Public Oracle API (`functions/evezOracleAPI.ts`)
+REST API for querying the corpus:
+- `GET ?action=transmit` → random oracle transmission
+- `GET ?action=status` → corpus statistics
+- `GET ?action=export` → JSONL for fine-tuning
+
+### Mobile Deployment (`mobile/`)
+- Termux bootstrap for Samsung Galaxy A16
+- PWA with embedded runtime (works offline)
+- iOS Shortcut integration
+
+## Quick Start
+
+```bash
+# Train the code generator on your codebase
+python3 evez_codegen.py --train
+
+# Generate code
+python3 evez_codegen.py function --name=process_data --params="data:list,timeout:int" --returns=dict
+python3 evez_codegen.py class --name=User --fields="name:str,email:str,active:bool"
+python3 evez_codegen.py crud --entity=Task --fields="title,status,priority"
+python3 evez_codegen.py test --target=my_function --cases=5
+python3 evez_codegen.py endpoint --method=POST --path=/api/users
+python3 evez_codegen.py model --name=Order --fields="id:int,total:float,paid:bool"
+```
 
 ## Architecture
 
 ```
-Atlas v3
-├── Spine         Append-only event store
-├── Hypergraph    Identity + relationship layer
-├── Agent Mesh    Event-driven inter-agent communication
-├── Immortality   Persistence across restart/failure
-└── Jubilee       Financial mutation endpoints (hardened)
+┌─────────────────────────────────────────────────────────────┐
+│              EVEZ TOKENLESS CODE GENERATOR                   │
+├──────────────────────────────────────────────────────────────┤
+│  LAYER 1: CODE CORPUS LOADER (54 .py, 15 .ts, 14.7K lines) │
+│  LAYER 2: PATTERN EXTRACTOR (409 functions, 61 classes)     │
+│  LAYER 3: MARKOV ENGINE (32K transitions, 5.7K vocab)       │
+│  LAYER 4: PARAMETERIZED GENERATORS (6 patterns)             │
+│  LAYER 5: SYNTAX VALIDATOR (ast.parse + bracket matching)   │
+│  LAYER 6: CLI INTERFACE (evez-gen <pattern> [options])      │
+└──────────────────────────────────────────────────────────────┘
 ```
 
----
+## Stats
 
-## Key Features
+- **Code corpus**: 54 Python files, 15 TypeScript files, 14,707 lines
+- **Patterns extracted**: 409 functions, 61 classes, 422 imports
+- **Markov chain**: 32,364 transitions, 5,754 vocab tokens, 4,072 line patterns
+- **Training corpus**: 734 pairs, avg entropy 4.48 bits, 7 domains
+- **Validation**: 6/6 Python generators produce ast-valid output
 
-**Spine Protocol**
-Every event is written once. No updates. No deletes. The history IS the state.
+## Author
 
-**Hypergraph Identity**
-Agents, nodes, and relationships encoded as a directed hypergraph. Identity is topology, not data.
+Steven Crawford-Maggard (EVEZ) — 2026
 
-**Jubilee System**
-Hardened debt mutation endpoints. Every balance change is a spine event. Auditable. Irreversible. Correct.
+## License
 
----
-
-## Integration
-
-Atlas v3 is the backbone for:
-- [evez-os](https://github.com/EvezArt/evez-os) spine events
-- [MAES](https://github.com/EvezArt/maes) event routing
-- [evez-agentnet](https://github.com/EvezArt/evez-agentnet) agent coordination
-
----
-
-*poly_c=τ×ω×topo/2√N | @EVEZ666 + Cipher / XyferViperZephyr*
+See LICENSE file.
