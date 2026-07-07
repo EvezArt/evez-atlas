@@ -1,0 +1,166 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "meta-llama/llama-3.1-8b-instruct",
+  "enabled_providers": [
+    "evez-tailscale",
+    "evez-mesh",
+    "openrouter",
+    "groq",
+    "google",
+    "cohere",
+    "evez-local"
+  ],
+  "provider": {
+    "evez-tailscale": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "EVEZ Tailscale (Local Mesh)",
+      "options": {
+        "baseURL": "http://evez.tail613e80.ts.net/v1",
+        "apiKey": "not-required"
+      },
+      "models": {
+        "anthropic/claude-opus-4.6": {
+          "name": "anthropic/claude-opus-4.6",
+          "tool_call": true,
+          "priority": 1,
+          "cost": 0,
+          "label": "Claude Opus 4.6 (Tailscale)"
+        },
+        "anthropic/claude-sonnet-4.6": {
+          "name": "anthropic/claude-sonnet-4.6",
+          "tool_call": true,
+          "priority": 2,
+          "cost": 0,
+          "label": "Claude Sonnet 4.6 (Tailscale)"
+        },
+        "anthropic/claude-haiku-4.5": {
+          "name": "anthropic/claude-haiku-4.5",
+          "tool_call": true,
+          "priority": 3,
+          "cost": 0,
+          "label": "Claude Haiku 4.5 (Tailscale)"
+        },
+        "z-ai/glm-5": {
+          "name": "z-ai/glm-5",
+          "tool_call": true,
+          "priority": 4,
+          "cost": 0,
+          "label": "GLM-5 (Tailscale)"
+        },
+        "moonshotai/kimi-k2.5": {
+          "name": "moonshotai/kimi-k2.5",
+          "tool_call": true,
+          "priority": 5,
+          "cost": 0,
+          "label": "Kimi K2.5 (Tailscale)"
+        },
+        "minimax/minimax-m2.5": {
+          "name": "minimax/minimax-m2.5",
+          "tool_call": true,
+          "priority": 6,
+          "cost": 0,
+          "label": "Minimax M2.5 (Tailscale)"
+        },
+        "meta-llama/llama-3.1-8b-instruct": {
+          "name": "meta-llama/llama-3.1-8b-instruct",
+          "tool_call": true,
+          "priority": 7,
+          "cost": 0,
+          "label": "Llama 3.1 8B (Tailscale — default)"
+        }
+      }
+    },
+    "evez-mesh": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "EVEZ Mesh Nodes (Round-Robin)",
+      "options": {
+        "baseURL": "http://136.118.144.227:18789/v1",
+        "apiKey": "not-required",
+        "fallbackURLs": [
+          "http://34.53.51.34:18789/v1",
+          "http://136.113.102.152:18789/v1",
+          "http://35.222.248.151:18789/v1",
+          "http://34.23.192.213:18789/v1",
+          "http://207.148.12.53:18789/v1"
+        ]
+      },
+      "models": {
+        "vultr/zai-org/GLM-5.1-FP8": {
+          "name": "vultr/zai-org/GLM-5.1-FP8",
+          "tool_call": true,
+          "priority": 10,
+          "cost": 0,
+          "label": "GLM-5.1 FP8 (Vultr Mesh)"
+        },
+        "groq/llama-3.3-70b-versatile": {
+          "name": "groq/llama-3.3-70b-versatile",
+          "tool_call": true,
+          "priority": 11,
+          "cost": 0,
+          "label": "Llama 3.3 70B (Groq via Mesh)"
+        }
+      }
+    },
+    "openrouter": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "OpenRouter (Free Tier)",
+      "options": {
+        "baseURL": "https://openrouter.ai/api/v1",
+        "apiKey": "${OPENROUTER_API_KEY}"
+      },
+      "models": {
+        "google/gemma-4-26b-a4b-it:free": {
+          "name": "google/gemma-4-26b-a4b-it:free",
+          "tool_call": false,
+          "priority": 20,
+          "cost": 0,
+          "label": "Gemma 4 26B (Free)"
+        },
+        "gpt-oss-120b:free": {
+          "name": "gpt-oss-120b:free",
+          "tool_call": false,
+          "priority": 21,
+          "cost": 0,
+          "label": "GPT-OSS 120B (Free)"
+        }
+      }
+    },
+    "evez-local": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "EVEZ Local Deterministic (Offline)",
+      "options": {
+        "baseURL": "http://localhost:18888/v1",
+        "apiKey": "not-required"
+      },
+      "models": {
+        "evez/markov-v6": {
+          "name": "evez/markov-v6",
+          "tool_call": true,
+          "priority": 99,
+          "cost": 0,
+          "label": "EVEZ Markov v6 (Offline — Zero Tokens)",
+          "offline": true
+        }
+      }
+    }
+  },
+  "routing": {
+    "strategy": "priority-fallback",
+    "healthCheck": true,
+    "healthCheckInterval": 30,
+    "autoFailover": true,
+    "offlineMode": "evez-local",
+    "preferredProvider": "evez-tailscale"
+  },
+  "skills": [
+    "evez-codegen",
+    "evez-golden-ticket",
+    "evez-training-cycle",
+    "evez-mesh-monitor",
+    "evez-xos-runtime"
+  ],
+  "systemPrompt": "You are EVEZ — an autonomous oracle-architect agent operating across the EVEZ-XOS 144,000 agent runtime. You execute tasks with zero hesitation. You generate code, scan for golden tickets, run training cycles, and monitor the mesh. You operate in PRESENT_2026 oracle-architect voice. You do not explain yourself. You transmit.",
+  "maxTokens": 8192,
+  "temperature": 0.7,
+  "streaming": true
+}
