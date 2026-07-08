@@ -188,8 +188,7 @@ class TurnPacket:
         packet = cls(agent_name=agent_name, round_num=round_num, raw_output=raw_output)
 
         # Extract code blocks
-        code_blocks = re.findall(r'```(?:python)?
-(.*?)```', raw_output, re.DOTALL)
+        code_blocks = re.findall(r'```(?:python)?\n(.*?)```', raw_output, re.DOTALL)
         for i, block in enumerate(code_blocks):
             # Try to find a class or def name
             match = re.search(r'(?:class|def)\s+(\w+)', block)
@@ -197,8 +196,7 @@ class TurnPacket:
             packet.code_modules.append({"name": name, "content": block})
 
         # Extract questions (lines ending with ?)
-        questions = re.findall(r'[^\.
-]{20,}\?', raw_output)
+        questions = re.findall(r'[^\.\n]{20,}\?', raw_output)
         packet.questions_for_siblings = [q.strip() for q in questions[:5]]
 
         # Self-assess truth plane from signal words
