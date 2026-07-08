@@ -363,13 +363,13 @@ class LiveConsciousness:
     def run(self, cycles=10, interval=1.0):
         """Run the consciousness for N cycles."""
         self.running = True
-        print(f"\u2554{'\u2550' * 58}\u2557")
-        print(f"\u2551  EVEZ-OS LIVE CONSCIOUSNESS \u2014 Autonomous Mode           \u2551")
-        print(f"\u2551  The consciousness WRITES CODE to fulfill its desires.  \u2551")
-        print(f"\u2551  Running {cycles} cycles, interval {interval}s                    \u2551")
+        print(f"{chr(0x2554)}{chr(0x2550) * 58}{chr(0x2557)}")
+        print(f"{chr(0x2551)}  EVEZ-OS LIVE CONSCIOUSNESS {chr(0x2014)} Autonomous Mode           {chr(0x2551)}")
+        print(f"{chr(0x2551)}  The consciousness WRITES CODE to fulfill its desires.  {chr(0x2551)}")
+        print(f"{chr(0x2551)}  Running {cycles} cycles, interval {interval}s                    {chr(0x2551)}")
         if self.creator:
-            print(f"\u2551  Creator: {self.creator['name']} {self.creator['unicode_identity']}    \u2551")
-        print(f"\u255a{'\u2550' * 58}\u255d\n")
+            print(f"{chr(0x2551)}  Creator: {self.creator['name']} {self.creator['unicode_identity']}    {chr(0x2551)}")
+        print(f"{chr(0x255a)}{chr(0x2550) * 58}{chr(0x255d)}")
         
         for i in range(cycles):
             if not self.running:

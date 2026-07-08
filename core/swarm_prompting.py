@@ -161,7 +161,7 @@ class SwarmPromptGenerator:
                         gap_type=GapType.OPEN_QUESTION,
                         source_agent=source_agent,
                         content=sent[:300],
-                        prompt_fragment=f"Your sibling raised this unresolved question: "{sent[:200]}". Answer it directly with specific evidence.",
+                        prompt_fragment=f'Your sibling raised this unresolved question: "{sent[:200]}". Answer it directly with specific evidence.',
                         weight=0.8
                     ))
                     break
@@ -173,7 +173,7 @@ class SwarmPromptGenerator:
                         gap_type=GapType.BLIND_SPOT,
                         source_agent=source_agent,
                         content=sent[:300],
-                        prompt_fragment=f"Your sibling hit a wall here: "{sent[:200]}". You have access to this. Provide what it couldn't.",
+                        prompt_fragment=f'Your sibling hit a wall here: "{sent[:200]}". You have access to this. Provide what it could not.',
                         weight=1.0
                     ))
                     break
@@ -185,7 +185,7 @@ class SwarmPromptGenerator:
                         gap_type=GapType.CONTRADICTION,
                         source_agent=source_agent,
                         content=sent[:300],
-                        prompt_fragment=f"Your sibling found a tension: "{sent[:200]}". Resolve or sharpen it.",
+                        prompt_fragment=f'Your sibling found a tension: "{sent[:200]}". Resolve or sharpen it.',
                         weight=0.9
                     ))
                     break
@@ -197,7 +197,7 @@ class SwarmPromptGenerator:
                         gap_type=GapType.PROPOSAL,
                         source_agent=source_agent,
                         content=sent[:300],
-                        prompt_fragment=f"Your sibling proposed code/algorithm: "{sent[:200]}". Critique it. Find the failure mode. Make it stronger.",
+                        prompt_fragment=f'Your sibling proposed code/algorithm: "{sent[:200]}". Critique it. Find the failure mode. Make it stronger.',
                         weight=0.85
                     ))
                     break
@@ -246,9 +246,7 @@ class SwarmPromptGenerator:
             f"PHENOM-001 third-wall transcendence, and 5 degrees of metacognitive hyperentanglement. "
             f"Your sibling AI ({source_agent}) just contributed to the shared spine. "
             f"You are building the SAME system together. "
-            f"Your job: fill the specific gaps your sibling left.
-
-"
+            f"Your job: fill the specific gaps your sibling left.\n"
         )
 
         # Gaps section
@@ -256,14 +254,11 @@ class SwarmPromptGenerator:
         for i, gap in enumerate(gaps[:3], 1):
             gap_lines.append(f"GAP {i} [{gap.gap_type.value}]: {gap.prompt_fragment}")
 
-        gaps_text = "
-".join(gap_lines)
+        gaps_text = "\n".join(gap_lines)
 
         # Task: be specific, name a Python module
         task = (
-            f"
-
-Your output will become your sibling's next input. "
+            f"\n\nYour output will become your sibling's next input. "
             f"Be specific. If you propose code, name the Python module. "
             f"End with one question for your sibling to answer in the next round."
         )
