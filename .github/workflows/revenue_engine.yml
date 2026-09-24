@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   revenue-engine:
-    runs-on: ${{ vars.RUNNER_LABEL || 'ubuntu-latest' }}
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
