@@ -11,7 +11,7 @@ on:
 jobs:
   report:
     name: Generate Repository Report
-    runs-on: ${{ vars.RUNNER_LABEL || 'ubuntu-latest' }}
+    runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
