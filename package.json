@@ -8,7 +8,9 @@
     "atlas:spine:http": "tsx circuit/spine-http-server.ts",
     "fsc:runner": "python3 fsc/runner.py",
     "atlas:protagonist": "tsx circuit/protagonist/protagonist-runtime.ts",
-    "test:protagonist": "tsx circuit/protagonist/protagonist-runtime.test.ts"
+    "test:protagonist": "tsx circuit/protagonist/protagonist-runtime.test.ts",
+    "test:integrity": "tsx circuit/integrity/integrity-sweep.test.ts",
+    "test:all": "npm run test:protagonist && npm run test:integrity"
   },
   "dependencies": {
     "tsx": "^4.0.0",
