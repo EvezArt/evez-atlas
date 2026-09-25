@@ -8,7 +8,7 @@ export type AtlasDomain =
   | "agents"
   | "fsc"
   | "governance"
-  | "observability";
+  | "observability"\n  | "autonomy";
 
 export interface EventSpineRecord<T = any> {
   id: string;
