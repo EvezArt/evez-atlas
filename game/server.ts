@@ -129,6 +129,8 @@ export class AuthoritativeGameServer {
       state: Record<string, GamePlayer>;
     };
 
+    const fromTick = this.state.tick;
+
     this.state = {
       matchId: this.state.matchId,
       tick: payload.tick,
@@ -140,7 +142,7 @@ export class AuthoritativeGameServer {
       kind: "ROLLBACK_APPLIED",
       payload: {
         matchId: this.state.matchId,
-        fromTick: this.state.tick,
+        fromTick,
         toTick,
         snapshotHash: snapshot.hash,
         playerCount: Object.keys(this.state.players).length
