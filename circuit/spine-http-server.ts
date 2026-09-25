@@ -2,12 +2,14 @@ import express from "express";
 import crypto from "crypto";
 import { EventSpine, AtlasDomain, EventSpineRecord } from "./event-spine/event-spine";
 import { ProjectionBus } from "./projection-bus/projection-bus";
+import { ProtagonistRuntime, listSwarmAgents } from "./protagonist/protagonist-runtime";
 
 const app = express();
 app.use(express.json());
 
 const spine = new EventSpine();
 const projectionBus = new ProjectionBus();
+const protagonist = new ProtagonistRuntime(spine);
 
 type GamePlayer = { x: number; y: number; health: number };
 type DerivedGameState = {
@@ -251,6 +253,35 @@ app.post("/game/move", (req, res) => {
 app.get("/game/state", (req, res) => {
   const matchId = String(req.query.matchId || "m1");
   res.json({ ok: true, state: deriveGameState(matchId) });
+});
+
+
+// Protagonist / swarm runtime
+app.get("/protagonist/state", (_req, res) => {
+  res.json({
+    protagonist: protagonist.getState(),
+    agents: listSwarmAgents()
+  });
+});
+
+app.get("/swarm/agents", (_req, res) => {
+  res.json({ agents: listSwarmAgents() });
+});
+
+app.post("/protagonist/turn", (req, res) => {
+  const input = String(req.body?.input || "").trim();
+  if (!input) {
+    return res.status(400).json({ ok: false, error: "input required" });
+  }
+
+  const result = protagonist.addressSwarm(input);
+  res.json({ ok: true, result });
+});
+
+app.post("/protagonist/refuse-compression", (req, res) => {
+  const reason = String(req.body?.reason || "Prediction is not identity.");
+  const record = protagonist.refuseCompression(reason);
+  res.json({ ok: true, record, protagonist: protagonist.getState() });
 });
 
 // GET /events - get full chain
