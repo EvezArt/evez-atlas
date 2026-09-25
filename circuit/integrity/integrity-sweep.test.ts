@@ -89,9 +89,6 @@ async function testLimitRecoveryPolicy() {
   const manifestPath = path.join(process.cwd(), "src", "autonomy", "agent_manifest.json");
   const navigation = new AgentNavigation(manifestPath);
 
-  const handler = new LimitBypassHandler(spine, spine as any, { maxRetries: 0 });
-  void handler;
-
   const legacyCompatible = new LimitBypassHandler(navigation, spine, { maxRetries: 0 });
   const result = await legacyCompatible.detectAndBypass(
     new Error("unauthorized"),
