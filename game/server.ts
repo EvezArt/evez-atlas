@@ -1,9 +1,15 @@
 import { EventSpine } from "../circuit/event-spine/event-spine";
 
+interface GamePlayer {
+  x: number;
+  y: number;
+  health: number;
+}
+
 interface GameState {
   matchId: string;
   tick: number;
-  players: Record<string, { x: number; y: number; health: number }>;
+  players: Record<string, GamePlayer>;
 }
 
 export class AuthoritativeGameServer {
@@ -26,6 +32,8 @@ export class AuthoritativeGameServer {
   }
 
   addPlayer(playerId: string) {
+    if (this.state.players[playerId]) return;
+
     this.state.players[playerId] = { x: 0, y: 0, health: 100 };
     this.spine.append({
       domain: "game",
@@ -72,30 +80,72 @@ export class AuthoritativeGameServer {
   }
 
   rollback(toTick: number) {
-    // Rebuild state from spine events
+    if (!Number.isInteger(toTick) || toTick < 0) {
+      throw new Error("Rollback target must be a non-negative integer tick");
+    }
+
     const events = this.spine.chain.filter(
-      r => r.domain === "game" && r.payload.matchId === this.state.matchId
+      (record) =>
+        record.domain === "game" &&
+        (record.payload as Record<string, unknown>)?.matchId === this.state.matchId
     );
 
-    const targetEvents = events.filter(e => {
-      if (e.kind === "TICK") return e.payload.tick <= toTick;
-      if (e.kind === "PLAYER_MOVE") return e.payload.tick <= toTick;
-      return true;
-    });
+    const snapshot = [...events]
+      .reverse()
+      .find(
+        (event) =>
+          event.kind === "TICK" &&
+          Number((event.payload as Record<string, unknown>).tick) === toTick
+      );
 
     this.spine.append({
       domain: "game",
-      kind: "ROLLBACK",
+      kind: "ROLLBACK_REQUESTED",
       payload: {
         matchId: this.state.matchId,
         fromTick: this.state.tick,
         toTick,
-        eventsReplayed: targetEvents.length
+        targetSnapshotFound: Boolean(snapshot)
       }
     });
 
-    // Replay logic (stub)
-    this.state.tick = toTick;
+    if (!snapshot) {
+      this.spine.append({
+        domain: "game",
+        kind: "ROLLBACK_REJECTED",
+        payload: {
+          matchId: this.state.matchId,
+          fromTick: this.state.tick,
+          toTick,
+          reason: "no_authoritative_snapshot_for_target_tick"
+        }
+      });
+
+      throw new Error("Rollback requires an authoritative TICK snapshot at the target tick");
+    }
+
+    const payload = snapshot.payload as {
+      tick: number;
+      state: Record<string, GamePlayer>;
+    };
+
+    this.state = {
+      matchId: this.state.matchId,
+      tick: payload.tick,
+      players: JSON.parse(JSON.stringify(payload.state))
+    };
+
+    this.spine.append({
+      domain: "game",
+      kind: "ROLLBACK_APPLIED",
+      payload: {
+        matchId: this.state.matchId,
+        fromTick: this.state.tick,
+        toTick,
+        snapshotHash: snapshot.hash,
+        playerCount: Object.keys(this.state.players).length
+      }
+    });
   }
 
   getState(): GameState {
