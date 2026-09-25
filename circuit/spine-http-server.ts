@@ -7,7 +7,7 @@ import { ProtagonistRuntime, listSwarmAgents } from "./protagonist/protagonist-r
 const app = express();
 app.use(express.json());
 
-const spine = new EventSpine();
+const spine = new EventSpine(process.env.ATLAS_SPINE_PATH);
 const projectionBus = new ProjectionBus();
 const protagonist = new ProtagonistRuntime(spine);
 
@@ -257,6 +257,10 @@ app.get("/game/state", (req, res) => {
 
 
 // Protagonist / swarm runtime
+app.get("/protagonist/replay", (_req, res) => {
+  res.json(protagonist.replay());
+});
+
 app.get("/protagonist/state", (_req, res) => {
   res.json({
     protagonist: protagonist.getState(),
