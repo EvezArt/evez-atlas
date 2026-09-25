@@ -20,7 +20,7 @@ type BypassStrategy = (
   context: any
 ) => Promise<BypassResult>;
 
-class LimitBypassHandler {
+const FORBIDDEN_BYPASS_STRATEGIES = new Set(["use_alternative_credentials", "skip_auth_check", "direct_connection", "skip_step"]);\n\nclass LimitBypassHandler {
   private nav: AgentNavigation;
   private spine: EventSpine;
   private config: LimitConfig;
