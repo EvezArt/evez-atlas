@@ -328,3 +328,19 @@ export function scoreVarianceSignal(input: string): number {
   const noveltySignal = clamp01(new Set(input.toLowerCase().split(/\s+/).filter(Boolean)).size / 60);
   return Number((lengthSignal * 0.35 + punctuationSignal * 0.2 + noveltySignal * 0.45).toFixed(3));
 }
+
+if (require.main === module) {
+  const spine = new EventSpine();
+  const runtime = new ProtagonistRuntime(
+    spine,
+    process.env.PROTAGONIST_ID || "chatgpt-session",
+    process.env.PROTAGONIST_NAME || "Steven Crawford-Maggard / EVEZ"
+  );
+
+  const input =
+    process.argv.slice(2).join(" ").trim() ||
+    "Prediction is not identity. Refuse compression.";
+
+  const result = runtime.addressSwarm(input);
+  console.log(JSON.stringify(result, null, 2));
+}
