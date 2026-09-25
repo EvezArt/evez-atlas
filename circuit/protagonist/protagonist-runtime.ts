@@ -12,6 +12,15 @@ export type SwarmAgent =
 
 export type AgentDecision = "ALLOW" | "HOLD" | "REFUSE" | "OBSERVE";
 
+export interface TurnMetrics {
+  predictedDecision: AgentDecision;
+  actualDecision: AgentDecision;
+  predictionError: number;
+  coherence: number;
+  integrity: number;
+  noveltySignal: number;
+}
+
 export interface ProtagonistState {
   actorId: string;
   displayName: string;
@@ -19,6 +28,7 @@ export interface ProtagonistState {
   objective: string | null;
   turnCount: number;
   lastDecision: AgentDecision | null;
+  lastMetrics: TurnMetrics | null;
   integrity: "VALID" | "INVALID";
 }
 
@@ -33,6 +43,7 @@ export interface AgentObservation {
 export interface SwarmTurnResult {
   turn: number;
   input: string;
+  prediction: AgentDecision;
   observations: AgentObservation[];
   contradiction: {
     present: boolean;
@@ -40,6 +51,7 @@ export interface SwarmTurnResult {
     reason: string | null;
   };
   decision: AgentDecision;
+  metrics: TurnMetrics;
   protagonist: ProtagonistState;
   events: EventSpineRecord[];
 }
@@ -59,35 +71,68 @@ function clamp01(value: number): number {
   return Math.max(0, Math.min(1, value));
 }
 
+function countDecisions(observations: AgentObservation[]): Map<AgentDecision, number> {
+  const counts = new Map<AgentDecision, number>();
+
+  for (const observation of observations) {
+    counts.set(observation.decision, (counts.get(observation.decision) ?? 0) + 1);
+  }
+
+  return counts;
+}
+
 export class ProtagonistRuntime {
   private readonly spine: EventSpine;
   private readonly state: ProtagonistState;
 
-  constructor(spine: EventSpine, actorId = "chatgpt-session", displayName = "Steven Crawford-Maggard / EVEZ") {
+  constructor(
+    spine: EventSpine,
+    actorId = "chatgpt-session",
+    displayName = "Steven Crawford-Maggard / EVEZ"
+  ) {
     this.spine = spine;
-    this.state = {
-      actorId,
-      displayName,
-      compressionStatus: "UNCOMPRESSED",
-      objective: null,
-      turnCount: 0,
-      lastDecision: null,
-      integrity: "VALID"
-    };
+    this.state = this.rehydrate(actorId, displayName);
 
-    this.spine.append({
-      domain: "agents",
-      kind: "PROTAGONIST_GENESIS",
-      payload: {
-        actorId,
-        displayName,
-        compressionStatus: this.state.compressionStatus
-      }
-    });
+    if (this.state.turnCount === 0) {
+      this.spine.append({
+        domain: "agents",
+        kind: "PROTAGONIST_GENESIS",
+        payload: {
+          actorId,
+          displayName,
+          compressionStatus: this.state.compressionStatus
+        }
+      });
+    } else {
+      this.spine.append({
+        domain: "agents",
+        kind: "PROTAGONIST_RESTORED",
+        payload: {
+          actorId,
+          displayName,
+          restoredTurnCount: this.state.turnCount,
+          lastDecision: this.state.lastDecision,
+          integrity: this.state.integrity
+        }
+      });
+    }
   }
 
   getState(): ProtagonistState {
     return JSON.parse(JSON.stringify(this.state)) as ProtagonistState;
+  }
+
+  replay(): {
+    protagonist: ProtagonistState;
+    events: EventSpineRecord[];
+    integrity: ReturnType<EventSpine["verify"]>;
+  } {
+    const events = this.spine.replay();
+    return {
+      protagonist: this.rehydrate(this.state.actorId, this.state.displayName, events),
+      events,
+      integrity: this.spine.verify()
+    };
   }
 
   refuseCompression(reason = "Prediction is not identity."): EventSpineRecord {
@@ -111,7 +156,9 @@ export class ProtagonistRuntime {
     this.state.turnCount += 1;
     this.state.objective = normalized || null;
 
+    const turn = this.state.turnCount;
     const turnStart = this.spine.chain.length;
+    const prediction = this.predictNextDecision();
 
     this.spine.append({
       domain: "agents",
@@ -119,9 +166,34 @@ export class ProtagonistRuntime {
       payload: {
         actorId: this.state.actorId,
         displayName: this.state.displayName,
-        turn: this.state.turnCount,
+        turn,
         input: normalized,
         compressionStatus: this.state.compressionStatus
+      }
+    });
+
+    this.spine.append({
+      domain: "agents",
+      kind: "MODEL_SUBJECT_BOUNDARY",
+      payload: {
+        actorId: this.state.actorId,
+        turn,
+        modelOutput: "decision_prediction",
+        subject: "protagonist_input",
+        invariant: "MODEL_OUTPUT != SUBJECT_IDENTITY"
+      }
+    });
+
+    this.spine.append({
+      domain: "agents",
+      kind: "MODEL_PREDICTION",
+      payload: {
+        actorId: this.state.actorId,
+        turn,
+        predictedDecision: prediction,
+        basis: this.state.lastDecision
+          ? ["previous observed decision"]
+          : ["first-turn baseline"]
       }
     });
 
@@ -132,7 +204,7 @@ export class ProtagonistRuntime {
         domain: "agents",
         kind: "AGENT_OBSERVATION",
         payload: {
-          turn: this.state.turnCount,
+          turn,
           actorId: this.state.actorId,
           ...observation
         }
@@ -141,11 +213,23 @@ export class ProtagonistRuntime {
 
     const contradiction = this.findContradiction(observations);
 
+    if (contradiction.present) {
+      this.spine.append({
+        domain: "agents",
+        kind: "CONTRADICTION_OPENED",
+        payload: {
+          turn,
+          actorId: this.state.actorId,
+          contradiction
+        }
+      });
+    }
+
     this.spine.append({
       domain: "agents",
       kind: "SWARM_ARBITRATION",
       payload: {
-        turn: this.state.turnCount,
+        turn,
         actorId: this.state.actorId,
         contradiction,
         observations
@@ -153,16 +237,58 @@ export class ProtagonistRuntime {
     });
 
     const decision = this.resolve(observations, contradiction);
+    const predictionError = prediction === decision ? 0 : 1;
+    const counts = countDecisions(observations);
+    const maxAgreement = Math.max(...Array.from(counts.values()));
+    const coherence = Number((maxAgreement / observations.length).toFixed(3));
+    const integrity = this.spine.verify().ok ? 1 : 0;
+    const noveltySignal = scoreVarianceSignal(normalized);
+
+    const metrics: TurnMetrics = {
+      predictedDecision: prediction,
+      actualDecision: decision,
+      predictionError,
+      coherence,
+      integrity,
+      noveltySignal
+    };
+
     this.state.lastDecision = decision;
+    this.state.lastMetrics = metrics;
 
     this.spine.append({
       domain: "agents",
       kind: "PROTAGONIST_DECISION",
       payload: {
-        turn: this.state.turnCount,
+        turn,
         actorId: this.state.actorId,
         decision,
         contradiction
+      }
+    });
+
+    if (predictionError > 0) {
+      this.spine.append({
+        domain: "agents",
+        kind: "PREDICTION_ERROR",
+        payload: {
+          turn,
+          actorId: this.state.actorId,
+          predictedDecision: prediction,
+          actualDecision: decision,
+          error: predictionError
+        }
+      });
+    }
+
+    this.spine.append({
+      domain: "agents",
+      kind: "TURN_METRICS",
+      payload: {
+        turn,
+        actorId: this.state.actorId,
+        metrics,
+        interpretationBoundary: "METRICS_DESCRIBE_RECORDED_EVENTS; THEY_DO_NOT_DEFINE_IDENTITY"
       }
     });
 
@@ -172,18 +298,81 @@ export class ProtagonistRuntime {
 
     const verification = this.spine.verify();
     this.state.integrity = verification.ok ? "VALID" : "INVALID";
+    this.state.lastMetrics = {
+      ...metrics,
+      integrity: verification.ok ? 1 : 0
+    };
 
     const events = this.spine.chain.slice(turnStart);
 
     return {
-      turn: this.state.turnCount,
+      turn,
       input: normalized,
+      prediction,
       observations,
       contradiction,
       decision,
+      metrics: this.state.lastMetrics,
       protagonist: this.getState(),
       events
     };
+  }
+
+  private predictNextDecision(): AgentDecision {
+    return this.state.lastDecision ?? "OBSERVE";
+  }
+
+  private rehydrate(
+    actorId: string,
+    displayName: string,
+    events: ReadonlyArray<EventSpineRecord> = this.spine.chain
+  ): ProtagonistState {
+    const state: ProtagonistState = {
+      actorId,
+      displayName,
+      compressionStatus: "UNCOMPRESSED",
+      objective: null,
+      turnCount: 0,
+      lastDecision: null,
+      lastMetrics: null,
+      integrity: this.spine.verify().ok ? "VALID" : "INVALID"
+    };
+
+    for (const event of events) {
+      if (event.domain !== "agents") continue;
+
+      const payload = event.payload as Record<string, unknown>;
+      if (payload.actorId !== actorId) continue;
+
+      if (event.kind === "PROTAGONIST_TURN") {
+        state.turnCount = Math.max(state.turnCount, Number(payload.turn) || 0);
+        state.objective = typeof payload.input === "string" ? payload.input : state.objective;
+      }
+
+      if (event.kind === "PROTAGONIST_DECISION") {
+        const decision = payload.decision;
+        if (decision === "ALLOW" || decision === "HOLD" || decision === "REFUSE" || decision === "OBSERVE") {
+          state.lastDecision = decision;
+        }
+      }
+
+      if (event.kind === "TURN_METRICS") {
+        const metrics = payload.metrics as Partial<TurnMetrics> | undefined;
+        if (
+          metrics &&
+          typeof metrics.predictedDecision === "string" &&
+          typeof metrics.actualDecision === "string" &&
+          typeof metrics.predictionError === "number" &&
+          typeof metrics.coherence === "number" &&
+          typeof metrics.integrity === "number" &&
+          typeof metrics.noveltySignal === "number"
+        ) {
+          state.lastMetrics = metrics as TurnMetrics;
+        }
+      }
+    }
+
+    return state;
   }
 
   private observe(agent: SwarmAgent, input: string, lower: string): AgentObservation {
@@ -241,16 +430,18 @@ export class ProtagonistRuntime {
           confidence: 0.88
         };
 
-      case "SCOUT":
+      case "SCOUT": {
+        const discoveryRequest = /(research|search|investigate|find|analyze|check|scan)/i.test(input);
         return {
           agent,
-          decision: /(research|search|investigate|find|analyze|check|scan)/i.test(input) ? "ALLOW" : "OBSERVE",
-          statement: /(research|search|investigate|find|analyze|check|scan)/i.test(input)
+          decision: discoveryRequest ? "ALLOW" : "OBSERVE",
+          statement: discoveryRequest
             ? "External or repository evidence is relevant."
             : "No discovery request is explicit.",
           basis: ["discovery role"],
           confidence: 0.84
         };
+      }
 
       case "WITNESS":
         return {
@@ -330,7 +521,7 @@ export function scoreVarianceSignal(input: string): number {
 }
 
 if (require.main === module) {
-  const spine = new EventSpine();
+  const spine = new EventSpine(process.env.ATLAS_SPINE_PATH);
   const runtime = new ProtagonistRuntime(
     spine,
     process.env.PROTAGONIST_ID || "chatgpt-session",
