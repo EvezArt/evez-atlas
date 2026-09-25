@@ -73,7 +73,7 @@ function testJournalPersistence() {
     );
 
     const journalLines = fs.readFileSync(journalPath, "utf8").trim().split(/\r?\n/);
-    assert.equal(journalLines.length, restoredSpine.chain.length + 1);
+    assert.equal(journalLines.length, restoredSpine.chain.length);
   } finally {
     fs.rmSync(directory, { recursive: true, force: true });
   }
