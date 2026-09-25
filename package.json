@@ -7,7 +7,8 @@
     "atlas:recursion:evez666": "ATLAS_TARGET=Evez666 ATLAS_INVARIANTS='coverage>0.8,no_blind_spots' tsx circuit/recursion-loop/recursion-loop.ts",
     "atlas:spine:http": "tsx circuit/spine-http-server.ts",
     "fsc:runner": "python3 fsc/runner.py",
-    "atlas:protagonist": "tsx circuit/protagonist/protagonist-runtime.ts"
+    "atlas:protagonist": "tsx circuit/protagonist/protagonist-runtime.ts",
+    "test:protagonist": "tsx circuit/protagonist/protagonist-runtime.test.ts"
   },
   "dependencies": {
     "tsx": "^4.0.0",
