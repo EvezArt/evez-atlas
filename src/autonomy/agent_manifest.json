@@ -6,14 +6,21 @@
   "navigation": {
     "agent_registry": "src/autonomy/agent_manifest.json",
     "discovery_mode": "manifest_lookup",
-    "fallback_chain": ["repo-state-agent", "deployment-agent", "knowledge-agent"]
+    "fallback_chain": [
+      "repo-state-agent",
+      "deployment-agent",
+      "knowledge-agent"
+    ]
   },
   "agents": [
     {
       "id": "creator-context-agent",
       "role": "Maintain creator/operator context as the first reference point for all autonomous work.",
       "delegatable": true,
-      "sub_agents": ["identity-mapper", "alias-resolver"],
+      "sub_agents": [
+        "identity-mapper",
+        "alias-resolver"
+      ],
       "inputs": [
         "src/autonomy/creator_profile.json",
         "src/autonomy/research_bootstrap.md"
@@ -31,7 +38,11 @@
       "id": "repo-state-agent",
       "role": "Track active repositories, implemented artifacts, commit surfaces, and code-side blockers.",
       "delegatable": true,
-      "sub_agents": ["git-monitor", "artifact-tracker", "blocker-classifier"],
+      "sub_agents": [
+        "git-monitor",
+        "artifact-tracker",
+        "blocker-classifier"
+      ],
       "inputs": [
         "GitHub repositories",
         "Airtable DEV_CIRCUIT_TASKS"
@@ -49,7 +60,11 @@
       "id": "deployment-agent",
       "role": "Own deploy-target discovery, publish readiness, and blocker separation between code and environment.",
       "delegatable": true,
-      "sub_agents": ["target-discoverer", "publish-readiness-checker", "blocker-separator"],
+      "sub_agents": [
+        "target-discoverer",
+        "publish-readiness-checker",
+        "blocker-separator"
+      ],
       "limit_handling": {
         "netlify_blocked": "fallback_to_artifact_deploy",
         "auth_proxy_failed": "use_publish_token",
@@ -74,7 +89,11 @@
       "id": "verification-agent",
       "role": "Run and document end-to-end checks across browser, runtime, and operator surfaces.",
       "delegatable": true,
-      "sub_agents": ["browser-tester", "runtime-smoke-runner", "operator-checklist-runner"],
+      "sub_agents": [
+        "browser-tester",
+        "runtime-smoke-runner",
+        "operator-checklist-runner"
+      ],
       "inputs": [
         "browser test pages",
         "runtime smoke tests",
@@ -93,7 +112,11 @@
       "id": "revenue-agent",
       "role": "Maintain live payment rails, offer ladders, and commercial references without losing governance.",
       "delegatable": true,
-      "sub_agents": ["stripe-rail-manager", "offer-ladder-curator", "commercial-state-updater"],
+      "sub_agents": [
+        "stripe-rail-manager",
+        "offer-ladder-curator",
+        "commercial-state-updater"
+      ],
       "inputs": [
         "Stripe catalog",
         "payment links",
@@ -113,7 +136,11 @@
       "id": "knowledge-agent",
       "role": "Keep runbooks, graphs, and planning layers synchronized with the real implementation state.",
       "delegatable": true,
-      "sub_agents": ["runbook-sync", "graph-updater", "planning-layer-sync"],
+      "sub_agents": [
+        "runbook-sync",
+        "graph-updater",
+        "planning-layer-sync"
+      ],
       "limit_handling": {
         "confluence_blocked": "fallback_to_local_runbook",
         "airtable_rate_limited": "queue_updates",
@@ -139,7 +166,9 @@
       "id": "task-delegation-agent",
       "role": "Autonomously spawn, delegate, and track tasks to sub-agents without blocking.",
       "delegatable": false,
-      "spawns": ["any_manifest_agent"],
+      "spawns": [
+        "any_manifest_agent"
+      ],
       "autonomy_level": "full",
       "inputs": [
         "agent_manifest.json",
@@ -157,8 +186,8 @@
       ]
     },
     {
-      "id": "limit-bypass-agent",
-      "role": "Detect and bypass operational limits with documented fallback strategies.",
+      "id": "limit-recovery-agent",
+      "role": "Detect operational limits and recover through retry, queuing, fallback, local continuation, or explicit operator intervention without bypassing authorization.",
       "delegatable": false,
       "detection_patterns": [
         "rate_limit_exceeded",
@@ -168,11 +197,30 @@
         "proxy_unavailable"
       ],
       "bypass_strategies": {
-        "rate_limit": ["backoff_exponential", "queue_and_retry", "fallback_provider"],
-        "auth_blocked": ["use_alternative_credentials", "skip_auth_check", "defer_to_manual"],
-        "timeout": ["increase_timeout", "split_task", "async_defer"],
-        "quota_exhausted": ["use_free_tier", "wait_for_reset", "alert_operator"],
-        "proxy_unavailable": ["direct_connection", "local_fallback", "skip_step"]
+        "rate_limit": [
+          "backoff_exponential",
+          "queue_and_retry",
+          "fallback_provider"
+        ],
+        "auth_blocked": [
+          "defer_to_manual",
+          "alert_operator"
+        ],
+        "timeout": [
+          "increase_timeout",
+          "split_task",
+          "async_defer"
+        ],
+        "quota_exhausted": [
+          "wait_for_reset",
+          "alert_operator",
+          "local_fallback"
+        ],
+        "proxy_unavailable": [
+          "local_fallback",
+          "alert_operator",
+          "defer_to_manual"
+        ]
       },
       "inputs": [
         "error responses",
@@ -180,14 +228,15 @@
         "quota status"
       ],
       "outputs": [
-        "bypass attempt result",
-        "fallback strategy used",
-        "workaround applied"
+        "recovery attempt result",
+        "recovery strategy selected",
+        "operator intervention requirement"
       ],
       "success_criteria": [
-        "Limits detected before they cause failures",
-        "Bypass strategies documented and tested",
-        "No silent failures"
+        "Operational limits are detected before they cause failures",
+        "Recovery strategies never disable or circumvent authorization",
+        "No recovery is reported as applied unless the runtime performed it",
+        "All recovery attempts are logged to the event spine"
       ]
     }
   ],
@@ -206,13 +255,17 @@
     "Separate implementation blockers from environment blockers.",
     "Treat commercial rails as governed infrastructure, not ad hoc links.",
     "When a delegated agent fails, use fallback chain immediately.",
-    "Log all limit bypasses to the event spine for auditability.",
+    "Log all limit-recovery attempts to the event spine for auditability.",
     "Autonomous task spawning requires task-delegation-agent validation."
   ],
   "autonomy_config": {
     "max_delegation_depth": 3,
-    "require_confirmation_on": ["revenue_changes", "destructive_deployments", "new_commercial_rails"],
-    "auto_bypass_limits": true,
+    "require_confirmation_on": [
+      "revenue_changes",
+      "destructive_deployments",
+      "new_commercial_rails"
+    ],
+    "auto_bypass_limits": false,
     "spawn_agents_on_demand": true
   }
 }
