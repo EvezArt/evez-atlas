@@ -1,0 +1,1 @@
+GitHub write access wired from OpenClaw gateway 2026-09-27
