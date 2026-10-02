@@ -19,10 +19,9 @@ jobs:
           mkdir -p data/fire
           echo '{"ts":"'$(date -u +%FT%TZ)'","event":"fire_cascade","source":"'${{ github.event.client_payload.source || 'manual' }}'"}' >> data/fire/events.jsonl
       - name: Run A012 Engine
-        continue-on-error: true
         run: |
           if [ -f skills/a012_telemetry_coincidence_engine.py ]; then
-            python skills/a012_telemetry_coincidence_engine.py --state data/hyperloop_state.json --mode full --output data/a012/predictions.jsonl 2>&1 || true
+            python skills/a012_telemetry_coincidence_engine.py --state data/hyperloop_state.json --mode full --output data/a012/predictions.jsonl 2>&1
           else
             echo "A012 engine not found, skipping"
           fi
