@@ -86,7 +86,12 @@ class SelfInterrogation:
             print(f"    • {s}")
         
         # CHECK: Are these skills actually published and visible?
-        token = "REVOKED_CLAWHUB_TOKEN"
+        # Env-backed only. The hardcoded token here was public in git history;
+        # it is revoked and must never be committed again.
+        token = os.environ.get("CLAWHUB_TOKEN", "").strip()
+        if not token:
+            print("  CLAWHUB_TOKEN unset — cannot verify published skills")
+            return
         published_count = 0
         verified_skills = []
         

@@ -1,8 +1,11 @@
 import { createClient } from "@supabase/supabase-js";
 
-const supabaseUrl = "https://vziaqxquzohqskesuxgz.supabase.co";
-const supabaseKey = "REVOKED_SUPABASE_SERVICE_ROLE";
+const supabaseUrl = Deno.env.get("SUPABASE_URL");
+const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
 
+if (!supabaseUrl || !supabaseKey) {
+  throw new Error('SUPABASE_URL / SUPABASE_SERVICE_ROLE_KEY unset')
+}
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 export async function evezCorpusStore(req: Request) {
