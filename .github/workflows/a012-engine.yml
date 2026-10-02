@@ -17,7 +17,7 @@ on:
 
 jobs:
   a012-run:
-    runs-on: ${{ vars.RUNNER_LABEL || 'ubuntu-latest' }}
+    runs-on: ubuntu-latest
     name: A012 — Telemetry Prediction & Coincidence Scan
 
     steps:
