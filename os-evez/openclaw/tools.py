@@ -1,5 +1,5 @@
 """openclaw.tools — bounded tool executor (FS_READ, FS_WRITE, SHELL)."""
-import subprocess, os
+import subprocess, os, shlex
 from pathlib import Path
 from .policy import load_policy, check_kill_switch, assert_fs_read, assert_fs_write, assert_shell
 
@@ -20,20 +20,31 @@ class ToolRunner:
 
     def read_file(self, path: str) -> str:
         self._check()
-        if not assert_fs_read(self.policy, path):
-            raise PermissionError(f"FS_READ denied: {path}")
-        return Path(path).read_text()
+        target = Path(path).expanduser().resolve()
+        if not assert_fs_read(self.policy, str(target)):
+            raise PermissionError("FS_READ denied by resolved-path policy")
+        return target.read_text()
 
     def write_file(self, path: str, content: str):
         self._check()
-        if not assert_fs_write(self.policy, path):
-            raise PermissionError(f"FS_WRITE denied: {path}")
-        Path(path).parent.mkdir(parents=True, exist_ok=True)
-        Path(path).write_text(content)
+        target = Path(path).expanduser().resolve()
+        if not assert_fs_write(self.policy, str(target)):
+            raise PermissionError("FS_WRITE denied by resolved-path policy")
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target = target.resolve()
+        if not assert_fs_write(self.policy, str(target)):
+            raise PermissionError("FS_WRITE denied after parent resolution")
+        target.write_text(content)
 
     def run_shell(self, cmd: str, timeout=30) -> str:
         self._check()
         if not assert_shell(self.policy, cmd):
-            raise PermissionError(f"SHELL denied: {cmd}")
-        result = subprocess.run(cmd, shell=True, capture_output=True, text=True, timeout=timeout)
-        return result.stdout + result.stderr
+            raise PermissionError("SHELL denied by command and sandbox policy")
+        argv = shlex.split(cmd)
+        jail = Path(self.policy["capabilities"]["SHELL"].get("workdir_jail", "./sandboxes")).resolve()
+        jail.mkdir(parents=True, exist_ok=True)
+        result = subprocess.run(
+            argv, shell=False, cwd=str(jail), capture_output=True,
+            text=True, timeout=min(max(int(timeout), 1), 30)
+        )
+        return (result.stdout + result.stderr)[:10000]
