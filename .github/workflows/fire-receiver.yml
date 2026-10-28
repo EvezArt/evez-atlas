@@ -41,19 +41,14 @@ jobs:
               stream.write(json.dumps(record, ensure_ascii=False) + "\n")
           PY
       - name: Run A012 Engine
-        continue-on-error: true
-        run: |
-          if [ -f skills/a012_telemetry_coincidence_engine.py ]; then
-            python skills/a012_telemetry_coincidence_engine.py --state data/hyperloop_state.json --mode full --output data/a012/predictions.jsonl 2>&1 || true
-          else
-            echo "A012 engine not found, skipping"
-          fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python skills/a012_telemetry_coincidence_engine.py --state data/hyperloop_state.json --mode full --output data/a012/predictions.jsonl
       - name: Commit results
         run: |
           git config user.name "EVEZ-OS Atlas"
           git config user.email "atlas@evez666.local"
-          git add -A
+          for path in data/fire data/a012 data/hyperloop_state.json; do [ ! -e "$path" ] || git add "$path"; done
           git diff --staged --quiet || git commit -m "fire-cascade: Atlas v3 cycle $(date -u +%FT%TZ)"
           git push
