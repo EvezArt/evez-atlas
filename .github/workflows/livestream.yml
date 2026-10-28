@@ -3,13 +3,18 @@ name: EVEZ Intel Livestream → YouTube
 on:
   workflow_dispatch:
     inputs:
-      stream_key:
-        description: 'YouTube stream key (leave blank to use secret)'
-        required: false
-        default: ''
+      confirm_live_stream:
+        description: 'Explicitly confirm publishing a live stream to YouTube'
+        required: true
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
 
 jobs:
   stream:
+    if: inputs.confirm_live_stream == true
     runs-on: ${{ vars.RUNNER_LABEL || 'ubuntu-latest' }}
     timeout-minutes: 360
 
@@ -26,7 +31,7 @@ jobs:
       - name: Run livestream
         timeout-minutes: 355
         env:
-          YOUTUBE_STREAM_KEY: ${{ inputs.stream_key || secrets.YOUTUBE_STREAM_KEY }}
+          YOUTUBE_STREAM_KEY: ${{ secrets.YOUTUBE_STREAM_KEY }}
           AI_ML_API_KEY: ${{ secrets.AI_ML_API_KEY }}
           RTMP_URL: rtmp://a.rtmp.youtube.com/live2
         run: |
