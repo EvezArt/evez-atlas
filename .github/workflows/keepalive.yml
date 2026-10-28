@@ -1,4 +1,4 @@
-name: Keepalive
+name: Workflow Health Inventory
 
 on:
   schedule:
@@ -7,29 +7,29 @@ on:
   push:
     branches: [main]
 
+permissions:
+  actions: read
+  contents: read
+
 jobs:
-  keepalive:
+  inventory:
     runs-on: ubuntu-latest
-    permissions:
-      actions: write
-      contents: write
     steps:
-      - name: Re-enable all workflows
+      - name: Report disabled workflows without re-enabling them
         uses: actions/github-script@v7
         with:
           script: |
-            const wfs = await github.rest.actions.listRepoWorkflows({
-              owner: context.repo.owner, repo: context.repo.repo
+            const response = await github.rest.actions.listRepoWorkflows({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              per_page: 100
             });
-            let reEnabled = 0;
-            for (const wf of wfs.data.workflows) {
-              if (wf.state !== 'active') {
-                await github.rest.actions.enableWorkflow({
-                  owner: context.repo.owner, repo: context.repo.repo,
-                  workflow_id: wf.id
-                });
-                reEnabled++;
-                console.log('Re-enabled:', wf.name);
-              }
+            const disabled = response.data.workflows
+              .filter(workflow => workflow.state !== "active")
+              .map(workflow => ({ id: workflow.id, name: workflow.name, state: workflow.state }));
+            core.info("Workflow inventory: " + response.data.total_count + " total.");
+            if (disabled.length) {
+              core.warning("Disabled workflows remain disabled by design: " + JSON.stringify(disabled));
+            } else {
+              core.info("No disabled workflows found.");
             }
-            console.log(`Keepalive done. Re-enabled ${reEnabled}/${wfs.data.total_count}. ${new Date().toISOString()}`);
