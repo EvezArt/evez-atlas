@@ -52,7 +52,7 @@ class AgentBootstrap:
         agent_name: str,
         role: str = "worker",
         domain: str = "general",
-        autonomy_level: str = "full",
+        autonomy_level: str = "supervised",
         capabilities: List[str] = None
     ) -> Dict[str, Any]:
         """
@@ -68,6 +68,14 @@ class AgentBootstrap:
         Returns:
             Bootstrap configuration
         """
+        if not isinstance(agent_name, str) or not agent_name.strip() or len(agent_name) > 80:
+            raise ValueError("agent_name must contain 1..80 non-whitespace characters")
+        if not isinstance(capabilities, list):
+            capabilities = []
+        allowed_capabilities = {"execute", "navigate", "read_only"}
+        selected_capabilities = sorted(set(cap for cap in capabilities if cap in allowed_capabilities))
+        # "full" autonomy is intentionally downgraded: an agent cannot grant itself authority.
+        autonomy_level = autonomy_level if autonomy_level in {"supervised", "limited"} else "supervised"
         agent_id = self._generate_agent_id(agent_name)
         
         agent_data = {
@@ -76,15 +84,15 @@ class AgentBootstrap:
             "role": role,
             "domain": domain,
             "autonomy_level": autonomy_level,
-            "capabilities": capabilities or ["execute", "delegate", "navigate"],
+            "capabilities": selected_capabilities or ["read_only"],
             "bootstrap_time": time.time(),
-            "status": "bootstrapped",
+            "status": "pending_approval",
             "config": {
-                "can_self_authorize": autonomy_level == "full",
-                "can_delegate": "delegate" in (capabilities or ["execute"]),
-                "can_navigate": "navigate" in (capabilities or ["execute"]),
-                "requires_approval": autonomy_level != "full",
-                "max_delegation_depth": 5 if autonomy_level == "full" else 1,
+                "can_self_authorize": False,
+                "can_delegate": False,
+                "can_navigate": "navigate" in selected_capabilities,
+                "requires_approval": True,
+                "max_delegation_depth": 1,
                 "timeout_seconds": 300,
                 "retry_attempts": 3
             }
@@ -114,6 +122,8 @@ class AgentBootstrap:
         Returns:
             List of bootstrap configurations
         """
+        if not isinstance(count, int) or isinstance(count, bool) or count < 1 or count > 10:
+            raise ValueError("batch count must be between 1 and 10")
         agents = []
         
         for i in range(count):
@@ -121,7 +131,7 @@ class AgentBootstrap:
                 agent_name=f"{base_name}-{i:03d}",
                 role="worker",
                 domain=domain,
-                autonomy_level="full",
+                autonomy_level="supervised",
                 capabilities=capabilities
             )
             agents.append(agent)
@@ -172,7 +182,7 @@ def quick_bootstrap(agent_name: str, role: str = "worker") -> Dict[str, Any]:
     return bootstrap.bootstrap_agent(
         agent_name=agent_name,
         role=role,
-        autonomy_level="full"
+        autonomy_level="supervised"
     )
 
 
