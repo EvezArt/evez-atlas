@@ -14,9 +14,9 @@ def test_limit_bypass_disabled_by_default(tmp_path, monkeypatch):
 def test_bounded_opt_in_increase_and_hard_cap(tmp_path, monkeypatch):
     monkeypatch.setenv("LIMIT_BYPASS_ENABLED", "1")
     limits = LimitBypass(data_dir=str(tmp_path))
-    allowed = limits.bypass_limit("max_agents", 150, reason="reviewed capacity test")
+    allowed = limits.bypass_limit("max_agents", 150, reason="reviewed capacity test", approval_id="approval-123456", approved_by="maintainer")
     assert allowed["status"] == "approved_by_opt_in_bounded_policy"
-    denied = limits.bypass_limit("max_agents", 500, reason="too large")
+    denied = limits.bypass_limit("max_agents", 500, reason="too large", approval_id="approval-123457", approved_by="maintainer")
     assert denied["status"] == "denied"
     assert limits.limits["max_agents"] == 150
 
