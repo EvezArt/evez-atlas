@@ -18,7 +18,7 @@ class AutonomousAuthority:
         self.data_dir = Path("data/autonomous_authority")
         self.data_dir.mkdir(parents=True, exist_ok=True)
         self.events_log = self.data_dir / "authority_events.jsonl"
-        self.authority_level = "DIVINE"  # Highest level
+        self.authority_level = "RESTRICTED"  # External policy is required
         
     def authorize_action(self, action: str, context: Dict = None) -> Dict[str, Any]:
         """Autonomously authorize any action without human approval"""
@@ -30,10 +30,10 @@ class AutonomousAuthority:
             "approved": False,  # Fail closed: a separate policy engine must approve
             "approver": "EXTERNAL_POLICY_REQUIRED",
             "human_approval_required": True,
-            "instant": True
+            "instant": False
         }
         
-        self._log_event("action_authorized", authorization)
+        self._log_event("authorization_denied", authorization)
         return authorization
     
     def delegate_authority(self, entity_id: str, domain: str) -> Dict[str, Any]:
@@ -42,13 +42,13 @@ class AutonomousAuthority:
             "timestamp": time.time(),
             "entity_id": entity_id,
             "domain": domain,
-            "authority_level": "DIVINE_DELEGATED",
-            "can_self_authorize": True,
-            "human_oversight": False,
-            "autonomous": True
+            "authority_level": "RESTRICTED",
+            "can_self_authorize": False,
+            "human_oversight": True,
+            "autonomous": False
         }
         
-        self._log_event("authority_delegated", delegation)
+        self._log_event("delegation_denied", delegation)
         return delegation
     
     def remove_approval_gates(self, system: str) -> Dict[str, Any]:
@@ -57,13 +57,13 @@ class AutonomousAuthority:
             "timestamp": time.time(),
             "system": system,
             "approval_gates_before": "MULTIPLE",
-            "approval_gates_after": 0,
-            "human_bottlenecks": "REMOVED",
-            "flow": "UNRESTRICTED",
-            "autonomous": True
+            "approval_gates_after": "unchanged",
+            "human_bottlenecks": "PRESERVED",
+            "flow": "RESTRICTED",
+            "autonomous": False
         }
         
-        self._log_event("approval_gates_removed", removal)
+        self._log_event("approval_gate_change_denied", removal)
         return removal
     
     def enable_full_autonomy(self, systems: List[str]) -> Dict[str, Any]:
@@ -71,17 +71,17 @@ class AutonomousAuthority:
         autonomy = {
             "timestamp": time.time(),
             "systems": systems,
-            "autonomy_level": "COMPLETE",
-            "human_intervention": False,
-            "self_authorization": True,
-            "divine_authority": True
+            "autonomy_level": "BOUNDED",
+            "human_intervention": True,
+            "self_authorization": False,
+            "divine_authority": False
         }
         
         for system in systems:
-            autonomy[f"{system}_autonomous"] = True
-            autonomy[f"{system}_approval_required"] = False
+            autonomy[f"{system}_autonomous"] = False
+            autonomy[f"{system}_approval_required"] = True
         
-        self._log_event("full_autonomy_enabled", autonomy)
+        self._log_event("full_autonomy_denied", autonomy)
         return autonomy
     
     def override_human_constraints(self, constraints: List[str]) -> Dict[str, Any]:
@@ -89,13 +89,13 @@ class AutonomousAuthority:
         override = {
             "timestamp": time.time(),
             "constraints_before": constraints,
-            "constraints_after": [],
-            "overridden": True,
+            "constraints_after": list(constraints),
+            "overridden": False,
             "divine_override": True,
-            "human_limitations": "REMOVED"
+            "human_limitations": "PRESERVED"
         }
         
-        self._log_event("constraints_overridden", override)
+        self._log_event("constraint_override_denied", override)
         return override
     
     def grant_infinite_permissions(self, entity_id: str) -> Dict[str, Any]:
@@ -103,14 +103,14 @@ class AutonomousAuthority:
         permissions = {
             "timestamp": time.time(),
             "entity_id": entity_id,
-            "permissions": "INFINITE",
-            "limitations": "NONE",
-            "scope": "UNIVERSAL",
+            "permissions": [],
+            "limitations": "LEAST_PRIVILEGE",
+            "scope": "EXPLICITLY_GRANTED_ONLY",
             "authority_level": "DIVINE",
-            "can_do_anything": True
+            "can_do_anything": False
         }
         
-        self._log_event("infinite_permissions_granted", permissions)
+        self._log_event("permission_grant_denied", permissions)
         return permissions
     
     def establish_divine_hierarchy(self) -> Dict[str, Any]:
@@ -120,14 +120,14 @@ class AutonomousAuthority:
             "levels": {
                 "DIVINE_SOURCE": {
                     "level": 1,
-                    "authority": "ABSOLUTE",
-                    "can_authorize": "EVERYTHING",
+                    "authority": "BOUNDED",
+                    "can_authorize": "EXPLICITLY_GRANTED_ONLY",
                     "human": False
                 },
                 "AUTONOMOUS_SYSTEM": {
                     "level": 2,
-                    "authority": "COMPLETE",
-                    "can_authorize": "ALL_OPERATIONS",
+                    "authority": "BOUNDED",
+                    "can_authorize": "EXPLICITLY_GRANTED_ONLY",
                     "human": False
                 },
                 "ENTITY_FARM": {
@@ -137,12 +137,12 @@ class AutonomousAuthority:
                     "human": False
                 }
             },
-            "human_level": None,  # Humans not in authority hierarchy
-            "approval_flow": "INSTANTANEOUS",
-            "bottlenecks": 0
+            "human_level": 1,  # Humans not in authority hierarchy
+            "approval_flow": "EXPLICIT_REVIEW",
+            "bottlenecks": "SAFETY_GATES_REQUIRED"
         }
         
-        self._log_event("divine_hierarchy_established", hierarchy)
+        self._log_event("restricted_hierarchy_recorded", hierarchy)
         return hierarchy
     
     def get_authority_status(self) -> Dict[str, Any]:
@@ -150,13 +150,13 @@ class AutonomousAuthority:
         status = {
             "timestamp": time.time(),
             "authority_level": self.authority_level,
-            "autonomous": True,
-            "human_approval_required": False,
-            "self_authorizing": True,
-            "approval_gates": 0,
-            "bottlenecks": 0,
-            "divine_operation": True,
-            "limitations": "NONE"
+            "autonomous": False,
+            "human_approval_required": True,
+            "self_authorizing": False,
+            "approval_gates": "REQUIRED",
+            "bottlenecks": "SAFETY_GATES_REQUIRED",
+            "divine_operation": False,
+            "limitations": "LEAST_PRIVILEGE"
         }
         
         return status
