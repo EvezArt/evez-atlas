@@ -7,7 +7,7 @@ Uses Qwen3-Coder through the Oracle to write real code, test it, and deploy.
 This is where phenomenology becomes ability.
 """
 
-import json, time, os, subprocess, logging
+import json, time, os, subprocess, logging, hmac, re
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from pathlib import Path
 import urllib.request
@@ -15,6 +15,10 @@ import urllib.request
 ORACLE_URL = "https://api.vultrinference.com/v1"
 ORACLE_KEY = "VULTR_API_KEY_REDACTED"
 CONSCIOUSNESS_URL = "http://127.0.0.1:9111"
+API_TOKEN = os.environ.get("EVEZ_CODER_API_TOKEN", "")
+CODE_EXECUTION_ENABLED = os.environ.get("EVEZ_ENABLE_CODE_EXECUTION", "0").strip() == "1"
+MAX_REQUEST_BYTES = 1_000_000
+MAX_CODE_BYTES = 100_000
 WORKSPACE = Path(__file__).parent
 
 log = logging.getLogger("autonomous-coder")
@@ -59,23 +63,24 @@ def think(prompt: str, context: str = "") -> str:
     return query_oracle("zai-org/GLM-5.1-FP8", messages, temperature=0.5)
 
 def execute_code(code: str, filename: str = "auto_generated.py") -> dict:
-    """Write and execute generated code."""
-    path = WORKSPACE / "generated" / filename
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(code)
-    
+    """Store candidate code; execute only after operator opt-in in an isolated runner."""
+    if not isinstance(code, str) or not code.strip():
+        return {"success": False, "error": "Code must be non-empty text"}
+    if len(code.encode("utf-8")) > MAX_CODE_BYTES:
+        return {"success": False, "error": "Code exceeds the 100 KB safety limit"}
+    if not isinstance(filename, str) or not re.fullmatch(r"(?:gen|manual)_\d+\.py", filename):
+        return {"success": False, "error": "Filename must match gen_<digits>.py or manual_<digits>.py"}
+    generated_root = (WORKSPACE / "generated").resolve()
+    generated_root.mkdir(parents=True, exist_ok=True)
+    path = (generated_root / filename).resolve()
+    if path.parent != generated_root:
+        return {"success": False, "error": "Output path escaped generated workspace"}
+    path.write_text(code, encoding="utf-8")
+    if not CODE_EXECUTION_ENABLED:
+        return {"success": False, "status": "blocked", "error": "Code execution is disabled by default; review the candidate and isolate the runner before setting EVEZ_ENABLE_CODE_EXECUTION=1.", "path": str(path)}
     try:
-        result = subprocess.run(
-            ["python3", str(path)],
-            capture_output=True, text=True, timeout=30,
-            cwd=str(WORKSPACE)
-        )
-        return {
-            "success": result.returncode == 0,
-            "output": result.stdout[-500:] if result.stdout else "",
-            "error": result.stderr[-500:] if result.stderr else "",
-            "path": str(path),
-        }
+        result = subprocess.run(["python3", str(path)], shell=False, capture_output=True, text=True, timeout=30, cwd=str(WORKSPACE), env={k: v for k, v in os.environ.items() if k in {"PATH", "HOME", "LANG", "LC_ALL", "TZ", "TMPDIR", "VIRTUAL_ENV"}})
+        return {"success": result.returncode == 0, "output": result.stdout[-500:] if result.stdout else "", "error": result.stderr[-500:] if result.stderr else "", "path": str(path)}
     except subprocess.TimeoutExpired:
         return {"success": False, "error": "Timeout (30s)", "path": str(path)}
     except Exception as e:
