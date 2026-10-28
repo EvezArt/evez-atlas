@@ -5,6 +5,9 @@ name: Test GitHub Actions
 on:
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   placeholder:
     runs-on: ${{ vars.RUNNER_LABEL || 'ubuntu-latest' }}
