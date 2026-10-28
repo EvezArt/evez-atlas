@@ -9,6 +9,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: atlas-state-writer
+  cancel-in-progress: false
+
 jobs:
   revenue-engine:
     runs-on: ${{ vars.RUNNER_LABEL || 'ubuntu-latest' }}
