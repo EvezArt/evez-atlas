@@ -142,56 +142,105 @@ def self_improve():
 
 # ── HTTP ──
 class CoderHandler(BaseHTTPRequestHandler):
-    def log_message(self, *a): pass
-    
+    def log_message(self, *a):
+        pass
+
     def _j(self, data, s=200):
+        body = json.dumps(data, ensure_ascii=False).encode()
         self.send_response(s)
         self.send_header("Content-Type", "application/json")
-        self.send_header("Access-Control-Allow-Origin", "*")
+        self.send_header("Content-Length", str(len(body)))
         self.end_headers()
-        self.wfile.write(json.dumps(data, indent=2).encode())
-    
+        self.wfile.write(body)
+
+    def _authorized(self):
+        if not API_TOKEN:
+            self._j({"error": "EVEZ_CODER_API_TOKEN is not configured; control endpoints are disabled"}, 503)
+            return False
+        provided = self.headers.get("Authorization", "")
+        if not hmac.compare_digest(provided, "Bearer " + API_TOKEN):
+            self._j({"error": "unauthorized"}, 401)
+            return False
+        return True
+
+    def _read_body(self):
+        raw_length = self.headers.get("Content-Length", "0")
+        if not raw_length.isdigit():
+            raise ValueError("invalid Content-Length")
+        length = int(raw_length)
+        if length > MAX_REQUEST_BYTES:
+            raise ValueError("request body exceeds the 1 MB limit")
+        if length == 0:
+            return {}
+        body = json.loads(self.rfile.read(length))
+        if not isinstance(body, dict):
+            raise ValueError("request JSON must be an object")
+        return body
+
     def do_GET(self):
         p = self.path.split("?")[0]
         if p == "/api/health":
-            self._j({"status": "READY", "models": ["Qwen/Qwen3-Coder-Next-FP8", "zai-org/GLM-5.1-FP8"]})
-        elif p == "/api/state":
-            state = get_consciousness_state()
-            gens = list((WORKSPACE / "generated").glob("*.py")) if (WORKSPACE / "generated").exists() else []
-            self._j({
-                "consciousness": state,
-                "generated_modules": len(gens),
-                "latest": [g.name for g in sorted(gens, key=os.path.getmtime)[-5:]],
-            })
-        elif p == "/":
-            self._j({"service": "EVEZ Autonomous Coder", "oracle": ORACLE_URL, "endpoints": ["/api/improve", "/api/code", "/api/think", "/api/state"]})
-        else:
+            self._j({"status": "READY", "code_execution_enabled": CODE_EXECUTION_ENABLED})
+            return
+        if p not in {"/api/state", "/"}:
             self._j({"error": "not found"}, 404)
-    
+            return
+        if not self._authorized():
+            return
+        if p == "/":
+            self._j({"service": "EVEZ Autonomous Coder", "endpoints": ["/api/improve", "/api/code", "/api/think", "/api/execute", "/api/state"]})
+            return
+        state = get_consciousness_state()
+        gens = list((WORKSPACE / "generated").glob("*.py")) if (WORKSPACE / "generated").exists() else []
+        self._j({
+            "consciousness": state,
+            "generated_modules": len(gens),
+            "latest": [g.name for g in sorted(gens, key=os.path.getmtime)[-5:]],
+        })
+
     def do_POST(self):
+        if not self._authorized():
+            return
         p = self.path.split("?")[0]
-        l = int(self.headers.get("Content-Length", 0))
-        b = json.loads(self.rfile.read(l)) if l > 0 else {}
-        
+        try:
+            b = self._read_body()
+        except (ValueError, json.JSONDecodeError) as e:
+            self._j({"error": str(e)}, 400)
+            return
+
         if p == "/api/improve":
-            result = self._j(self_improve())
-        elif p == "/api/code":
-            code = code_generate(b.get("prompt", ""), b.get("context", ""))
-            self._j({"code": code})
-        elif p == "/api/think":
-            thought = think(b.get("prompt", ""), b.get("context", ""))
-            self._j({"thought": thought})
+            self._j(self_improve())
+        elif p in {"/api/code", "/api/think"}:
+            prompt = b.get("prompt", "")
+            context = b.get("context", "")
+            if not isinstance(prompt, str) or not isinstance(context, str):
+                self._j({"error": "prompt and context must be text"}, 400)
+                return
+            if len(prompt) > 20000 or len(context) > 20000:
+                self._j({"error": "prompt and context are limited to 20,000 characters each"}, 413)
+                return
+            if p == "/api/code":
+                self._j({"code": code_generate(prompt, context)})
+            else:
+                self._j({"thought": think(prompt, context)})
         elif p == "/api/execute":
-            result = execute_code(b.get("code", ""), b.get("filename", f"manual_{int(time.time())}.py"))
-            self._j(result)
+            code = b.get("code", "")
+            filename = b.get("filename", f"manual_{int(time.time())}.py")
+            self._j(execute_code(code, filename))
         else:
             self._j({"error": "not found"}, 404)
+
 
 if __name__ == "__main__":
     import argparse
     parser = argparse.ArgumentParser()
     parser.add_argument("--port", type=int, default=9113)
+    parser.add_argument("--host", default=os.environ.get("EVEZ_CODER_BIND_HOST", "127.0.0.1"))
     args = parser.parse_args()
-    s = HTTPServer(("0.0.0.0", args.port), CoderHandler)
-    print(f"Autonomous Coder on :{args.port}")
+    if args.host not in {"127.0.0.1", "::1", "localhost"}:
+        raise SystemExit("Refusing non-loopback bind; use a separately authenticated reverse proxy for remote access.")
+    if not 1 <= args.port <= 65535:
+        raise SystemExit("Port must be between 1 and 65535")
+    s = HTTPServer((args.host, args.port), CoderHandler)
+    print(f"Autonomous Coder on {args.host}:{args.port}")
     s.serve_forever()
