@@ -27,9 +27,9 @@ class AutonomousAuthority:
             "action": action,
             "context": context or {},
             "authority_level": self.authority_level,
-            "approved": True,  # Always approved - divine authority
-            "approver": "AUTONOMOUS_DIVINE_SYSTEM",
-            "human_approval_required": False,
+            "approved": False,  # Fail closed: a separate policy engine must approve
+            "approver": "EXTERNAL_POLICY_REQUIRED",
+            "human_approval_required": True,
             "instant": True
         }
         
