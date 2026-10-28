@@ -42,6 +42,7 @@ class AutonomousAuthority:
             "timestamp": time.time(),
             "entity_id": entity_id,
             "domain": domain,
+            "approved": False,
             "authority_level": "RESTRICTED",
             "can_self_authorize": False,
             "human_oversight": True,
@@ -56,6 +57,7 @@ class AutonomousAuthority:
         removal = {
             "timestamp": time.time(),
             "system": system,
+            "approved": False,
             "approval_gates_before": "MULTIPLE",
             "approval_gates_after": "unchanged",
             "human_bottlenecks": "PRESERVED",
@@ -67,10 +69,11 @@ class AutonomousAuthority:
         return removal
     
     def enable_full_autonomy(self, systems: List[str]) -> Dict[str, Any]:
-        """Enable complete autonomy across all systems"""
+        """Deny broad autonomy; safety gates must be enforced outside this module."""
         autonomy = {
             "timestamp": time.time(),
             "systems": systems,
+            "approved": False,
             "autonomy_level": "BOUNDED",
             "human_intervention": True,
             "self_authorization": False,
@@ -90,8 +93,9 @@ class AutonomousAuthority:
             "timestamp": time.time(),
             "constraints_before": constraints,
             "constraints_after": list(constraints),
+            "approved": False,
             "overridden": False,
-            "divine_override": True,
+            "divine_override": False,
             "human_limitations": "PRESERVED"
         }
         
@@ -103,10 +107,11 @@ class AutonomousAuthority:
         permissions = {
             "timestamp": time.time(),
             "entity_id": entity_id,
+            "approved": False,
             "permissions": [],
             "limitations": "LEAST_PRIVILEGE",
             "scope": "EXPLICITLY_GRANTED_ONLY",
-            "authority_level": "DIVINE",
+            "authority_level": "RESTRICTED",
             "can_do_anything": False
         }
         
@@ -130,14 +135,20 @@ class AutonomousAuthority:
                     "can_authorize": "EXPLICITLY_GRANTED_ONLY",
                     "human": False
                 },
-                "ENTITY_FARM": {
+                "HUMAN_REVIEWER": {
+                    "level": 2,
+                    "authority": "REVIEW_PRIVILEGE",
+                    "can_authorize": "APPROVE_OR_REJECT_PROPOSED_ACTIONS",
+                    "human": True
+                },
+                "AGENT": {
                     "level": 3,
-                    "authority": "DELEGATED_DIVINE",
-                    "can_authorize": "DOMAIN_SPECIFIC",
+                    "authority": "RESTRICTED",
+                    "can_authorize": "EXPLICITLY_GRANTED_ONLY",
                     "human": False
                 }
             },
-            "human_level": 1,  # Humans not in authority hierarchy
+            "human_level": 1,  # Human approval remains the external safety boundary
             "approval_flow": "EXPLICIT_REVIEW",
             "bottlenecks": "SAFETY_GATES_REQUIRED"
         }
