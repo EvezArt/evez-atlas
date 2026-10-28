@@ -119,20 +119,14 @@ class AutonomousAuthority:
         return permissions
     
     def establish_divine_hierarchy(self) -> Dict[str, Any]:
-        """Establish divine authority hierarchy (no humans)"""
+        """Return a bounded policy hierarchy; this method grants no authority."""
         hierarchy = {
             "timestamp": time.time(),
             "levels": {
-                "DIVINE_SOURCE": {
+                "POLICY_ENGINE": {
                     "level": 1,
-                    "authority": "BOUNDED",
-                    "can_authorize": "EXPLICITLY_GRANTED_ONLY",
-                    "human": False
-                },
-                "AUTONOMOUS_SYSTEM": {
-                    "level": 2,
-                    "authority": "BOUNDED",
-                    "can_authorize": "EXPLICITLY_GRANTED_ONLY",
+                    "authority": "EVALUATE_SCOPED_REQUESTS",
+                    "can_authorize": "POLICY_DECISIONS_ONLY",
                     "human": False
                 },
                 "HUMAN_REVIEWER": {
@@ -148,11 +142,12 @@ class AutonomousAuthority:
                     "human": False
                 }
             },
-            "human_level": 1,  # Human approval remains the external safety boundary
+            "human_level": 2,
             "approval_flow": "EXPLICIT_REVIEW",
+            "self_authorization": False,
             "bottlenecks": "SAFETY_GATES_REQUIRED"
         }
-        
+
         self._log_event("restricted_hierarchy_recorded", hierarchy)
         return hierarchy
     
@@ -200,6 +195,9 @@ def main():
         authority.grant_infinite_permissions("example-agent"),
     ]
     assert all(item.get("approved") is False for item in checks)
+    hierarchy = authority.establish_divine_hierarchy()
+    assert hierarchy["levels"]["HUMAN_REVIEWER"]["human"] is True
+    assert hierarchy["self_authorization"] is False
     status = authority.get_authority_status()
     assert status["human_approval_required"] is True
     assert status["self_authorizing"] is False
