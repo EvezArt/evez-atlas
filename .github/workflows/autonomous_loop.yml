@@ -5,6 +5,13 @@ on:
     - cron: '0 7 * * *'
   workflow_dispatch:
 
+permissions:
+  contents: read
+
+concurrency:
+  group: atlas-spectral-heartbeat
+  cancel-in-progress: false
+
 jobs:
   atlas-cycle:
     runs-on: ${{ vars.RUNNER_LABEL || 'ubuntu-latest' }}
