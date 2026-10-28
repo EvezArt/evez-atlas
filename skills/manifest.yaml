@@ -27,22 +27,28 @@ skills:
     safe_mode_supported: true
 
   - id: agent_bootstrap
-    description: Bootstrap new autonomous agents with full capabilities
-    risk: medium
+    description: Bootstrap supervised agents with least-privilege capabilities; privileged actions require explicit review
+    risk: high
     requires:
       - internal_spawn
+      - manual_approval
+      - least_privilege_templates
     safe_mode_supported: true
 
   - id: parallel_build
-    description: Execute build tasks in parallel with path optimization
-    risk: low
+    description: Run allowlisted build/test tasks only; disabled by default and restricted to an isolated build runner
+    risk: high
     requires:
       - build_exec
+      - isolated_build_runner
+      - manual_approval
     safe_mode_supported: true
 
   - id: limit_bypass
-    description: Bypass operational limits for emergent architecture scaling
+    description: Optional bounded limit increases only; disabled by default and unlimited mode is prohibited
     risk: high
     requires:
-      - admin_override
-    safe_mode_supported: false
+      - explicit_limit_allowlist
+      - manual_approval
+      - LIMIT_BYPASS_ENABLED
+    safe_mode_supported: true
