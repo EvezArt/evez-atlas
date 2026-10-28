@@ -15,6 +15,13 @@ on:
         required: false
         default: ''
 
+permissions:
+  contents: write
+
+concurrency:
+  group: atlas-state-writer
+  cancel-in-progress: false
+
 jobs:
   a012-run:
     runs-on: ${{ vars.RUNNER_LABEL || 'ubuntu-latest' }}
@@ -31,34 +38,39 @@ jobs:
 
       - name: Run A012 Engine
         id: a012
+        env:
+          MODE_INPUT: ${{ inputs.mode || 'full' }}
+          ROUND_INPUT: ${{ inputs.round_override || '' }}
         run: |
-          MODE="${{ github.event.inputs.mode || 'full' }}"
-          ROUND="${{ github.event.inputs.round_override }}"
-
-          ROUND_ARG=""
-          if [ -n "$ROUND" ]; then
-            ROUND_ARG="--round $ROUND"
+          set -euo pipefail
+          case "$MODE_INPUT" in
+            full|predict|coincidence|score) MODE="$MODE_INPUT" ;;
+            *) echo "Rejected invalid engine mode" >&2; exit 2 ;;
+          esac
+          ROUND_ARG=()
+          if [[ -n "$ROUND_INPUT" ]]; then
+            if ! [[ "$ROUND_INPUT" =~ ^[0-9]{1,9}$ ]]; then
+              echo "Rejected invalid round override" >&2
+              exit 2
+            fi
+            ROUND_ARG=(--round "$ROUND_INPUT")
           fi
-
           python skills/a012_telemetry_coincidence_engine.py \
             --state data/hyperloop_state.json \
             --mode "$MODE" \
             --output data/a012/predictions.jsonl \
-            $ROUND_ARG 2>&1 | tee /tmp/a012_output.txt
-
-          echo "exit_code=$?" >> $GITHUB_OUTPUT
-          cat /tmp/a012_output.txt
-
+            "${ROUND_ARG[@]}" 2>&1 | tee /tmp/a012_output.txt
+          echo "A012 run completed successfully"
       - name: Commit A012 ledger updates
         run: |
           git config --global user.name "EVEZ-OS [A012]"
           git config --global user.email "evez-os-a012@evez666.local"
 
           # Pull latest to avoid conflicts
-          git pull --rebase origin main || true
+          git pull --rebase origin main
 
           # Stage A012 data outputs
-          git add data/a012/ || true
+          git add data/a012/
 
           # Only commit if there are changes
           if git diff --staged --quiet; then
