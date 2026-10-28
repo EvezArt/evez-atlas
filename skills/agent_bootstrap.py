@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 """
-Agent Bootstrap System - Autonomize New Agents
-Automatically configures new agents with autonomous authority,
-domain delegation, and navigation capabilities.
+Agent Bootstrap System - Supervised Agent Enrollment
+Creates least-privilege agent records that remain pending until a separate approval step.
 """
 
 import hashlib
@@ -14,7 +13,7 @@ from typing import Any, Dict, List, Optional
 
 
 class AgentBootstrap:
-    """Bootstrap new agents with full autonomous capabilities."""
+    """Bootstrap least-privilege agents that await explicit approval."""
     
     def __init__(self, data_dir: str = "data"):
         self.data_dir = Path(data_dir)
@@ -56,13 +55,13 @@ class AgentBootstrap:
         capabilities: List[str] = None
     ) -> Dict[str, Any]:
         """
-        Bootstrap a new autonomous agent.
+        Create a supervised agent record pending approval.
         
         Args:
             agent_name: Base name for the agent
             role: Agent role (worker, orchestrator, etc.)
             domain: Primary domain
-            autonomy_level: full, limited, or supervised
+            autonomy_level: supervised or limited; full is downgraded to supervised
             capabilities: List of capability names
             
         Returns:
@@ -199,13 +198,13 @@ if __name__ == "__main__":
     
     bootstrap = AgentBootstrap()
     
-    # Bootstrap single agents
+    # Bootstrap a supervised example; no agent may self-authorize.
     agent1 = bootstrap.bootstrap_agent(
         "orchestrator-001",
         role="orchestrator",
         domain="task_routing",
-        autonomy_level="full",
-        capabilities=["execute", "delegate", "navigate"]
+        autonomy_level="supervised",
+        capabilities=["read_only", "navigate"]
     )
     print(f"\nBootstrapped: {agent1['agent_id']}")
     print(f"  Role: {agent1['role']}")
