@@ -73,6 +73,12 @@ class LimitBypass:
             return self._deny(limit_name, old_limit, new_limit, "a valid external approval_id is required")
         if not isinstance(approved_by, str) or not approved_by.strip() or len(approved_by) > 120:
             return self._deny(limit_name, old_limit, new_limit, "an approving operator identity is required")
+        configured_approval = os.environ.get("LIMIT_BYPASS_APPROVAL_ID", "")
+        configured_approver = os.environ.get("LIMIT_BYPASS_APPROVED_BY", "")
+        if not configured_approval or approval_id != configured_approval:
+            return self._deny(limit_name, old_limit, new_limit, "approval_id does not match the operator-configured approval")
+        if not configured_approver or approved_by.strip() != configured_approver:
+            return self._deny(limit_name, old_limit, new_limit, "approver does not match operator configuration")
         if duration is not None and (not isinstance(duration, int) or isinstance(duration, bool) or duration < 1 or duration > 86400):
             return self._deny(limit_name, old_limit, new_limit, "duration must be between 1 and 86400 seconds")
 
@@ -86,7 +92,7 @@ class LimitBypass:
             "bypassed_at": time.time(),
             "duration": duration,
             "active": True,
-            "status": "approved_by_opt_in_bounded_policy",
+            "status": "bounded_limit_increase_recorded",
         }
         self.limits[limit_name] = new_limit
         self.bypassed_limits[limit_name] = record
