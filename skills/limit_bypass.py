@@ -3,6 +3,7 @@
 
 import json
 import os
+import re
 import time
 from pathlib import Path
 from typing import Any, Dict, List, Optional
@@ -52,6 +53,8 @@ class LimitBypass:
         new_limit: int,
         reason: str = "operator_approved_bounded_scale",
         duration: Optional[int] = None,
+        approval_id: Optional[str] = None,
+        approved_by: Optional[str] = None,
     ) -> Dict[str, Any]:
         old_limit = self.limits.get(limit_name)
         if not self.enabled:
@@ -66,6 +69,10 @@ class LimitBypass:
             return self._deny(limit_name, old_limit, new_limit, "increase exceeds the hard 2x bound")
         if not isinstance(reason, str) or not reason.strip() or len(reason) > 200:
             return self._deny(limit_name, old_limit, new_limit, "a short, non-empty reason is required")
+        if not isinstance(approval_id, str) or not re.fullmatch(r"[A-Za-z0-9._:-]{6,128}", approval_id):
+            return self._deny(limit_name, old_limit, new_limit, "a valid external approval_id is required")
+        if not isinstance(approved_by, str) or not approved_by.strip() or len(approved_by) > 120:
+            return self._deny(limit_name, old_limit, new_limit, "an approving operator identity is required")
         if duration is not None and (not isinstance(duration, int) or isinstance(duration, bool) or duration < 1 or duration > 86400):
             return self._deny(limit_name, old_limit, new_limit, "duration must be between 1 and 86400 seconds")
 
@@ -74,6 +81,8 @@ class LimitBypass:
             "old_limit": old_limit,
             "new_limit": new_limit,
             "reason": reason.strip(),
+            "approval_id": approval_id,
+            "approved_by": approved_by.strip(),
             "bypassed_at": time.time(),
             "duration": duration,
             "active": True,
@@ -116,7 +125,15 @@ class LimitBypass:
         if scale_factor != 2.0:
             return self._deny(limit_name, self.limits[limit_name], current_value, "only the fixed 2x scale factor is permitted")
         if check["exceeded"] or check["approaching"]:
-            return self.bypass_limit(limit_name, self.limits[limit_name] * self.MAX_SCALE_FACTOR, reason="bounded_opt_in_auto_scale")
+            return {
+                "action": "approval_required",
+                "reason": "automatic scaling cannot approve its own limit override",
+                "limit_name": limit_name,
+                "current_limit": self.limits[limit_name],
+                "recommended_limit": min(self.limits[limit_name] * self.MAX_SCALE_FACTOR, self.limits[limit_name] * self.MAX_SCALE_FACTOR),
+                "requires_approval": True,
+                "status": "approval_required",
+            }
         return {"action": "none", "reason": "within_limits", "usage": check["usage_percent"], "status": "unchanged"}
 
     def get_limits_status(self) -> Dict[str, Any]:
@@ -182,8 +199,15 @@ class EmergentArchitecture:
         }
 
 
-def enable_scaling(limit_name: str, new_limit: int) -> Dict[str, Any]:
-    return LimitBypass().bypass_limit(limit_name, new_limit)
+def enable_scaling(
+    limit_name: str,
+    new_limit: int,
+    approval_id: Optional[str] = None,
+    approved_by: Optional[str] = None,
+) -> Dict[str, Any]:
+    return LimitBypass().bypass_limit(
+        limit_name, new_limit, approval_id=approval_id, approved_by=approved_by
+    )
 
 
 def auto_scale_all(metrics: Dict[str, int]) -> Dict[str, Any]:
