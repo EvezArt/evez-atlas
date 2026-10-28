@@ -130,7 +130,7 @@ class LimitBypass:
                 "reason": "automatic scaling cannot approve its own limit override",
                 "limit_name": limit_name,
                 "current_limit": self.limits[limit_name],
-                "recommended_limit": min(self.limits[limit_name] * self.MAX_SCALE_FACTOR, self.limits[limit_name] * self.MAX_SCALE_FACTOR),
+                "recommended_limit": self.limits[limit_name] * self.MAX_SCALE_FACTOR,
                 "requires_approval": True,
                 "status": "approval_required",
             }
