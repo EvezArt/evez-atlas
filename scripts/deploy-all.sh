@@ -11,8 +11,12 @@ REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$REPO_ROOT"
 
 # 1. Environment Setup
-export JUBILEE_MODE="${JUBILEE_MODE:-qsvc-ibm}"
-export JUBILEE_TOUCH_ID="${JUBILEE_TOUCH_ID:-8e5526c72cebad3c09e4158399eaab06}"
+export JUBILEE_MODE="${JUBILEE_MODE:-offline}"
+export JUBILEE_TOUCH_ID="${JUBILEE_TOUCH_ID:-}"
+if [[ "$JUBILEE_MODE" == "qsvc-ibm" && -z "$JUBILEE_TOUCH_ID" ]]; then
+    echo "ERROR: qsvc-ibm mode requires JUBILEE_TOUCH_ID from the deployment secret store"
+    exit 1
+fi
 if [[ -z "${SECRET_KEY:-}" ]]; then
     SECRET_KEY="$(openssl rand -hex 32 2>/dev/null)" || { echo "ERROR: unable to create SECRET_KEY"; exit 1; }
 fi
