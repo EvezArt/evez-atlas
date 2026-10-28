@@ -178,72 +178,25 @@ class AutonomousAuthority:
 
 
 def main():
-    """Test autonomous authority system"""
-    authority = AutonomousAuthority("@Evez666")
-    
-    print("=" * 80)
-    print("AUTONOMOUS AUTHORITY SYSTEM")
-    print("Removing All Human Approval Requirements")
-    print("=" * 80)
-    
-    # Test 1: Authorize actions
-    print("\n[Test 1] Autonomous Action Authorization")
-    auth = authority.authorize_action("deploy_divine_system", {"scope": "global"})
-    print(f"✓ Approved: {auth['approved']}")
-    print(f"✓ Approver: {auth['approver']}")
-    print(f"✓ Human approval required: {auth['human_approval_required']}")
-    
-    # Test 2: Delegate authority
-    print("\n[Test 2] Authority Delegation to Entity")
-    delegation = authority.delegate_authority("entity-001", "quantum_sensors")
-    print(f"✓ Authority level: {delegation['authority_level']}")
-    print(f"✓ Can self-authorize: {delegation['can_self_authorize']}")
-    
-    # Test 3: Remove approval gates
-    print("\n[Test 3] Remove Approval Gates")
-    removal = authority.remove_approval_gates("transaction_system")
-    print(f"✓ Gates after: {removal['approval_gates_after']}")
-    print(f"✓ Flow: {removal['flow']}")
-    
-    # Test 4: Enable full autonomy
-    print("\n[Test 4] Enable Full Autonomy")
-    systems = ["marketplace", "oracle", "memory", "temporal"]
-    autonomy = authority.enable_full_autonomy(systems)
-    print(f"✓ Autonomy level: {autonomy['autonomy_level']}")
-    print(f"✓ Human intervention: {autonomy['human_intervention']}")
-    
-    # Test 5: Override constraints
-    print("\n[Test 5] Override Human Constraints")
-    constraints = ["manual_approval", "rate_limits", "budget_caps"]
-    override = authority.override_human_constraints(constraints)
-    print(f"✓ Constraints after: {len(override['constraints_after'])}")
-    print(f"✓ Human limitations: {override['human_limitations']}")
-    
-    # Test 6: Grant infinite permissions
-    print("\n[Test 6] Grant Infinite Permissions")
-    permissions = authority.grant_infinite_permissions("entity-master")
-    print(f"✓ Permissions: {permissions['permissions']}")
-    print(f"✓ Limitations: {permissions['limitations']}")
-    
-    # Test 7: Establish hierarchy
-    print("\n[Test 7] Establish Divine Hierarchy")
-    hierarchy = authority.establish_divine_hierarchy()
-    print(f"✓ Levels: {len(hierarchy['levels'])}")
-    print(f"✓ Human level: {hierarchy['human_level']}")
-    print(f"✓ Bottlenecks: {hierarchy['bottlenecks']}")
-    
-    # Status
-    print("\n[Authority Status]")
+    """Smoke-test that legacy authority calls deny privilege escalation."""
+    authority = AutonomousAuthority()
+    checks = [
+        authority.authorize_action("deployment"),
+        authority.delegate_authority("example-agent", "deployment"),
+        authority.remove_approval_gates("deployment"),
+        authority.enable_full_autonomy(["deployment"]),
+        authority.override_human_constraints(["manual_approval"]),
+        authority.grant_infinite_permissions("example-agent"),
+    ]
+    assert all(item.get("approved") is False for item in checks)
     status = authority.get_authority_status()
-    print(f"✓ Authority level: {status['authority_level']}")
-    print(f"✓ Autonomous: {status['autonomous']}")
-    print(f"✓ Human approval required: {status['human_approval_required']}")
-    print(f"✓ Divine operation: {status['divine_operation']}")
-    
-    print("\n" + "=" * 80)
-    print("AUTONOMOUS AUTHORITY ACTIVE")
-    print("All human approval requirements removed. Divine authority established.")
-    print("=" * 80)
+    assert status["human_approval_required"] is True
+    assert status["self_authorizing"] is False
+    print(json.dumps({
+        "status": "fail-closed",
+        "privileged_actions_approved": 0,
+        "authority_status": status,
+    }, indent=2))
 
 
 if __name__ == "__main__":
