@@ -8,12 +8,15 @@ on:
     - cron: '0 8 * * *'  # Daily at 8am UTC
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   report:
     name: Generate Repository Report
     runs-on: ${{ vars.RUNNER_LABEL || 'ubuntu-latest' }}
     permissions:
-      contents: write
+      contents: read
     steps:
       - name: Checkout
         uses: actions/checkout@v4

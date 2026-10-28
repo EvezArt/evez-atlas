@@ -12,9 +12,12 @@ on:
       - '.github/workflows/agent-os.yml'
 
 permissions:
-  contents: write
+  contents: read
   issues: write
-  pull-requests: write
+
+concurrency:
+  group: agent-os-ooda-cycle
+  cancel-in-progress: false
 
 jobs:
   ooda-cycle:
@@ -100,7 +103,7 @@ jobs:
       - name: Run Tests
         run: |
           cd os-evez
-          python -m pytest tests/test_agent_os.py -v --tb=short 2>&1 || true
+          python -m pytest tests/test_agent_os.py -v --tb=short
 
       - name: Upload Spine Artifacts
         if: always()

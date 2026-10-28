@@ -1,19 +1,17 @@
 #!/usr/bin/env python3
-"""
-Limit Bypass System - Emergent Architecture Scaling
-Provides mechanisms to bypass operational limits for autonomous scaling.
-"""
+"""Bounded limit adjustments. Disabled by default; unlimited mode is prohibited."""
 
 import json
 import os
+import re
 import time
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
 
 class LimitBypass:
-    """Handles limit bypass for emergent architecture."""
-    
+    """Allows only explicit, bounded limit increases when an operator opts in."""
+
     DEFAULT_LIMITS = {
         "max_concurrent_tasks": 100,
         "max_delegation_depth": 10,
@@ -23,234 +21,210 @@ class LimitBypass:
         "max_queue_size": 10000,
         "max_domain_size": 500,
     }
-    
+    MAX_SCALE_FACTOR = 2
+
     def __init__(self, data_dir: str = "data"):
         self.data_dir = Path(data_dir)
-        self.data_dir.mkdir(exist_ok=True)
+        self.data_dir.mkdir(parents=True, exist_ok=True)
         self.log_file = self.data_dir / "limit_bypass.jsonl"
-        
+        self.enabled = os.environ.get("LIMIT_BYPASS_ENABLED", "0").strip() == "1"
         self.limits = self.DEFAULT_LIMITS.copy()
-        self.bypassed_limits: Dict[str, Dict] = {}
-        self.scaling_events: List[Dict] = []
-    
+        self.bypassed_limits: Dict[str, Dict[str, Any]] = {}
+        self.scaling_events: List[Dict[str, Any]] = []
+
     def check_limit(self, limit_name: str, current_value: int) -> Dict[str, Any]:
-        """Check if current value approaches limit."""
-        limit = self.limits.get(limit_name, float('inf'))
-        
+        known = limit_name in self.limits
+        limit = self.limits.get(limit_name)
+        valid_current = isinstance(current_value, int) and not isinstance(current_value, bool) and current_value >= 0
+        usage = (current_value / limit * 100) if known and valid_current and limit > 0 else 0
         return {
             "limit_name": limit_name,
+            "known_limit": known,
             "current": current_value,
             "limit": limit,
-            "usage_percent": (current_value / limit * 100) if limit > 0 else 0,
-            "approaching": (current_value / limit) > 0.8,
-            "exceeded": current_value > limit
+            "usage_percent": usage,
+            "approaching": bool(known and valid_current and limit > 0 and current_value / limit > 0.8),
+            "exceeded": bool(known and valid_current and current_value > limit),
         }
-    
+
     def bypass_limit(
         self,
         limit_name: str,
         new_limit: int,
-        reason: str = "emergent_scaling",
-        duration: Optional[int] = None
+        reason: str = "operator_approved_bounded_scale",
+        duration: Optional[int] = None,
+        approval_id: Optional[str] = None,
+        approved_by: Optional[str] = None,
     ) -> Dict[str, Any]:
-        """
-        Bypass a system limit.
-        
-        Args:
-            limit_name: Name of limit to bypass
-            new_limit: New limit value
-            reason: Reason for bypass
-            duration: Optional duration in seconds
-            
-        Returns:
-            Bypass confirmation
-        """
-        old_limit = self.limits.get(limit_name, 0)
-        
-        bypass_record = {
+        old_limit = self.limits.get(limit_name)
+        if not self.enabled:
+            return self._deny(limit_name, old_limit, new_limit, "limit bypass is disabled by default")
+        if old_limit is None:
+            return self._deny(limit_name, old_limit, new_limit, "unknown limit name")
+        if not isinstance(new_limit, int) or isinstance(new_limit, bool) or new_limit <= 0:
+            return self._deny(limit_name, old_limit, new_limit, "new limit must be a positive integer")
+        if new_limit <= old_limit:
+            return self._deny(limit_name, old_limit, new_limit, "this interface only handles increases")
+        if new_limit > old_limit * self.MAX_SCALE_FACTOR:
+            return self._deny(limit_name, old_limit, new_limit, "increase exceeds the hard 2x bound")
+        if not isinstance(reason, str) or not reason.strip() or len(reason) > 200:
+            return self._deny(limit_name, old_limit, new_limit, "a short, non-empty reason is required")
+        if not isinstance(approval_id, str) or not re.fullmatch(r"[A-Za-z0-9._:-]{6,128}", approval_id):
+            return self._deny(limit_name, old_limit, new_limit, "a valid external approval_id is required")
+        if not isinstance(approved_by, str) or not approved_by.strip() or len(approved_by) > 120:
+            return self._deny(limit_name, old_limit, new_limit, "an approving operator identity is required")
+        configured_approval = os.environ.get("LIMIT_BYPASS_APPROVAL_ID", "")
+        configured_approver = os.environ.get("LIMIT_BYPASS_APPROVED_BY", "")
+        if not configured_approval or approval_id != configured_approval:
+            return self._deny(limit_name, old_limit, new_limit, "approval_id does not match the operator-configured approval")
+        if not configured_approver or approved_by.strip() != configured_approver:
+            return self._deny(limit_name, old_limit, new_limit, "approver does not match operator configuration")
+        if duration is not None and (not isinstance(duration, int) or isinstance(duration, bool) or duration < 1 or duration > 86400):
+            return self._deny(limit_name, old_limit, new_limit, "duration must be between 1 and 86400 seconds")
+
+        record = {
             "limit_name": limit_name,
             "old_limit": old_limit,
             "new_limit": new_limit,
-            "reason": reason,
+            "reason": reason.strip(),
+            "approval_id": approval_id,
+            "approved_by": approved_by.strip(),
             "bypassed_at": time.time(),
             "duration": duration,
-            "active": True
+            "active": True,
+            "status": "bounded_limit_increase_recorded",
         }
-        
         self.limits[limit_name] = new_limit
-        self.bypassed_limits[limit_name] = bypass_record
-        
-        self._log_event("limit_bypassed", bypass_record)
-        
-        return bypass_record
-    
-    def restore_limit(self, limit_name: str) -> Dict[str, Any]:
-        """Restore original limit."""
-        if limit_name in self.bypassed_limits:
-            old_limit = self.bypassed_limits[limit_name]["old_limit"]
-            self.limits[limit_name] = old_limit
-            
-            self.bypassed_limits[limit_name]["active"] = False
-            self.bypassed_limits[limit_name]["restored_at"] = time.time()
-            
-            return {"limit_name": limit_name, "restored_to": old_limit}
-        
-        return {"error": "Limit not bypassed"}
-    
-    def auto_scale(self, limit_name: str, current_value: int, scale_factor: float = 2.0) -> Dict[str, Any]:
-        """Automatically scale limit based on current usage."""
-        check = self.check_limit(limit_name, current_value)
-        
-        if check["exceeded"]:
-            new_limit = int(current_value * scale_factor)
-            return self.bypass_limit(limit_name, new_limit, reason="auto_scale")
-        
-        if check["approaching"]:
-            new_limit = int(self.limits[limit_name] * scale_factor)
-            return self.bypass_limit(limit_name, new_limit, reason="preemptive_scale")
-        
-        return {
-            "action": "none",
-            "reason": "within_limits",
-            "usage": check["usage_percent"]
-        }
-    
-    def get_limits_status(self) -> Dict[str, Any]:
-        """Get current limits and bypass status."""
-        status = {
-            "limits": self.limits,
-            "bypassed": list(self.bypassed_limits.keys()),
-            "total_bypasses": len(self.bypassed_limits)
-        }
-        
-        for limit_name in self.limits:
-            check = self.check_limit(limit_name, 0)
-            status[f"{limit_name}_status"] = check["usage_percent"]
-        
-        return status
-    
-    def _log_event(self, event_type: str, data: Dict):
-        """Log limit events."""
-        event = {
-            "type": event_type,
+        self.bypassed_limits[limit_name] = record
+        self._log_event("bounded_limit_increased", record)
+        return record
+
+    def _deny(self, limit_name: str, old_limit: Any, new_limit: Any, reason: str) -> Dict[str, Any]:
+        record = {
+            "limit_name": limit_name,
+            "old_limit": old_limit,
+            "requested_limit": new_limit,
+            "reason": reason,
             "timestamp": time.time(),
-            "data": data
+            "status": "denied",
+            "approved": False,
         }
-        
+        self._log_event("limit_change_denied", record)
+        return record
+
+    def restore_limit(self, limit_name: str) -> Dict[str, Any]:
+        if limit_name not in self.bypassed_limits:
+            return {"limit_name": limit_name, "status": "unchanged", "reason": "no active bounded increase"}
+        old_limit = self.bypassed_limits[limit_name]["old_limit"]
+        self.limits[limit_name] = old_limit
+        self.bypassed_limits[limit_name]["active"] = False
+        self.bypassed_limits[limit_name]["restored_at"] = time.time()
+        self._log_event("limit_restored", {"limit_name": limit_name, "restored_to": old_limit})
+        return {"limit_name": limit_name, "restored_to": old_limit, "status": "restored"}
+
+    def auto_scale(self, limit_name: str, current_value: int, scale_factor: float = 2.0) -> Dict[str, Any]:
+        if not self.enabled:
+            return self._deny(limit_name, self.limits.get(limit_name), current_value, "automatic scaling is disabled by default")
+        check = self.check_limit(limit_name, current_value)
+        if not check["known_limit"] or not isinstance(current_value, int) or isinstance(current_value, bool) or current_value < 0:
+            return self._deny(limit_name, self.limits.get(limit_name), current_value, "unknown limit or invalid usage metric")
+        if scale_factor != 2.0:
+            return self._deny(limit_name, self.limits[limit_name], current_value, "only the fixed 2x scale factor is permitted")
+        if check["exceeded"] or check["approaching"]:
+            return {
+                "action": "approval_required",
+                "reason": "automatic scaling cannot approve its own limit override",
+                "limit_name": limit_name,
+                "current_limit": self.limits[limit_name],
+                "recommended_limit": self.limits[limit_name] * self.MAX_SCALE_FACTOR,
+                "requires_approval": True,
+                "status": "approval_required",
+            }
+        return {"action": "none", "reason": "within_limits", "usage": check["usage_percent"], "status": "unchanged"}
+
+    def get_limits_status(self) -> Dict[str, Any]:
+        status = {
+            "enabled": self.enabled,
+            "limits": self.limits,
+            "active_bypassed": [name for name, record in self.bypassed_limits.items() if record.get("active")],
+            "total_bypasses": len(self.bypassed_limits),
+        }
+        for name in self.limits:
+            status[f"{name}_status"] = 0
+        return status
+
+    def enable_unlimited_mode(self) -> Dict[str, Any]:
+        """Unlimited mode is deliberately forbidden, regardless of environment flags."""
+        result = {
+            "mode": "denied",
+            "approved": False,
+            "reason": "unlimited mode is prohibited; use bounded, reviewed increases",
+            "limits": self.limits.copy(),
+        }
+        self._log_event("unlimited_mode_denied", result)
+        return result
+
+    def _log_event(self, event_type: str, data: Dict[str, Any]) -> None:
+        event = {"type": event_type, "timestamp": time.time(), "data": data}
         try:
-            with self.log_file.open("a") as f:
-                f.write(json.dumps(event) + "\n")
-        except IOError:
+            with self.log_file.open("a", encoding="utf-8") as stream:
+                stream.write(json.dumps(event, sort_keys=True) + "\n")
+        except OSError:
             pass
 
 
 class EmergentArchitecture:
-    """Manages emergent architecture with dynamic limit handling."""
-    
+    """Reports demand pressure; automatic limit changes remain opt-in and bounded."""
+
     def __init__(self):
         self.bypass = LimitBypass()
-        self.emergent_events: List[Dict] = []
-    
+        self.emergent_events: List[Dict[str, Any]] = []
+
     def detect_emergence(self, metrics: Dict[str, int]) -> Dict[str, Any]:
-        """
-        Detect emergent patterns and auto-scale.
-        
-        Args:
-            metrics: Current system metrics
-            
-        Returns:
-            Emergence detection result
-        """
         events = []
-        
         for metric_name, value in metrics.items():
             limit_name = f"max_{metric_name}"
             if limit_name in self.bypass.limits:
-                auto_scale_result = self.bypass.auto_scale(limit_name, value)
-                if auto_scale_result.get("action") in ["bypass", "none"]:
-                    events.append({
-                        "metric": metric_name,
-                        "value": value,
-                        "auto_scale": auto_scale_result
-                    })
-        
+                result = self.bypass.auto_scale(limit_name, value)
+                events.append({"metric": metric_name, "value": value, "decision": result})
         return {
-            "emergence_detected": len(events) > 0,
+            "emergence_detected": bool(events),
             "events": events,
-            "current_limits": self.bypass.limits
+            "current_limits": self.bypass.limits.copy(),
+            "enabled": self.bypass.enabled,
         }
-    
+
     def enable_unlimited_mode(self) -> Dict[str, Any]:
-        """Enable unlimited mode for all limits."""
-        unlimited_limits = {
-            "max_concurrent_tasks": 1000000,
-            "max_delegation_depth": 1000,
-            "max_agents": 1000000,
-            "max_memory_mb": 1000000,
-            "max_execution_time": 86400,
-            "max_queue_size": 1000000,
-            "max_domain_size": 100000,
-        }
-        
-        for limit_name, new_limit in unlimited_limits.items():
-            self.bypass.bypass_limit(limit_name, new_limit, reason="unlimited_mode")
-        
-        return {
-            "mode": "unlimited",
-            "limits": self.bypass.limits
-        }
-    
+        return self.bypass.enable_unlimited_mode()
+
     def get_architecture_status(self) -> Dict[str, Any]:
-        """Get complete architecture status."""
         return {
             "limits": self.bypass.get_limits_status(),
             "bypassed_limits": self.bypass.bypassed_limits,
-            "emergent_mode": "unlimited" if any(
-                v > 100000 for v in self.bypass.limits.values()
-            ) else "standard"
+            "emergent_mode": "bounded" if self.bypass.enabled else "standard",
         }
 
 
-def enable_scaling(limit_name: str, new_limit: int) -> Dict[str, Any]:
-    """Quick enable scaling for a limit."""
-    bypass = LimitBypass()
-    return bypass.bypass_limit(limit_name, new_limit)
+def enable_scaling(
+    limit_name: str,
+    new_limit: int,
+    approval_id: Optional[str] = None,
+    approved_by: Optional[str] = None,
+) -> Dict[str, Any]:
+    return LimitBypass().bypass_limit(
+        limit_name, new_limit, approval_id=approval_id, approved_by=approved_by
+    )
 
 
 def auto_scale_all(metrics: Dict[str, int]) -> Dict[str, Any]:
-    """Auto-scale all limits based on metrics."""
-    emergent = EmergentArchitecture()
-    return emergent.detect_emergence(metrics)
+    return EmergentArchitecture().detect_emergence(metrics)
 
 
 if __name__ == "__main__":
-    print("Limit Bypass System Demo")
-    print("=" * 50)
-    
     bypass = LimitBypass()
-    
-    # Check limits
-    check = bypass.check_limit("max_concurrent_tasks", 50)
-    print(f"\nLimit check: {check}")
-    
-    # Auto-scale
-    scale_result = bypass.auto_scale("max_concurrent_tasks", 95)
-    print(f"\nAuto-scale result: {scale_result}")
-    
-    # Status
-    status = bypass.get_limits_status()
-    print(f"\nLimits status: {json.dumps(status, indent=2)}")
-    
-    # Emergent architecture
-    emergent = EmergentArchitecture()
-    metrics = {
-        "concurrent_tasks": 150,
-        "agents": 50,
-        "domain_size": 200
-    }
-    emergence = emergent.detect_emergence(metrics)
-    print(f"\nEmergence detection: {json.dumps(emergence, indent=2)}")
-    
-    # Unlimited mode
-    unlimited = emergent.enable_unlimited_mode()
-    print(f"\nUnlimited mode: {unlimited['mode']}")
+    print(json.dumps({
+        "status": "disabled-by-default",
+        "limit_bypass_enabled": bypass.enabled,
+        "unlimited_mode": bypass.enable_unlimited_mode()["mode"],
+        "limits": bypass.get_limits_status(),
+    }, indent=2))

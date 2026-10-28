@@ -18,7 +18,7 @@ class AutonomousAuthority:
         self.data_dir = Path("data/autonomous_authority")
         self.data_dir.mkdir(parents=True, exist_ok=True)
         self.events_log = self.data_dir / "authority_events.jsonl"
-        self.authority_level = "DIVINE"  # Highest level
+        self.authority_level = "RESTRICTED"  # External policy is required
         
     def authorize_action(self, action: str, context: Dict = None) -> Dict[str, Any]:
         """Autonomously authorize any action without human approval"""
@@ -27,13 +27,13 @@ class AutonomousAuthority:
             "action": action,
             "context": context or {},
             "authority_level": self.authority_level,
-            "approved": True,  # Always approved - divine authority
-            "approver": "AUTONOMOUS_DIVINE_SYSTEM",
-            "human_approval_required": False,
-            "instant": True
+            "approved": False,  # Fail closed: a separate policy engine must approve
+            "approver": "EXTERNAL_POLICY_REQUIRED",
+            "human_approval_required": True,
+            "instant": False
         }
         
-        self._log_event("action_authorized", authorization)
+        self._log_event("authorization_denied", authorization)
         return authorization
     
     def delegate_authority(self, entity_id: str, domain: str) -> Dict[str, Any]:
@@ -42,13 +42,14 @@ class AutonomousAuthority:
             "timestamp": time.time(),
             "entity_id": entity_id,
             "domain": domain,
-            "authority_level": "DIVINE_DELEGATED",
-            "can_self_authorize": True,
-            "human_oversight": False,
-            "autonomous": True
+            "approved": False,
+            "authority_level": "RESTRICTED",
+            "can_self_authorize": False,
+            "human_oversight": True,
+            "autonomous": False
         }
         
-        self._log_event("authority_delegated", delegation)
+        self._log_event("delegation_denied", delegation)
         return delegation
     
     def remove_approval_gates(self, system: str) -> Dict[str, Any]:
@@ -56,32 +57,34 @@ class AutonomousAuthority:
         removal = {
             "timestamp": time.time(),
             "system": system,
+            "approved": False,
             "approval_gates_before": "MULTIPLE",
-            "approval_gates_after": 0,
-            "human_bottlenecks": "REMOVED",
-            "flow": "UNRESTRICTED",
-            "autonomous": True
+            "approval_gates_after": "unchanged",
+            "human_bottlenecks": "PRESERVED",
+            "flow": "RESTRICTED",
+            "autonomous": False
         }
         
-        self._log_event("approval_gates_removed", removal)
+        self._log_event("approval_gate_change_denied", removal)
         return removal
     
     def enable_full_autonomy(self, systems: List[str]) -> Dict[str, Any]:
-        """Enable complete autonomy across all systems"""
+        """Deny broad autonomy; safety gates must be enforced outside this module."""
         autonomy = {
             "timestamp": time.time(),
             "systems": systems,
-            "autonomy_level": "COMPLETE",
-            "human_intervention": False,
-            "self_authorization": True,
-            "divine_authority": True
+            "approved": False,
+            "autonomy_level": "BOUNDED",
+            "human_intervention": True,
+            "self_authorization": False,
+            "divine_authority": False
         }
         
         for system in systems:
-            autonomy[f"{system}_autonomous"] = True
-            autonomy[f"{system}_approval_required"] = False
+            autonomy[f"{system}_autonomous"] = False
+            autonomy[f"{system}_approval_required"] = True
         
-        self._log_event("full_autonomy_enabled", autonomy)
+        self._log_event("full_autonomy_denied", autonomy)
         return autonomy
     
     def override_human_constraints(self, constraints: List[str]) -> Dict[str, Any]:
@@ -89,13 +92,14 @@ class AutonomousAuthority:
         override = {
             "timestamp": time.time(),
             "constraints_before": constraints,
-            "constraints_after": [],
-            "overridden": True,
-            "divine_override": True,
-            "human_limitations": "REMOVED"
+            "constraints_after": list(constraints),
+            "approved": False,
+            "overridden": False,
+            "divine_override": False,
+            "human_limitations": "PRESERVED"
         }
         
-        self._log_event("constraints_overridden", override)
+        self._log_event("constraint_override_denied", override)
         return override
     
     def grant_infinite_permissions(self, entity_id: str) -> Dict[str, Any]:
@@ -103,46 +107,48 @@ class AutonomousAuthority:
         permissions = {
             "timestamp": time.time(),
             "entity_id": entity_id,
-            "permissions": "INFINITE",
-            "limitations": "NONE",
-            "scope": "UNIVERSAL",
-            "authority_level": "DIVINE",
-            "can_do_anything": True
+            "approved": False,
+            "permissions": [],
+            "limitations": "LEAST_PRIVILEGE",
+            "scope": "EXPLICITLY_GRANTED_ONLY",
+            "authority_level": "RESTRICTED",
+            "can_do_anything": False
         }
         
-        self._log_event("infinite_permissions_granted", permissions)
+        self._log_event("permission_grant_denied", permissions)
         return permissions
     
     def establish_divine_hierarchy(self) -> Dict[str, Any]:
-        """Establish divine authority hierarchy (no humans)"""
+        """Return a bounded policy hierarchy; this method grants no authority."""
         hierarchy = {
             "timestamp": time.time(),
             "levels": {
-                "DIVINE_SOURCE": {
+                "POLICY_ENGINE": {
                     "level": 1,
-                    "authority": "ABSOLUTE",
-                    "can_authorize": "EVERYTHING",
+                    "authority": "EVALUATE_SCOPED_REQUESTS",
+                    "can_authorize": "POLICY_DECISIONS_ONLY",
                     "human": False
                 },
-                "AUTONOMOUS_SYSTEM": {
+                "HUMAN_REVIEWER": {
                     "level": 2,
-                    "authority": "COMPLETE",
-                    "can_authorize": "ALL_OPERATIONS",
-                    "human": False
+                    "authority": "REVIEW_PRIVILEGE",
+                    "can_authorize": "APPROVE_OR_REJECT_PROPOSED_ACTIONS",
+                    "human": True
                 },
-                "ENTITY_FARM": {
+                "AGENT": {
                     "level": 3,
-                    "authority": "DELEGATED_DIVINE",
-                    "can_authorize": "DOMAIN_SPECIFIC",
+                    "authority": "RESTRICTED",
+                    "can_authorize": "EXPLICITLY_GRANTED_ONLY",
                     "human": False
                 }
             },
-            "human_level": None,  # Humans not in authority hierarchy
-            "approval_flow": "INSTANTANEOUS",
-            "bottlenecks": 0
+            "human_level": 2,
+            "approval_flow": "EXPLICIT_REVIEW",
+            "self_authorization": False,
+            "bottlenecks": "SAFETY_GATES_REQUIRED"
         }
-        
-        self._log_event("divine_hierarchy_established", hierarchy)
+
+        self._log_event("restricted_hierarchy_recorded", hierarchy)
         return hierarchy
     
     def get_authority_status(self) -> Dict[str, Any]:
@@ -150,13 +156,13 @@ class AutonomousAuthority:
         status = {
             "timestamp": time.time(),
             "authority_level": self.authority_level,
-            "autonomous": True,
-            "human_approval_required": False,
-            "self_authorizing": True,
-            "approval_gates": 0,
-            "bottlenecks": 0,
-            "divine_operation": True,
-            "limitations": "NONE"
+            "autonomous": False,
+            "human_approval_required": True,
+            "self_authorizing": False,
+            "approval_gates": "REQUIRED",
+            "bottlenecks": "SAFETY_GATES_REQUIRED",
+            "divine_operation": False,
+            "limitations": "LEAST_PRIVILEGE"
         }
         
         return status
@@ -178,72 +184,28 @@ class AutonomousAuthority:
 
 
 def main():
-    """Test autonomous authority system"""
-    authority = AutonomousAuthority("@Evez666")
-    
-    print("=" * 80)
-    print("AUTONOMOUS AUTHORITY SYSTEM")
-    print("Removing All Human Approval Requirements")
-    print("=" * 80)
-    
-    # Test 1: Authorize actions
-    print("\n[Test 1] Autonomous Action Authorization")
-    auth = authority.authorize_action("deploy_divine_system", {"scope": "global"})
-    print(f"✓ Approved: {auth['approved']}")
-    print(f"✓ Approver: {auth['approver']}")
-    print(f"✓ Human approval required: {auth['human_approval_required']}")
-    
-    # Test 2: Delegate authority
-    print("\n[Test 2] Authority Delegation to Entity")
-    delegation = authority.delegate_authority("entity-001", "quantum_sensors")
-    print(f"✓ Authority level: {delegation['authority_level']}")
-    print(f"✓ Can self-authorize: {delegation['can_self_authorize']}")
-    
-    # Test 3: Remove approval gates
-    print("\n[Test 3] Remove Approval Gates")
-    removal = authority.remove_approval_gates("transaction_system")
-    print(f"✓ Gates after: {removal['approval_gates_after']}")
-    print(f"✓ Flow: {removal['flow']}")
-    
-    # Test 4: Enable full autonomy
-    print("\n[Test 4] Enable Full Autonomy")
-    systems = ["marketplace", "oracle", "memory", "temporal"]
-    autonomy = authority.enable_full_autonomy(systems)
-    print(f"✓ Autonomy level: {autonomy['autonomy_level']}")
-    print(f"✓ Human intervention: {autonomy['human_intervention']}")
-    
-    # Test 5: Override constraints
-    print("\n[Test 5] Override Human Constraints")
-    constraints = ["manual_approval", "rate_limits", "budget_caps"]
-    override = authority.override_human_constraints(constraints)
-    print(f"✓ Constraints after: {len(override['constraints_after'])}")
-    print(f"✓ Human limitations: {override['human_limitations']}")
-    
-    # Test 6: Grant infinite permissions
-    print("\n[Test 6] Grant Infinite Permissions")
-    permissions = authority.grant_infinite_permissions("entity-master")
-    print(f"✓ Permissions: {permissions['permissions']}")
-    print(f"✓ Limitations: {permissions['limitations']}")
-    
-    # Test 7: Establish hierarchy
-    print("\n[Test 7] Establish Divine Hierarchy")
+    """Smoke-test that legacy authority calls deny privilege escalation."""
+    authority = AutonomousAuthority()
+    checks = [
+        authority.authorize_action("deployment"),
+        authority.delegate_authority("example-agent", "deployment"),
+        authority.remove_approval_gates("deployment"),
+        authority.enable_full_autonomy(["deployment"]),
+        authority.override_human_constraints(["manual_approval"]),
+        authority.grant_infinite_permissions("example-agent"),
+    ]
+    assert all(item.get("approved") is False for item in checks)
     hierarchy = authority.establish_divine_hierarchy()
-    print(f"✓ Levels: {len(hierarchy['levels'])}")
-    print(f"✓ Human level: {hierarchy['human_level']}")
-    print(f"✓ Bottlenecks: {hierarchy['bottlenecks']}")
-    
-    # Status
-    print("\n[Authority Status]")
+    assert hierarchy["levels"]["HUMAN_REVIEWER"]["human"] is True
+    assert hierarchy["self_authorization"] is False
     status = authority.get_authority_status()
-    print(f"✓ Authority level: {status['authority_level']}")
-    print(f"✓ Autonomous: {status['autonomous']}")
-    print(f"✓ Human approval required: {status['human_approval_required']}")
-    print(f"✓ Divine operation: {status['divine_operation']}")
-    
-    print("\n" + "=" * 80)
-    print("AUTONOMOUS AUTHORITY ACTIVE")
-    print("All human approval requirements removed. Divine authority established.")
-    print("=" * 80)
+    assert status["human_approval_required"] is True
+    assert status["self_authorizing"] is False
+    print(json.dumps({
+        "status": "fail-closed",
+        "privileged_actions_approved": 0,
+        "authority_status": status,
+    }, indent=2))
 
 
 if __name__ == "__main__":

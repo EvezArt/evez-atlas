@@ -5,13 +5,9 @@ on:
       - 'spine/*.py'
       - 'hyperloop_state.json'
   workflow_dispatch:
-    inputs:
-      spf:
-        description: 'Frames per round (lower=faster)'
-        default: '3'
-      hold:
-        description: 'Hold seconds at end'
-        default: '4.0'
+
+permissions:
+  contents: read
 
 jobs:
   render:
@@ -35,8 +31,8 @@ jobs:
           python scripts/gen_cinematic.py \
             --output /tmp/evez_arc.mp4 \
             --fps 30 \
-            --spf ${{ github.event.inputs.spf || '3' }} \
-            --hold ${{ github.event.inputs.hold || '4.0' }}
+            --spf 3 \
+            --hold 4.0
           ls -lh /tmp/evez_arc.mp4
 
       - name: Upload artifact

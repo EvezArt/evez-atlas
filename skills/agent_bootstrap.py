@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 """
-Agent Bootstrap System - Autonomize New Agents
-Automatically configures new agents with autonomous authority,
-domain delegation, and navigation capabilities.
+Agent Bootstrap System - Supervised Agent Enrollment
+Creates least-privilege agent records that remain pending until a separate approval step.
 """
 
 import hashlib
@@ -14,7 +13,7 @@ from typing import Any, Dict, List, Optional
 
 
 class AgentBootstrap:
-    """Bootstrap new agents with full autonomous capabilities."""
+    """Bootstrap least-privilege agents that await explicit approval."""
     
     def __init__(self, data_dir: str = "data"):
         self.data_dir = Path(data_dir)
@@ -52,22 +51,30 @@ class AgentBootstrap:
         agent_name: str,
         role: str = "worker",
         domain: str = "general",
-        autonomy_level: str = "full",
+        autonomy_level: str = "supervised",
         capabilities: List[str] = None
     ) -> Dict[str, Any]:
         """
-        Bootstrap a new autonomous agent.
+        Create a supervised agent record pending approval.
         
         Args:
             agent_name: Base name for the agent
             role: Agent role (worker, orchestrator, etc.)
             domain: Primary domain
-            autonomy_level: full, limited, or supervised
+            autonomy_level: supervised or limited; full is downgraded to supervised
             capabilities: List of capability names
             
         Returns:
             Bootstrap configuration
         """
+        if not isinstance(agent_name, str) or not agent_name.strip() or len(agent_name) > 80:
+            raise ValueError("agent_name must contain 1..80 non-whitespace characters")
+        if not isinstance(capabilities, list):
+            capabilities = []
+        allowed_capabilities = {"execute", "navigate", "read_only"}
+        selected_capabilities = sorted(set(cap for cap in capabilities if cap in allowed_capabilities))
+        # "full" autonomy is intentionally downgraded: an agent cannot grant itself authority.
+        autonomy_level = autonomy_level if autonomy_level in {"supervised", "limited"} else "supervised"
         agent_id = self._generate_agent_id(agent_name)
         
         agent_data = {
@@ -76,15 +83,15 @@ class AgentBootstrap:
             "role": role,
             "domain": domain,
             "autonomy_level": autonomy_level,
-            "capabilities": capabilities or ["execute", "delegate", "navigate"],
+            "capabilities": selected_capabilities or ["read_only"],
             "bootstrap_time": time.time(),
-            "status": "bootstrapped",
+            "status": "pending_approval",
             "config": {
-                "can_self_authorize": autonomy_level == "full",
-                "can_delegate": "delegate" in (capabilities or ["execute"]),
-                "can_navigate": "navigate" in (capabilities or ["execute"]),
-                "requires_approval": autonomy_level != "full",
-                "max_delegation_depth": 5 if autonomy_level == "full" else 1,
+                "can_self_authorize": False,
+                "can_delegate": False,
+                "can_navigate": "navigate" in selected_capabilities,
+                "requires_approval": True,
+                "max_delegation_depth": 1,
                 "timeout_seconds": 300,
                 "retry_attempts": 3
             }
@@ -114,6 +121,8 @@ class AgentBootstrap:
         Returns:
             List of bootstrap configurations
         """
+        if not isinstance(count, int) or isinstance(count, bool) or count < 1 or count > 10:
+            raise ValueError("batch count must be between 1 and 10")
         agents = []
         
         for i in range(count):
@@ -121,7 +130,7 @@ class AgentBootstrap:
                 agent_name=f"{base_name}-{i:03d}",
                 role="worker",
                 domain=domain,
-                autonomy_level="full",
+                autonomy_level="supervised",
                 capabilities=capabilities
             )
             agents.append(agent)
@@ -172,7 +181,7 @@ def quick_bootstrap(agent_name: str, role: str = "worker") -> Dict[str, Any]:
     return bootstrap.bootstrap_agent(
         agent_name=agent_name,
         role=role,
-        autonomy_level="full"
+        autonomy_level="supervised"
     )
 
 
@@ -189,13 +198,13 @@ if __name__ == "__main__":
     
     bootstrap = AgentBootstrap()
     
-    # Bootstrap single agents
+    # Bootstrap a supervised example; no agent may self-authorize.
     agent1 = bootstrap.bootstrap_agent(
         "orchestrator-001",
         role="orchestrator",
         domain="task_routing",
-        autonomy_level="full",
-        capabilities=["execute", "delegate", "navigate"]
+        autonomy_level="supervised",
+        capabilities=["read_only", "navigate"]
     )
     print(f"\nBootstrapped: {agent1['agent_id']}")
     print(f"  Role: {agent1['role']}")
