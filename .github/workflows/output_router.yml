@@ -11,11 +11,20 @@ on:
         required: false
         default: '{}'
       force_youtube:
-        description: 'Force YouTube'
+        description: 'Force YouTube lock behavior'
         required: false
         default: 'false'
+      confirm_external_publish:
+        description: 'Explicitly confirm any external YouTube upload'
+        required: true
+        type: boolean
+        default: false
+permissions:
+  contents: read
+
 jobs:
   route:
+    if: inputs.confirm_external_publish == true
     runs-on: ${{ vars.RUNNER_LABEL || 'ubuntu-latest' }}
     steps:
       - uses: actions/checkout@v4
@@ -28,12 +37,14 @@ jobs:
           curl -sSL https://raw.githubusercontent.com/EvezArt/surething-offline/main/scripts/youtube_upload.py -o yt_upload.py
       - name: Check Twitter lock
         id: tw
+        env:
+          FORCE_YOUTUBE: ${{ inputs.force_youtube || 'false' }}
         run: |
           LOCKED="false"
           if [ -f "workspace/hyperloop_state.json" ]; then
             LOCKED=$(python3 -c "import json; s=json.load(open('workspace/hyperloop_state.json')); n=s.get('last_tweet',{}).get('note','').upper(); print('true' if any(x in n for x in ['BLOCKED','LOCKED','SUSPENDED']) else 'false')")
           fi
-          [ "${{ github.event.inputs.force_youtube }}" = "true" ] && LOCKED="true"
+          [ "$FORCE_YOUTUBE" = "true" ] && LOCKED="true"
           echo "locked=$LOCKED" >> $GITHUB_OUTPUT
           echo "Twitter locked: $LOCKED"
       - name: Route + upload
@@ -41,15 +52,23 @@ jobs:
           YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
           YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
           YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
+          DATA_JSON: ${{ inputs.data_json || '{}' }}
+          CONTENT_TYPE: ${{ inputs.content_type }}
         run: |
-          echo '${{ github.event.inputs.data_json }}' > /tmp/data.json
-          python3 yt_router.py '${{ github.event.inputs.content_type }}' /tmp/data.json > /tmp/decision.json
+          python3 - <<'PY'
+          import json, os
+          from pathlib import Path
+          raw = os.environ.get("DATA_JSON", "{}")
+          json.loads(raw)
+          Path("/tmp/data.json").write_text(raw, encoding="utf-8")
+          PY
+          python3 yt_router.py "$CONTENT_TYPE" /tmp/data.json > /tmp/decision.json
           cat /tmp/decision.json
           ROUTE=$(python3 -c "import json; print(json.load(open('/tmp/decision.json'))['route'])")
           echo "Route: $ROUTE"
           if [[ "$ROUTE" == *"youtube"* ]]; then
             python3 -c "import json; open('/tmp/meta.json','w').write(json.dumps(json.load(open('/tmp/decision.json')).get('youtube_meta',{})))"
-            TITLE=$(python3 -c "import json; print(json.load(open('/tmp/meta.json')).get('title','EVEZ')[:50])")
+            TITLE=$(python3 -c 'import json,re; s=json.load(open("/tmp/meta.json")).get("title","EVEZ"); print(re.sub(r"[^A-Za-z0-9 .,_-]", "", str(s))[:50])')
             if ! command -v ffmpeg &>/dev/null; then sudo apt-get install -y ffmpeg -q; fi
             ffmpeg -f lavfi -i color=black:size=1920x1080:rate=24 -f lavfi -i anullsrc=r=44100:cl=mono \
               -vf "drawtext=text='$TITLE':fontcolor=white:fontsize=44:x=(w-text_w)/2:y=h/2-50,drawtext=text='evez-operator.vercel.app':fontcolor=gray:fontsize=28:x=(w-text_w)/2:y=h/2+50" \
