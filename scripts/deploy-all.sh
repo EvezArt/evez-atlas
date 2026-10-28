@@ -13,14 +13,21 @@ cd "$REPO_ROOT"
 # 1. Environment Setup
 export JUBILEE_MODE="${JUBILEE_MODE:-qsvc-ibm}"
 export JUBILEE_TOUCH_ID="${JUBILEE_TOUCH_ID:-8e5526c72cebad3c09e4158399eaab06}"
-export SECRET_KEY="${SECRET_KEY:-$(openssl rand -hex 32 2>/dev/null || echo 'dev-secret-key')}"
+if [[ -z "${SECRET_KEY:-}" ]]; then
+    SECRET_KEY="$(openssl rand -hex 32 2>/dev/null)" || { echo "ERROR: unable to create SECRET_KEY"; exit 1; }
+fi
+if [[ -z "$SECRET_KEY" ]]; then
+    echo "ERROR: SECRET_KEY is empty; refusing to deploy"
+    exit 1
+fi
+export SECRET_KEY
 
 echo "📦 Environment configured"
 echo "   JUBILEE_MODE=$JUBILEE_MODE"
-echo "   SECRET_KEY=${SECRET_KEY:0:16}..."
+echo "   SECRET_KEY is configured"
 
 # 1.5. Limit Bypass Configuration
-export LIMIT_BYPASS_ENABLED="${LIMIT_BYPASS_ENABLED:-true}"
+export LIMIT_BYPASS_ENABLED="${LIMIT_BYPASS_ENABLED:-false}"
 export DEPLOYMENT_FALLBACK_MODE="${DEPLOYMENT_FALLBACK_MODE:-artifact}"
 
 echo "   LIMIT_BYPASS_ENABLED=$LIMIT_BYPASS_ENABLED"
