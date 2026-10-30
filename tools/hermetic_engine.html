@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hermetic Biofeedback Console (Local-Only)</title>
+  <title>Hermetic Synthetic Signal Demo (Local-Only)</title>
   <style>
     body {
       font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
@@ -90,9 +90,9 @@
 </head>
 <body>
   <header>
-    <h1>Hermetic Biofeedback Console (Local-Only)</h1>
+    <h1>Hermetic Synthetic Signal Demo (Local-Only)</h1>
     <div class="warning">
-      For personal experimentation only. Not medical. Do not use to influence or manipulate others.
+      SYNTHETIC DATA ONLY: Alpha, beta, and theta values below are generated demo signals, not EEG or brain measurements. Not for health decisions.
     </div>
   </header>
 
@@ -129,7 +129,7 @@
       <label>API Base URL</label>
       <input id="apiBase" value="http://localhost:8000" />
       <label>API Key</label>
-      <input id="apiKey" value="tier3_director" />
+      <input id="apiKey" type="password" value="" autocomplete="off" placeholder="Enter API key locally" />
       <div class="row">
         <button id="fetchStatus" class="secondary">Fetch /legion-status</button>
         <span class="tag">Read-only, tier-aware</span>
@@ -181,6 +181,8 @@
       const theta = 0.3 + rand() * 0.7;
 
       const sample = {
+        source: "synthetic_demo",
+        simulated: true,
         timestamp: new Date().toISOString(),
         alpha: Number(alpha.toFixed(3)),
         beta: Number(beta.toFixed(3)),
