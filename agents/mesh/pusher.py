@@ -54,7 +54,12 @@ class ImmortalStatePusher:
         canonical = json.dumps(payload, sort_keys=True, separators=(",", ":")).encode("utf-8")
         payload["sha3_512_checksum"] = hashlib.sha3_512(canonical).hexdigest()
 
-        signing_secret = os.getenv("EVEZ_MESH_SIGNING_KEY", "mesh-default-key").encode("utf-8")
+        signing_secret = os.getenv("EVEZ_MESH_SIGNING_KEY")
+        if not signing_secret:
+            raise RuntimeError(
+                "EVEZ_MESH_SIGNING_KEY is not set; refusing to sign with a predictable fallback"
+            )
+        signing_secret = signing_secret.encode("utf-8")
         payload["signature"] = hmac.new(signing_secret, canonical, hashlib.sha3_512).hexdigest()
 
         compressed = gzip.compress(

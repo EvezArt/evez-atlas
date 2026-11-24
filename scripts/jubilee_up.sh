@@ -43,7 +43,7 @@ fi
 # Generate HMAC secret if not set
 if [ -z "${JUBILEE_HMAC_SECRET:-}" ]; then
     export JUBILEE_HMAC_SECRET=$(openssl rand -hex 32)
-    warn "Generated new HMAC secret: ${JUBILEE_HMAC_SECRET}"
+    warn "Generated new HMAC secret (fingerprint): $(printf %s "${JUBILEE_HMAC_SECRET}" | sha256sum | cut -c1-12)"
     warn "Set JUBILEE_HMAC_SECRET environment variable to persist"
 fi
 
@@ -54,7 +54,7 @@ export JUBILEE_TOUCH_ID="${JUBILEE_TOUCH_ID:-8e5526c72cebad3c09e4158399eaab06}"
 info "Configuration:"
 info "  Mode: ${JUBILEE_MODE}"
 info "  Touch ID: ${JUBILEE_TOUCH_ID}"
-info "  HMAC Secret: ${JUBILEE_HMAC_SECRET:0:8}..."
+info "  HMAC Secret: [REDACTED] (fingerprint: $(printf %s "${JUBILEE_HMAC_SECRET}" | sha256sum | cut -c1-12))"
 
 # Check for Docker
 if ! command -v docker &> /dev/null; then

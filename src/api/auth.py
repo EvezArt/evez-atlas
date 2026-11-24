@@ -62,7 +62,13 @@ def verify_api_key(
                 "message": "Missing API key",
             },
         )
-    tier = TIER_MAP.get(x_api_key)
+    # Constant-time comparison against the configured tier labels. The manifest
+    # stores literal tier labels (tier0_public etc.), NOT key fingerprints —
+    # hashing the supplied value here would break every valid credential.
+    tier = None
+    for stored_key, tier_value in TIER_MAP.items():
+        if hmac.compare_digest(str(stored_key), x_api_key):
+            tier = tier_value
     if tier is None:
         raise HTTPException(
             status_code=401,
