@@ -5,11 +5,14 @@ name: Test GitHub Actions
 on:
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   placeholder:
     runs-on: ${{ vars.RUNNER_LABEL || 'ubuntu-latest' }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - name: Status
         run: |
           echo "test-actions: disabled — actions/lord-fusion-action not present"
