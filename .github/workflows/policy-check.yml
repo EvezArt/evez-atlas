@@ -81,6 +81,11 @@ jobs:
             fi
           done
 
+      - name: YAML-aware policy check (report-only)
+        continue-on-error: true
+        run: |
+          python3 -m pip install --quiet ruamel.yaml
+          python3 scripts/check_workflow_policy.py .github/policy-allowlist.txt
       - name: SAFE_MODE doc present
         run: |
           test -f docs/SAFETY.md
