@@ -1,7 +1,5 @@
-# Policy allowlist
-#
-# Add workflow filenames here (one per line) if they require exceptions to policy-check.
-# Keep the list short and document why in the PR.
-#
-# Example:
-# external-posting.yml
+# Rule-scoped, dated exceptions. Format: <workflow> <rule> expires YYYY-MM-DD
+agent-os.yml writes:contents expires 2027-05-25
+agent-os.yml writes:issues expires 2027-05-25
+agent-os.yml writes:pull-requests expires 2027-05-25
+revenue_engine.yml writes:contents expires 2027-05-25
